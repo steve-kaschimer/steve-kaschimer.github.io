@@ -75,7 +75,7 @@ export default function NavBar() {
                   </li>
                   <li className="relative group">
                     <a
-                      href="/work"
+                      href="/blog"
                       className="
                         ud-menu-scroll
                         text-base text-dark
@@ -91,7 +91,7 @@ export default function NavBar() {
                         xl:ml-12
                       "
                     >
-                      Work
+                      Blog
                     </a>
                   </li>
                   <li className="relative group">

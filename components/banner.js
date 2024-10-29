@@ -14,6 +14,9 @@ export default function Banner({ pageName }) {
     case "about":
       pageTitle = "About Me";
       break;
+    case "blog":
+      pageTitle = "Tech Notes";
+      break;
   }
   return (
     <div

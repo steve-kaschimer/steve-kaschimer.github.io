@@ -1,16 +1,14 @@
 import Banner from "../../components/banner"
-import About from "../../components/about"
-import Team from "../../components/team"
+import BlogPosts from "../../components/blogPosts"
 
 export default function Page() {
     return (
         <div className="w-full m-auto flex flex-col">
             <div>
-                <Banner pageName="about" />
+                <Banner pageName="blog" />
             </div>
             <div>
-                <About />
-                <Team />
+                <BlogPosts />
             </div>
         </div>
     );
