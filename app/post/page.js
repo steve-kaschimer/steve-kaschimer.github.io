@@ -1,4 +1,5 @@
-import Banner from "../../../components/banner"
+import Banner from "../../components/banner"
+import BlogPost from "../../components/blogPost"
 
 export default function Page() {
     return (
@@ -7,7 +8,7 @@ export default function Page() {
                 <Banner pageName="blog" />
             </div>
             <div>
-
+                <BlogPost />
             </div>
         </div>
     );
