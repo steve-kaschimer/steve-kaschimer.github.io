@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-css": "tailwindcss -i ./app/tailwind.css -o ./assets/css/tailwind.css -w"
   },
   "dependencies": {
     "react": "19.0.0-rc-69d4b800-20241021",
