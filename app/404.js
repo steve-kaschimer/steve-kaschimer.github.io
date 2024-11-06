@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Custom404()  {
     return (
         <section className="bg-white py-14 lg:py-20">
@@ -33,15 +35,15 @@ export default function Custom404()  {
                   xl:text-[42px]
                 "
               >
-                404 - We couldn't find that page.
+                404 - We couldn&apos;t find that page.
               </h2>
               <h3 className="font-normal mb-8 text-xl md:text-2xl text-dark-700">
                 Maybe you can find what you need here?
               </h3>
               <ul className="flex flex-wrap justify-center">
                 <li>
-                  <a
-                    href="javascript:void(0)"
+                  <Link
+                    href="/"
                     className="
                       text-base
                       font-medium
@@ -57,11 +59,11 @@ export default function Custom404()  {
                     "
                   >
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="javascript:void(0)"
+                  <Link
+                    href="/resume"
                     className="
                       text-base
                       font-medium
@@ -76,28 +78,8 @@ export default function Custom404()  {
                       hover:bg-primary hover:text-white
                     "
                   >
-                    Support
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="javascript:void(0)"
-                    className="
-                      text-base
-                      font-medium
-                      py-3
-                      px-6
-                      text-dark
-                      rounded-md
-                      mx-2
-                      my-1
-                      inline-block
-                      bg-[#f5f8ff]
-                      hover:bg-primary hover:text-white
-                    "
-                  >
-                    Latest News
-                  </a>
+                    Resume
+                  </Link>
                 </li>
               </ul>
             </div>
