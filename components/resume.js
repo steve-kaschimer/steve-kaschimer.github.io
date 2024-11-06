@@ -6,8 +6,8 @@ export default function Resume() {
                 <div className="mx-6 my-10 text-[#ffffff]">
                     <h2 className="text-xl text-[#efefef]">Contact</h2>
                     <ul className="ml-4 mt-4">
-                        <li><a href="tel:15684190427" target="_blank" rel="noreferrer">586-419-0427 (mobile)</a></li>
-                        <li><a href="mailto:steve.kaschimer@slalom.com" target="_blank" rel="noreferrer">steve.kaschimer@slalom.com</a></li>
+                        <li><a href="tel:15684190427">586-419-0427 (mobile)</a></li>
+                        <li><a href="mailto:steve.kaschimer@slalom.com">steve.kaschimer@slalom.com</a></li>
                         <li className="mt-4"><a href="https://www.linkedin.com/in/skaschimer" target="_blank" rel="noreferrer">www.linkedin.com/in/skaschimer (LinkedIn)</a></li>
                         <li><a href="https://github.com/steve-kaschimer" target="_blank" rel="noreferrer">github.com/steve-kaschimer (GitHub)</a></li>
                     </ul>
@@ -27,20 +27,19 @@ export default function Resume() {
                         <li>Technical Architecture</li>
                         <li>Software Architecture</li>
                         <li>System Architecture</li>
-<li>Application Architecture</li>
-<li>Solution Architecture</li>
-<li>Enterprise Architecture</li>
-<li>Cloud-Native Architecture</li>
-<li>Cloud Administration</li>
-<li>Infrastructure as code (IaC)</li>
-<li>Automation</li>
-<li>Integration</li>
-<li>DevOps</li>
-<li>Azure DevOps Services</li>
-<li>GitHub Actions</li>
-<li>GitHub Workflows</li>
+                        <li>Application Architecture</li>
+                        <li>Solution Architecture</li>
+                        <li>Enterprise Architecture</li>
+                        <li>Cloud-Native Architecture</li>
+                        <li>Cloud Administration</li>
+                        <li>Infrastructure as code (IaC)</li>
+                        <li>Automation</li>
+                        <li>Integration</li>
+                        <li>DevOps</li>
+                        <li>Azure DevOps Services</li>
+                        <li>GitHub Actions</li>
+                        <li>GitHub Workflows</li>
                     </ul>
-
                     <h2 className="mt-6 text-xl text-[#efefef]">Certifications</h2>
                     <ul className="ml-4 mt-4">
                         <li><a href="https://learn.microsoft.com/en-us/users/stevekaschimer-0933/credentials/certification/azure-fundamentals" target="_blank" rel="noreferrer">AZ-900 Azure Fundamentals</a></li>
