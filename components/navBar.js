@@ -7,14 +7,7 @@ export default function NavBar() {
       <div className="container">
         <div className="flex -mx-4 items-center justify-between relative">
           <div className="px-4 w-60 max-w-full">
-            <Link href="/" className="navbar-logo w-full block py-5">
-                <Image aria-hidden
-                    src="/assets/images/logo/logo-white.svg"
-                    alt="logo"
-                    className="w-full header-logo"
-                    width={0}
-                    height={0}/>              
-            </Link>
+
           </div>
           <div className="flex justify-between items-center">
             <div>
@@ -55,48 +48,6 @@ export default function NavBar() {
                   </li>
                   <li className="relative group">
                     <Link
-                      href="/about"
-                      className="
-                        ud-menu-scroll
-                        text-base text-dark
-                        lg:text-white
-                        lg:group-hover:opacity-70
-                        lg:group-hover:text-white
-                        group-hover:text-primary
-                        py-2
-                        lg:py-6 lg:inline-flex lg:px-0
-                        flex
-                        mx-8
-                        lg:mr-0 lg:ml-7
-                        xl:ml-12
-                      "
-                    >
-                      About Me
-                    </Link>
-                  </li>
-                  <li className="relative group">
-                    <Link
-                      href="/blog"
-                      className="
-                        ud-menu-scroll
-                        text-base text-dark
-                        lg:text-white
-                        lg:group-hover:opacity-70
-                        lg:group-hover:text-white
-                        group-hover:text-primary
-                        py-2
-                        lg:py-6 lg:inline-flex lg:px-0
-                        flex
-                        mx-8
-                        lg:mr-0 lg:ml-7
-                        xl:ml-12
-                      "
-                    >
-                      Blog
-                    </Link>
-                  </li>
-                  <li className="relative group">
-                    <Link
                       href="/resume"
                       className="
                         ud-menu-scroll
@@ -114,27 +65,6 @@ export default function NavBar() {
                       "
                     >
                       Resume
-                    </Link>
-                  </li>
-                  <li className="relative group">
-                    <Link
-                      href="/contact"
-                      className="
-                        ud-menu-scroll
-                        text-base text-dark
-                        lg:text-white
-                        lg:group-hover:opacity-70
-                        lg:group-hover:text-white
-                        group-hover:text-primary
-                        py-2
-                        lg:py-6 lg:inline-flex lg:px-0
-                        flex
-                        mx-8
-                        lg:mr-0 lg:ml-7
-                        xl:ml-12
-                      "
-                    >
-                      Contact
                     </Link>
                   </li>
                 </ul>

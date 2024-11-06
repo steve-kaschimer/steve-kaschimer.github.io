@@ -1,11 +1,14 @@
-import Hero from "../components/hero"
+import Banner from "../components/banner"
+import About from "../components/about"
 export default function Home() {
   return (
     <div>
-      <Hero />
-      <main className="">
-        
-      </main>
+      <div>
+        <Banner pageName="about" />
+      </div>
+      <div>
+        <About />
+      </div>
     </div>
   );
 }

@@ -2,6 +2,9 @@ import localFont from "next/font/local";
 import "./tailwind.css";
 import Footer from "../components/footer"
 import NavBar from "../components/navBar"
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
