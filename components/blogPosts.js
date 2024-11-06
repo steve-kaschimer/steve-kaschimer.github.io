@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function BlogPosts() {
     return (
         <section className="pt-20 lg:pt-[120px] pb-10 lg:pb-20">
@@ -7,15 +9,10 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".1s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="/blog/post" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-01.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-01.jpg"
                                         alt="image"
-                                        className="
-                      w-full
-                      transition
-                      group-hover:scale-125 group-hover:rotate-6
-                    "
-                                    />
+                                        className="w-full transition group-hover:scale-125 group-hover:rotate-6" height={1} width={1} />
                                 </a>
                             </div>
                             <div>
@@ -65,14 +62,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".15s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-02.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-02.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -123,14 +120,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".2s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-03.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-03.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -181,14 +178,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".1s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-02.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-02.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -239,14 +236,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".15s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-03.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-03.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -297,14 +294,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".2s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-01.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-01.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -355,14 +352,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".1s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-01.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-01.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -413,14 +410,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".15s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-02.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-02.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -471,14 +468,14 @@ export default function BlogPosts() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".2s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-03.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-03.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>

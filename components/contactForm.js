@@ -1,24 +1,13 @@
 
 export default function ContactForm() {
     return (
-      <div className="container pb-4 w-full">
-        <div className="flex flex-wrap items-center">
-          <div className="px-4 py-4 w-full h-full lg:w-7/12 xl:w-8/12">
-            <div className="">
-              <div className="mb-24 ">
-                <span
-                  className="
-                    font-headingFont
-                    text-dark
-                    font-semibold
-                    text-base
-                    mb-5
-                  "
-                >
-                  CONTACT ME
-                </span>
+      <div className="pb-4 w-full">
+        <div className="flex flex-wrap items-center align-top h-full">
+          <div className="flex p-4 w-full h-full lg:w-7/12 xl:w-8/12 justify-center mb-auto">
+            <div className="w-11/12">
+              <div className="ml-10 my-10">
                 <h2 className="text-3xl font-semibold mb-6">
-                  Let's talk about:
+                  Let&apos;s talk about:
                 </h2>
                 <ul className="list-disc ml-6">
                   <li className="text-xl">Cloud</li>
@@ -91,7 +80,6 @@ export default function ContactForm() {
                 wow
                 fadeInUp
               "
-              data-wow-delay=".2s"
             >
               <h3 className="font-semibold mb-8 text-2xl md:text-[26px]">
                 Send us a Message

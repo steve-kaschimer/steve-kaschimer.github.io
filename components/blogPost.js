@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function BlogPost() {
     return (
         <section className="pt-6 pb-10 lg:pb-20 w-full">
@@ -20,10 +22,10 @@ export default function BlogPost() {
                             data-wow-delay=".1s
               "
                         >
-                            <img
+                            <Image
                                 src="assets/images/blog/blog-details-01.jpg"
                                 alt="image"
-                                className="w-full h-full object-cover object-center"
+                                className="w-full h-full object-cover object-center" height={1} width={1}
                             />
                             <div
                                 className="
@@ -43,10 +45,10 @@ export default function BlogPost() {
                                 <div className="flex flex-wrap items-center p-4 sm:p-8 pb-4">
                                     <div className="flex items-center mb-4 mr-5 md:mr-10">
                                         <div className="w-10 h-10 rounded-full overflow-hidden mr-4">
-                                            <img
+                                            <Image
                                                 src="assets/images/blog/author-01.png"
                                                 alt="image"
-                                                className="w-full"
+                                                className="w-full" height={1} width={1}
                                             />
                                         </div>
                                         <p className="text-base text-white font-medium">
@@ -194,12 +196,12 @@ export default function BlogPost() {
                     "
                                         data-wow-delay=".1s"
                                     >
-                                        There's a time and place for everything… including asking
+                                        There&apos;s a time and place for everything… including asking
                                         for reviews. For instance: you should not asking for a
                                         review on your checkout page. The sole purpose of this page
                                         is to guide your customer to complete their purchase, and
                                         this means that the page should be as minimalist and
-                                        pared-down possible. You don't want to have any unnecessary
+                                        pared-down possible. You don&apos;t want to have any unnecessary
                                         elements or Call To Actions.
                                     </p>
                                     <p
@@ -212,12 +214,12 @@ export default function BlogPost() {
                     "
                                         data-wow-delay=".1s"
                                     >
-                                        There's a time and place for everything… including asking
+                                        There&apos;s a time and place for everything… including asking
                                         for reviews. For instance: you should not asking for a
                                         review on your checkout page. The sole purpose of this page
                                         is to guide your customer to complete their purchase, and
                                         this means that the page should be as minimalist and
-                                        pared-down possible. You don't want to have any unnecessary
+                                        pared-down possible. You don&apos;t want to have any unnecessary
                                         elements or Call To Actions.
                                     </p>
                                     <h3
@@ -632,7 +634,7 @@ export default function BlogPost() {
                                             />
                                         </form>
                                         <p className="text-sm font-medium text-white">
-                                            Don't worry, we don't spam
+                                            Don&apos;t worry, we don&apos;t spam
                                         </p>
 
                                         <div>
@@ -650,7 +652,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -658,7 +660,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -666,7 +668,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -674,7 +676,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -682,7 +684,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -690,7 +692,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -698,7 +700,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -706,7 +708,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -714,7 +716,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -722,7 +724,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -730,7 +732,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -738,7 +740,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -746,7 +748,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -754,7 +756,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -762,7 +764,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -770,7 +772,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                 </svg>
                                             </span>
@@ -788,7 +790,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -796,7 +798,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -804,7 +806,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -812,7 +814,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -820,7 +822,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -828,7 +830,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -836,7 +838,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 44.6026)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -844,7 +846,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 7.9913)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -852,7 +854,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -860,7 +862,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -868,7 +870,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -876,7 +878,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 32.3058)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="1.39737"
@@ -884,7 +886,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 1.39737 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="13.6943"
@@ -892,7 +894,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 13.6943 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="25.9911"
@@ -900,7 +902,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 25.9911 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                     <circle
                                                         cx="38.288"
@@ -908,7 +910,7 @@ export default function BlogPost() {
                                                         r="1.39737"
                                                         transform="rotate(-90 38.288 20.0086)"
                                                         fill="white"
-                                                        fill-opacity="0.44"
+                                                        fillOpacity="0.44"
                                                     />
                                                 </svg>
                                             </span>
@@ -962,10 +964,10 @@ export default function BlogPost() {
                             mr-5
                           "
                                                 >
-                                                    <img
+                                                    <Image
                                                         src="assets/images/blog/article-author-01.png"
                                                         alt="image"
-                                                        className="w-full"
+                                                        className="w-full" height={1} width={1}
                                                     />
                                                 </div>
                                                 <div className="w-full">
@@ -1016,10 +1018,10 @@ export default function BlogPost() {
                             mr-5
                           "
                                                 >
-                                                    <img
+                                                    <Image
                                                         src="assets/images/blog/article-author-02.png"
                                                         alt="image"
-                                                        className="w-full"
+                                                        className="w-full" height={1} width={1}
                                                     />
                                                 </div>
                                                 <div className="w-full">
@@ -1070,10 +1072,10 @@ export default function BlogPost() {
                             mr-5
                           "
                                                 >
-                                                    <img
+                                                    <Image
                                                         src="assets/images/blog/article-author-03.png"
                                                         alt="image"
-                                                        className="w-full"
+                                                        className="w-full" height={1} width={1}
                                                     />
                                                 </div>
                                                 <div className="w-full">
@@ -1127,10 +1129,10 @@ export default function BlogPost() {
                             mr-5
                           "
                                                 >
-                                                    <img
+                                                    <Image
                                                         src="assets/images/blog/article-author-04.png"
                                                         alt="image"
-                                                        className="w-full"
+                                                        className="w-full" height={1} width={1}
                                                     />
                                                 </div>
                                                 <div className="w-full">
@@ -1162,10 +1164,10 @@ export default function BlogPost() {
                                         className="rounded overflow-hidden mb-12 wow fadeInUp"
                                         data-wow-delay=".1s"
                                     >
-                                        <img
+                                        <Image
                                             src="assets/images/blog/bannder-ad.png"
                                             alt="image"
-                                            className="w-full"
+                                            className="w-full" height={1} width={1}
                                         />
                                     </div>
                                 </div>
@@ -1193,14 +1195,14 @@ export default function BlogPost() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".1s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-01.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-01.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -1251,14 +1253,14 @@ export default function BlogPost() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".15s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-02.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-02.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>
@@ -1309,14 +1311,14 @@ export default function BlogPost() {
                         <div className="mb-10 group wow fadeInUp" data-wow-delay=".2s">
                             <div className="rounded overflow-hidden mb-8">
                                 <a href="blog-details.html" className="block">
-                                    <img
-                                        src="assets/images/blog/blog-03.jpg"
+                                    <Image
+                                        src="/assets/images/blog/blog-03.jpg"
                                         alt="image"
                                         className="
                       w-full
                       transition
                       group-hover:scale-125 group-hover:rotate-6
-                    "
+                    " height={1} width={1}
                                     />
                                 </a>
                             </div>

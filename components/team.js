@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function Team() {
     return (
         <section id="team" className="pt-20 lg:pt-[120px] pb-10 lg:pb-20">
@@ -50,7 +52,7 @@ export default function Team() {
                   mb-6
                 "
               >
-                <img
+                <Image
                   src="assets/images/team/team-01.png"
                   alt="image"
                   className="w-full rounded-full"
@@ -575,7 +577,7 @@ export default function Team() {
                   mb-6
                 "
               >
-                <img
+                <Image
                   src="assets/images/team/team-02.png"
                   alt="image"
                   className="w-full rounded-full"
@@ -1098,7 +1100,7 @@ export default function Team() {
                   mb-6
                 "
               >
-                <img
+                <Image
                   src="assets/images/team/team-03.png"
                   alt="image"
                   className="w-full rounded-full"
@@ -1623,7 +1625,7 @@ export default function Team() {
                   mb-6
                 "
               >
-                <img
+                <Image
                   src="assets/images/team/team-01.png"
                   alt="image"
                   className="w-full rounded-full"

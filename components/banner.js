@@ -23,7 +23,7 @@ export default function Banner({ pageName }) {
       className="
         relative
         z-10
-        py-[100px]
+        py-12
         bg-primary      "
     >
       <div className="container">

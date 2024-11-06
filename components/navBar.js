@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NavBar() {
     return (
@@ -6,14 +7,14 @@ export default function NavBar() {
       <div className="container">
         <div className="flex -mx-4 items-center justify-between relative">
           <div className="px-4 w-60 max-w-full">
-            <a href="/" className="navbar-logo w-full block py-5">
+            <Link href="/" className="navbar-logo w-full block py-5">
                 <Image aria-hidden
                     src="/assets/images/logo/logo-white.svg"
                     alt="logo"
                     className="w-full header-logo"
                     width={0}
                     height={0}/>              
-            </a>
+            </Link>
           </div>
           <div className="flex justify-between items-center">
             <div>
@@ -33,7 +34,7 @@ export default function NavBar() {
                 className="absolute py-5 lg:py-0 lg:px-4 xl:px-6 bg-white lg:bg-transparent shadow-lg rounded-lg max-w-[250px] w-full lg:max-w-full lg:w-full right-4 top-full hidden lg:block lg:static lg:shadow-none">
                 <ul className="block lg:flex">
                   <li className="relative group">
-                    <a
+                    <Link
                       href="/"
                       className="
                         ud-menu-scroll
@@ -50,10 +51,10 @@ export default function NavBar() {
                       "
                     >
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="relative group">
-                    <a
+                    <Link
                       href="/about"
                       className="
                         ud-menu-scroll
@@ -71,10 +72,10 @@ export default function NavBar() {
                       "
                     >
                       About Me
-                    </a>
+                    </Link>
                   </li>
                   <li className="relative group">
-                    <a
+                    <Link
                       href="/blog"
                       className="
                         ud-menu-scroll
@@ -92,10 +93,10 @@ export default function NavBar() {
                       "
                     >
                       Blog
-                    </a>
+                    </Link>
                   </li>
                   <li className="relative group">
-                    <a
+                    <Link
                       href="/resume"
                       className="
                         ud-menu-scroll
@@ -113,10 +114,10 @@ export default function NavBar() {
                       "
                     >
                       Resume
-                    </a>
+                    </Link>
                   </li>
                   <li className="relative group">
-                    <a
+                    <Link
                       href="/contact"
                       className="
                         ud-menu-scroll
@@ -134,7 +135,7 @@ export default function NavBar() {
                       "
                     >
                       Contact
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>

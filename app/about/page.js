@@ -1,6 +1,5 @@
 import Banner from "../../components/banner"
 import About from "../../components/about"
-import Team from "../../components/team"
 
 export default function Page() {
     return (
@@ -10,7 +9,6 @@ export default function Page() {
             </div>
             <div>
                 <About />
-                <Team />
             </div>
         </div>
     );
