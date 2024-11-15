@@ -15,7 +15,7 @@ export default function Footer() {
           <FontAwesomeIcon icon={faLinkedin} className="fas fa-check text-primary" />
           </a>
         </div>
-        <div className="my-5">© Copyright 2024. All Rights Reserved.</div>
+        <div className="my-5">&copy; Copyright 2024. All Rights Reserved.</div>
       </div>
     </div>
   )
