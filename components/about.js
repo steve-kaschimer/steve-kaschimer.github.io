@@ -53,7 +53,7 @@ export default function About() {
                 </ul>
                 <h2 className="text-2xl mb-4" id="-ask-me-about">💬 Ask Me About</h2>
                 <ul className="list-none mb-4">
-                    <li className="mx-6"><p>Anything related to: Cloud (Azure), DevOps, .NET, Software Development</p></li>
+                    <li className="mx-6"><p>Anything related to: Cloud (Azure), DevOps, GitHub, .NET, Software Development</p></li>
                 </ul>
                 <h2 className="text-2xl mb-4" id="-pronouns">😄 Pronouns</h2>
                 <ul className="list-none mb-4">
