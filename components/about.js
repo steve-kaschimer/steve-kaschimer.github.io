@@ -61,7 +61,7 @@ export default function About() {
                 </ul>
                 <h2 className="text-2xl mb-4" id="-fun-fact">⚡ Fun fact</h2>
                 <ul className="list-none mb-4">
-                    <li className="mx-6"><p>Once upon a time, I got paid to break into houses...</p></li>
+                    <li className="mx-6"><p>Once upon a time, I got paid to break into houses... as a locksmith!</p></li>
                 </ul>
                 <h2 className="text-2xl mb-4" id="-get-in-touch">📬 Get in Touch</h2>
                 <ul className="list-none mb-4">
