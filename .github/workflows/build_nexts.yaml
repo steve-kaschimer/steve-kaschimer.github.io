@@ -70,7 +70,7 @@ jobs:
         with:
           # The GitHub token used to make authenticated API requests.
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          subject-path: '${{ github.workspace }}'
+          subject-path: '${{ github.workspace }}/out'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
