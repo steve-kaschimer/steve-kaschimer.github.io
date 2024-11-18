@@ -1,13 +1,11 @@
 name: Release
 on:
   workflow_call:
-    inputs:
+    secrets:
       GITHUB_TOKEN:
         required: true
-        type: string
       NPM_TOKEN:
         required: true
-        type: string
 
 permissions:
   contents: read # for checkout
