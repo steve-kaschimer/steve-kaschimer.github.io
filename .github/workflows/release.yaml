@@ -30,6 +30,6 @@ jobs:
         run: npm audit signatures
       - name: Release
         env:
-          GITHUB_TOKEN: $env.GITHUB_TOKEN
+          GITHUB_TOKEN: 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
           NPM_TOKEN: $env.NPM_TOKEN
         run: npx semantic-release
