@@ -12,6 +12,10 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
   # Build job
   build:
@@ -20,6 +24,9 @@ jobs:
   release:
     needs: build
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
+    with:
+      GITHUB_TOKEN: ${{env.GITHUB_TOKEN)}      
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     
   deploy:
     needs: release
