@@ -37,6 +37,7 @@ export default function Resume() {
                         <li>Integration</li>
                         <li>DevOps</li>
                         <li>Azure DevOps Services</li>
+                        <li>GitHub</li>
                         <li>GitHub Actions</li>
                         <li>GitHub Workflows</li>
                     </ul>
