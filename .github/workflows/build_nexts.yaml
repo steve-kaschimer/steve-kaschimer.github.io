@@ -7,6 +7,8 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  id-token: write
+  attestations: write
 
 #concurrency:
 #  group: "pages"
@@ -68,7 +70,7 @@ jobs:
         with:
           # The GitHub token used to make authenticated API requests.
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        
+          subject-path: '${{ github.workspace }}/my-app'
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
