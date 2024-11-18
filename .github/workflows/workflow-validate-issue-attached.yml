@@ -1,17 +1,14 @@
-  on:
-    pull_request:
-      types: [edited, synchronize, opened, reopened]
-    merge_group:
-      types: [checks_requested]
+on:
+  pull_request:
+    types: [edited, synchronize, opened, reopened]
 
 jobs:
-    test:
-      runs-on: ubuntu-latest
-      steps:
+   build:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
       
       - name: Verify Linked Issue
         uses: hattan/verify-linked-issue-action@v1.1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              
