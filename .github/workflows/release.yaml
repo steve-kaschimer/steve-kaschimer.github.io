@@ -1,14 +1,13 @@
 name: Release
 on:
-  workflow_call:
-    secrets:
-      GH_TOKEN:
-        required: true
-      NPM_TOKEN:
-        required: true
+  workflow_call
 
 permissions:
   contents: read # for checkout
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   release:
@@ -34,6 +33,6 @@ jobs:
         run: npm audit signatures
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: env.GH_TOKEN
+          NPM_TOKEN: env.NPM_TOKEN
         run: npx semantic-release
