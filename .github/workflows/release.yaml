@@ -30,8 +30,8 @@ jobs:
         run: npm audit signatures
       - name: Debug
         run: |
-          echo env.GHTK
-          echo env.NPMTK
+          echo '${env.GHTK}'
+          echo '${env.NPMTK}'
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
