@@ -2,6 +2,7 @@ name: Build, Release and Deploy Unified Workflow
 on:
   push:
     branches:
+      - main
       - release**
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -26,5 +27,6 @@ jobs:
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
     
   deploy:
+    if: ${{ github.ref_name.startsWith('release') }}
     needs: release
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/deploy_nextjs.yaml@main
