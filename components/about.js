@@ -16,7 +16,7 @@ export default function About() {
                 <ul className="list-disc mb-4">
                     <li className="mx-6">I have a B.S. in Computer Information Systems and a M.S. in Information Management, both from Arizona State University (Go Sun Devils!).</li>
                     <li className="mx-6">I volunteer my time outside of work to various causes that mean something to me including: <a className="underline" href="https://www.forgottenharvest.org" target="_blank" rel="noreferrer">Forgotten Harvest</a>, <a className="underline" href="https://pack248.org" target="_blank" rel="noreferrer">Cub Scout Pack 248</a>, <a className="underline" href="https://scouting.org" target="_blank" rel="noreferrer">Boy Scouts of America</a>, and <a className="underline" href="https://freedomaintfree.us" target="_blank" rel="noreferrer">#32 Freedom Ain&apos;t Free</a></li>
-                    <li className="mx-6">I have a family full of boys... 5 of them to be precise... and a loving wife who puts up with all of us!</li>
+                    <li className="mx-6">I have a family full of boys... 5 of them to be precise... two extrememly sweet Golden Doodles... and a loving wife who puts up with all of us!</li>
                     <li className="mx-6">My favorite place to vacation is Holland, MI. You can find me there every summer with my family on the beach soaking up the sun and disconnecting from technology.</li>
                     <li className="mx-6">Opinions expressed are my own. Endorsements will be explicitly stated. </li>
                 </ul>
