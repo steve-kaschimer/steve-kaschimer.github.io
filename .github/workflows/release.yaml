@@ -2,10 +2,6 @@ name: Release
 on:
   workflow_call
 
-env:
-  GHTK: ${{ secrets.GH_TOKEN }}
-  NPMTK: ${{ secrets.NPM_TOKEN }}
-
 jobs:
   release:
     name: Release
@@ -30,10 +26,10 @@ jobs:
         run: npm audit signatures
       - name: Debug
         run: |
-          echo ${{env.GHTK}}
-          echo ${{env.NPMTK}}
+          echo '${{ secrets.GITHUB_TOKEN }}'
+          echo '${{ secrets.NPM_TOKEN }}'
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
