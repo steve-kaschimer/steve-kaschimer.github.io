@@ -12,6 +12,7 @@ permissions:
   pull-requests: write
   pages: write
   id-token: write
+  attestations: write
 
 env:
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
