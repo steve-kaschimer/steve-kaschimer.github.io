@@ -27,6 +27,6 @@ jobs:
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
     
   deploy:
-    if: ${{ github.ref_name.startsWith('release') }}
+    if: ${{ startsWith(github.ref_name, 'release') }}
     needs: release
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/deploy_nextjs.yaml@main
