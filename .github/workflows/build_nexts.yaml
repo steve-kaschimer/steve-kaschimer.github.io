@@ -66,6 +66,7 @@ jobs:
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Attest Build Provenance
+        if: ${{ equals(github.ref_name, 'main') }}
         uses: actions/attest-build-provenance@v1.4.4
         with:
           # The GitHub token used to make authenticated API requests.
