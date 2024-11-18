@@ -5,7 +5,7 @@ on:
 jobs:
   release:
     name: Release
-    if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.ref_name == 'main' || startsWith(github.ref_name, 'release') }}
     runs-on: ubuntu-latest
     permissions:
       contents: write # to be able to publish a GitHub release
