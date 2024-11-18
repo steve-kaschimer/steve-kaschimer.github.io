@@ -17,12 +17,12 @@ concurrency:
 jobs:
   # Build job
   build:
-    uses: /steve-kaschimer/steve-kaschimer.github.io/.github/workflows/buildnexs.yaml@main
+    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/buildnexs.yaml@main
                 
   release:
     needs: build
-    uses: /steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
+    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
     
   deploy:
     needs: release
-    uses: /steve-kaschimer/steve-kaschimer.github.io/.github/workflows/deploy_nextjs.yaml@main
+    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/deploy_nextjs.yaml@main
