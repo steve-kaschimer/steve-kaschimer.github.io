@@ -3,7 +3,7 @@ on:
   workflow_call
 
 env:
-  GHTK: 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
+  GHTK: ${{ secrets.GH_TOKEN }}
   NPMTK: ${{ secrets.NPM_TOKEN }}
 
 jobs:
@@ -28,8 +28,12 @@ jobs:
         run: npm clean-install --force
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
+      - name: Debug
+        run: |
+          echo env.GHTK
+          echo env.NPMTK
       - name: Release
         env:
-          GITHUB_TOKEN: $env.GHTK
-          NPM_TOKEN: $env.NPMTK
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
