@@ -25,8 +25,8 @@ jobs:
     needs: build
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
     with:
-      GITHUB_TOKEN: env.GITHUB_TOKEN
-      NPM_TOKEN: wnv.NPM_TOKEN
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     
   deploy:
     needs: release
