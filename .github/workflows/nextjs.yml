@@ -17,7 +17,7 @@ concurrency:
 jobs:
   # Build job
   build:
-    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/buildnexs.yaml@main
+    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/build_nexts.yaml@main
                 
   release:
     needs: build
