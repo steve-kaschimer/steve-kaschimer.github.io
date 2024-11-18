@@ -1,4 +1,4 @@
-name: Build, Release and Deploy
+name: Deploy NextJS
 on:
   workflow_call
 
