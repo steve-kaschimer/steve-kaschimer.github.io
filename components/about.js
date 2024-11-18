@@ -33,11 +33,11 @@ export default function About() {
                 </ul>
                 <h2 className="text-2xl mb-4" id="tech-stack">Tech Stack</h2>
                 <p className="mb-4"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=azure,cs,dotnet,windows,ubuntu,visualstudio,vscode,docker,js,html,css,react,nextjs,gatsby,github,githubactions,md,npm,py,postman,nodejs,notion,powershell,tailwind,terraform,ts,rabbitmq,raspberrypi,linkedin,devto,stackoverflow&perline=8" alt="My Skills" /></a></p>
-                <h2 className="text-2xl mb-4" id="-currently-working-on">🔭 Currently Working On</h2>
+                <h2 className="text-2xl mb-4" id="-currently-working-on">Currently Working On</h2>
                 <ul className="list-none mb-4">
                     <li className="ml-6">A sweet DevOps project using GitHub, IaC, Azure, and AI</li>
                     <li className="ml-6">This GitHub Pages project using GitHub and Next.js</li>
-                    <li className="ml-6">Pack 248&apos;s website (in my free time between midnight and 6am)s/li>
+                    <li className="ml-6">Pack 248&apos;s website (in my free time between midnight and 6am)</li>
                     <li className="ml-6">#32 Freedom Ain&apos;t Free&apos;s website (on the weekends)</li>
                 </ul>
                 <h2 className="text-2xl mb-4" id="-currently-exploring">🌱 Currently Exploring</h2>
