@@ -1,4 +1,4 @@
-sename: Release
+name: Release
 on:
   workflow_call
 
