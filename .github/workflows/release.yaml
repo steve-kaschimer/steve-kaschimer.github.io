@@ -2,10 +2,10 @@ name: Release
 on:
   workflow_call:
     inputs:
-      GITHUB_SECRET:
+      GITHUB_TOKEN:
         required: true
         type: string
-      NPM_SECRET:
+      NPM_TOKEN:
         required: true
         type: string
 
