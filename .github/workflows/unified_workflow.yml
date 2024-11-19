@@ -19,7 +19,7 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
-  ## versioning job
+  ## versioning job.
   version:
     uses: steve-kaschimer/workflow-core-ci/.github/workflows/core-ci.yml@main
 
