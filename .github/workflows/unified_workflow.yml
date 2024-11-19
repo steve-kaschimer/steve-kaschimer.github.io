@@ -41,4 +41,5 @@ jobs:
   ## 5eploy job.
   deploy:
     if: ${{ startsWith(github.ref_name, 'release') }}
+    needs: validate
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/deploy_nextjs.yaml@main
