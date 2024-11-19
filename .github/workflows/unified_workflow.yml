@@ -23,7 +23,7 @@ jobs:
   version:
     uses: steve-kaschimer/workflow-core-ci/.github/workflows/core-ci.yml@main
 
-  ## validation job
+  ## validation job.
   validate:
     needs: version
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/workflow-validate-issue-attached.yml@main
