@@ -34,9 +34,9 @@ jobs:
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/build_nexts.yaml@main
 
   ## release job.
-  release:
-    needs: build
-    uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
+  #release:
+  #  needs: build
+  #  uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
 
   ## 5eploy job.
   deploy:
