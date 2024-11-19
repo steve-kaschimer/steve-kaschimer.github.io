@@ -19,26 +19,26 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
-  # 1 versioning job.
+  # 1 versioning job
   version:
     uses: steve-kaschimer/workflow-core-ci/.github/workflows/core-ci.yml@main
 
-  # 2 validation job.
+  # 2 validation job
   validate:
     needs: version
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/workflow-validate-issue-attached.yml@main
   
-  # 3 Build job.
+  # 3 Build job
   build:
     needs: validate
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/build_nexts.yaml@main
 
-  # 4 release job.
+  # 4 release job
   release:
     needs: build
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
 
-  # 5 deploy job.
+  # 5 deploy job
   deploy:
     if: ${{ startsWith(github.ref_name, 'release') }}
     needs: release
