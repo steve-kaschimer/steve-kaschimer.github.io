@@ -38,7 +38,7 @@ jobs:
     needs: build
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
 
-  ## 5eploy job
+  ## 5eploy job.
   deploy:
     if: ${{ startsWith(github.ref_name, 'release') }}
     needs: release
