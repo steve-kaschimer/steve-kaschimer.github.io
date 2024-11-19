@@ -19,7 +19,11 @@ env:
   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
+  version:
+    uses: steve-kaschimer/workflow-core-ci/blob/main/.github/workflows/core-ci.yml@main
+    
   validate:
+    needs: version
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/workflow-validate-issue-attached.yml@main
   # Build job
   build:
