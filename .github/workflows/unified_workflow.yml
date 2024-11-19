@@ -33,7 +33,7 @@ jobs:
     needs: validate
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/build_nexts.yaml@main
 
-  ## release job
+  ## release job.
   release:
     needs: build
     uses: steve-kaschimer/steve-kaschimer.github.io/.github/workflows/release.yaml@main
