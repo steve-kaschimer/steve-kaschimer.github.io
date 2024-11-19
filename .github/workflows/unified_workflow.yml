@@ -21,7 +21,7 @@ env:
 jobs:
   # versioning
   version:
-    uses: steve-kaschimer/workflow-core-ci/blob/main/.github/workflows/core-ci.yml@main
+    uses: steve-kaschimer/workflow-core-ci/main/.github/workflows/core-ci.yml@main
 
   # validation
   validate:
