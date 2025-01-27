@@ -18,7 +18,7 @@
     "@mdi/react": "^1.6.1",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
-    "@next/mdx": "^15.0.2",
+    "@next/mdx": "^15.1.6",
     "@types/mdx": "^2.0.13",
     "next": "15.0.1",
     "react": "19.0.0-rc-69d4b800-20241021",
