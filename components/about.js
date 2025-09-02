@@ -20,6 +20,7 @@ export default function About() {
                     <li className="mx-6">My favorite place to vacation is Holland, MI. You can find me there every summer with my family on the beach soaking up the sun and disconnecting from technology.</li>
                     <li className="mx-6">Opinions expressed are my own. Endorsements will be explicitly stated. </li>
                 </ul>
+                <p className="mb-4"><img src="https://img.shields.io/badge/currently-online-green"/></p>
                 <h2 className="text-2xl mb-4 flex text-primary"><Icon className="pt-1" path={mdiCertificate} size={1.2} /> <p className="ml-2 text-black">Certifications</p></h2>
                 <ul className="list-none mb-4">
                     <li className="ml-6 font-semibold">Earned</li>
