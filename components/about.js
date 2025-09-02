@@ -28,6 +28,7 @@ export default function About() {
                     <li className="ml-6"><a className="hover:underline" href="https://learn.microsoft.com/en-us/users/stevekaschimer-0933/credentials/certification/azure-data-fundamentals?tab=credentials-tab" target="_blank" rel="noreferrer">DP-900 Azure Data Fundamentals - May 16, 2023</a></li>
                     <li className="ml-6"><a className="hover:underline" href="https://www.credly.com/badges/9f688830-9e03-4329-aed2-abaad86e9096/public_url" target="_blank" rel="noreferrer">AWS Partner: Generative AI Essentials - April 18, 2024</a></li>
                     <li className="ml-6"><a classNamw="hover:underline" href="https://www.credly.com/badges/bbce5fff-76e0-4879-bfc4-5bf8c4390077/public_url" target="_blank" rel="noreferrer">GitHub Foundations - February 21, 2025</a></li>
+                    <li className="ml-6 font-semibold"></li>
                     <li className="ml-6 font-semibold">Queued Up</li>
                     <li className="ml-6">GitHub Actions</li>
                     <li className="ml-6">GitHub Administration</li>
