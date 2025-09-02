@@ -28,8 +28,11 @@ export default function About() {
                     <li className="ml-6"><a classNamw="hover:underline" href="https://www.credly.com/badges/bbce5fff-76e0-4879-bfc4-5bf8c4390077/public_url" target="_blank" rel="noreferrer">GitHub Foundations - February 21, 2025</a></li>
                     <li className="ml-6 font-semibold">Queued Up</li>
                     <li className="ml-6">GitHub Actions</li>
+                    <li className="ml-6">GitHub Administration</li>
                     <li className="ml-6">GitHub Advanced Security</li>
                     <li className="ml-6">GitHub Administration</li>
+                    <li className="ml-6">GitHub Copilot</li>
+                    <li className="ml-6">Microsoft - DevOps Engineer Expert</li>
                 </ul>
                 <h2 className="text-2xl mb-4" id="tech-stack">Tech Stack</h2>
                 <p className="mb-4"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=azure,cs,dotnet,windows,ubuntu,visualstudio,vscode,docker,js,html,css,react,nextjs,gatsby,github,githubactions,md,npm,py,postman,nodejs,notion,powershell,tailwind,terraform,ts,rabbitmq,raspberrypi,linkedin,devto,stackoverflow&perline=8" alt="My Skills" /></a></p>
