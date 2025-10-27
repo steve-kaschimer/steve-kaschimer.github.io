@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
-import "./tailwind.css";
-import Footer from "../components/footer"
-import NavBar from "../components/navBar"
+import PageShell from "../components/PageShell"
+import MuiProvider from "../components/MuiProvider"
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
@@ -25,14 +24,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-      </head>
+      <head />
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-         <div className="w-5/6 m-auto">
-          <NavBar />
+        <MuiProvider>
+          <PageShell>
             {children}
-          <Footer />
-        </div>
+          </PageShell>
+        </MuiProvider>
       </body>
     </html>
   );

@@ -49,5 +49,35 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('daisyui')],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          primary: '#3056D3',
+          secondary: '#13C296',
+          'base-100': '#ffffff',
+        },
+      },
+    ],
+  },
+  safelist: [
+    // simple classes
+    'bg-white',
+    'py-2',
+    'bg-dark',
+    'text-dark',
+    'text-primary',
+    'text-white',
+    'bg-primary',
+    'transform',
+    'opacity-0',
+    // patterns for arbitrary/bracket utilities and hover variants
+    { pattern: /^bg-opacity-\d+$/ },
+    { pattern: /^z-\[.*\]$/ },
+    { pattern: /^hover:.*$/ },
+    { pattern: /^opacity-\d+$/ },
+    { pattern: /^rotate(-\[.*\]|-\d+|\[.*\])?$/ },
+    { pattern: /^top-\[?-?\d+px\]?$/ },
+  ],
 };

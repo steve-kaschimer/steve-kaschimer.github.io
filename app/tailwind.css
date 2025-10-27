@@ -8,43 +8,72 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-.sticky {
-  @apply fixed z-[9999] transition bg-white bg-opacity-80;
-  backdrop-filter: blur(5px);
-  box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+/* Gentle page background and base text color for better readability */
+html, body {
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
-.sticky .navbar-logo {
-  @apply py-2;
-}
+@layer components {
+  .sticky {
+    position: fixed;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+  }
 
-.sticky #navbarToggler span {
-  @apply bg-dark;
-}
+  .sticky .navbar-logo {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
 
-.sticky #navbarCollapse li a {
-  @apply text-dark hover:opacity-100 hover:text-primary;
-}
-#navbarCollapse li .ud-menu-scroll.active {
-  @apply opacity-70;
-}
-.sticky #navbarCollapse li .ud-menu-scroll.active {
-  @apply opacity-100 text-primary;
-}
-.sticky .loginBtn {
-  @apply text-dark hover:text-primary hover:opacity-100;
-}
+  .sticky #navbarToggler span {
+    background-color: #090E34;
+  }
 
-.sticky .signUpBtn {
-  @apply text-white bg-primary hover:bg-dark hover:text-white;
-}
+  .sticky #navbarCollapse li a {
+    color: #090E34;
+  }
+  .sticky #navbarCollapse li a:hover {
+    opacity: 1;
+    color: #3056D3;
+  }
 
-.navbarTogglerActive > span:nth-child(1) {
-  @apply transform rotate-45 top-[7px];
-}
-.navbarTogglerActive > span:nth-child(2) {
-  @apply opacity-0;
-}
-.navbarTogglerActive > span:nth-child(3) {
-  @apply top-[-8px] rotate-[135deg];
+  #navbarCollapse li .ud-menu-scroll.active {
+    opacity: 0.7;
+  }
+  .sticky #navbarCollapse li .ud-menu-scroll.active {
+    opacity: 1;
+    color: #3056D3;
+  }
+  .sticky .loginBtn {
+    color: #090E34;
+  }
+  .sticky .loginBtn:hover {
+    color: #3056D3;
+    opacity: 1;
+  }
+
+  .sticky .signUpBtn {
+    color: #ffffff;
+    background-color: #3056D3;
+  }
+  .sticky .signUpBtn:hover {
+    background-color: #090E34;
+    color: #ffffff;
+  }
+
+  .navbarTogglerActive > span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 7px;
+  }
+  .navbarTogglerActive > span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbarTogglerActive > span:nth-child(3) {
+    top: -8px;
+    transform: rotate(135deg);
+  }
 }

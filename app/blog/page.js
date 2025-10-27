@@ -1,15 +1,13 @@
-import Banner from "../../components/banner"
 import BlogPosts from "../../components/blogPosts"
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 export default function Page() {
     return (
-        <div className="w-full m-auto flex flex-col">
-            <div>
-                <Banner pageName="blog" />
-            </div>
-            <div>
+        <Box>
+            <Container maxWidth="lg" sx={{ mt: 4 }}>
                 <BlogPosts />
-            </div>
-        </div>
+            </Container>
+        </Box>
     );
 }

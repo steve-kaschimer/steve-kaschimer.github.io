@@ -1,12 +1,13 @@
-import Work from "../../components/work"
+import BlogPost from "../../components/blogPost"
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
-export default function Page() {
+export default function Page({postId}) {
     return (
         <Box>
+        
             <Container maxWidth="lg" sx={{ mt: 4 }}>
-                <Work />
+                <BlogPost postId={postId} />
             </Container>
         </Box>
     );

@@ -1,15 +1,13 @@
-import Banner from "../../components/banner"
 import ContactForm from "../../components/contactForm"
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
 export default function Page() {
     return (
-        <div className="w-full m-auto flex flex-col">
-            <div>
-                <Banner pageName="contact" />
-            </div>
-            <div>
+        <Box>
+            <Container maxWidth="lg" sx={{ mt: 4 }}>
                 <ContactForm />
-            </div>
-        </div>
+            </Container>
+        </Box>
     );
 }
