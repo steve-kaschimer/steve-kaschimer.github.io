@@ -40,10 +40,10 @@ jobs:
 
       - name: Export static site to out/
         run: |
-          # next export produces a static out/ directory. If your site cannot be statically exported
+          # next export produces a static out/ directory by default. If your site cannot be statically exported
           # because it relies on server-only features, this step will fail.
           # If that happens, consider deploying to Vercel/Netlify or converting pages to static.
-          npx next export -o out
+          npx next export
 
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
