@@ -1,6 +1,6 @@
 name: Release
 on:
-  workflow_call
+  workflow_call:
 
 jobs:
   release:
@@ -25,10 +25,10 @@ jobs:
         run: npm clean-install --force
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
-      - name: Debug
+      - name: Debug (safe)
         run: |
-          echo '${{ secrets.GITHUB_TOKEN }}'
-          echo '${{ secrets.NPM_TOKEN }}'
+          node --version
+          npm --version
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

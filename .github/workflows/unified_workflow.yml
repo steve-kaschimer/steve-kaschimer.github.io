@@ -1,9 +1,10 @@
 name: Build, Release and Deploy Unified Workflow
 on:
-  push:
-    branches:
-      - main
-      - release**
+  workflow_call:
+  # push:
+  #   branches:
+  #     - main
+  #     - release**
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

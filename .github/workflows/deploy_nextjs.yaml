@@ -1,6 +1,6 @@
 name: Deploy NextJS
 on:
-  workflow_call
+  workflow_call:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:

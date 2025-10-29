@@ -1,0 +1,54 @@
+name: Build and Deploy Next.js to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          static_site_generator: next
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tailwind CSS (if present)
+        run: npm run build-css
+        continue-on-error: true
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Export static site to out/
+        run: |
+          # next export produces a static out/ directory. If your site cannot be statically exported
+          # because it relies on server-only features, this step will fail.
+          # If that happens, consider deploying to Vercel/Netlify or converting pages to static.
+          npx next export -o out
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

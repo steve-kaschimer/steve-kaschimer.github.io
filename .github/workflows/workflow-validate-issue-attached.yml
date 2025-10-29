@@ -1,14 +1,14 @@
 on:
-  pull_request:
-    types: [edited, synchronize, opened, reopened]
+  # pull_request:
+  #   types: [edited, synchronize, opened, reopened]
   workflow_call:
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Verify Linked Issue
         uses: hattan/verify-linked-issue-action@v1.1.5
         env:
