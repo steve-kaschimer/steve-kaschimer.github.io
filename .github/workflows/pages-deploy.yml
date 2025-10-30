@@ -1,6 +1,8 @@
 name: Build and Deploy Next.js to GitHub Pages
 
 on:
+  schedule:
+    - cron: '0 4 * * 0'  # every Sunday at midnight UTC
   push:
     branches: [ main ]
   workflow_dispatch: {}
