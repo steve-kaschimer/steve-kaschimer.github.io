@@ -8,8 +8,6 @@
     "build:export": "next build",
     "start": "next start",
     "lint": "next lint",
-    "build-css": "node ./scripts/build-tailwind.js",
-    "build-css:watch": "npx tailwindcss -i ./app/tailwind.css -o ./public/assets/css/tailwind.css --watch",
     "deploy:ghpages": "gh-pages -d out"
   },
   "dependencies": {
