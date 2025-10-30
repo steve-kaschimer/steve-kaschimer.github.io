@@ -2,8 +2,7 @@ import React from 'react'
 import localFont from 'next/font/local'
 import MuiProvider from '../components/MuiProvider'
 import PageShell from '../components/PageShell'
-
-import '../app/tailwind.css'
+import Head from 'next/head'
 
 const geistSans = localFont({
   src: '../app/fonts/GeistVF.woff',

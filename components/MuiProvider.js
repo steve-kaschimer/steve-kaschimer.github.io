@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { GlobalStyles } from '@mui/styled-engine';
+import GlobalStyles from '@mui/material/GlobalStyles';
 
 export default function MuiProvider({ children }) {
   // Azure-inspired palette with warm accent and neutral greys
