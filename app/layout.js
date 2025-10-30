@@ -19,7 +19,7 @@ const geistMono = localFont({
 export const metadata = {
   title: "Steve Kaschimer - Tech Notes",
   description: "Personal Site for Steve Kaschimer (Slalom)",
-  icon: '/images/logo/favico.png',
+  icon: '/images/logo/favicon.png',
 };
 
 export default function RootLayout({ children }) {
