@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - release
+      - release/**
   workflow_dispatch:
   schedule:
     # Run at midnight UTC every day
