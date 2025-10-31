@@ -16,7 +16,6 @@ export default function Footer() {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
           <Box>
             <Typography variant="body2">© {year} Steve Kaschimer. All rights reserved.</Typography>
-            <Typography variant="caption" color="text.secondary">Built with Next.js & Material UI.</Typography>
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

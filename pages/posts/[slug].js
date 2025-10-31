@@ -1,6 +1,8 @@
 import React from 'react'
 import { getPostSlugs, getPostData } from '../../lib/markdown'
 import Box from '@mui/material/Box'
+import Image from 'next/image'
+import blurDataURLForPath from '../../lib/blurPlaceholder'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 
@@ -52,21 +54,14 @@ export default function PostPage({ post }) {
           }}
           aria-label={coverAlt}
         >
-          <Box
-            component="img"
+          <Image
             src={cover}
             alt={coverAlt}
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              zIndex: 0,
-            }}
+            fill
+            sizes="(max-width: 600px) 100vw, 1200px"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            placeholder="blur"
+            blurDataURL={blurDataURLForPath(cover)}
           />
 
           {/* dark overlay for contrast */}

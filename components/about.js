@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Link from 'next/link'
+import Image from 'next/image'
 import Icon from '@mdi/react'
 import { mdiTwitter, mdiLinkedin, mdiEmailOutline, mdiCellphone, mdiReact } from '@mdi/js'
 
@@ -33,7 +34,16 @@ export default function About() {
                     <Grid item xs={12} md={6}>
                         <Typography variant="h6">Tech Stack</Typography>
                         <Box sx={{ mt: 1 }}>
-                            <a href="https://skillicons.dev" target="_blank" rel="noreferrer"><img src="https://skillicons.dev/icons?i=azure,cs,dotnet,windows,ubuntu,visualstudio,vscode,docker,js,html,css,react,nextjs,gatsby,github,githubactions,md,npm,py,postman,nodejs,notion,powershell,tailwind,terraform,ts,rabbitmq,raspberrypi,linkedin,devto,stackoverflow&perline=8" alt="My Skills"/></a>
+                            <a href="https://skillicons.dev" target="_blank" rel="noreferrer">
+                                <Image
+                                    src="https://skillicons.dev/icons?i=azure,cs,dotnet,windows,ubuntu,visualstudio,vscode,docker,js,html,css,react,nextjs,gatsby,github,githubactions,md,npm,py,postman,nodejs,notion,powershell,tailwind,terraform,ts,rabbitmq,raspberrypi,linkedin,devto,stackoverflow&perline=8"
+                                    alt="My Skills"
+                                    width={800}
+                                    height={120}
+                                    style={{ maxWidth: '100%', height: 'auto' }}
+                                    unoptimized
+                                />
+                            </a>
                         </Box>
                         <Box sx={{ mt: 3 }}>
                             <Typography variant="h6">Get in Touch</Typography>

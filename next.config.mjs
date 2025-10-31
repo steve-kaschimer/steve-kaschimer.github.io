@@ -7,6 +7,15 @@ const nextConfig = {
 	trailingSlash: true,
 	images: {
 		unoptimized: true,
+		// Prefer remotePatterns for fine-grained remote image allowance
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'skillicons.dev',
+				port: '',
+				pathname: '/icons*',
+			},
+		],
 	},
 	// If you host under a repo name on GitHub Pages, set ASSET_PREFIX or modify here
 	// assetPrefix: process.env.GH_PAGES ? '/steve-kaschimer.github.io/' : '',
