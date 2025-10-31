@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ site_title }} - {{ title }}</title>
+  <meta name="description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.svg">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ page.url or '/' }}">
+  <meta property="og:title" content="{{ site_title }}">
+  <meta property="og:description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
+  <meta property="og:image" content="/images/favicon.svg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="{{ page.url or '/' }}">
+  <meta property="twitter:title" content="{{ site_title }}">
+  <meta property="twitter:description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
+  <meta property="twitter:image" content="/images/favicon.svg">
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#0284c7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0369a1" media="(prefers-color-scheme: dark)">
+
+  <link rel="stylesheet" href="/styles/output.css">
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+  <nav class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo and Brand -->
+        <div class="flex items-center space-x-8">
+          <a href="/" class="flex items-center space-x-2">
+            <svg class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"></path>
+            </svg>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site_title }}</span>
+          </a>
+
+          <!-- Navigation Links -->
+          <div class="hidden md:flex space-x-6">
+            <a href="/" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Home</a>
+            <a href="/about/" class="text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">About</a>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+          aria-label="Toggle theme">
+          <svg class="w-6 h-6 text-gray-800 dark:text-gray-200 hidden dark:block" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"></path>
+          </svg>
+          <svg class="w-6 h-6 text-gray-800 dark:text-gray-200 block dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div class="md:hidden pb-4 space-y-2">
+        <a href="/" class="block text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+        <a href="/about/" class="block text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="min-h-screen">
+    {{ content | safe }}
+  </main>
+
+  <footer class="bg-gray-100 dark:bg-gray-800 mt-20 border-t border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Logo and Description -->
+        <div class="space-y-4">
+          <a href="/" class="flex items-center space-x-2">
+            <svg class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"></path>
+            </svg>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site_title }}</span>
+          </a>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">
+            A modern blog about technology, programming, cloud and DevSecOps.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+            Quick Links
+          </h3>
+          <ul class="space-y-3">
+            <li>
+              <a href="/" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                Home
+              </a>
+            </li>
+            <li>
+              <a href="/about/" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Legal Links -->
+        <div>
+          <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">
+            Legal
+          </h3>
+          <ul class="space-y-3">
+            <li>
+              <a href="/privacy/" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="/terms/" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                Terms & Conditions
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
+          &copy; 2025 {{ site_title }}. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
