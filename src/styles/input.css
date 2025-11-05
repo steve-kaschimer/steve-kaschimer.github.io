@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
+  }
+
+  .prose h2 {
+    @apply mt-4 mb-2;
+  }
+
+  .prose h3 {
+    @apply mt-4 mb-2;
+  }
+
+  .prose hr {
+    @apply mt-8 mb-8 border-primary-600 dark:border-primary-400;
+  }
+
+  .prose li {
+    @apply my-2 marker:text-primary-600 dark:marker:text-primary-400;
+  }
+
+  .prose ol {
+    @apply my-2;
+  }
+
+  .prose ol li {
+    @apply marker:text-primary-600 dark:marker:text-primary-400;
+  }
+
+  .prose p {
+    @apply mb-4;
+  }
+
+  .prose-lg p {
+    @apply mb-4 mt-0;
+  }
+
+  .prose pre {
+    @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto;
+  }
+
+  .prose ul {
+    @apply my-2;
+  }
+
+  .prose ul li {
+    @apply marker:text-primary-600 dark:marker:text-primary-400;
+  }
+}

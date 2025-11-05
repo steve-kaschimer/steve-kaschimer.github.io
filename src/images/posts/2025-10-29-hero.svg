@@ -1,0 +1,16 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grad3)"/>
+  
+  <!-- Tailwind Logo Simplified -->
+  <path d="M 600 200 Q 500 250, 600 300 Q 700 250, 600 200 Z" fill="#06b6d4"/>
+  <path d="M 600 300 Q 500 350, 600 400 Q 700 350, 600 300 Z" fill="#0891b2"/>
+  
+  <text x="600" y="480" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="white" text-anchor="middle">Tailwind CSS</text>
+  <text x="600" y="540" font-family="Arial, sans-serif" font-size="32" fill="#06b6d4" text-anchor="middle">Utility-First CSS Framework</text>
+</svg>
