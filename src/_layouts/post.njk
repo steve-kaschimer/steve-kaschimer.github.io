@@ -2,21 +2,29 @@
 layout: base.njk
 ---
 
-<article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <!-- Post Header -->
-  <header class="mb-8">
-    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+<!-- Hero with Background Image -->
+{% if image %}
+<header class="relative h-96 bg-gray-900 overflow-hidden">
+  <!-- Background Image -->
+  <div class="absolute inset-0">
+    <img src="{{ image }}" alt="{{ title }}" class="w-full h-full object-cover opacity-60">
+  </div>
+  
+  <!-- Overlay Gradient -->
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/80"></div>
+  
+  <!-- Title and Meta -->
+  <div class="relative h-full flex flex-col justify-end mx-auto px-4 pb-4" style="max-width: 95%;">
+    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
       {{ title }}
     </h1>
-
-    <div class="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400">
+    <div class="flex items-center justify-center gap-6 text-white/90">
       <div class="flex items-center space-x-2">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
         </svg>
         <span>{{ author }}</span>
       </div>
-
       <div class="flex items-center space-x-2">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
@@ -24,15 +32,34 @@ layout: base.njk
         <time datetime="{{ date }}">{{ date | readableDate }}</time>
       </div>
     </div>
-  </header>
-
-  <!-- Featured Image -->
-  {% if image %}
-  <div class="mb-8 rounded-lg overflow-hidden">
-    <img src="{{ image }}" alt="{{ title }}" class="w-full h-auto">
   </div>
-  {% endif %}
+</header>
+{% else %}
+<!-- Fallback Header without Image -->
+<header class="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-800 dark:to-primary-900 py-16">
+  <div class="mx-auto px-4" style="max-width: 95%;">
+    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
+      {{ title }}
+    </h1>
+    <div class="flex items-center justify-center gap-6 text-white/90">
+      <div class="flex items-center space-x-2">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+        </svg>
+        <span>{{ author }}</span>
+      </div>
+      <div class="flex items-center space-x-2">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+        </svg>
+        <time datetime="{{ date }}">{{ date | readableDate }}</time>
+      </div>
+    </div>
+  </div>
+</header>
+{% endif %}
 
+<article class="mx-auto px-4 py-12" style="max-width: 95%;">
   <!-- Post Content -->
   <div class="prose prose-lg dark:prose-invert max-w-none">
     {{ content | safe }}

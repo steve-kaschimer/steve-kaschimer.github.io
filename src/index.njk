@@ -20,13 +20,67 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
 </section>
 
 <!-- Blog Posts Grid -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-  <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">Latest Posts</h2>
-
-  {% if collections.posts.length > 0 %}
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<section class="mx-auto px-4 py-12" style="max-width: 95%;">
+  <div class="flex flex-col lg:flex-row gap-8">
+    
+    <!-- Left Sidebar - Tag Filters -->
+    <aside class="lg:w-64 order-2 lg:order-1">
+      <div class="lg:sticky lg:top-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd"></path>
+            </svg>
+            Filter by Tags
+          </h3>
+          
+          {% if collections.tagListWithCounts and collections.tagListWithCounts.length > 0 %}
+          <div class="mb-4">
+            <button 
+              id="clear-filters" 
+              class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors flex items-center justify-between"
+            >
+              <span>Clear All Filters</span>
+              <span class="text-xs opacity-75">{{ collections.posts.length }}</span>
+            </button>
+          </div>
+          
+          <!-- Tag Checkboxes -->
+          <div class="space-y-2">
+            {%- for item in collections.tagListWithCounts -%}
+            <label class="flex items-center px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors group">
+              <input 
+                type="checkbox" 
+                class="tag-checkbox w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                data-tag="{{ item.tag }}"
+              >
+              <span class="ml-3 text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white flex-1">
+                {{ item.tag }}
+              </span>
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                {{ item.count }}
+              </span>
+            </label>
+            {%- endfor -%}
+          </div>
+          {% else %}
+          <p class="text-gray-600 dark:text-gray-400 text-sm">No tags found.</p>
+          {% endif %}
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Main Content Area -->
+    <div class="flex-1 order-1 lg:order-2">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Latest Posts</h2>
+        <div id="filter-status" class="text-sm text-gray-600 dark:text-gray-400"></div>
+      </div>
+      
+      {% if collections.posts.length > 0 %}
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8" id="posts-grid">
     {% for post in collections.posts %}
-    <a href="{{ post.url }}" class="card group">
+    <a href="{{ post.url }}" class="card group post-card" data-tags="{{ post.data.tags | join(',') }}">
       <!-- Image -->
       {% if post.data.image %}
       <div class="aspect-video overflow-hidden bg-gray-200 dark:bg-gray-700">
@@ -88,4 +142,7 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
     <p class="text-xl text-gray-600 dark:text-gray-400">No posts yet. Check back soon!</p>
   </div>
   {% endif %}
+    </div>
+
+  </div>
 </section>
