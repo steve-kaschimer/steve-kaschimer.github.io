@@ -54,7 +54,8 @@
   }
 
   .prose pre {
-    @apply bg-gray-800 text-gray-100 p-4 rounded-lg overflow-x-auto;
+    @apply bg-gray-800 text-gray-300 p-4 rounded-lg overflow-x-auto;
+    padding-top: 2.5rem !important; /* Extra space for language label */
   }
 
   .prose ul {
@@ -64,4 +65,50 @@
   .prose ul li {
     @apply marker:text-primary-600 dark:marker:text-primary-400;
   }
+
+  .prose img {
+    @apply block mx-auto w-1/2;
+  }
+
+  /* Code block wrapper with copy button */
+  .code-block-wrapper {
+    @apply relative my-6;
+    max-width: max-content;
+  }
+
+  .code-block-wrapper pre {
+    @apply w-full mx-0 mt-0;
+  }
+
+  .code-language-label {
+    @apply absolute top-2 left-2 px-2 py-1 text-xs font-medium text-gray-400 bg-gray-700 rounded-md z-10;
+  }
+
+  .copy-code-button {
+    @apply absolute top-2 right-2 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-300 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors duration-200 z-10;
+  }
+
+  .copy-code-button.copied {
+    @apply bg-green-700 hover:bg-green-600;
+  }
+
+  .copy-code-button .copy-icon {
+    @apply flex-shrink-0;
+  }
+
+  /* GitHub Dark syntax highlighting */
+  .prose pre code .token.keyword { color: #ff7b72; }
+  .prose pre code .token.string { color: #a5d6ff; }
+  .prose pre code .token.comment { color: #8b949e; font-style: italic; }
+  .prose pre code .token.function { color: #d2a8ff; }
+  .prose pre code .token.number { color: #79c0ff; }
+  .prose pre code .token.operator { color: #ff7b72; }
+  .prose pre code .token.punctuation { color: #c9d1d9; }
+  .prose pre code .token.property { color: #79c0ff; }
+  .prose pre code .token.class-name { color: #ffa657; }
+  .prose pre code .token.boolean,
+  .prose pre code .token.null { color: #79c0ff; }
+  .prose pre code .token.variable { color: #ffa657; }
+  .prose pre code .token.tag { color: #7ee787; }
+  .prose pre code .token.attr-name { color: #79c0ff; }
 }

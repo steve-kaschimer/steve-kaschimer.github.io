@@ -6,7 +6,7 @@ author: Steve Kaschimer
 date: 2025-11-10
 image: /images/posts/2025-11-10-hero.png
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.
-tags: ["secrets-management", "github-security", "devsecops", "security-best-practices", "github-actions"]
+tags: ["devsecops", "github", "secrets-management"]
 ---
 
 Secrets are the lifeblood of modern applications. API keys, database credentials, encryption tokens - these tiny strings unlock access to critical systems and sensitive data. But when secrets are mishandled, they become one of the fastest paths to a breach. In fact, exposed credentials are among the most common causes of security incidents today.

@@ -6,7 +6,7 @@ author: Steve Kaschimer
 date: 2025-11-03
 image: /images/posts/2025-11-03-hero.png
 summary: Learn how to implement Security as Code using GitHub Actions. Explore reusable workflows, Marketplace integrations, matrix builds, and best practices for embedding security into CI/CD pipelines.
-tags: ["security-as-code", "github-actions", "ci-cd", "devsecops", "automation"]
+tags: ["devsecops", "github", "github-actions"]
 ---
 
 Security as Code is more than a buzzword. It’s a practical approach to embedding security into the development lifecycle. Instead of treating security as a separate process, we codify policies, checks, and controls so they run automatically alongside builds and deployments. For DevSecOps professionals, this is the foundation of scalable, repeatable security.
