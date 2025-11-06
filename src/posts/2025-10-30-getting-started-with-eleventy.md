@@ -1,12 +1,12 @@
 ---
-layout: post.njk
-site_title: Tech Notes
-title: Getting Started with Eleventy
 author: Steve Kaschimer
 date: 2025-10-30
 image: /images/posts/2025-10-30-hero.svg
+layout: post.njk
+site_title: Tech Notes
 summary: Eleventy is a simpler static site generator. Learn why it's great for building fast, modern websites and how to get started with your first project.
 tags: ['eleventy', 'web-development', 'tutorial']
+title: Getting Started with Eleventy
 ---
 
 Eleventy (or 11ty) is a fantastic static site generator that's simple, flexible, and incredibly fast. If you're looking to build a blog, documentation site, or any static website, Eleventy is an excellent choice.

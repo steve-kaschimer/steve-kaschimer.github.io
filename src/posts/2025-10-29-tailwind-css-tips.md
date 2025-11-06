@@ -1,12 +1,12 @@
 ---
-layout: post.njk
-site_title: Tech Notes
-title: 5 Tailwind CSS Tips for Better Productivity
 author: Steve Kaschimer
 date: 2025-10-29
 image: /images/posts/2025-10-29-hero.svg
+layout: post.njk
+site_title: Tech Notes
 summary: Boost your productivity with these practical Tailwind CSS tips and tricks. Learn how to write cleaner, more maintainable utility-first CSS.
 tags: ['tailwind', 'css', 'productivity']
+title: 5 Tailwind CSS Tips for Better Productivity
 ---
 
 Tailwind CSS has revolutionized the way I write CSS. Here are five tips that have significantly improved my workflow.

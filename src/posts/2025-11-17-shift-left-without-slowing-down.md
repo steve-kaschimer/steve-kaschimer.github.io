@@ -1,12 +1,12 @@
 ---
-layout: post.njk
-site_title: Tech Notes
-title: "Shift Left Without Slowing Down: DevSecOps Pipeline Design"
 author: Steve Kaschimer
 date: 2025-11-17
 image: /images/posts/2025-11-17-hero.png
+layout: post.njk
+site_title: Tech Notes
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.
 tags: ["devsecops", "github", "ci-cd"]
+title: "Shift Left Without Slowing Down: DevSecOps Pipeline Design"
 ---
 
 Modern software delivery is a race against time. Teams push code faster than ever, deploying multiple times a day to meet customer demands. But speed without security is a recipe for disaster. Vulnerabilities introduced early in development can cascade into production, where they’re exponentially harder and more expensive to fix. That’s why the principle of “shift left” has become a cornerstone of DevSecOps.
@@ -79,7 +79,7 @@ The result is a pipeline that enforces security without slowing development. Dev
 
 You can find some examples below
 
-### 1) Pull Request workflow — fast feedback, parallel security
+### Pull Request workflow - fast feedback, parallel security
 
 **File:** '.github/workflows/pr-pipeline.yml'
 
@@ -245,7 +245,7 @@ jobs:
 *   **Caching** speeds Trivy DB and Node modules.
 *   **Fail on severity** and **exit codes** keep signal strong and avoid noisy false positives.
 
-### 2) Main branch workflow - heavier scans on merge
+### Main branch workflow - heavier scans on merge
 
 **File:** '.github/workflows/main-security.yml'
 
@@ -343,7 +343,7 @@ jobs:
 ```
 {% endraw %}
 
-### 3) Optional: Reusable workflow for org-wide consistency
+### Optional: Reusable workflow for org-wide consistency
 
 If you manage many repos, create a **reusable workflow** and call it from each repo.
 

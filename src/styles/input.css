@@ -9,6 +9,7 @@
 }
 
 @layer components {
+  /* Button styles */
   .btn {
     @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
   }
@@ -17,12 +18,104 @@
     @apply bg-primary-600 hover:bg-primary-700 text-white;
   }
 
+  /* Callout box for highlighting important sections */
+  .callout-box {
+    @apply text-sm bg-primary-50 border-4 border-primary-600 p-6 my-6 rounded-xl;
+  }
+
+  .callout-box > *:first-child {
+    margin-top: 0;
+  }
+
+  .callout-box > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .dark .callout-box {
+    @apply bg-primary-900/30 border-primary-500;
+  }
+
+  /* Card styles */
   .card {
     @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
   }
 
+  /* Code block wrapper with copy button */
+  .code-block-wrapper {
+    @apply relative my-6;
+    max-width: max-content;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .code-block-wrapper .code-content {
+    display: flex;
+  }
+
+  .code-block-wrapper pre {
+    @apply w-full mx-0 mt-0 flex-1;
+    padding-left: 1rem;
+    border-radius: 0 0 0.5rem 0 !important;
+  }
+
+  .code-header {
+    @apply flex items-center justify-between px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-t-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .code-language-label {
+    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+  }
+
+  /* Copy code button */
+  .copy-code-button {
+    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded transition-colors duration-200;
+  }
+
+  .copy-code-button .copy-icon {
+    @apply flex-shrink-0;
+  }
+
+  .copy-code-button.copied {
+    @apply bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600;
+  }
+
+  /* GitHub Dark syntax highlighting (for dark mode) */
+  .dark .prose pre { background: #0D1117}
+
+  .dark .prose pre code .token.attr-name { color: #79c0ff; }
+  .dark .prose pre code .token.atrule { color: #7EE787; }
+  .dark .prose pre code .token.boolean {color: #FF7B72; }
+  .dark .prose pre code .token.class-name { color: #ffa657; }
+  .dark .prose pre code .token.comment { color: #9198A1; }
+  .dark .prose pre code .token.function { color: #d2a8ff; }
+  .dark .prose pre code .token.keyword { color: #ff7b72; }
+  .dark .prose pre code .token.null { color: #79c0ff; }
+  .dark .prose pre code .token.number { color: #79c0ff; }
+  .dark .prose pre code .token.operator { color: #ff7b72; }
+  .dark .prose pre code .token.property { color: #79c0ff; }
+  .dark .prose pre code .token.punctuation { color: #F0F6FC; }
+  .dark .prose pre code .token.string { color: #A5D6FF; }
+  .dark .prose pre code .token.tag { color: #7ee787; }
+  .dark .prose pre code .token.variable { color: #ffa657; }
+
+  /* Line numbers */
+  .line-numbers {
+    @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-4 pr-3 pl-3 select-none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-size: 0.875rem; /* 14px - match code */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    text-align: right;
+    user-select: none;
+    padding-bottom: 1rem !important;
+    border-radius: 0 0 0 0.5rem;
+  }
+
+  /* Prose typography styles */
   .prose h2 {
-    @apply mt-4 mb-2;
+    @apply mt-8 mb-4;
   }
 
   .prose h3 {
@@ -31,6 +124,10 @@
 
   .prose hr {
     @apply mt-8 mb-8 border-primary-600 dark:border-primary-400;
+  }
+
+  .prose img {
+    @apply block mx-auto w-1/2;
   }
 
   .prose li {
@@ -49,10 +146,6 @@
     @apply mb-4;
   }
 
-  .prose-lg p {
-    @apply mb-4 mt-0;
-  }
-
   .prose pre {
     @apply bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300 p-4 overflow-x-auto;
     border-radius: 0 0.5rem 0.5rem 0; /* Only right side rounded */
@@ -67,103 +160,34 @@
     display: block;
   }
 
+  /* GitHub Light syntax highlighting (for light mode) */
+  .prose pre { background: #f6f8fa; }
+
+  .prose pre code .token.attr-name { color: #0550ae; }
+  .prose pre code .token.atrule { color: #0550AE; }
+  .prose pre code .token.boolean { color: #CF2256; }
+  .prose pre code .token.class-name { color: #953800; }
+  .prose pre code .token.comment { color: #59636E; }
+  .prose pre code .token.function { color: #8250df; }
+  .prose pre code .token.keyword { color: #cf222e; }
+  .prose pre code .token.null { color: #0550ae; }
+  .prose pre code .token.number { color: #0550AE; }
+  .prose pre code .token.operator { color: #cf222e; }
+  .prose pre code .token.property { color: #0550ae; }
+  .prose pre code .token.punctuation { color: #1F2328; }
+  .prose pre code .token.string { color: #0A3069; }
+  .prose pre code .token.tag { color: #116329; }
+  .prose pre code .token.variable { color: #953800; }
+
   .prose ul {
-    @apply my-2;
+    @apply mt-2 mb-4;
   }
 
   .prose ul li {
     @apply marker:text-primary-600 dark:marker:text-primary-400;
   }
 
-  .prose img {
-    @apply block mx-auto w-1/2;
+  .prose-lg p {
+    @apply mb-4 mt-0;
   }
-
-  /* Code block wrapper with copy button */
-  .code-block-wrapper {
-    @apply relative my-6;
-    max-width: max-content;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .code-header {
-    @apply flex items-center justify-between px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-t-lg;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .code-block-wrapper .code-content {
-    display: flex;
-  }
-
-  .code-block-wrapper pre {
-    @apply w-full mx-0 mt-0 flex-1;
-    padding-left: 1rem;
-    border-radius: 0 0 0.5rem 0 !important;
-  }
-
-  .line-numbers {
-    @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-4 pr-3 pl-3 select-none;
-    display: flex;
-    flex-direction: column;
-    line-height: 1.5;
-    font-size: 0.875rem; /* 14px - match code */
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    text-align: right;
-    user-select: none;
-    padding-bottom: 1rem !important;
-    border-radius: 0 0 0 0.5rem;
-  }
-
-  .code-language-label {
-    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
-  }
-
-  .copy-code-button {
-    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded transition-colors duration-200;
-  }
-
-  .copy-code-button.copied {
-    @apply bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600;
-  }
-
-  .copy-code-button .copy-icon {
-    @apply flex-shrink-0;
-  }
-
-  /* GitHub Light syntax highlighting (for light mode) */
-  .prose pre code .token.atrule { color: #0550AE; }
-  .prose pre code .token.keyword { color: #cf222e; }
-  .prose pre code .token.string { color: #0A3069; }
-  .prose pre code .token.comment { color: #59636E; }
-  .prose pre code .token.function { color: #8250df; }
-  .prose pre code .token.number { color: #0550AE; }
-  .prose pre code .token.operator { color: #cf222e; }
-  .prose pre code .token.punctuation { color: #1F2328; }
-  .prose pre code .token.property { color: #0550ae; }
-  .prose pre code .token.class-name { color: #953800; }
-  .prose pre code .token.boolean { color: #CF2256; }
-  .prose pre code .token.null { color: #0550ae; }
-  .prose pre code .token.variable { color: #953800; }
-  .prose pre code .token.tag { color: #116329; }
-  .prose pre code .token.attr-name { color: #0550ae; }
-  .prose pre { background: #f6f8fa; }
-
-  /* GitHub Dark syntax highlighting (for dark mode) */
-  .dark .prose pre code .token.atrule { color: #7EE787; }
-  .dark .prose pre code .token.keyword { color: #ff7b72; }
-  .dark .prose pre code .token.string { color: #A5D6FF; }
-  .dark .prose pre code .token.comment { color: #9198A1; }
-  .dark .prose pre code .token.function { color: #d2a8ff; }
-  .dark .prose pre code .token.number { color: #79c0ff; }
-  .dark .prose pre code .token.operator { color: #ff7b72; }
-  .dark .prose pre code .token.punctuation { color: #F0F6FC; }
-  .dark .prose pre code .token.property { color: #79c0ff; }
-  .dark .prose pre code .token.class-name { color: #ffa657; }
-  .dark .prose pre code .token.boolean {color: #FF7B72; }
-  .dark .prose pre code .token.null { color: #79c0ff; }
-  .dark .prose pre code .token.variable { color: #ffa657; }
-  .dark .prose pre code .token.tag { color: #7ee787; }
-  .dark .prose pre code .token.attr-name { color: #79c0ff; }
-  .dark .prose pre { background: #0D1117}
 }

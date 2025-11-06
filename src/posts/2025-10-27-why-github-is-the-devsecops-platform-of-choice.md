@@ -1,12 +1,12 @@
 ---
-layout: post.njk
-site_title: Tech Notes
-title: Why GitHub is the DevSecOps Platform of Choice
 author: Steve Kaschimer
 date: 2025-10-27
 image: /images/posts/2025-10-27-hero.png
+layout: post.njk
+site_title: Tech Notes
 summary: Why GitHub is a strong platform choice for DevSecOps teams - built-in automation, native security tooling, and auditability.
 tags: ["devsecops", "github", "security"]
+title: Why GitHub is the DevSecOps Platform of Choice
 ---
 
 In the evolving landscape of software development, DevSecOps has emerged as a critical discipline - one that integrates security into every phase of the software delivery lifecycle. As organizations strive to ship faster without compromising safety, the tools we choose become more than just enablers - they shape our workflows, our culture, and ultimately, our outcomes.
@@ -24,8 +24,6 @@ DevSecOps isn’t just a buzzword. It’s a response to real-world challenges. T
 DevSecOps flips that model. It embeds security into every stage of development, from code commit to deployment. It encourages collaboration between developers, security engineers, and operations teams. And it relies heavily on automation to ensure that security checks are consistent, scalable, and fast.
 
 But implementing DevSecOps is easier said than done. Tool sprawl, lack of integration, and resistance to change are common hurdles. That’s where platform choice becomes critical and why GitHub deserves a closer look.
-
----
 
 ## GitHub’s Strengths for DevSecOps
 
@@ -62,8 +60,6 @@ Every action on GitHub, from commits to workflow runs, is logged and traceable. 
 
 GitHub’s open nature allows teams to leverage community tools while maintaining enterprise-grade controls. Whether you’re integrating with Snyk, Trivy, or custom linters, GitHub’s extensibility supports a wide range of security use cases.
 
----
-
 ## Real-World Use Cases
 
 Let’s look at how GitHub supports DevSecOps in practice.
@@ -82,8 +78,6 @@ With dependency review and Dependabot alerts, teams can stay ahead of known vuln
 
 These examples aren’t hypothetical. They’re part of the daily workflow for many DevSecOps teams using GitHub.
 
----
-
 ## Common Pitfalls and How GitHub Helps
 
 No platform is perfect, and GitHub is no exception. But many of the common challenges in DevSecOps are mitigated by GitHub’s design.
@@ -99,8 +93,6 @@ Managing multiple tools across different platforms can be a nightmare. GitHub co
 ### Lack of Visibility
 
 Security teams often struggle to see what’s happening in development. GitHub’s dashboards, logs, and integrations provide a clear view of code changes, workflow runs, and security alerts.
-
----
 
 ## Strategic Considerations
 
@@ -118,16 +110,17 @@ For organizations considering GitHub as a DevSecOps platform, there are a few st
 
     With organization-level policies, reusable workflows, and role-based access, GitHub supports DevSecOps at scale.
 
-
 ---
 
-## Conclusion
+## Closing Thoughts
 
 DevSecOps is no longer optional. It’s a **necessity**. As threats evolve and delivery cycles accelerate, security must be built into the fabric of development. GitHub offers a platform that supports this vision, combining developer-first design with powerful security tooling.
 
 For DevSecOps architects and engineers, GitHub isn’t just a place to host code. It’s a strategic enabler of secure, scalable, and efficient software delivery.
 
 If you haven’t explored GitHub’s security features recently, now is a good time to dive in. Start small, automate what you can, and build a culture where security is everyone’s responsibility.
+
+---
 
 Need help? Ask me!
 

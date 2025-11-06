@@ -1,17 +1,19 @@
 ---
+author: Steve Kaschimer
+date: 2025-11-10
+image: /images/posts/2025-11-03-hero.png
 layout: post.njk
 site_title: Tech Notes
-title: "Security as Code with GitHub Actions: Automating DevSecOps"
-author: Steve Kaschimer
-date: 2025-11-03
-image: /images/posts/2025-11-03-hero.png
 summary: Learn how to implement Security as Code using GitHub Actions. Explore reusable workflows, Marketplace integrations, matrix builds, and best practices for embedding security into CI/CD pipelines.
 tags: ["devsecops", "github", "github-actions"]
+title: "Security as Code with GitHub Actions: Automating DevSecOps"
 ---
 
 Security as Code is more than a buzzword. It’s a practical approach to embedding security into the development lifecycle. Instead of treating security as a separate process, we codify policies, checks, and controls so they run automatically alongside builds and deployments. For DevSecOps professionals, this is the foundation of scalable, repeatable security.
 
 GitHub Actions makes this vision achievable. By leveraging workflows, you can integrate security checks into CI/CD pipelines without slowing down delivery. In this post, we’ll explore what Security as Code means, why it matters, and how to implement it using GitHub Actions.
+
+---
 
 ## Why Security as Code Matters
 
@@ -25,8 +27,6 @@ Traditional security practices often rely on manual reviews and ad-hoc scans. Th
 For DevSecOps engineers, this approach aligns perfectly with the “shift-left” philosophy. that is, catching issues early when they’re cheaper and easier to fix.
 
 > “**Shift-left**” is a software development principle that moves critical activities, like testing and security, earlier in the lifecycle. Instead of waiting until code is complete or deployed to check for vulnerabilities, teams integrate these checks during development. The goal is simple: catch issues sooner, fix them faster, and reduce risk. By shifting security left, DevSecOps teams prevent costly late-stage fixes and make security a natural part of coding, not an afterthought.
-
----
 
 ## GitHub Actions: The Engine Behind Security Automation
 
@@ -96,6 +96,10 @@ This workflow ensures that every pull request undergoes static analysis and secr
 - **False Positives**: Tune your tools to reduce noise.
 - **Developer Resistance**: Communicate the benefits and provide quick fixes.
 - **Performance Impact**: Optimize workflows to run in parallel.
+
+---
+
+## Closing Thoughts
 
 Security as Code isn’t optional. It’s **essential** for modern software delivery. GitHub Actions provides the flexibility and power to make it real. By automating security checks, you can reduce risk, improve compliance, and keep development moving at full speed.
 
