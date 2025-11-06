@@ -54,8 +54,17 @@
   }
 
   .prose pre {
-    @apply bg-gray-800 text-gray-300 p-4 rounded-lg overflow-x-auto;
-    padding-top: 2.5rem !important; /* Extra space for language label */
+    @apply bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300 p-4 overflow-x-auto;
+    border-radius: 0 0.5rem 0.5rem 0; /* Only right side rounded */
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.875rem; /* 14px */
+  }
+
+  .prose pre code {
+    line-height: 1.5;
+    font-size: 0.875rem; /* 14px */
+    display: block;
   }
 
   .prose ul {
@@ -74,41 +83,87 @@
   .code-block-wrapper {
     @apply relative my-6;
     max-width: max-content;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .code-header {
+    @apply flex items-center justify-between px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-t-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .code-block-wrapper .code-content {
+    display: flex;
   }
 
   .code-block-wrapper pre {
-    @apply w-full mx-0 mt-0;
+    @apply w-full mx-0 mt-0 flex-1;
+    padding-left: 1rem;
+    border-radius: 0 0 0.5rem 0 !important;
+  }
+
+  .line-numbers {
+    @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-4 pr-3 pl-3 select-none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-size: 0.875rem; /* 14px - match code */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    text-align: right;
+    user-select: none;
+    padding-bottom: 1rem !important;
+    border-radius: 0 0 0 0.5rem;
   }
 
   .code-language-label {
-    @apply absolute top-2 left-2 px-2 py-1 text-xs font-medium text-gray-400 bg-gray-700 rounded-md z-10;
+    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
   }
 
   .copy-code-button {
-    @apply absolute top-2 right-2 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-300 bg-gray-700 hover:bg-gray-600 rounded-md transition-colors duration-200 z-10;
+    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded transition-colors duration-200;
   }
 
   .copy-code-button.copied {
-    @apply bg-green-700 hover:bg-green-600;
+    @apply bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600;
   }
 
   .copy-code-button .copy-icon {
     @apply flex-shrink-0;
   }
 
-  /* GitHub Dark syntax highlighting */
-  .prose pre code .token.keyword { color: #ff7b72; }
-  .prose pre code .token.string { color: #a5d6ff; }
-  .prose pre code .token.comment { color: #8b949e; font-style: italic; }
-  .prose pre code .token.function { color: #d2a8ff; }
-  .prose pre code .token.number { color: #79c0ff; }
-  .prose pre code .token.operator { color: #ff7b72; }
-  .prose pre code .token.punctuation { color: #c9d1d9; }
-  .prose pre code .token.property { color: #79c0ff; }
-  .prose pre code .token.class-name { color: #ffa657; }
-  .prose pre code .token.boolean,
-  .prose pre code .token.null { color: #79c0ff; }
-  .prose pre code .token.variable { color: #ffa657; }
-  .prose pre code .token.tag { color: #7ee787; }
-  .prose pre code .token.attr-name { color: #79c0ff; }
+  /* GitHub Light syntax highlighting (for light mode) */
+  .prose pre code .token.atrule { color: #0550AE; }
+  .prose pre code .token.keyword { color: #cf222e; }
+  .prose pre code .token.string { color: #0A3069; }
+  .prose pre code .token.comment { color: #59636E; }
+  .prose pre code .token.function { color: #8250df; }
+  .prose pre code .token.number { color: #0550AE; }
+  .prose pre code .token.operator { color: #cf222e; }
+  .prose pre code .token.punctuation { color: #1F2328; }
+  .prose pre code .token.property { color: #0550ae; }
+  .prose pre code .token.class-name { color: #953800; }
+  .prose pre code .token.boolean { color: #CF2256; }
+  .prose pre code .token.null { color: #0550ae; }
+  .prose pre code .token.variable { color: #953800; }
+  .prose pre code .token.tag { color: #116329; }
+  .prose pre code .token.attr-name { color: #0550ae; }
+  .prose pre { background: #f6f8fa; }
+
+  /* GitHub Dark syntax highlighting (for dark mode) */
+  .dark .prose pre code .token.atrule { color: #7EE787; }
+  .dark .prose pre code .token.keyword { color: #ff7b72; }
+  .dark .prose pre code .token.string { color: #A5D6FF; }
+  .dark .prose pre code .token.comment { color: #9198A1; }
+  .dark .prose pre code .token.function { color: #d2a8ff; }
+  .dark .prose pre code .token.number { color: #79c0ff; }
+  .dark .prose pre code .token.operator { color: #ff7b72; }
+  .dark .prose pre code .token.punctuation { color: #F0F6FC; }
+  .dark .prose pre code .token.property { color: #79c0ff; }
+  .dark .prose pre code .token.class-name { color: #ffa657; }
+  .dark .prose pre code .token.boolean {color: #FF7B72; }
+  .dark .prose pre code .token.null { color: #79c0ff; }
+  .dark .prose pre code .token.variable { color: #ffa657; }
+  .dark .prose pre code .token.tag { color: #7ee787; }
+  .dark .prose pre code .token.attr-name { color: #79c0ff; }
+  .dark .prose pre { background: #0D1117}
 }

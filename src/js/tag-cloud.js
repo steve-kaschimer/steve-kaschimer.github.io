@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Get tag data from data attributes
   const tagData = JSON.parse(tagCloudContainer.dataset.tags || '[]');
-  
+
   if (tagData.length === 0) return;
 
   // Set up dimensions
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners
     tags.on('click', function(event, d) {
       const tag = d.tag; // Use original tag for filtering
-      
+
       // Update active state
       document.querySelectorAll('.tag-filter').forEach(btn => {
         btn.classList.remove('active');
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateTagColors() {
     const isDark = document.documentElement.classList.contains('dark');
     const tags = document.querySelectorAll('.tag-cloud-item');
-    
+
     // Define color palette from theme
     const lightColors = [
       '#3b82f6', // blue-500
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
       '#ef4444', // red-500
       '#ec4899', // pink-500
     ];
-    
+
     const darkColors = [
       '#60a5fa', // blue-400
       '#a78bfa', // violet-400
@@ -140,9 +140,9 @@ document.addEventListener('DOMContentLoaded', function() {
       '#f87171', // red-400
       '#f472b6', // pink-400
     ];
-    
+
     const colors = isDark ? darkColors : lightColors;
-    
+
     tags.forEach((tag, index) => {
       const isActive = tag.classList.contains('active');
       if (isActive) {
@@ -178,14 +178,14 @@ document.addEventListener('DOMContentLoaded', function() {
     allButton.addEventListener('click', function() {
       // Remove active from cloud tags
       document.querySelectorAll('.tag-cloud-item').forEach(t => t.classList.remove('active'));
-      
+
       // Show all posts
       const posts = document.querySelectorAll('.post-card');
       posts.forEach(post => {
         post.style.display = '';
         post.classList.add('fadeIn');
       });
-      
+
       window.location.hash = '';
     });
   }

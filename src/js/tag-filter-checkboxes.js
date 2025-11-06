@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const clearButton = document.getElementById('clear-filters');
   const postsGrid = document.getElementById('posts-grid');
   const filterStatus = document.getElementById('filter-status');
-  
+
   if (!postsGrid) return;
 
   // Update the display based on selected tags
@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedTags = Array.from(checkboxes)
       .filter(cb => cb.checked)
       .map(cb => cb.dataset.tag);
-    
+
     const posts = postsGrid.querySelectorAll('.post-card');
     let visibleCount = 0;
 
     posts.forEach(post => {
       const postTags = post.dataset.tags ? post.dataset.tags.split(',') : [];
-      
+
       // Show post if it has ANY of the selected tags (OR logic)
       // Or if no tags are selected, show all posts
       let shouldShow = selectedTags.length === 0;
-      
+
       if (selectedTags.length > 0) {
         shouldShow = selectedTags.some(tag => postTags.includes(tag));
       }

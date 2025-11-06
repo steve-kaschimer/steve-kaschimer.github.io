@@ -4,26 +4,26 @@
 document.addEventListener('DOMContentLoaded', function() {
   const tagButtons = document.querySelectorAll('.tag-filter');
   const postCards = document.querySelectorAll('.post-card');
-  
+
   if (!tagButtons.length || !postCards.length) return;
 
   tagButtons.forEach(button => {
     button.addEventListener('click', function() {
       const selectedTag = this.getAttribute('data-tag');
-      
+
       // Update active button state
       tagButtons.forEach(btn => {
         btn.classList.remove('active', 'bg-primary-600', 'text-white');
         btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
       });
-      
+
       this.classList.add('active', 'bg-primary-600', 'text-white');
       this.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-300');
-      
+
       // Filter posts
       postCards.forEach(card => {
         const cardTags = card.getAttribute('data-tags');
-        
+
         if (selectedTag === 'all') {
           // Show all posts
           card.style.display = '';
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
           card.style.display = 'none';
         }
       });
-      
+
       // Update URL hash (optional, for shareable filtered views)
       if (selectedTag === 'all') {
         history.replaceState(null, null, window.location.pathname);
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-  
+
   // Check URL hash on load and apply filter
   const hash = window.location.hash;
   if (hash && hash.startsWith('#tag-')) {

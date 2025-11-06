@@ -54,7 +54,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addCollection("tagListWithCounts", function(collectionApi) {
     const tagCount = {};
     const posts = collectionApi.getFilteredByGlob("src/posts/*.md");
-    
+
     posts.forEach(post => {
       if ("tags" in post.data) {
         let tags = post.data.tags;
@@ -70,7 +70,7 @@ module.exports = function(eleventyConfig) {
         }
       }
     });
-    
+
     // Return array of objects with tag and count
     return Object.keys(tagCount)
       .sort()

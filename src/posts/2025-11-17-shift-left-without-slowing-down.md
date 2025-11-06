@@ -3,7 +3,7 @@ layout: post.njk
 site_title: Tech Notes
 title: "Shift Left Without Slowing Down: DevSecOps Pipeline Design"
 author: Steve Kaschimer
-date: 2025-11-05
+date: 2025-11-17
 image: /images/posts/2025-11-17-hero.png
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.
 tags: ["devsecops", "github", "ci-cd"]
