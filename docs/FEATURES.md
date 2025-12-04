@@ -404,7 +404,6 @@ npm run dev
 Potential features for future releases:
 
 - 🔍 Search functionality
-- 🏷️ Tag cloud visualization
 - 📧 Newsletter subscription
 - 💬 Comments system (via external service)
 - 📊 Analytics integration

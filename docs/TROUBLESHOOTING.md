@@ -23,7 +23,7 @@ This guide helps you diagnose and fix common issues with the Tech Notes blog.
 1. **Check Node.js version:**
    ```bash
    node --version
-   # Should be v14 or higher
+   # Should be v18 or higher (v14+ minimum)
    ```
 
 2. **Clear npm cache:**

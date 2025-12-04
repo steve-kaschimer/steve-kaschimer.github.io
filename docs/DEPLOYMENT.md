@@ -25,6 +25,7 @@ The repository includes a GitHub Actions workflow that automatically builds and 
    - Go to your repository on GitHub
    - Navigate to **Settings** → **Pages**
    - Under **Source**, select **GitHub Actions**
+   - **Note:** GitHub Pages is free for public repositories. Private repositories require GitHub Pro, Team, or Enterprise.
 
 2. **Configure the workflow:**
    The workflow file (`.github/workflows/deploy.yml`) is already configured to:

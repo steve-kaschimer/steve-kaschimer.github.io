@@ -6,7 +6,7 @@ This guide will help you set up the Tech Notes blog on your local machine and ge
 
 Before you begin, make sure you have the following installed on your system:
 
-- **Node.js** (version 14 or higher)
+- **Node.js** (version 18 or higher recommended)
   - Download from [nodejs.org](https://nodejs.org/)
   - Verify installation: `node --version`
 - **npm** (comes with Node.js)

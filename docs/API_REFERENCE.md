@@ -246,7 +246,7 @@ eleventyConfig.addCollection("tagListWithCounts", function(collectionApi) {
   
   posts.forEach(post => {
     if ("tags" in post.data) {
-      let tags = item.data.tags;
+      let tags = post.data.tags;
       if (typeof tags === "string") tags = [tags];
       for (const tag of tags) {
         if (tag && tag !== "posts" && tag !== "all") {
