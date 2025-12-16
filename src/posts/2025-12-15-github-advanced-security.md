@@ -1,6 +1,6 @@
 ---
 author: Steve Kaschimer
-date: 2025-12-01
+date: 2025-12-15
 image: /images/posts/2025-12-15-hero.png
 layout: post.njk
 site_title: Tech Notes
