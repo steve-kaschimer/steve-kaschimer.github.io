@@ -7,6 +7,9 @@ backend:
 # Enable local development without GitHub OAuth
 local_backend: true
 
+# Required for open_authoring
+publish_mode: editorial_workflow
+
 media_folder: "src/images/posts"
 collections:
   - name: "blog"
