@@ -1,0 +1,41 @@
+---
+permalink: /feed/index.xml
+eleventyExcludeFromCollections: true
+metadata:
+  title: "Steve Kaschimer - Tech Notes"
+  subtitle: "DevOps, Security, and Development insights"
+  url: "https://steve-kaschimer.github.io/"
+  feedUrl: "https://steve-kaschimer.github.io/feed/"
+  author:
+    name: "Steve Kaschimer"
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="{{ metadata.url }}">
+  <title>{{ metadata.title }}</title>
+  <subtitle>{{ metadata.subtitle }}</subtitle>
+  <link href="{{ metadata.feedUrl }}" rel="self"/>
+  <link href="{{ metadata.url }}"/>
+  <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+  <id>{{ metadata.url }}</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+  </author>
+  {%- for post in collections.posts | reverse %}
+  {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
+  <entry>
+    <title>{{ post.data.title }}</title>
+    <link href="{{ absolutePostUrl }}"/>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <id>{{ absolutePostUrl }}</id>
+    <content xml:lang="en" type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
+    {%- if post.data.summary %}
+    <summary>{{ post.data.summary }}</summary>
+    {%- endif %}
+    {%- if post.data.tags %}
+    {%- for tag in post.data.tags %}
+    <category term="{{ tag }}"/>
+    {%- endfor %}
+    {%- endif %}
+  </entry>
+  {%- endfor %}
+</feed>
