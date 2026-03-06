@@ -5,6 +5,7 @@ backend:
   site_domain: "https://steve-kaschimer.github.io"
   cms_label_prefix: "decap-cms/"
   open_authoring: true
+  publish-mode: editorial_workflow
 media_folder: "src/images/posts"
 collections:
   - name: "blog"
