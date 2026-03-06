@@ -2,7 +2,7 @@ backend:
   name: github
   repo: "steve-kaschimer/steve-kaschimer.github.io"
   branch: main
-  base_url: "https://cold-union-4f9f.steve-kaschimer.workers.dev"
+  base_url: "https://steve-kaschimer-github-io.steve-kaschimer.workers.dev"
   auth_endpoint: auth
 
 # Enable local development without GitHub OAuth
