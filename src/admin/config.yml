@@ -1,0 +1,23 @@
+backend:
+  name: github
+  repo: "steve-kaschimer/steve-kaschimer.github.io"
+  branch: main
+  site_domain: "https://steve-kaschimer.github.io"
+  cms_label_prefix: "decap-cms/"
+media_folder: "src/images/posts"
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "src/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Layout", name: "layout", widget: "hidden", default: "post.njk" }
+      - { label: "Site Title", name: "site_title", widget: "hidden", default: "Tech Notes" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Featured Image", name: "image", widget: "image" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Body", name: "body", widget: "markdown" }
