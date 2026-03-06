@@ -2,6 +2,11 @@ backend:
   name: github
   repo: "steve-kaschimer/steve-kaschimer.github.io"
   branch: main
+  open_authoring: true
+
+# Enable local development without GitHub OAuth
+local_backend: true
+
 media_folder: "src/images/posts"
 collections:
   - name: "blog"
