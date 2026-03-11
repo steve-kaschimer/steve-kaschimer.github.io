@@ -87,7 +87,6 @@ jobs:
         uses: actions/attest@v1
         with:
           subject-path: sbom.cyclonedx.json
-          predicate-type: https://cyclonedx.org/schema
 
       - name: Attach SBOM to release
         uses: softprops/action-gh-release@v2

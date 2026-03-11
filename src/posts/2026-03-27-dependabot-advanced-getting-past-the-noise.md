@@ -14,7 +14,7 @@ Here's how most Dependabot stories end: the team enables it, a flood of PRs appe
 
 The tool isn't broken. The configuration is. Dependabot out of the box is optimized for coverage — it will find every update and open a PR for it. What it is not optimized for is human attention. The default config fires daily, creates one PR per package per version bump, treats a patch bump to a dev-only type package the same as a major version change to your HTTP client, and sets a low cap on open PRs that triggers a silent failure mode most teams don't even know exists. Every one of those choices is tunable. Two hours of configuration work will cut your PR volume by 70% while keeping security updates fast and individual. This post walks through exactly how to do that.
 
----
+***
 
 ## What You Get by Default
 

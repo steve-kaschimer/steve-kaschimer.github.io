@@ -84,7 +84,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `security`, `vulnerability-management`, `devsecops`, `developer-education`
 
 ### Generating and Using SBOMs with GitHub Actions
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #104
 - **Pitch:** A Software Bill of Materials (SBOM) is becoming a compliance requirement for many development teams, and GitHub Actions makes generating, attesting, and publishing one surprisingly straightforward.
 - **Angle:** Practical walkthrough using `anchore/sbom-action` and GitHub's artifact attestation to produce a CycloneDX SBOM, attach it to a release, and validate it downstream. Addresses why the SBOM matters beyond compliance — it's also a debugging tool for transitive dependency surprises.
