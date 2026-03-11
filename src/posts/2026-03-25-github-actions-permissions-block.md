@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
-date: 2026-06-12
-image: /images/posts/2026-06-12-hero.png
+date: 2026-03-25
+image: /images/posts/2026-03-25-hero.png
 image_prompt: "A dark-mode technical illustration on a near-black background with cool steel blue, amber, and off-white accents. Center-left: a stylized YAML snippet — a GitHub Actions workflow file rendered in crisp monospaced text — with the permissions block conspicuously absent, its absence marked by a faint red gap in the file's left border gutter. Emanating from that gap: thin amber arrows fanning outward to a ring of labeled permission nodes — 'contents: write,' 'pull-requests: write,' 'packages: write,' 'issues: write,' each node glowing faintly, representing the blast radius of unconstrained default permissions. Center-right: a second, contrasting workflow file where the permissions block is present and tightly scoped — only two nodes lit, 'contents: read' and 'checks: write,' the rest dimmed to near-black. Between the two files, a vertical divider. At the bottom of the right-side composition, a small GITHUB_TOKEN badge outlined in clean steel blue, its scope indicator showing a minimal sliver rather than a full ring. Mood: the moment a developer realizes the blast radius was always there — and that the fix is three lines of YAML. Avoid: generic lock icons, circuit board textures, padlock clipart, any specific org or company logos."
 layout: post.njk
 site_title: Tech Notes
@@ -251,7 +251,7 @@ on: [push]
 permissions: {}
 ```
 
-The `read-all` shorthand is a common stopping point for teams that know they should restrict permissions but aren't ready to audit each job. It meaningfully reduces the write blast radius. But `read: access` to `contents` still means any step in the workflow can read the full repository source, read secrets exposed as environment variables via `env:`, and exfiltrate data to an external endpoint. Read-only is not zero. `permissions: {}` is zero.
+The `read-all` shorthand is a common stopping point for teams that know they should restrict permissions but aren't ready to audit each job. It meaningfully reduces the write blast radius. But `read` access to `contents` still means any step in the workflow can read the full repository source, read secrets exposed as environment variables via `env:`, and exfiltrate data to an external endpoint. Read-only is not zero. `permissions: {}` is zero.
 
 The other reason the zero baseline matters: it makes security visible in code review. When a developer adds a new job that calls `softprops/action-gh-release` to create a release, and the workflow has `permissions: {}` at the top, the CI run will fail immediately with a 403. The review conversation becomes "this job needs `contents: write` to create a release — is that the right tool for this workflow?" instead of "the release job works, ship it." The failure surface in CI is the faster feedback loop.
 

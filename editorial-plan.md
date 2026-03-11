@@ -9,21 +9,21 @@
 The three posts most worth shipping right now: two are directly tied to the active Eleventy site work, and one is a high-impact security quick-win.
 
 ### Deploying to GitHub Pages with GitHub Actions: Beyond the Defaults
-- **Status:** `idea`
+- **Status:** `published`
 - **Issue:** #95
 - **Pitch:** The default `peaceiris/actions-gh-pages` workflow gets you up and running, but it leaks build artifacts, skips caching, and doesn't handle environment protection or OIDC — this post shows the production-grade version.
 - **Angle:** Rebuilds the deployment pipeline from scratch using the official `actions/deploy-pages` action with OIDC token authentication (no `GITHUB_TOKEN` secret exposure), proper cache keys for the build tool, and a staging environment that requires reviewer approval before the production deploy.
 - **Tags:** `github-actions`, `github-pages`, `ci-cd`, `eleventy`, `deployment`
 
 ### The GitHub Actions `permissions` Block: Principle of Least Privilege for Workflows
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #96
 - **Pitch:** By default, GitHub Actions workflows run with a token that has write access to your entire repository — explicitly scoping `permissions` to the minimum required is a one-line security improvement most workflows skip.
 - **Angle:** Shows the blast radius of a compromised workflow token with default permissions (hint: an attacker can push to main, create releases, and exfiltrate secrets). Walks through the permissions model, explains why `contents: read` should be the default, and provides a hardened workflow template for the five most common workflow patterns: test, release, deploy, PR comment, and dependency update.
 - **Tags:** `github-actions`, `security`, `devsecops`, `ci-cd`
 
 ### Tailwind CSS v4: What Actually Changed and How to Migrate
-- **Status:** `idea`
+- **Status:** `published`
 - **Issue:** #97
 - **Pitch:** Tailwind v4 ships a completely rewritten engine, drops `tailwind.config.js` in favor of CSS-native configuration, and changes how plugins and themes work — this post is the migration guide for developers already using v3.
 - **Angle:** Side-by-side comparison of v3 vs. v4 config syntax with a real migration of this blog's `tailwind.config.js`. Benchmarks cold build time before and after, explains what `@theme` and `@utility` replace, and flags the three breaking changes most likely to burn you (custom screen breakpoints, arbitrary value syntax, dark mode configuration).
