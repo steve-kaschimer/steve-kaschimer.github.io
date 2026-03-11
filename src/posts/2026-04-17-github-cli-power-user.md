@@ -181,19 +181,19 @@ YESTERDAY=$(date -d "yesterday" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
   || date -v-1d +%Y-%m-%dT%H:%M:%SZ)
 
 echo "=== PRs you reviewed ==="
-gh search prs --reviewed-by @me --updated "$YESTERDAY..*" \
+gh search prs --reviewed-by @me --updated ">$YESTERDAY" \
   --json number,title,repository \
   --jq '.[] | "  #\(.number) \(.title) [\(.repository.name)]"'
 
 echo ""
 echo "=== PRs you opened or updated ==="
-gh search prs --author @me --updated "$YESTERDAY..*" \
+gh search prs --author @me --updated ">$YESTERDAY" \
   --json number,title,state,repository \
   --jq '.[] | "  #\(.number) [\(.state)] \(.title) [\(.repository.name)]"'
 
 echo ""
 echo "=== Issues you were involved in ==="
-gh search issues --involves @me --updated "$YESTERDAY..*" \
+gh search issues --involves @me --updated ">$YESTERDAY" \
   --json number,title,repository \
   --jq '.[] | "  #\(.number) \(.title) [\(.repository.name)]"'
 ```
