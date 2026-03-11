@@ -6,7 +6,7 @@ image_prompt: "A clean, technical illustration in a dark-mode editorial style â€
 layout: post.njk
 site_title: Tech Notes
 summary: The default GitHub Pages workflow skips caching, leaks artifacts, and has no deployment gate â€” this post rebuilds it from scratch with OIDC authentication, npm caching, and a reviewer-gated GitHub Environment.
-tags: ["github-actions", "github-pages", "ci-cd", "eleventy", "deployment"]
+tags: ["github-actions", "eleventy", "ci-cd"]
 title: "Deploying to GitHub Pages with GitHub Actions: Beyond the Defaults"
 ---
 

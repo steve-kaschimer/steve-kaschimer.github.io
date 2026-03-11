@@ -35,7 +35,9 @@ module.exports = function(eleventyConfig) {
   // Collect tags with counts
   eleventyConfig.addCollection("tagListWithCounts", function(collectionApi) {
     const tagCount = {};
-    const posts = collectionApi.getFilteredByGlob("src/posts/*.md");
+    const now = new Date();
+    const posts = collectionApi.getFilteredByGlob("src/posts/*.md")
+      .filter(post => post.date <= now);
 
     posts.forEach(post => {
       if ("tags" in post.data) {

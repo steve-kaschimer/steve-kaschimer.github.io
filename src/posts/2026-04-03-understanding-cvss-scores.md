@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration with deep charcoal background 
 layout: post.njk
 site_title: Tech Notes
 summary: CVSS scores tell you theoretical worst-case severity, not actual risk to your application — here's how to read the vector string and triage accurately instead of panic-patching.
-tags: ["security", "vulnerability-management", "devsecops", "developer-education"]
+tags: ["security", "devsecops", "supply-chain-security"]
 title: "Understanding CVSS Scores: A Practical Guide for Developers"
 ---
 

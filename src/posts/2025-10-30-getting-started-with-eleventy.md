@@ -6,7 +6,7 @@ image_prompt: "A wide-format dark editorial illustration on a near-black backgro
 layout: post.njk
 site_title: Tech Notes
 summary: Eleventy is a simpler static site generator. Learn why it's great for building fast, modern websites and how to get started with your first project.
-tags: ['eleventy', 'web-development', 'tutorial']
+tags: ["eleventy", "developer-productivity"]
 title: Getting Started with Eleventy
 ---
 

@@ -6,7 +6,7 @@ image_prompt: "A dark-mode terminal aesthetic on a near-black background with de
 layout: post.njk
 site_title: Tech Notes
 summary: Most commit messages are a form of passive negligence — this post teaches the exact format, body-writing discipline, hook setup, and CI enforcement that turns git log into a searchable record of every decision your team has ever made.
-tags: ["git", "developer-productivity", "writing-for-engineers", "code-review"]
+tags: ["writing-for-engineers", "developer-productivity", "devops"]
 title: "Writing Commit Messages That Make Code Review Faster"
 ---
 

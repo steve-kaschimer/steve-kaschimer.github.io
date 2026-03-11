@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical editorial illustration with near-black back
 layout: post.njk
 site_title: Tech Notes
 summary: Shift-left tooling stops at the deployment boundary — runtime observability closes the gap by turning the same logs and traces you already collect into a security detection layer.
-tags: ["observability", "security", "devsecops", "opentelemetry", "nodejs"]
+tags: ["security", "devsecops", "platform-engineering"]
 title: "Shift Right: Why Production Observability Is a Security Practice"
 ---
 

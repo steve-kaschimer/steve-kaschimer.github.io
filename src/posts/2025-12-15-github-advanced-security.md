@@ -6,7 +6,7 @@ image_prompt: "A dark-mode editorial illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: GitHub Advanced Security provides integrated tools like secret scanning, dependency review, and security dashboards to help DevSecOps teams embed proactive security checks into their development and CI/CD workflows.
-tags: ["devops", "github", "security"]
+tags: ["security", "devsecops", "github"]
 title: "GitHub Advanced Security: What You Get and How to Use It"
 ---
 

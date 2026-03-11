@@ -6,7 +6,7 @@ image_prompt: "A clean, technical illustration in a dark-mode aesthetic — deep
 layout: post.njk
 site_title: Tech Notes
 summary: Reusable workflows and composite actions solve different problems — understand the secret-passing rules, matrix scoping, and status-check semantics before you pick one.
-tags: ["github-actions", "ci-cd", "devops", "workflow-design"]
+tags: ["github-actions", "ci-cd", "devops"]
 title: "GitHub Actions: Reusable Workflows vs. Composite Actions — Know the Difference"
 ---
 

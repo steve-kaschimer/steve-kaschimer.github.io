@@ -6,7 +6,7 @@ image_prompt: "A clean, architectural illustration in a technical editorial styl
 layout: post.njk
 site_title: Tech Notes
 summary: Architecture Decision Records are a single Markdown file per decision that eliminates the 'why did we build it this way?' archaeology session forever — here is the template, the storage convention, the GitHub workflow, and a real example from this blog's own stack.
-tags: ["documentation", "architecture", "writing-for-engineers", "developer-productivity"]
+tags: ["writing-for-engineers", "developer-productivity"]
 title: "Architecture Decision Records: The 30-Minute Investment That Pays Off for Years"
 ---
 

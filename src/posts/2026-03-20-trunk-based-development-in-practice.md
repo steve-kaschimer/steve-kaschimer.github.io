@@ -6,7 +6,7 @@ image_prompt: "A wide, horizontal illustration in a warm-but-technical style —
 layout: post.njk
 site_title: Tech Notes
 summary: Trunk-based development promises elite software delivery performance, but most adoption attempts fail on unspoken prerequisites — feature flags, expand/contract migrations, and a CI pipeline that earns trust.
-tags: ["git", "devops", "ci-cd", "developer-productivity", "branching-strategy"]
+tags: ["devops", "ci-cd", "developer-productivity"]
 title: "Trunk-Based Development in Practice: What They Don't Tell You"
 ---
 

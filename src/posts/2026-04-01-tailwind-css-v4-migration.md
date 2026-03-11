@@ -6,7 +6,7 @@ image_prompt: "A wide, high-contrast illustration in a technical editorial style
 layout: post.njk
 site_title: Tech Notes
 summary: Tailwind CSS v4 ships a Rust-powered engine and CSS-native configuration that replaces tailwind.config.js — this post walks through migrating this blog's actual v3 config, and flags the three breaking changes most likely to catch you off-guard.
-tags: ["tailwind-css", "css", "static-sites", "eleventy"]
+tags: ["tailwind-css", "eleventy"]
 title: "Tailwind CSS v4: What Actually Changed and How to Migrate"
 ---
 

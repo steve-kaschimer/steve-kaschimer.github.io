@@ -6,7 +6,7 @@ image_prompt: "A flat-design illustration with a dark navy background and cool t
 layout: post.njk
 site_title: Tech Notes
 summary: Default Dependabot floods teams with low-signal PRs until they stop merging them — here's how to tune grouping, scheduling, and auto-merge so dependency updates actually get reviewed.
-tags: ["dependabot", "supply-chain-security", "github", "dependency-management"]
+tags: ["supply-chain-security", "github", "devsecops"]
 title: "Dependabot Advanced: Getting Past the Noise"
 ---
 

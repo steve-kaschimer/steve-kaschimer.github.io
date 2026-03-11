@@ -6,7 +6,7 @@ image_prompt: "A wide-format dark editorial illustration on a near-black backgro
 layout: post.njk
 site_title: Tech Notes
 summary: DevOps culture prioritizes collaboration and shared responsibility over tools and automation. Learn why cultural transformation is essential for faster delivery, better quality, and sustainable software development practices.
-tags: ["devops", "culture"]
+tags: ["devops"]
 title: "DevOps Culture: What It Is, Why It Exists, and Why It Matters"
 ---
 

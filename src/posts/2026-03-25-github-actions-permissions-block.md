@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: GitHub Actions workflows run with write access to almost every repo scope by default — the permissions block is three lines of YAML that closes that blast radius, and most workflows aren't using it.
-tags: ["github-actions", "security", "devops", "devsecops"]
+tags: ["github-actions", "security", "devsecops"]
 title: "The GitHub Actions `permissions` Block: Principle of Least Privilege for Workflows"
 ---
 

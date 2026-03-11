@@ -6,7 +6,7 @@ image_prompt: "A dark-mode editorial illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: Learn the essential DevSecOps metrics, how to track them using GitHub APIs and workflows, and why they matter for balancing speed, security, and reliability.
-tags: ["devops", "culture"]
+tags: ["devsecops", "devops"]
 title: "DevSecOps Metrics That Matter: What to Measure, How to Track It in GitHub, and Why It Matters"
 ---
 

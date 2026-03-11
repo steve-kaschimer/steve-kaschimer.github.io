@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration on a deep charcoal background 
 layout: post.njk
 site_title: Tech Notes
 summary: GitHub Actions makes generating a cryptographically attested, queryable CycloneDX SBOM on every release straightforward — here's the complete workflow and why the SBOM is a debugging tool as much as a compliance artifact.
-tags: ["sbom", "supply-chain-security", "github-actions", "compliance"]
+tags: ["supply-chain-security", "github-actions", "devsecops"]
 title: "Generating and Using SBOMs with GitHub Actions"
 ---
 

@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: Master CodeQL's query-based static analysis by treating your codebase as a database. Learn to write custom queries, integrate with CI/CD pipelines, and detect vulnerabilities with precision.
-tags: ["devsecops", "github", "codeql"]
+tags: ["security", "devsecops", "github"]
 title: "CodeQL Deep Dive: Static Analysis for DevSecOps Engineers"
 ---
 

@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: Learn how to implement Security as Code using GitHub Actions. Explore reusable workflows, Marketplace integrations, matrix builds, and best practices for embedding security into CI/CD pipelines.
-tags: ["devsecops", "github", "github-actions"]
+tags: ["github-actions", "devsecops", "ci-cd"]
 title: "Security as Code with GitHub Actions: Automating DevSecOps"
 ---
 

@@ -6,7 +6,7 @@ image_prompt: "A precise, architectural illustration in a dark-mode technical ed
 layout: post.njk
 site_title: Tech Notes
 summary: GitHub Rulesets replace classic branch protection with organization-level enforcement, named bypass actors, and tag protection — here is what changed, what to migrate first, and an audit workflow to check coverage across your entire org.
-tags: ["github", "branch-protection", "devsecops", "platform-engineering"]
+tags: ["github", "devsecops", "platform-engineering"]
 title: "GitHub Branch Protection Rules vs. Rulesets: The New Way to Enforce Standards"
 ---
 

@@ -6,7 +6,7 @@ image_prompt: "A wide-format dark editorial illustration on a near-black backgro
 layout: post.njk
 site_title: Tech Notes
 summary: Boost your productivity with these practical Tailwind CSS tips and tricks. Learn how to write cleaner, more maintainable utility-first CSS.
-tags: ['tailwind', 'css', 'productivity']
+tags: ["tailwind-css", "eleventy", "developer-productivity"]
 title: 5 Tailwind CSS Tips for Better Productivity
 ---
 

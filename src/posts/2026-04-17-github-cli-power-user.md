@@ -6,7 +6,7 @@ image_prompt: "A dark-mode developer workstation aesthetic on a deep charcoal ba
 layout: post.njk
 site_title: Tech Notes
 summary: The gh CLI covers PR reviews, workflow monitoring, secret management, and issue branching entirely from the terminal — here are the 10 commands that eliminate the browser tabs most developers still have open.
-tags: ["github-cli", "developer-productivity", "tooling", "terminal"]
+tags: ["github", "developer-productivity", "platform-engineering"]
 title: "GitHub CLI Power User: 10 `gh` Commands That Replace Browser Tabs"
 ---
 

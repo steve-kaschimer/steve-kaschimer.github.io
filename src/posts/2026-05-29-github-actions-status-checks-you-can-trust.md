@@ -6,7 +6,7 @@ image_prompt: "A precise, dark-mode technical editorial illustration — near-bl
 layout: post.njk
 site_title: Tech Notes
 summary: Status checks only block bad code if they are fast, reliable, correctly named, and actually enforced — this post covers the four ways pipelines fail that test and the concrete workflow patterns that fix each one.
-tags: ["github-actions", "ci-cd", "code-quality", "developer-productivity"]
+tags: ["github-actions", "ci-cd", "platform-engineering"]
 title: "Enforcing Code Quality with GitHub Actions Status Checks You Can Actually Trust"
 ---
 

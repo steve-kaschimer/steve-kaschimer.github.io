@@ -6,7 +6,7 @@ image_prompt: "A dark-mode editorial illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: Why GitHub is a strong platform choice for DevSecOps teams - built-in automation, native security tooling, and auditability.
-tags: ["devsecops", "github", "security"]
+tags: ["devsecops", "github", "devops"]
 title: Why GitHub is the DevSecOps Platform of Choice
 ---
 

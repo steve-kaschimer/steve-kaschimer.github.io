@@ -6,7 +6,7 @@ image_prompt: "A dark-mode technical illustration on a near-black background wit
 layout: post.njk
 site_title: Tech Notes
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.
-tags: ["devsecops", "github", "ci-cd"]
+tags: ["devsecops", "ci-cd", "devops"]
 title: "Shift Left Without Slowing Down: DevSecOps Pipeline Design"
 ---
 
