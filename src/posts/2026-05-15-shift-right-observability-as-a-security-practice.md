@@ -68,6 +68,43 @@ What to watch for:
 
 A Node.js web application should almost never spawn a shell. If one appears in your process spawn log, that is not a false positive you tune away — it is the beginning of an incident response.
 
+Instrument spawns by wrapping `child_process.spawn` at a single callsite in your application:
+
+```js
+// lib/safe-spawn.js
+import { spawn as _spawn } from 'child_process';
+import { trace } from '@opentelemetry/api';
+
+const SHELL_INTERPRETERS = new Set(['sh', 'bash', 'zsh', 'cmd.exe', 'powershell.exe', 'pwsh']);
+
+export function spawn(command, args = [], options = {}) {
+  const fullCommand = [command, ...args].join(' ');
+  const isShell = SHELL_INTERPRETERS.has(command);
+
+  console.log(JSON.stringify({
+    level: isShell ? 'error' : 'info',
+    event: 'process.spawn',
+    command,
+    args: args.join(' '),
+    is_shell: isShell,
+    timestamp: new Date().toISOString(),
+  }));
+
+  const span = trace.getActiveSpan();
+  if (span) {
+    span.setAttributes({
+      'process.spawn.command': command,
+      'process.spawn.args': args.join(' '),
+      ...(isShell && { 'security.anomaly': 'shell_spawn', 'security.severity': 'high' }),
+    });
+  }
+
+  return _spawn(command, args, options);
+}
+```
+
+Use `lib/safe-spawn.js` everywhere in your application instead of importing `child_process` directly — the wrapper is a `eslint` rule away from being enforced (`no-restricted-imports`).
+
 ***
 
 ## Instrumenting a Node.js App with OpenTelemetry
@@ -255,6 +292,54 @@ The `category: runtime-security` field keeps runtime signals visually separated 
 ```
 
 The `physicalLocation.artifactLocation.uri` maps the alert to the relevant source file — the auth middleware, the HTTP client wrapper, wherever the instrumented code lives. GitHub uses this to anchor the alert in code review context.
+
+**The `signals-to-sarif.js` conversion script** reads a newline-delimited JSON file of signal objects emitted by your application (each line: `{ ruleId, message, level, uri }`) and produces the SARIF document:
+
+```js
+// scripts/signals-to-sarif.js
+import { readFileSync, writeFileSync } from 'fs';
+import { parseArgs } from 'util';
+
+const { values } = parseArgs({
+  options: {
+    input:  { type: 'string' },
+    output: { type: 'string' },
+  },
+});
+
+const signals = readFileSync(values.input, 'utf8')
+  .trim().split('\n').map(line => JSON.parse(line));
+
+const ruleIds = [...new Set(signals.map(s => s.ruleId))];
+
+const sarif = {
+  version: '2.1.0',
+  runs: [{
+    tool: {
+      driver: {
+        name: 'runtime-security',
+        rules: ruleIds.map(id => ({
+          id,
+          name: id.replace(/-([a-z])/g, (_, c) => c.toUpperCase()),
+          shortDescription: { text: id },
+          defaultConfiguration: { level: 'warning' },
+        })),
+      },
+    },
+    results: signals.map(s => ({
+      ruleId: s.ruleId,
+      message: { text: s.message },
+      level: s.level ?? 'warning',
+      locations: [{ physicalLocation: { artifactLocation: { uri: s.uri } } }],
+    })),
+  }],
+};
+
+writeFileSync(values.output, JSON.stringify(sarif, null, 2));
+console.log(`Wrote ${signals.length} signal(s) to ${values.output}`);
+```
+
+Your runtime alerting code (rate-threshold logic, correlation checks) writes to the signals file; this script is the schema adapter. Keep them separate — the converter is stateless and easy to test; the threshold logic is where the real decisions live.
 
 ***
 
