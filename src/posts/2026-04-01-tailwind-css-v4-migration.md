@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
-date: 2026-06-05
-image: /images/posts/2026-06-05-hero.png
+date: 2026-04-01
+image: /images/posts/2026-04-01-hero.png
 image_prompt: "A wide, high-contrast illustration in a technical editorial style — deep navy blue background with electric cyan, pure white, and amber accents. The left half shows a JavaScript configuration object rendered as faded, receding code — module.exports, content arrays, darkMode keys — slightly desaturated and drifting off-screen, as if being archived. The right half shows clean, modern CSS — @import tailwindcss, @theme blocks with CSS custom properties, @variant dark — sharp and forward-facing. Between them, a thin vertical Rust-orange lightning bolt separator suggests the engine underneath. At the bottom, a faint benchmark bar chart in cyan shows two bars: a taller one labeled v3 and a dramatically shorter one labeled v4. Mood: purposeful technical progress — not nostalgia for the old, but clarity about the new. Avoid: generic CSS icons, Tailwind logo, circuit board textures, any software brand logos."
 layout: post.njk
 site_title: Tech Notes
@@ -299,7 +299,7 @@ The subtler issue: v4 adjusts the default breakpoint values slightly. The `sm`, 
 **Step 1: Run the codemod**
 
 ```bash
-npx @tailwindcss/upgrade@next
+npx @tailwindcss/upgrade
 ```
 
 Handles: renaming deprecated utilities, generating a starter `@theme` block, updating PostCSS config. Does not handle: `darkMode: 'class'`, typography `theme()` overrides, or arbitrary variable syntax.
@@ -307,7 +307,7 @@ Handles: renaming deprecated utilities, generating a starter `@theme` block, upd
 **Step 2: Install v4 packages**
 
 ```bash
-npm install tailwindcss@next @tailwindcss/cli@next @tailwindcss/typography@next
+npm install tailwindcss @tailwindcss/cli @tailwindcss/typography
 ```
 
 **Step 3: Update `package.json` build scripts**
@@ -357,7 +357,7 @@ The practical impact on the `npm run dev` script — which uses `npm-run-all --p
 
 ## v4 Migration Checklist
 
-- [ ] Run `npx @tailwindcss/upgrade@next` first — handles the mechanical parts
+- [ ] Run `npx @tailwindcss/upgrade` first — handles the mechanical parts
 - [ ] `npm install tailwindcss@next @tailwindcss/cli@next @tailwindcss/typography@next`
 - [ ] Replace `@tailwind base/components/utilities` with `@import "tailwindcss"` in `input.css`
 - [ ] Add `@plugin "@tailwindcss/typography"` to `input.css` (replaces the `plugins` array)

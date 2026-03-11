@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
-date: 2026-05-22
-image: /images/posts/2026-05-22-hero.png
+date: 2026-03-18
+image: /images/posts/2026-03-18-hero.png
 image_prompt: "A clean, technical illustration in a dark-mode editorial style — near-black background with electric blue, green, and cool white accents. The composition shows a three-stage pipeline rendered as a horizontal flow: a leftmost box labeled 'build' with a gear icon and a small caching layer symbol below it, connected by a clean arrow to a center box labeled 'upload artifact' with a sealed container icon, connected by another arrow to a rightmost box labeled 'deploy' with a shield and a padlock — the shield carries a faint OIDC token badge in electric blue. Below the pipeline, a slim horizontal band shows a GitHub Environment gate: a human silhouette with a checkmark and the word 'Approved' in green. The bottom of the image carries faint ghost-text YAML — just legible enough to read 'permissions: id-token: write' and 'environment: github-pages'. Mood: the satisfaction of a pipeline that is both fast and actually secure — engineered, not cobbled together. Avoid: generic cloud logos, circuit-board textures, lock clipart, any specific company branding."
 layout: post.njk
 site_title: Tech Notes
