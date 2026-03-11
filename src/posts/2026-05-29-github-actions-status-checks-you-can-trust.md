@@ -219,10 +219,19 @@ Clicking required checks in the UI works but isn't reproducible or auditable. Se
 
 ```bash
 # Set required status checks via API
-gh api --method PATCH /repos/{owner}/{repo}/branches/main/protection \
-  --field 'required_status_checks[strict]=true' \
-  --field 'required_status_checks[contexts][]=ci-gate' \
-  --field 'enforce_admins=true'
+# PUT replaces the full protection config — include null for unused fields
+gh api --method PUT /repos/{owner}/{repo}/branches/main/protection \
+  --input - <<'EOF'
+{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": ["ci-gate"]
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": null,
+  "restrictions": null
+}
+EOF
 ```
 
 `enforce_admins=true` removes the admin bypass from classic branch protection — without it, repository admins skip all rules by default. (For a more complete treatment of admin bypass and why Rulesets are the better long-term answer, see the [May 8 post on Rulesets](https://steve-kaschimer.github.io/posts/2026-05-08-github-branch-protection-rules-vs-rulesets/).)
@@ -287,12 +296,12 @@ These four failure modes share a common solution: a single `ci-gate` job that ac
 
 ```
 PR opens
-  → changes job: detect which paths changed
-  → test job: runs only if src/ changed (skipped otherwise)
-  → coverage job: runs only if test ran (skipped otherwise)
-  → ci-gate job: always runs, fails if test or coverage failed
-      ↑
-      Required status check in Ruleset
+  → changes job:  detect which paths changed
+  → lint job:     runs only if src/ changed (skipped otherwise)
+  → test job:     runs only if src/ changed (skipped otherwise; coverage threshold enforced inline)
+  → ci-gate job:  always runs, fails if lint or test failed
+        ↑
+        Required status check in Ruleset
 ```
 
 The properties that make this pattern reliable:
@@ -301,7 +310,7 @@ The properties that make this pattern reliable:
 2. **`ci-gate` always runs** — `if: always()` ensures it has a result on every PR, including PRs where the real checks were skipped by path filters.
 3. **`ci-gate` validates outcomes** — it passes if the real checks passed or were legitimately skipped; it fails if any real check failed.
 4. **Workflow internals can change freely** — add a linter, rename a job, restructure parallelism. None of those changes affect the string registered in branch protection.
-5. **Coverage threshold lives inside a job that `ci-gate` depends on** — a coverage failure propagates through `needs` and surfaces as a `ci-gate` failure.
+5. **Coverage threshold lives inside a job that `ci-gate` depends on** — the `test` job exits non-zero if coverage falls below the threshold, which propagates through `needs` and surfaces as a `ci-gate` failure.
 
 The complete wiring for a typical project:
 

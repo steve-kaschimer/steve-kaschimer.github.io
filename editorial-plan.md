@@ -50,7 +50,7 @@ Three posts queued and ready to pick up once the March batch ships.
 - **Tags:** `github`, `branch-protection`, `devsecops`, `platform-engineering`
 
 ### Enforcing Code Quality with GitHub Actions Status Checks You Can Actually Trust
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #100
 - **Pitch:** Status checks only work as a quality gate if they're fast enough for developers to respect and strict enough to be meaningful — most pipelines fail one or both criteria.
 - **Angle:** Covers the four failure modes of status checks (flaky tests, slow linters, bypass-able required checks, missing branch coverage enforcement) and a concrete remediation for each. Includes workflow patterns for parallelizing linters, using `paths` filters to skip irrelevant checks, and configuring required status checks via the GitHub API so they can't be bypassed even by repo admins.
@@ -112,7 +112,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `documentation`, `architecture`, `writing-for-engineers`, `developer-productivity`
 
 ### Shift Right: Why Production Observability Is a Security Practice
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #108
 - **Pitch:** Shifting left catches vulnerabilities before deployment, but attackers operate in production — runtime observability (logs, traces, alerts) is the underinvested complement to a strong shift-left posture.
 - **Angle:** Argues that observability and security share the same data (anomalous request patterns, unexpected process spawns, unusual outbound connections) and should share the same tooling. Shows how to instrument a Node.js app with OpenTelemetry, route signals to GitHub's security alerts via a custom action, and define alert thresholds that distinguish abuse from bugs.
