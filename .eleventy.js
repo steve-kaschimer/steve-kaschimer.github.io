@@ -7,7 +7,6 @@ module.exports = function(eleventyConfig) {
 
   // Copy static files
   eleventyConfig.addPassthroughCopy("src/images");
-  eleventyConfig.addPassthroughCopy("src/styles/output.css");
   eleventyConfig.addPassthroughCopy("src/js");
 
   // Add date filter
@@ -31,28 +30,6 @@ module.exports = function(eleventyConfig) {
         // Sort by date, newest first
         return b.date - a.date;
       });
-  });
-
-  // Collect all unique tags from posts
-  eleventyConfig.addCollection("tagList", function(collectionApi) {
-    const tagSet = new Set();
-    collectionApi.getAll().forEach(item => {
-      if ("tags" in item.data) {
-        let tags = item.data.tags;
-        // Handle both array and string tags
-        if (typeof tags === "string") {
-          tags = [tags];
-        }
-        for (const tag of tags) {
-          // Exclude special tags like "posts"
-          if (tag && tag !== "posts" && tag !== "all") {
-            tagSet.add(tag);
-          }
-        }
-      }
-    });
-    // Return sorted array of tags
-    return [...tagSet].sort();
   });
 
   // Collect tags with counts

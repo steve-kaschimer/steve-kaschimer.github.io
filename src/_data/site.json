@@ -1,0 +1,12 @@
+{
+  "title": "Tech Notes",
+  "description": "A modern blog about technology, programming, cloud and DevSecOps.",
+  "url": "https://steve-kaschimer.github.io",
+  "feedUrl": "https://steve-kaschimer.github.io/feed/",
+  "author": {
+    "name": "Steve Kaschimer",
+    "email": "steve.kaschimer@slalom.com",
+    "github": "https://github.com/steve-kaschimer",
+    "linkedin": "https://www.linkedin.com/in/steve-kaschimer/"
+  }
+}

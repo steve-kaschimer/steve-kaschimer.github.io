@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ site_title }} - {{ title }}</title>
-  <meta name="description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
+  <title>{% if title %}{{ title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{{ description or summary or site.description }}">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
@@ -12,19 +12,22 @@
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.svg">
 
+  <!-- Canonical -->
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ page.url or '/' }}">
-  <meta property="og:title" content="{{ site_title }}">
-  <meta property="og:description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
-  <meta property="og:image" content="/images/favicon.svg">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:title" content="{% if title %}{{ title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{{ description or summary or site.description }}">
+  <meta property="og:image" content="{{ site.url }}{{ image or '/images/og-default.png' }}">
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="{{ page.url or '/' }}">
-  <meta property="twitter:title" content="{{ site_title }}">
-  <meta property="twitter:description" content="{{ description or 'A modern blog about technology, programming, cloud and DevSecOps' }}">
-  <meta property="twitter:image" content="/images/favicon.svg">
+  <meta name="twitter:url" content="{{ site.url }}{{ page.url }}">
+  <meta name="twitter:title" content="{% if title %}{{ title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta name="twitter:description" content="{{ description or summary or site.description }}">
+  <meta name="twitter:image" content="{{ site.url }}{{ image or '/images/og-default.png' }}">
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#0284c7" media="(prefers-color-scheme: light)">
@@ -48,7 +51,7 @@
             <svg class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"></path>
             </svg>
-            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site_title }}</span>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site.title }}</span>
           </a>
 
           <!-- Navigation Links -->
@@ -105,7 +108,7 @@
             <svg class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"></path>
             </svg>
-            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site_title }}</span>
+            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ site.title }}</span>
           </a>
           <p class="text-gray-600 dark:text-gray-400 text-sm">
             A modern blog about technology, programming, cloud and DevSecOps.
@@ -163,7 +166,7 @@
       <!-- Copyright -->
       <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
         <p class="text-center text-gray-600 dark:text-gray-400 text-sm">
-          &copy; 2025 {{ site_title }}. All rights reserved.
+          &copy; 2025 {{ site.title }}. All rights reserved.
         </p>
       </div>
     </div>
