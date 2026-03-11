@@ -133,8 +133,12 @@ ignore:
 For monorepos with a mix of internal and external packages, `allow` lets you whitelist just the external dependencies you actually want Dependabot to manage, which prevents it from opening PRs for internal workspace packages:
 
 ```yaml
+# Option A: only direct dependencies (production + dev, no transitive)
 allow:
   - dependency-type: "direct"
+
+# Option B: only production dependencies (direct + transitive, no dev)
+allow:
   - dependency-type: "production"
 ```
 

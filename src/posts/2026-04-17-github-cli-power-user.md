@@ -95,7 +95,7 @@ The `--debug` flag is the behavior most people don't know exists. It enables ste
 gh issue develop 88 --checkout
 ```
 
-The branch name is generated from the issue title and number: `88-fix-the-thing-described-in-issue-88`. The branch is automatically linked to the issue in the GitHub UI, and when you open a PR from it, the issue is referenced and closed automatically on merge. Use `--base` to target a non-default branch. This eliminates an entire class of "I forgot to link the issue" PR comments.
+The branch name is generated from the issue title and number — something like `88-fix-authentication-redirect-loop`. The branch is automatically linked to the issue in the GitHub UI, and when you open a PR from it, the issue is referenced and closed automatically on merge. Use `--base` to target a non-default branch. This eliminates an entire class of "I forgot to link the issue" PR comments.
 
 ### 6. `gh secret set`
 

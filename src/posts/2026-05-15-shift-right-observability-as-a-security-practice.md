@@ -82,18 +82,25 @@ npm install @opentelemetry/sdk-node \
   @opentelemetry/exporter-otlp-http
 ```
 
-**Bootstrap the SDK** — load this before anything else using `--require ./instrumentation.js`:
+**Bootstrap the SDK** — load this before anything else using `--require ./instrumentation.js`. Using `spanProcessors` explicitly lets you compose the export pipeline with custom processors (the `OutboundAnomalyProcessor` defined below):
 
 ```js
 // instrumentation.js
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-otlp-http';
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { OutboundAnomalyProcessor } from './processors/outbound-anomaly.js';
+
+const exporter = new OTLPTraceExporter({
+  url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
+});
 
 const sdk = new NodeSDK({
-  traceExporter: new OTLPTraceExporter({
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-  }),
+  spanProcessors: [
+    new BatchSpanProcessor(exporter),   // normal export pipeline
+    new OutboundAnomalyProcessor(),     // security annotation layer
+  ],
   instrumentations: [
     getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-http': { enabled: true },

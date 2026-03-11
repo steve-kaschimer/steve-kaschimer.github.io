@@ -43,7 +43,7 @@ Three posts queued and ready to pick up once the March batch ships.
 - **Tags:** `github-actions`, `ci-cd`, `devops`, `workflow-design`
 
 ### GitHub Branch Protection Rules vs. Rulesets: The New Way to Enforce Standards
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #99
 - **Pitch:** GitHub Rulesets replace the old branch protection model and are strictly more powerful, but the migration path and new capabilities are poorly documented — this post maps what changed and what you should migrate today.
 - **Angle:** Covers the key differences: Rulesets apply to tags and branches, support bypass actors, and work at the organization level. Includes a YAML-driven Ruleset template for a typical open-source project and a GitHub Actions workflow that audits whether all repos in an org have Rulesets configured.
@@ -70,7 +70,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `git`, `devops`, `ci-cd`, `developer-productivity`, `branching-strategy`
 
 ### Dependabot Advanced: Getting Past the Noise
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #102
 - **Pitch:** Default Dependabot configuration floods teams with low-signal PRs; this post shows how to tune grouping, scheduling, versioning strategies, and auto-merge rules so you actually merge dependency updates instead of ignoring them.
 - **Angle:** Starts from a realistic monorepo with npm, Docker, and GitHub Actions dependencies. Walks through a battle-tested `dependabot.yml` that cuts PR volume by 70% while keeping security updates fast. Also covers when to switch to Renovate and why.
@@ -98,7 +98,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `github-cli`, `developer-productivity`, `tooling`, `terminal`
 
 ### Writing Commit Messages That Make Code Review Faster
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #106
 - **Pitch:** A well-written commit message is the smallest unit of developer communication, and most engineers write them badly — this post teaches a repeatable format that makes diffs self-documenting and `git log` actually useful.
 - **Angle:** Uses the Conventional Commits spec as a baseline but goes further: how to write the body (`why`, not `what`), how to link issues and PRs correctly, how to use `git notes` for post-merge context, and how to configure a commit-msg hook that enforces format in CI.

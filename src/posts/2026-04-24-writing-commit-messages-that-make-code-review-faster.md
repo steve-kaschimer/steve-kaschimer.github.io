@@ -229,10 +229,13 @@ npx --no -- commitlint --edit $1
 ```
 
 ```js
-// commitlint.config.js
+// commitlint.config.js (ESM — requires "type": "module" in package.json)
 export default {
   extends: ['@commitlint/config-conventional']
 };
+
+// CommonJS alternative: rename to commitlint.config.cjs and use:
+// module.exports = { extends: ['@commitlint/config-conventional'] };
 ```
 
 The `prepare` script runs on `npm install`, so every developer who clones the repository and installs dependencies gets the hook automatically.
