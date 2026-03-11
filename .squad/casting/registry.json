@@ -1,0 +1,46 @@
+{
+  "agents": {
+    "elliot": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Elliot",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "darlene": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Darlene",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "mr. robot": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Mr. Robot",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "trenton": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Trenton",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "romero": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Romero",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "scribe": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Scribe",
+      "universe": "Mr. Robot",
+      "status": "active"
+    },
+    "ralph": {
+      "created_at": "2026-03-11T13:31:36.237Z",
+      "persistent_name": "Ralph",
+      "universe": "Mr. Robot",
+      "status": "active"
+    }
+  }
+}

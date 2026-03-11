@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2025-10-30
-image: /images/posts/2025-10-30-hero.svg
+image: /images/posts/2025-10-30-hero.png
 image_prompt: "A wide-format dark editorial illustration on a near-black background with warm amber, off-white, and cool teal accents. The central visual is a stylized build pipeline flowing left to right: a stack of Markdown files with faint .md labels on the far left, arrows feeding into a central transformation node — a small mechanical gear rendered in teal labeled '11ty' — and emerging on the right as clean, structured HTML pages in a file tree. Three labeled panels float above the pipeline: 'Layouts,' 'Collections,' and 'Filters,' each connected to the transformation node by thin directional lines. At the bottom, a terminal prompt glows softly: 'npx @11ty/eleventy --serve,' with a miniature browser window suggesting a live local site. Mood: minimal and methodical — the quiet satisfaction of a static site snapping into existence from plain text, no runtime overhead, no complexity in the way. Avoid: generic web browser mockups, cloud provider logos, server rack imagery, WordPress or CMS screenshots, JavaScript framework logos."
 layout: post.njk
 site_title: Tech Notes
