@@ -91,7 +91,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `sbom`, `supply-chain-security`, `github-actions`, `compliance`
 
 ### GitHub CLI Power User: 10 `gh` Commands That Replace Browser Tabs
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #105
 - **Pitch:** The `gh` CLI can handle PR reviews, issue triage, secret management, and workflow triggers without leaving the terminal — most developers use 20% of it and miss the most productive parts.
 - **Angle:** Focused on commands that replace real browser workflows: `gh pr checkout`, `gh run watch`, `gh secret set`, `gh repo clone --template`, `gh issue develop`. Includes shell aliases and a practical script for daily standup prep.
