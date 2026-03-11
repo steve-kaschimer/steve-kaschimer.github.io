@@ -37,11 +37,11 @@ jobs:
           npm ci
           npx tailwindcss --help
 
-      - name: Build CSS
-        run: npm run build:css
-
       - name: Build site
         run: npm run build
+
+      - name: Build CSS
+        run: npm run build:css
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
