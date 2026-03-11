@@ -36,7 +36,7 @@ The three posts most worth shipping right now: two are directly tied to the acti
 Three posts queued and ready to pick up once the March batch ships.
 
 ### GitHub Actions: Reusable Workflows vs. Composite Actions — Know the Difference
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #98
 - **Pitch:** Reusable workflows and composite actions both let you DRY up your pipelines, but they have fundamentally different scoping rules, secret-passing behaviors, and failure semantics — choosing the wrong one causes subtle bugs.
 - **Angle:** Side-by-side comparison driven by concrete failure scenarios: a secret that silently disappears, a matrix that can't be inherited, a status check that reports to the wrong job. Readers finish knowing exactly which abstraction to reach for and why.
@@ -63,7 +63,7 @@ Three posts queued and ready to pick up once the March batch ships.
 All remaining topics, roughly ordered by theme. Pull from here when a slot opens up.
 
 ### Trunk-Based Development in Practice: What They Don't Tell You
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #101
 - **Pitch:** Trunk-based development is the delivery model behind high-performing engineering teams, but the advice online glosses over the cultural and tooling prerequisites that make it safe.
 - **Angle:** Covers the hard parts: feature flags as a first-class citizen, how to handle database migrations without long-lived branches, the minimum branch protection ruleset you need, and how to talk your team out of GitFlow. Grounded in The Accelerate research.
@@ -77,7 +77,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `dependabot`, `supply-chain-security`, `github`, `dependency-management`
 
 ### Understanding CVSS Scores: A Practical Guide for Developers
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #103
 - **Pitch:** CVSS scores show up in Dependabot alerts and security advisories every day, but most developers treat them as black boxes — this post teaches you to read them critically so you can triage accurately instead of panic-patching.
 - **Angle:** Breaks down the CVSS v3.1 vector string (AV, AC, PR, UI, S, C, I, A) using real CVEs pulled from npm and GitHub Advisory Database examples. Shows how the same "Critical 9.8" can be a fire drill or a non-issue depending on your deployment context.
@@ -105,7 +105,7 @@ All remaining topics, roughly ordered by theme. Pull from here when a slot opens
 - **Tags:** `git`, `developer-productivity`, `writing-for-engineers`, `code-review`
 
 ### Architecture Decision Records: The 30-Minute Investment That Pays Off for Years
-- **Status:** `idea`
+- **Status:** `draft`
 - **Issue:** #107
 - **Pitch:** ADRs are the most underused documentation practice in software engineering — a lightweight Markdown file per decision that eliminates "why did we do it this way?" forever.
 - **Angle:** Walks through creating an ADR template, storing ADRs in a `docs/decisions/` folder in the repo, linking them from PR descriptions, and using GitHub Discussions for the deliberation phase. Includes a real-world example: choosing between Nunjucks and Liquid for an Eleventy project.

@@ -96,8 +96,6 @@ The scope in parentheses is optional but useful: `feat(auth)`, `fix(api)`, `chor
 
 Why this matters beyond aesthetics: Conventional Commits is machine-parseable. Tools like `semantic-release`, `conventional-changelog`, and `release-please` read your commit history to determine version bumps and generate changelogs automatically. A `feat` commit triggers a minor version bump. A `fix` triggers a patch. A commit with `BREAKING CHANGE:` in the footer triggers a major. That automation is only possible because the commit messages follow a predictable structure.
 
-The before/after speaks for itself.
-
 **Before:**
 ```text
 fix stuff
@@ -302,7 +300,7 @@ That friction makes `git notes` most useful for team-internal context in reposit
 
 Before every commit:
 
-- [ ] Subject line is **≤ 72 characters**, imperative mood, no trailing period
+- [ ] Subject line is **≤ 50 characters** (hard limit: 72), imperative mood, no trailing period
 - [ ] Type prefix matches what changed — `feat` for new capability, `fix` for bug, `chore` for maintenance
 - [ ] Body explains **why**, not what the diff already shows
 - [ ] Tradeoffs and rejected alternatives are documented if the decision wasn't obvious

@@ -63,7 +63,7 @@ CVSS:3.1/AV:N/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H
 
 The Confidentiality, Integrity, and Availability impacts are identical. The potential damage ceiling is the same. But **AC:H** means the attacker needs specific, non-default conditions to land the exploit — a race condition, a particular configuration, a timing window. **PR:H** means they need admin-level credentials on the target system first. **UI:R** means a legitimate user has to take an action — click a link, open a file, trigger a specific code path.
 
-The score on that second vector drops to around 6.6 Medium, despite the same damage potential. That drop reflects how much harder the exploitation chain is in practice. The gap between a 10.0 and a 6.6 isn't about how bad the impact is — it's about how accessible the attack path is.
+The score on that second vector drops to 6.4 Medium, despite the same damage potential. That drop reflects how much harder the exploitation chain is in practice. The gap between a 10.0 and a 6.6 isn't about how bad the impact is — it's about how accessible the attack path is.
 
 The two metrics that do the most work in changing real-world exploitability are **AC** (does this require unusual conditions?) and **PR** (does the attacker need existing access?). Learn to read those two first.
 
@@ -87,7 +87,7 @@ A 9.8 Base Score with no known public proof-of-concept. The Temporal metric **Ex
 
 ### The Environmental Score: The Fix Nobody Uses
 
-CVSS provides **Environmental Metrics** precisely for this problem. Your organization can configure values for Modified Attack Vector, Modified Confidentiality, and others to reflect the actual deployment context, producing an adjusted score that accurately represents your exposure. A `AV:N` vulnerability running inside a network segment with no external access can have its Attack Vector modified to `AV:L` in the environmental calculation, producing a score that reflects reality.
+CVSS provides **Environmental Metrics** precisely for this problem. Your organization can configure values for Modified Attack Vector, Modified Confidentiality, and others to reflect the actual deployment context, producing an adjusted score that accurately represents your exposure. An `AV:N` vulnerability running inside a network segment with no external access can have its Attack Vector modified to `AV:L` in the environmental calculation, producing a score that reflects reality.
 
 Almost no teams do this because tooling support is inconsistent and the process isn't automated. Understanding that it exists changes how you read advisories — you know you can mentally apply the same logic even when the tool doesn't do it for you.
 

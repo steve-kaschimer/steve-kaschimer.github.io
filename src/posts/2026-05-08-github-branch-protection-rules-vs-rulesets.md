@@ -103,12 +103,12 @@ Classic branch protection has no equivalent for tags. Rulesets close this. A tag
   "rules": [
     { "type": "deletion" },
     { "type": "non_fast_forward" },
-    { "type": "creation", "parameters": { "restricted_to": [] } }
+    { "type": "creation" }
   ]
 }
 ```
 
-`restricted_to: []` with no bypass actors means no one can create `v*` tags except via whatever automation you've granted bypass access to. If your release process creates tags through a GitHub App or Actions bot, add that actor as a bypass actor on this Ruleset. Human engineers — including admins — are blocked by default.
+The `creation` rule blocks all creation of matching refs by default — only bypass actors can create `v*` tags. If your release process creates tags through a GitHub App or Actions bot, add that actor as a bypass actor on this Ruleset. Human engineers — including admins — are blocked by default.
 
 ### Organization-Level Rulesets
 

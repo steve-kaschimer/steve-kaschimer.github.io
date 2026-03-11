@@ -24,7 +24,7 @@ An ADR records **a single architectural decision** at the moment it was made. It
 
 The two properties that make ADRs useful are also the two that teams instinctively resist. First: **one decision per file**. Not "the architecture of the authentication system" — that's a design document. An ADR is "use JWTs instead of server-side sessions." Specific, bounded, answerable. Second: **immutable once accepted**. You do not edit an old ADR to reflect a change in direction. You write a new ADR that supersedes it, and the old one stays in the repo with its status updated. The history is the value.
 
-The format was coined by Michael Nygard and popularized by the `adr-tools` CLI project. The exact template has evolved, but the principle hasn't moved.
+The format was coined by Michael Nygard in a [2011 blog post](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions) and later popularized by the `adr-tools` CLI project. The exact template has evolved, but the principle hasn't moved.
 
 What counts as an architectural decision: anything that affects the structure of the system, is expensive to reverse, or that future maintainers will need to understand in order to make sensible choices. Template engine selection, database schema approach, authentication strategy, monorepo vs. polyrepo, API versioning policy. What doesn't warrant an ADR: bug fixes, routine implementation choices, minor refactors that don't change structural constraints.
 
