@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-03-27
 image: /images/posts/2026-03-27-hero.png
+image_prompt: "A flat-design illustration with a dark navy background and cool teal, lime green, and muted red accents. On the left, a chaotic torrent of identically-sized pull-request cards cascades downward — dozens of them, slightly blurred, each stamped with a package name and version bump — representing unfiltered noise. A bold vertical filter gate bisects the image; to its right, only a handful of cards emerge: neatly grouped, color-coded by severity, with one bright red security-update card given prominent placement. Small clock and calendar icons appear near the gate to suggest scheduled delivery. Mood: calm authority over entropy — the feeling of having tamed a system that used to feel unmanageable. Avoid: robot mascots, the Dependabot logo, generic padlock-and-shield supply-chain imagery."
 layout: post.njk
 site_title: Tech Notes
 summary: Default Dependabot floods teams with low-signal PRs until they stop merging them — here's how to tune grouping, scheduling, and auto-merge so dependency updates actually get reviewed.

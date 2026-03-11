@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-03-20
 image: /images/posts/2026-03-20-hero.png
+image_prompt: "A wide, horizontal illustration in a warm-but-technical style — off-white background with deep forest green, amber, and slate blue. A single thick horizontal trunk line stretches across the canvas, labeled 'main.' From it sprout three very short branch stubs, each no longer than a thumb's width, each curving swiftly back into the trunk. In stark contrast, a ghosted background shows a tangle of long, serpentine branches that never converge — slightly desaturated, visually chaotic, receding into the distance. Small feature-flag toggle switches appear along the trunk like signal lights on a rail line. Mood: confident momentum, engineering discipline, the satisfaction of a system that actually works. Avoid: Git logo, any reference to specific tools, generic 'branching tree' stock illustration styles."
 layout: post.njk
 site_title: Tech Notes
 summary: Trunk-based development promises elite software delivery performance, but most adoption attempts fail on unspoken prerequisites — feature flags, expand/contract migrations, and a CI pipeline that earns trust.

@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-03-13
 image: /images/posts/2026-03-13-hero.png
+image_prompt: "A clean, technical illustration in a dark-mode aesthetic — deep charcoal background with cool blue and violet accent tones. Two parallel vertical swimlanes represent execution environments: the left lane labeled 'Reusable Workflow' shows a complete bordered job box with its own runner icon and status badge; the right lane labeled 'Composite Action' shows a flat sequence of inline steps nested inside a parent job box. Subtle YAML code fragments float behind each lane as ghost text. A branching decision node sits at the top center, rendered as a crisp geometric diamond. Mood: precise, architectural, the kind of diagram a senior engineer would draw on a whiteboard before saying 'it matters which one you pick.' Avoid: any generic gears, cloud logos, or abstract circuit-board textures."
 layout: post.njk
 site_title: Tech Notes
 summary: Reusable workflows and composite actions solve different problems — understand the secret-passing rules, matrix scoping, and status-check semantics before you pick one.
