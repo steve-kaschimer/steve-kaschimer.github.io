@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-11-17
 image: /images/posts/2025-11-17-hero.png
+image_prompt: "A dark-mode technical illustration on a near-black background with cool teal, amber, and off-white accents. The central visual is a horizontal CI/CD pipeline timeline — 'Code Commit,' 'Pull Request,' 'Merge to Main,' 'Deploy' — labeled left to right. Above the main pipeline track, five security job lanes run in parallel as distinct colored horizontal bars: 'CodeQL,' 'Secret Scan,' 'Dependency Review,' 'Trivy,' 'Checkov' — each starting at the Pull Request stage, executing simultaneously, and completing before the Merge node. At the far right, a deployment node glows green: small and unblocked. Behind this, dimmed and crossed out, a contrasting version shows a single long sequential security bar that blocks the pipeline gate — a ghost image of the old way. Mood: velocity and control in harmony — a well-designed pipeline that moves fast precisely because security is parallel, not an afterthought. Avoid: tortoise-and-hare imagery, speedometer dials, generic CI/CD diagrams, shield icons, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.

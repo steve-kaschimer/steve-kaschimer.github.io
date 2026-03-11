@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-11-10
 image: /images/posts/2025-11-03-hero.png
+image_prompt: "A dark-mode technical illustration on a near-black background with electric blue, amber, and off-white accents. Center: a GitHub Actions workflow YAML file rendered in crisp monospaced text, its jobs visually laid out as a directed graph — 'codeql-analysis' and 'secret-scan' job boxes connected by dashed dependency arrows, each box glowing blue when passing and amber when flagged. Surrounding the workflow graph, three satellite panels: a Marketplace badge cluster (Snyk, Trivy, Checkov rendered as small labeled tiles), a matrix build grid showing parallel environment cells executing simultaneously, and a reusable workflow call arrow originating from a second repository. At the top of the composition, a pull request merge button pulses green — held in place by the workflow gate below it. Mood: automation at work, security woven into the fabric of delivery rather than bolted on as a post-process step. Avoid: generic padlocks, firewall topology diagrams, shield clipart, GitHub Octocat, server rack imagery."
 layout: post.njk
 site_title: Tech Notes
 summary: Learn how to implement Security as Code using GitHub Actions. Explore reusable workflows, Marketplace integrations, matrix builds, and best practices for embedding security into CI/CD pipelines.

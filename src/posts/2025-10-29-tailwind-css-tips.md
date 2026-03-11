@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-10-29
 image: /images/posts/2025-10-29-hero.svg
+image_prompt: "A wide-format dark editorial illustration on a near-black background with electric cyan, slate gray, and warm amber accents. Center: a large code editor panel displaying a cascade of Tailwind utility class strings — 'px-4 py-2 rounded-lg', 'bg-blue-600 hover:bg-blue-700', 'dark:bg-gray-900 dark:text-white' — each class name rendered in distinct color-coded monospaced text. Branching from the panel, five annotated callout lines point to visual outcomes: a styled button, a dark-mode-toggled card, a custom color swatch, a compact @apply block, and a VS Code IntelliSense autocomplete popup. The composition flows left to right: raw utility classes on the left dissolving into polished UI components on the right. Mood: productive clarity, the satisfaction of turning a tangle of class strings into a coherent, maintainable design system. Avoid: generic CSS stylesheet imagery, browser window chrome, rainbow color palettes unrelated to the UI, Tailwind logo, HTML tag soup."
 layout: post.njk
 site_title: Tech Notes
 summary: Boost your productivity with these practical Tailwind CSS tips and tricks. Learn how to write cleaner, more maintainable utility-first CSS.

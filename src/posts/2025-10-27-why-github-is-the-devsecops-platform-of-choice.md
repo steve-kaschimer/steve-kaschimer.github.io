@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-10-27
 image: /images/posts/2025-10-27-hero.png
+image_prompt: "A dark-mode editorial illustration on a near-black background with steel blue, emerald green, and amber accents. Center stage: a stylized GitHub repository rendered as a glowing platform hub, with multiple orbiting rings surrounding it — each ring labeled with a DevSecOps pillar: 'Code Scanning,' 'Secret Scanning,' 'Dependency Review,' 'GitHub Actions,' 'Audit Log.' Each pillar represented by a distinct node connected back to the central hub by thin luminous lines, suggesting a solar system of integrated capabilities. At the bottom-left, a faint developer silhouette commits code; at the bottom-right, a faint operations silhouette monitors a dashboard — the two figures connected by a glowing arc labeled 'shared responsibility.' Mood: unified and authoritative, the feeling of a fully-integrated platform humming in sync — security not bolted on but woven in. Avoid: generic lock icons, padlock clipart, GitHub Octocat, circuit board textures, server rack illustrations."
 layout: post.njk
 site_title: Tech Notes
 summary: Why GitHub is a strong platform choice for DevSecOps teams - built-in automation, native security tooling, and auditability.

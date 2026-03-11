@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-11-05
 image: /images/posts/2025-11-10-hero.png
+image_prompt: "A dark-mode editorial illustration on a near-black background with deep crimson, steel blue, and off-white accents. The composition is split into two halves: on the left, a code diff panel shows a hardcoded credential string — 'API_KEY=AKIA...' — highlighted in a faint red glow, a warning annotation hovering above it. On the right, an encrypted vault panel labeled 'GitHub Secrets' displays three stacked, sealed secret cards — 'PROD_DB_PASSWORD,' 'STRIPE_SECRET_KEY,' 'AWS_ACCESS_TOKEN' — each sealed and scoped to 'environment: production.' Between the two halves, a bold arrow labeled 'migrate' points right. At the bottom of the composition, a small rotation cycle diagram renders in amber: secret → scan → revoke → rotate, forming a continuous loop. Mood: the quiet urgency of a near-miss caught in time, the relief of a system that protects developers from themselves. Avoid: hacker silhouettes, skull-and-crossbones imagery, binary rain backgrounds, generic shield icons, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes
 summary: Learn how to securely manage secrets on GitHub using secret scanning, environment variables, and best practices to prevent credential leaks and security breaches.

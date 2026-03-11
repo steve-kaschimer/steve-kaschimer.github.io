@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-12-15
 image: /images/posts/2025-12-15-hero.png
+image_prompt: "A dark-mode editorial illustration on a near-black background with deep cobalt blue, amber, and off-white accents. The central visual is a four-quadrant layout, each quadrant representing a GHAS pillar: top-left 'Code Scanning' (a CodeQL query graph tracing tainted data from a source node through intermediate functions to a sink labeled 'SQL query — unsanitized'), top-right 'Secret Scanning' (a commit diff with a flagged credential string highlighted in amber, a shield-alert annotation hovering above), bottom-left 'Dependency Review' (a pull request showing a before/after dependency version diff with a red CVE badge on the old version), bottom-right 'Security Overview' (a faint org-level grid of repository cards ranked by alert count, trending toward zero). At the center of the quadrants, a small repository icon acts as the hub connecting all four pillars with thin directional lines. Mood: comprehensive coverage — the steady confidence of knowing every attack surface is continuously watched. Avoid: generic lock icons, hacker silhouettes, padlock clipart, GitHub Octocat, circuit board textures."
 layout: post.njk
 site_title: Tech Notes
 summary: GitHub Advanced Security provides integrated tools like secret scanning, dependency review, and security dashboards to help DevSecOps teams embed proactive security checks into their development and CI/CD workflows.

@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-12-08
 image: /images/posts/2025-12-08-hero.png
+image_prompt: "A dark-mode editorial illustration on a near-black background with electric green, steel blue, and amber accents. The central visual is a dashboard-style composition: four DORA metric panels arranged in a 2×2 grid — 'Deployment Frequency' (a bar chart trending upward in green), 'Lead Time for Changes' (a timeline bar compressing), 'Change Failure Rate' (a gauge needle swinging toward green), 'Mean Time to Restore' (a countdown clock shrinking). Below the DORA grid, a second row of security metric panels rendered in a complementary palette: 'Open Vulnerabilities' (a declining area chart), 'Time to Remediate' (a horizontal bar shrinking sprint over sprint), 'Secret Exposure' (a near-zero tick mark). All panels rendered in a clean terminal data-viz aesthetic — not polished SaaS product chrome. Mood: the empowerment of measurement — data as compass, not as scorecard for blame. Avoid: generic dashboard screenshots, red warning lights, speedometer dials, management report mockups, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes
 summary: Learn the essential DevSecOps metrics, how to track them using GitHub APIs and workflows, and why they matter for balancing speed, security, and reliability.

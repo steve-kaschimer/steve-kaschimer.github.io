@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-11-24
 image: /images/posts/2025-11-24-hero.png
+image_prompt: "A dark-mode technical illustration on a near-black background with deep violet, steel blue, and amber accents. Center: an abstract visualization of code-as-database — a JavaScript source code fragment on the left (a function with unsanitized user input) dissolves rightward into a structured relational schema, nodes representing functions, variables, and call relationships connected by directed graph edges. From the schema, a CodeQL query panel sits on the right: crisp .ql syntax highlighting 'from,' 'where,' and 'select' clauses, with a glowing result row at the bottom: 'Possible SQL injection detected at line 42.' Above the schema, a faint three-step extraction pipeline reads 'Parse → Database → Query.' The composition suggests a lens — source code enters one side as raw text and exits the other as precise, structured intelligence. Mood: precision and depth, the quiet confidence of a tool that truly understands code rather than just scanning for string patterns. Avoid: magnifying glass clipart, generic bug icons, binary code rain, circuit board textures, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes
 summary: Master CodeQL's query-based static analysis by treating your codebase as a database. Learn to write custom queries, integrate with CI/CD pipelines, and detect vulnerabilities with precision.
