@@ -14,7 +14,7 @@ layout: base.njk
   <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/80"></div>
 
   <!-- Title and Meta -->
-  <div class="relative h-full flex flex-col justify-end max-w-5xl mx-auto px-4 pb-4">
+  <div class="relative h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
     <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
       {{ title }}
     </h1>
@@ -37,7 +37,7 @@ layout: base.njk
 {% else %}
 <!-- Fallback Header without Image -->
 <header class="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-800 dark:to-primary-900 py-16">
-  <div class="max-w-5xl mx-auto px-4">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
       {{ title }}
     </h1>
@@ -59,9 +59,9 @@ layout: base.njk
 </header>
 {% endif %}
 
-<article class="max-w-5xl mx-auto px-4 py-12">
+<article class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <!-- Post Content -->
-  <div class="prose prose-lg dark:prose-invert">
+  <div class="prose prose-lg dark:prose-invert max-w-none">
     {{ content | safe }}
   </div>
 
