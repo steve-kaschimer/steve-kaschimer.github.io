@@ -159,7 +159,7 @@ const KNOWN_DESTINATIONS = new Set([
 ]);
 
 export class OutboundAnomalyProcessor {
-  onStart(span) {
+  onStart(span, _parentContext) {
     const host = span.attributes['net.peer.name'];
     if (host && !KNOWN_DESTINATIONS.has(host)) {
       span.setAttributes({
