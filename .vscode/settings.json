@@ -1,3 +1,6 @@
 {
-    "snyk.advanced.autoSelectOrganization": true
+    "snyk.advanced.autoSelectOrganization": true,
+    "chat.tools.terminal.autoApprove": {
+        "format:\"%s\"": true
+    }
 }
