@@ -12,7 +12,7 @@ Example: `speckit.aisdlc.preflight` -> `/speckit-aisdlc-preflight`.
 
 # Verify Bugfix Consistency
 
-Verify that all spec artifacts are consistent after bugfix patches — checks that new requirements have corresponding plan sections and tasks, reopened tasks are not still marked complete, and no orphaned references exist.
+Verify that all spec artifacts are consistent after bugfix patches - checks that new requirements have corresponding plan sections and tasks, reopened tasks are not still marked complete, and no orphaned references exist.
 
 ## User Input
 
@@ -31,10 +31,10 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 ## Outline
 
 1. **Load all artifacts**: Read from the current feature directory:
-   - `spec.md` — the source of truth
-   - `plan.md` — implementation plan (if exists)
-   - `tasks.md` — task breakdown (if exists)
-   - `specs/{feature}/bugs/*.md` — all bug reports
+   - `spec.md` - the source of truth
+   - `plan.md` - implementation plan (if exists)
+   - `tasks.md` - task breakdown (if exists)
+   - `specs/{feature}/bugs/*.md` - all bug reports
 
 2. **Check bug report status**: For each bug report file:
 
@@ -58,7 +58,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 5. **Verify tasks.md consistency** (if exists):
    - Every new requirement in spec.md is traceable to at least one task
    - No tasks marked `[x]` that were supposed to be reopened
-   - Reopened tasks have the `(reopened — BUG-NNN)` annotation
+   - Reopened tasks have the `(reopened - BUG-NNN)` annotation
    - New task IDs are sequential and do not duplicate existing IDs
    - Task dependencies form a valid DAG (no circular dependencies)
    - Wave DAG (if present) includes all new tasks
@@ -75,7 +75,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    | Bug ID | Title | Status | Patched |
    |--------|-------|--------|---------|
    | BUG-001 | [Title] | ✅ Patched | [DATE] |
-   | BUG-002 | [Title] | ⚠️ Open | — |
+   | BUG-002 | [Title] | ⚠️ Open | - |
 
    ## Consistency Checks
 
@@ -94,12 +94,12 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    - If all checks pass: Resume `/speckit-implement` to apply the code fix
    ```
 
-7. **Report**: Output the verification report. Do not modify any files — this command is read-only.
+7. **Report**: Output the verification report. Do not modify any files - this command is read-only.
 
 ## Rules
 
-- **Read-only** — this command never modifies any files
-- **Check all artifacts** — verify consistency across spec, plan, tasks, and bug reports
-- **Be specific about failures** — report exact bug IDs, task IDs, and requirement text that fail checks
-- **Handle missing artifacts gracefully** — if plan.md or tasks.md does not exist, skip those checks and note the absence
-- **Verify traceability** — every bugfix note must reference a valid bug report, and every bug report must have corresponding artifact changes
+- **Read-only** - this command never modifies any files
+- **Check all artifacts** - verify consistency across spec, plan, tasks, and bug reports
+- **Be specific about failures** - report exact bug IDs, task IDs, and requirement text that fail checks
+- **Handle missing artifacts gracefully** - if plan.md or tasks.md does not exist, skip those checks and note the absence
+- **Verify traceability** - every bugfix note must reference a valid bug report, and every bug report must have corresponding artifact changes

@@ -4,7 +4,7 @@ description: "Sync spec.md with updates from the linked source GitHub Issue"
 
 # Issue Sync
 
-Fetch the latest state of the linked GitHub Issue and update the current feature's spec artifacts to reflect any changes — new acceptance criteria, updated requirements, new comments, or a changed issue state.
+Fetch the latest state of the linked GitHub Issue and update the current feature's spec artifacts to reflect any changes - new acceptance criteria, updated requirements, new comments, or a changed issue state.
 
 ## User Input
 
@@ -90,7 +90,7 @@ Update `spec.md` with the identified changes. Follow these rules:
 - **Preserve local additions**: Content in spec.md that was added manually and is not present in the issue must not be removed.
 - **Update the source header**: Refresh the `> **Source**:` line to record the sync:
   ```markdown
-  > **Source**: [#<number>](<issue-url>) — imported on <import-date>, synced on <today>
+  > **Source**: [#<number>](<issue-url>) - imported on <import-date>, synced on <today>
   ```
 - **Record issue closure**: If the issue is now closed, add a note at the top of the spec:
   ```markdown

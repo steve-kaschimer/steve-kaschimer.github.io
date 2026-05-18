@@ -4,7 +4,7 @@ description: "Surgically update spec, plan, and tasks to address the reported bu
 
 # Patch Spec Artifacts
 
-Surgically update spec.md, plan.md, and tasks.md to address a reported bug — adds missing requirements, fixes conflicts, reopens false completions, and adds new tasks. Minimal changes only, never regenerates from scratch.
+Surgically update spec.md, plan.md, and tasks.md to address a reported bug - adds missing requirements, fixes conflicts, reopens false completions, and adds new tasks. Minimal changes only, never regenerates from scratch.
 
 ## User Input
 
@@ -18,7 +18,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 
 1. Verify a spec-kit project exists by checking for `.specify/` directory
 2. Locate the current feature's spec directory
-3. Check for bug reports in `specs/{feature}/bugs/` — if a bug ID is provided, load that report
+3. Check for bug reports in `specs/{feature}/bugs/` - if a bug ID is provided, load that report
 4. If no bug report exists, inform the user and suggest running `/speckit.bugfix.report` first
 
 ## Outline
@@ -45,26 +45,26 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    - Update assumptions if dependencies changed
    - Add a bugfix note:
      ```
-     **Bugfix**: [DATE] — [BUG-NNN] [Brief description of what was patched]
+     **Bugfix**: [DATE] - [BUG-NNN] [Brief description of what was patched]
      ```
 
 4. **Patch plan.md** (if it exists):
    - Update affected sections with new context
    - Add complexity notes for newly discovered edge cases
-   - Preserve all existing content — only add or annotate
+   - Preserve all existing content - only add or annotate
    - Add a bugfix note:
      ```
-     **Bugfix**: [DATE] — [BUG-NNN] Updated from bugfix patch
+     **Bugfix**: [DATE] - [BUG-NNN] Updated from bugfix patch
      ```
 
 5. **Patch tasks.md** (if it exists):
    - **Add new tasks**: Assign next sequential IDs, proper dependencies, and story labels
-   - **Reopen tasks**: Change `[x]` back to `[ ]` with a note: `(reopened — BUG-NNN)`
+   - **Reopen tasks**: Change `[x]` back to `[ ]` with a note: `(reopened - BUG-NNN)`
    - **Mark false completions**: Add `⚠️ Reopened` prefix to task description
    - **Update Wave DAG**: If present, regenerate to include new tasks
    - Add a bugfix note:
      ```
-     **Bugfix**: [DATE] — [BUG-NNN] Updated from bugfix patch
+     **Bugfix**: [DATE] - [BUG-NNN] Updated from bugfix patch
      ```
 
 6. **Update bug report**: Mark the bug report file as patched:
@@ -81,10 +81,10 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 
 ## Rules
 
-- **Surgical updates only** — never regenerate artifacts from scratch, only modify affected sections
-- **Never delete content** — use strikethrough for superseded text, preserve history
-- **Preserve formatting** — match existing artifact style exactly
-- **Track changes** — always add bugfix notes with dates and bug IDs
-- **Reopen, don't delete tasks** — falsely completed tasks get reopened, not removed
-- **Require bug report** — if no bug report or user description is provided, refuse to patch and suggest `/speckit.bugfix.report` first
-- **Minimal changes** — change only what is necessary to address the specific bug
+- **Surgical updates only** - never regenerate artifacts from scratch, only modify affected sections
+- **Never delete content** - use strikethrough for superseded text, preserve history
+- **Preserve formatting** - match existing artifact style exactly
+- **Track changes** - always add bugfix notes with dates and bug IDs
+- **Reopen, don't delete tasks** - falsely completed tasks get reopened, not removed
+- **Require bug report** - if no bug report or user description is provided, refuse to patch and suggest `/speckit.bugfix.report` first
+- **Minimal changes** - change only what is necessary to address the specific bug

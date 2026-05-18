@@ -1,4 +1,4 @@
-# Elliot — History
+# Elliot - History
 
 ## Core Context
 

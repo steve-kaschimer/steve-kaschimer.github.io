@@ -1,9 +1,9 @@
 name: Squad Heartbeat (Ralph)
 
 on:
-  # DISABLED: Cron heartbeat commented out pre-migration — re-enable when ready
+  # DISABLED: Cron heartbeat commented out pre-migration - re-enable when ready
   # schedule:
-  #   # Every 30 minutes — adjust or remove if not needed
+  #   # Every 30 minutes - adjust or remove if not needed
   #   - cron: '*/30 * * * *'
 
   # React to completed work or new squad work
@@ -26,19 +26,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Ralph — Check for squad work
+      - name: Ralph - Check for squad work
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
 
-            // Read team roster — check .squad/ first, fall back to .ai-team/
+            // Read team roster - check .squad/ first, fall back to .ai-team/
             let teamFile = '.squad/team.md';
             if (!fs.existsSync(teamFile)) {
               teamFile = '.ai-team/team.md';
             }
             if (!fs.existsSync(teamFile)) {
-              core.info('No .squad/team.md or .ai-team/team.md found — Ralph has nothing to monitor');
+              core.info('No .squad/team.md or .ai-team/team.md found - Ralph has nothing to monitor');
               return;
             }
 
@@ -46,7 +46,7 @@ jobs:
 
             // Check if Ralph is on the roster
             if (!content.includes('Ralph') || !content.includes('🔄')) {
-              core.info('Ralph not on roster — heartbeat disabled');
+              core.info('Ralph not on roster - heartbeat disabled');
               return;
             }
 
@@ -73,7 +73,7 @@ jobs:
             }
 
             if (members.length === 0) {
-              core.info('No squad members found — nothing to monitor');
+              core.info('No squad members found - nothing to monitor');
               return;
             }
 
@@ -168,7 +168,7 @@ jobs:
             }
 
             if (summary.length === 0) {
-              core.info('📋 Board is clear — Ralph found no pending work');
+              core.info('📋 Board is clear - Ralph found no pending work');
               return;
             }
 
@@ -214,7 +214,7 @@ jobs:
                 );
                 if (lead) {
                   assignedMember = lead;
-                  reason = 'No domain match — routed to Lead';
+                  reason = 'No domain match - routed to Lead';
                 }
               }
 
@@ -233,7 +233,7 @@ jobs:
                   repo: context.repo.repo,
                   issue_number: issue.number,
                   body: [
-                    `### 🔄 Ralph — Auto-Triage`,
+                    `### 🔄 Ralph - Auto-Triage`,
                     '',
                     `**Assigned to:** ${assignedMember.name} (${assignedMember.role})`,
                     `**Reason:** ${reason}`,
@@ -247,7 +247,7 @@ jobs:
             }
 
       # Copilot auto-assign step (uses PAT if available)
-      - name: Ralph — Assign @copilot issues
+      - name: Ralph - Assign @copilot issues
         if: success()
         uses: actions/github-script@v7
         with:

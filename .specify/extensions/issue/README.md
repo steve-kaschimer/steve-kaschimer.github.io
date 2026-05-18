@@ -1,7 +1,7 @@
 # spec-kit-issue
 
 A [Spec Kit](https://github.com/github/spec-kit) community extension that generates
-and maintains spec artifacts from GitHub Issues — eliminating duplicate work between
+and maintains spec artifacts from GitHub Issues - eliminating duplicate work between
 issue tracking and specification.
 
 ## Overview

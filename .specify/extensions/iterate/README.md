@@ -9,7 +9,7 @@ Spec Kit's core workflow (`specify → plan → tasks → implement`) doesn't ha
 | Command | Description |
 |---------|-------------|
 | `/speckit.iterate.define` | Analyze a change request against current spec state and implementation progress, then write a reviewable iteration plan |
-| `/speckit.iterate.apply` | Apply the pending iteration to all spec documents — then hand off to `speckit.implement` |
+| `/speckit.iterate.apply` | Apply the pending iteration to all spec documents - then hand off to `speckit.implement` |
 
 ## Workflow
 
@@ -30,7 +30,7 @@ Spec Kit's core workflow (`specify → plan → tasks → implement`) doesn't ha
    ↓  continues implementation with updated docs
 ```
 
-The key insight: after `apply`, you skip `/speckit.plan` and `/speckit.tasks` entirely — `apply` already updated those artifacts to reflect the iteration.
+The key insight: after `apply`, you skip `/speckit.plan` and `/speckit.tasks` entirely - `apply` already updated those artifacts to reflect the iteration.
 
 ## Requirements
 
@@ -84,7 +84,7 @@ The command will:
 - Present an impact summary with risk checks
 - Write `pending-iteration.md` to your feature directory for review
 
-You can edit `pending-iteration.md` by hand before applying — it's structured markdown.
+You can edit `pending-iteration.md` by hand before applying - it's structured markdown.
 
 ### Applying an iteration
 
@@ -92,7 +92,7 @@ You can edit `pending-iteration.md` by hand before applying — it's structured 
 /speckit.iterate.apply
 ```
 
-No arguments needed — the command reads from `pending-iteration.md`. It will:
+No arguments needed - the command reads from `pending-iteration.md`. It will:
 - Update artifacts in dependency order: spec.md → data-model.md → plan.md → tasks.md → quickstart.md → research.md
 - Mark tasks as complete when confirmed by git evidence
 - Add an iteration log entry to spec.md

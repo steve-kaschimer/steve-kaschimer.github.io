@@ -1,4 +1,4 @@
-# Trenton — History
+# Trenton - History
 
 ## Core Context
 

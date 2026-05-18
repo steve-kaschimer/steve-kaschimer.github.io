@@ -4,7 +4,7 @@ extension:
   id: bugfix
   name: "Bugfix Workflow"
   version: "1.0.0"
-  description: "Structured bugfix workflow — capture bugs, trace to spec artifacts, and patch specs surgically"
+  description: "Structured bugfix workflow - capture bugs, trace to spec artifacts, and patch specs surgically"
   author: "Quratulain-bilal"
   repository: "https://github.com/Quratulain-bilal/spec-kit-bugfix"
   license: "MIT"

@@ -1,6 +1,6 @@
 # Lean Workflow
 
-A minimal preset that strips the Spec Kit workflow down to its essentials — just the prompt, just the artifact.
+A minimal preset that strips the Spec Kit workflow down to its essentials - just the prompt, just the artifact.
 
 ## When to Use
 
@@ -18,12 +18,12 @@ Use Lean when you want the structured specify → plan → tasks → implement p
 
 ## What It Replaces
 
-Lean overrides the five core workflow commands with self-contained prompts that produce each artifact directly — no separate template files involved. The result is a shorter, more direct workflow.
+Lean overrides the five core workflow commands with self-contained prompts that produce each artifact directly - no separate template files involved. The result is a shorter, more direct workflow.
 
 ## Installation
 
 ```bash
-# Lean is a bundled preset — no download needed
+# Lean is a bundled preset - no download needed
 specify preset add lean
 ```
 

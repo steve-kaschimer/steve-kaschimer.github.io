@@ -1,5 +1,5 @@
 ---
-description: Apply a pending iteration to spec documents — update all artifacts that speckit.implement relies on, then hand off to implementation.
+description: Apply a pending iteration to spec documents - update all artifacts that speckit.implement relies on, then hand off to implementation.
 handoffs:
   - label: Continue Implementation
     agent: speckit.implement
@@ -23,7 +23,7 @@ If the user provides arguments, treat them as adjustments or notes for the apply
 
 ## Outline
 
-Goal: Execute the iteration plan defined in `pending-iteration.md` by updating all spec artifacts that `speckit.implement` relies on. After apply completes, the user can go directly to `/speckit.implement` — skipping `/speckit.plan` and `/speckit.tasks` since this command already handles those updates.
+Goal: Execute the iteration plan defined in `pending-iteration.md` by updating all spec artifacts that `speckit.implement` relies on. After apply completes, the user can go directly to `/speckit.implement` - skipping `/speckit.plan` and `/speckit.tasks` since this command already handles those updates.
 
 ### 1. Initialize Feature Context
 
@@ -58,13 +58,13 @@ If `status` is not `pending`, warn the user that this iteration may have already
 
 Read all available artifacts from FEATURE_DIR:
 
-- **REQUIRED**: `spec.md` — requirements, user stories, edge cases, scope
-- **IF EXISTS**: `plan.md` — tech stack, architecture, file structure, phases
-- **IF EXISTS**: `tasks.md` — task list with IDs, phases, checkboxes, dependencies
-- **IF EXISTS**: `data-model.md` — entities, attributes, relationships
-- **IF EXISTS**: `research.md` — technical decisions and constraints
-- **IF EXISTS**: `quickstart.md` — integration/test scenarios
-- **IF EXISTS**: `checklists/` — quality checklists
+- **REQUIRED**: `spec.md` - requirements, user stories, edge cases, scope
+- **IF EXISTS**: `plan.md` - tech stack, architecture, file structure, phases
+- **IF EXISTS**: `tasks.md` - task list with IDs, phases, checkboxes, dependencies
+- **IF EXISTS**: `data-model.md` - entities, attributes, relationships
+- **IF EXISTS**: `research.md` - technical decisions and constraints
+- **IF EXISTS**: `quickstart.md` - integration/test scenarios
+- **IF EXISTS**: `checklists/` - quality checklists
 
 Build an internal model of the feature's current state.
 
@@ -117,7 +117,7 @@ For each artifact, follow the specific changes listed in the `## Planned Changes
 
 - **Adding tasks**: Assign the next available Task ID (TXXX). Place in the correct phase. Add `[P]` and `[Story]` markers following existing conventions. Use checkbox format: `- [ ] TXXX ...`
 - **Modifying tasks**: Update the description in place. Preserve the Task ID and checkbox state.
-- **Removing tasks**: Do NOT renumber — IDs are stable references. Strike through with a note: `~~TXXX~~ (removed in iteration YYYY-MM-DD)`.
+- **Removing tasks**: Do NOT renumber - IDs are stable references. Strike through with a note: `~~TXXX~~ (removed in iteration YYYY-MM-DD)`.
 - **Re-scoping phases**: If tasks move between phases, update both the source and target phase sections.
 - Update the Dependencies & Execution Order section if task relationships change.
 - Update the Implementation Strategy summary table if phase composition changes.
@@ -140,7 +140,7 @@ Using the implementation progress data from `pending-iteration.md` (the "Potenti
 - Change `- [ ]` to `- [x]` for confirmed completions in `tasks.md`.
 - If a task was listed but cannot be confirmed, leave it as `[ ]` and note it in the completion report.
 
-This step is **supplementary** — if no task completions are detected, skip it cleanly.
+This step is **supplementary** - if no task completions are detected, skip it cleanly.
 
 ### 7. Add Iteration Log Entry
 
@@ -161,7 +161,7 @@ Add an entry under a `## Iterations` section in `spec.md` (create the section if
 
 After all updates, perform a quick consistency scan:
 
-- Every requirement in spec.md should have at least one task in tasks.md that addresses it (warn if not — don't auto-generate tasks).
+- Every requirement in spec.md should have at least one task in tasks.md that addresses it (warn if not - don't auto-generate tasks).
 - Every task in tasks.md should reference files/components that exist in plan.md's structure (warn on orphans).
 - No contradictory statements across artifacts (e.g., spec says "add tab" but tasks still reference removing it).
 - Task dependency graph has no cycles and respects phase ordering.
@@ -195,7 +195,7 @@ Output a structured summary:
 |--------|----------|---------|
 | Added | TXXX, TYYY | <brief description> |
 | Modified | TZZZ | <what changed> |
-| Removed | — | — |
+| Removed | - | - |
 | Marked complete | TAAA | <confirmed from git> |
 
 ### Consistency Warnings (if any)
@@ -207,21 +207,21 @@ Output a structured summary:
 
 Your spec documents are updated and ready for implementation:
 
-- `/speckit.implement` — continue implementation with the updated specs (recommended)
-- `/speckit.analyze` — verify cross-artifact consistency before implementing
-- `/speckit.iterate.define` — define another iteration if more changes are needed
+- `/speckit.implement` - continue implementation with the updated specs (recommended)
+- `/speckit.analyze` - verify cross-artifact consistency before implementing
+- `/speckit.iterate.define` - define another iteration if more changes are needed
 ```
 
 ## Behavior Rules
 
-- **Require a pending iteration** — never apply changes without `pending-iteration.md`. If the user wants a single-step workflow, they should run `define` first.
-- **Follow the plan** — execute the specific changes listed in `pending-iteration.md`. Do not add, skip, or reinterpret changes beyond what the plan specifies (unless the user provides adjustments via `$ARGUMENTS`).
-- **Preserve completed work** — never silently remove or modify completed tasks (`[x]`). If the iteration plan acknowledged risks to completed tasks, follow through as planned.
-- **Stable IDs** — never renumber existing Task IDs or Requirement IDs. Append new ones at the end of the sequence.
-- **Minimal edits** — only touch sections directly affected by the planned changes. Do not reformat or restructure unrelated content.
-- **No implementation** — this command updates documentation only. It does not write application code.
-- **Atomic saves** — save each artifact immediately after updating it to minimize context loss.
-- **Clean up after success** — always delete `pending-iteration.md` after a successful apply.
-- **Respect user intent** — if something in the pending iteration file is unclear or seems wrong, ask before proceeding rather than guessing.
+- **Require a pending iteration** - never apply changes without `pending-iteration.md`. If the user wants a single-step workflow, they should run `define` first.
+- **Follow the plan** - execute the specific changes listed in `pending-iteration.md`. Do not add, skip, or reinterpret changes beyond what the plan specifies (unless the user provides adjustments via `$ARGUMENTS`).
+- **Preserve completed work** - never silently remove or modify completed tasks (`[x]`). If the iteration plan acknowledged risks to completed tasks, follow through as planned.
+- **Stable IDs** - never renumber existing Task IDs or Requirement IDs. Append new ones at the end of the sequence.
+- **Minimal edits** - only touch sections directly affected by the planned changes. Do not reformat or restructure unrelated content.
+- **No implementation** - this command updates documentation only. It does not write application code.
+- **Atomic saves** - save each artifact immediately after updating it to minimize context loss.
+- **Clean up after success** - always delete `pending-iteration.md` after a successful apply.
+- **Respect user intent** - if something in the pending iteration file is unclear or seems wrong, ask before proceeding rather than guessing.
 
 Context for iteration: $ARGUMENTS

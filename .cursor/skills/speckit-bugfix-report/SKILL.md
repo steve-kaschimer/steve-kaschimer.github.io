@@ -20,7 +20,7 @@ Capture a bug discovered during implementation and trace it back to the relevant
 $ARGUMENTS
 ```
 
-You **MUST** consider the user input before proceeding (if not empty). The user describes the bug — what went wrong, error messages, unexpected behavior, or a gap discovered during implementation.
+You **MUST** consider the user input before proceeding (if not empty). The user describes the bug - what went wrong, error messages, unexpected behavior, or a gap discovered during implementation.
 
 ## Prerequisites
 
@@ -65,7 +65,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    ## Artifact Traceability
 
    ### spec.md
-   - **Affected user story**: [Story N — title]
+   - **Affected user story**: [Story N - title]
    - **Affected requirements**: [List specific requirements]
    - **Gap identified**: [What is missing or wrong in the spec]
 
@@ -79,7 +79,7 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
    - **Missing tasks**: [New tasks needed to fix the bug]
 
    ## Root Cause Analysis
-   [Why this bug exists — was it a spec oversight, changed requirement, or implementation error?]
+   [Why this bug exists - was it a spec oversight, changed requirement, or implementation error?]
 
    ## Recommended Fix
    1. Run `/speckit-bugfix-patch` to update spec artifacts
@@ -93,8 +93,8 @@ You **MUST** consider the user input before proceeding (if not empty). The user 
 
 ## Rules
 
-- **Always trace to artifacts** — every bug must map to at least one spec section
-- **Never modify spec artifacts** — this command only reports, use `/speckit-bugfix-patch` to make changes
-- **Sequential numbering** — bug reports are numbered BUG-001, BUG-002, etc.
-- **Classify accurately** — distinguish between spec gaps (missing requirements) and implementation drift (code doesn't match spec)
-- **Be specific** — reference exact user story numbers, requirement text, and task IDs
+- **Always trace to artifacts** - every bug must map to at least one spec section
+- **Never modify spec artifacts** - this command only reports, use `/speckit-bugfix-patch` to make changes
+- **Sequential numbering** - bug reports are numbered BUG-001, BUG-002, etc.
+- **Classify accurately** - distinguish between spec gaps (missing requirements) and implementation drift (code doesn't match spec)
+- **Be specific** - reference exact user story numbers, requirement text, and task IDs

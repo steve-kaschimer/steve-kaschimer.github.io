@@ -4,7 +4,7 @@ extension:
   id: "iterate"
   name: "Iterate"
   version: "2.0.0"
-  description: "Iterate on spec documents with a two-phase define-and-apply workflow — refine specs mid-implementation and go straight back to building"
+  description: "Iterate on spec documents with a two-phase define-and-apply workflow - refine specs mid-implementation and go straight back to building"
   author: "Vianca Martinez"
   repository: "https://github.com/imviancagrace/spec-kit-iterate"
   license: "MIT"
@@ -19,7 +19,7 @@ provides:
   commands:
     - name: "speckit.iterate.define"
       file: "commands/define.md"
-      description: "Define an iteration — analyze the change request against current spec state and implementation progress, then write a reviewable iteration plan"
+      description: "Define an iteration - analyze the change request against current spec state and implementation progress, then write a reviewable iteration plan"
 
     - name: "speckit.iterate.apply"
       file: "commands/apply.md"

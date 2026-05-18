@@ -66,7 +66,7 @@ Using the GitHub MCP tool, call the appropriate function to get issue details.
 
 ### 3. Extract Spec Content from the Issue
 
-Analyze the issue content and identify the following. Each may appear in the body or in comments — use best judgement when sections are not explicitly labelled:
+Analyze the issue content and identify the following. Each may appear in the body or in comments - use best judgement when sections are not explicitly labelled:
 
 - **Problem Statement / Context**: What problem this addresses or what value it provides
 - **User Stories / Requirements**: Desired behavior, often in
@@ -99,12 +99,12 @@ Create the directory if it does not exist.
 
 ### 5. Generate spec.md
 
-Write `spec.md` to the feature directory using the structure below. Populate every section with content derived from the issue. Do not leave placeholder text — if a section has no applicable content, omit it rather than writing "N/A".
+Write `spec.md` to the feature directory using the structure below. Populate every section with content derived from the issue. Do not leave placeholder text - if a section has no applicable content, omit it rather than writing "N/A".
 
 ```markdown
 # <Issue Title>
 
-> **Source**: [#<number>](<issue-url>) — imported on <today's date (YYYY-MM-DD)>
+> **Source**: [#<number>](<issue-url>) - imported on <today's date (YYYY-MM-DD)>
 
 ## Overview
 

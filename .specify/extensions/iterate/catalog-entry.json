@@ -1,7 +1,7 @@
 {
   "name": "Iterate",
   "id": "iterate",
-  "description": "Iterate on spec documents with a two-phase define-and-apply workflow — refine specs mid-implementation and go straight back to building",
+  "description": "Iterate on spec documents with a two-phase define-and-apply workflow - refine specs mid-implementation and go straight back to building",
   "author": "Vianca Martinez",
   "version": "2.0.0",
   "download_url": "https://github.com/imviancagrace/spec-kit-iterate/archive/refs/tags/v2.0.0.zip",

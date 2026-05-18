@@ -2,15 +2,15 @@
 author: Steve Kaschimer
 date: 2026-04-24
 image: /images/posts/2026-04-24-hero.png
-image_prompt: "A dark-mode terminal aesthetic on a near-black background with deep indigo and amber accent tones. Split composition: on the left, a blurred, visually chaotic git log output showing commit messages like 'fix', 'wip', 'more fixes', 'update', 'actually fix', 'pr feedback' — rendered in faded, desaturated red-orange, each message bleeding together into noise. On the right, a sharp, crisp git log showing well-structured Conventional Commits messages with type prefixes, scope indicators, and clean subject lines — rendered in bright amber and cool white, clearly readable and ordered. A thin vertical dividing line separates the two halves, glowing faintly. Below both panels, a faint horizontal timeline suggests git history stretching back into the past. Mood: the satisfaction of order over entropy, the feeling of a codebase you can actually navigate. Avoid: cartoon characters, GitHub Octocat, generic keyboard imagery, abstract circuit board textures."
+image_prompt: "A dark-mode terminal aesthetic on a near-black background with deep indigo and amber accent tones. Split composition: on the left, a blurred, visually chaotic git log output showing commit messages like 'fix', 'wip', 'more fixes', 'update', 'actually fix', 'pr feedback' - rendered in faded, desaturated red-orange, each message bleeding together into noise. On the right, a sharp, crisp git log showing well-structured Conventional Commits messages with type prefixes, scope indicators, and clean subject lines - rendered in bright amber and cool white, clearly readable and ordered. A thin vertical dividing line separates the two halves, glowing faintly. Below both panels, a faint horizontal timeline suggests git history stretching back into the past. Mood: the satisfaction of order over entropy, the feeling of a codebase you can actually navigate. Avoid: cartoon characters, GitHub Octocat, generic keyboard imagery, abstract circuit board textures."
 layout: post.njk
 site_title: Tech Notes
-summary: Most commit messages are a form of passive negligence — this post teaches the exact format, body-writing discipline, hook setup, and CI enforcement that turns git log into a searchable record of every decision your team has ever made.
+summary: Most commit messages are a form of passive negligence - this post teaches the exact format, body-writing discipline, hook setup, and CI enforcement that turns git log into a searchable record of every decision your team has ever made.
 tags: ["writing-for-engineers", "developer-productivity", "devops"]
 title: "Writing Commit Messages That Make Code Review Faster"
 ---
 
-You open a PR for review. It has twelve commits. The messages read: "fix", "wip", "update", "more fixes", "actually fix", "pr feedback". There is no narrative, no context, no explanation of what was tried and discarded. To understand why any particular line changed, you have to reverse-engineer intent from the diff alone — which is exactly what the commit messages were supposed to make unnecessary. This is a communication failure, and it compounds: bad commit messages make code review slower, make `git bisect` a guessing game, make `git blame` useless for anything except finding who to ask, and make onboarding new teammates onto a codebase a puzzle instead of a story.
+You open a PR for review. It has twelve commits. The messages read: "fix", "wip", "update", "more fixes", "actually fix", "pr feedback". There is no narrative, no context, no explanation of what was tried and discarded. To understand why any particular line changed, you have to reverse-engineer intent from the diff alone - which is exactly what the commit messages were supposed to make unnecessary. This is a communication failure, and it compounds: bad commit messages make code review slower, make `git bisect` a guessing game, make `git blame` useless for anything except finding who to ask, and make onboarding new teammates onto a codebase a puzzle instead of a story.
 
 The fix takes about 60 seconds per commit. Most developers just haven't been taught the format.
 
@@ -23,7 +23,7 @@ Start with a concrete example of the finished product, then take it apart:
 ```text
 feat(auth): replace session tokens with JWTs
 
-Cookie-based sessions were hitting a scaling wall — the session store
+Cookie-based sessions were hitting a scaling wall - the session store
 was becoming a bottleneck at ~5k concurrent users. JWTs eliminate the
 server-side session lookup entirely.
 
@@ -43,37 +43,37 @@ Five distinct structural elements. Each one is doing specific work.
 
 ### The subject line
 
-- 50 characters or fewer — hard limit is 72. If your editor shows a ruler, put it there.
-- **Imperative mood**: "add", "fix", "remove" — not "added", "fixed", "removes". The convention is to complete the sentence "If applied, this commit will..." — the rest of that sentence is your subject line.
-- **Type prefix + scope**: `feat(auth):`, `fix(api):`, `chore(deps):` — this is **Conventional Commits**, covered in full below.
+- 50 characters or fewer - hard limit is 72. If your editor shows a ruler, put it there.
+- **Imperative mood**: "add", "fix", "remove" - not "added", "fixed", "removes". The convention is to complete the sentence "If applied, this commit will..." - the rest of that sentence is your subject line.
+- **Type prefix + scope**: `feat(auth):`, `fix(api):`, `chore(deps):` - this is **Conventional Commits**, covered in full below.
 - No period at the end. The subject line is a title, not a sentence.
 - If you can't write it in 50 characters, the commit is probably doing too much. That's information worth acting on.
 
 ### The blank line
 
-Required. Without it, many git tools — `git log --oneline`, `git shortlog`, GitHub's PR commit list — treat the entire message as a single subject. The blank line is not optional punctuation. It is structural.
+Required. Without it, many git tools - `git log --oneline`, `git shortlog`, GitHub's PR commit list - treat the entire message as a single subject. The blank line is not optional punctuation. It is structural.
 
 ### The body
 
-This is the part most developers skip and the part that pays the most dividends over time. The body explains **why**, not what — the diff already shows what changed. Three questions the body should answer:
+This is the part most developers skip and the part that pays the most dividends over time. The body explains **why**, not what - the diff already shows what changed. Three questions the body should answer:
 
 1. Why was this change necessary?
 2. What alternatives were considered and why were they rejected?
 3. What constraints or tradeoffs shaped the approach?
 
-Wrap at 72 characters. `git log` outputs body text at full width in a terminal — unwrapped lines that run past 80 characters make the output unreadable without horizontal scrolling.
+Wrap at 72 characters. `git log` outputs body text at full width in a terminal - unwrapped lines that run past 80 characters make the output unreadable without horizontal scrolling.
 
 ### The footer
 
 - **Issue references**: `Closes #412`, `Fixes #88`, `Resolves #200`, `Refs #101`
-- **Co-authors**: `Co-authored-by: Name <email>` — GitHub parses this trailer and credits the contributor in the commit view and contribution graph
-- **Breaking changes**: `BREAKING CHANGE:` — the Conventional Commits spec; triggers a major version bump in `semantic-release` and `release-please`
+- **Co-authors**: `Co-authored-by: Name <email>` - GitHub parses this trailer and credits the contributor in the commit view and contribution graph
+- **Breaking changes**: `BREAKING CHANGE:` - the Conventional Commits spec; triggers a major version bump in `semantic-release` and `release-please`
 
 The footer is where metadata lives. Putting `Closes #412` in the body instead of the footer works syntactically, but it survives squash-merge and PR description edits more reliably as a footer trailer.
 
 ***
 
-## Conventional Commits — The Spec Worth Adopting
+## Conventional Commits - The Spec Worth Adopting
 
 > **Conventional Commits** is a specification for commit message format that makes history machine-parseable: `<type>(<scope>): <subject>`.
 
@@ -84,7 +84,7 @@ The common types, and what they mean:
 | `feat` | New capability or behavior |
 | `fix` | Bug fix |
 | `docs` | Documentation only |
-| `style` | Formatting, whitespace — no logic change |
+| `style` | Formatting, whitespace - no logic change |
 | `refactor` | Code restructuring, no behavior change |
 | `test` | Adding or updating tests |
 | `chore` | Maintenance, config, tooling |
@@ -128,12 +128,12 @@ Zero manual changelog writing. The history is the changelog, because the commit 
 
 ***
 
-## Writing the Body — The Why, Not the What
+## Writing the Body - The Why, Not the What
 
 The body is where most developers have the most room to improve and the most to gain. Here is the pattern to avoid:
 
 ```text
-# Bad — describes what the diff already shows
+# Bad - describes what the diff already shows
 refactor(db): extract query builder
 
 Moved query building logic from UserRepository into a new
@@ -143,7 +143,7 @@ QueryBuilder class. Added methods for filtering and sorting.
 That body is worse than no body. It repeats what the diff shows, adds no context, and will tell a future reader nothing they couldn't have learned from running `git diff`. Compare:
 
 ```text
-# Good — explains why and what was considered
+# Good - explains why and what was considered
 refactor(db): extract query builder
 
 UserRepository had grown to 400 lines, 60% of which was
@@ -160,7 +160,7 @@ the query surface significantly.
 
 The test for whether a body is done: could someone who wasn't in the room understand why this change was made, six months from now, with only this message and the diff? If not, the body isn't done.
 
-That test is particularly important for decisions that look arbitrary without context. The rejected Redis cluster alternative in the opening example isn't there to show off the author's research — it's there because the next engineer to touch that code will have the same idea, and they deserve to know it was already considered and why it was rejected. Without that note, the investigation happens again. Bad commit messages bill future engineers for decisions that were already paid for.
+That test is particularly important for decisions that look arbitrary without context. The rejected Redis cluster alternative in the opening example isn't there to show off the author's research - it's there because the next engineer to touch that code will have the same idea, and they deserve to know it was already considered and why it was rejected. Without that note, the investigation happens again. Bad commit messages bill future engineers for decisions that were already paid for.
 
 ***
 
@@ -168,14 +168,14 @@ That test is particularly important for decisions that look arbitrary without co
 
 GitHub parses specific **closing keywords** in commit messages (and PR descriptions) and acts on them when code lands on the default branch:
 
-- `Closes #123` — closes the issue on merge
-- `Fixes #123` — closes the issue (alias for Closes)
-- `Resolves #123` — closes the issue (alias for Closes)
-- `Refs #123` — links without closing, for partial work or related issues
+- `Closes #123` - closes the issue on merge
+- `Fixes #123` - closes the issue (alias for Closes)
+- `Resolves #123` - closes the issue (alias for Closes)
+- `Refs #123` - links without closing, for partial work or related issues
 
 The recommendation: put these in the commit message footer, not the PR description. Here's why.
 
-If you use a squash-merge strategy, GitHub uses the PR description as the squash commit message by default. But PR descriptions get edited — the final state of the description may not match what was in the original. Issue references in individual commit messages survive this, and they're visible in the git history independent of GitHub's UI.
+If you use a squash-merge strategy, GitHub uses the PR description as the squash commit message by default. But PR descriptions get edited - the final state of the description may not match what was in the original. Issue references in individual commit messages survive this, and they're visible in the git history independent of GitHub's UI.
 
 For `Refs` specifically: use it when a commit is related to an issue but doesn't fully resolve it. A multi-PR epic might have three commits that each `Refs #88` and one final commit that `Closes #88`. That gives a clean audit trail of every commit that touched the work.
 
@@ -229,7 +229,7 @@ npx --no -- commitlint --edit $1
 ```
 
 ```js
-// commitlint.config.js (ESM — requires "type": "module" in package.json)
+// commitlint.config.js (ESM - requires "type": "module" in package.json)
 export default {
   extends: ['@commitlint/config-conventional']
 };
@@ -242,7 +242,7 @@ The `prepare` script runs on `npm install`, so every developer who clones the re
 
 ### CI Enforcement
 
-The local hook can be bypassed with `git commit --no-verify`. For teams where that matters — or for open-source projects where contributors control their own environments — add a CI check that runs on pull requests:
+The local hook can be bypassed with `git commit --no-verify`. For teams where that matters - or for open-source projects where contributors control their own environments - add a CI check that runs on pull requests:
 
 ```yaml
 name: Lint Commits
@@ -264,13 +264,13 @@ jobs:
       - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 ```
 
-The `fetch-depth: 0` is required — without it, the shallow clone won't have the base commit in history, and commitlint can't compute the range. This catches any commit that bypassed the local hook, and it gives contributors clear feedback in CI before the PR goes to review.
+The `fetch-depth: 0` is required - without it, the shallow clone won't have the base commit in history, and commitlint can't compute the range. This catches any commit that bypassed the local hook, and it gives contributors clear feedback in CI before the PR goes to review.
 
 ***
 
-## `git notes` — Post-Merge Context Without Rewriting History
+## `git notes` - Post-Merge Context Without Rewriting History
 
-Sometimes you learn something after a commit merges — a production incident reveals the real cause, a follow-up investigation changes your understanding of a decision. **`git notes`** lets you attach context to an existing commit without amending or rewriting history:
+Sometimes you learn something after a commit merges - a production incident reveals the real cause, a follow-up investigation changes your understanding of a decision. **`git notes`** lets you attach context to an existing commit without amending or rewriting history:
 
 ```bash
 # Add a note to the most recent commit
@@ -304,10 +304,10 @@ That friction makes `git notes` most useful for team-internal context in reposit
 Before every commit:
 
 - [ ] Subject line is **≤ 50 characters** (hard limit: 72), imperative mood, no trailing period
-- [ ] Type prefix matches what changed — `feat` for new capability, `fix` for bug, `chore` for maintenance
+- [ ] Type prefix matches what changed - `feat` for new capability, `fix` for bug, `chore` for maintenance
 - [ ] Body explains **why**, not what the diff already shows
 - [ ] Tradeoffs and rejected alternatives are documented if the decision wasn't obvious
-- [ ] Issue reference is in the footer (`Closes #N`, `Refs #N`) — not buried in the body
+- [ ] Issue reference is in the footer (`Closes #N`, `Refs #N`) - not buried in the body
 - [ ] If it's a breaking change: `BREAKING CHANGE:` is in the footer
 - [ ] If you couldn't fit the change in one subject line, consider whether the commit should be split
 
@@ -315,11 +315,11 @@ Before every commit:
 
 ## The Asymmetry of the Investment
 
-Writing a good commit message costs 60 seconds. Reading a bad one during code review, a `git bisect` session, or an incident postmortem costs multiples of that — multiplied by every person who reads it, every time the codebase is touched for as long as it exists. A codebase with good commit messages is a codebase with a searchable, human-readable record of every decision ever made: why the architecture looks the way it does, what was tried and rejected, what constraints shaped each choice.
+Writing a good commit message costs 60 seconds. Reading a bad one during code review, a `git bisect` session, or an incident postmortem costs multiples of that - multiplied by every person who reads it, every time the codebase is touched for as long as it exists. A codebase with good commit messages is a codebase with a searchable, human-readable record of every decision ever made: why the architecture looks the way it does, what was tried and rejected, what constraints shaped each choice.
 
 That's useful for reviewers. It's useful for the new engineer trying to understand a module they've never touched. It's especially useful for the person who wrote the commits six months from now, staring at a line they no longer remember writing, asking themselves why they made a choice they can't explain.
 
-The format is learnable in an afternoon. The discipline is a habit built commit by commit. Start with the subject line — type prefix, imperative mood, under 72 characters. Add a body the next time you make a decision that future-you will need to understand. The rest follows.
+The format is learnable in an afternoon. The discipline is a habit built commit by commit. Start with the subject line - type prefix, imperative mood, under 72 characters. Add a body the next time you make a decision that future-you will need to understand. The rest follows.
 
 ***
 

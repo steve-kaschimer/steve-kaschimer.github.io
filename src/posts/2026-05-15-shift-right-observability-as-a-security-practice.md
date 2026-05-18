@@ -2,17 +2,17 @@
 author: Steve Kaschimer
 date: 2026-05-15
 image: /images/posts/2026-05-15-hero.png
-image_prompt: "A dark-mode technical editorial illustration with near-black background and sharp teal, amber, and soft-red accents. Split composition: left side shows a stylized CI/CD pipeline — sequential stages labeled 'lint,' 'scan,' 'test,' 'deploy' — rendered in clean teal, glowing with confidence, conveying shift-left coverage. Right side bleeds into a live production environment: a cluster of server nodes emitting subtle signal arcs, logs scrolling, a single amber trace line threading through. Connecting the two halves, a thin horizontal arrow labeled 'shift right' in small monospaced type. Overlaid on the production side, faint anomaly markers — a spike on an auth-failure rate chart, a red dot on an outbound connection to an unknown host — rendered as miniature technical widgets. The mood is not alarm; it is instrumentation — the quiet satisfaction of a system that is actually watching itself. Avoid: generic padlock or shield imagery, fire or explosion motifs, cartoon hacker figures, circuit board textures."
+image_prompt: "A dark-mode technical editorial illustration with near-black background and sharp teal, amber, and soft-red accents. Split composition: left side shows a stylized CI/CD pipeline - sequential stages labeled 'lint,' 'scan,' 'test,' 'deploy' - rendered in clean teal, glowing with confidence, conveying shift-left coverage. Right side bleeds into a live production environment: a cluster of server nodes emitting subtle signal arcs, logs scrolling, a single amber trace line threading through. Connecting the two halves, a thin horizontal arrow labeled 'shift right' in small monospaced type. Overlaid on the production side, faint anomaly markers - a spike on an auth-failure rate chart, a red dot on an outbound connection to an unknown host - rendered as miniature technical widgets. The mood is not alarm; it is instrumentation - the quiet satisfaction of a system that is actually watching itself. Avoid: generic padlock or shield imagery, fire or explosion motifs, cartoon hacker figures, circuit board textures."
 layout: post.njk
 site_title: Tech Notes
-summary: Shift-left tooling stops at the deployment boundary — runtime observability closes the gap by turning the same logs and traces you already collect into a security detection layer.
+summary: Shift-left tooling stops at the deployment boundary - runtime observability closes the gap by turning the same logs and traces you already collect into a security detection layer.
 tags: ["security", "devsecops", "platform-engineering"]
 title: "Shift Right: Why Production Observability Is a Security Practice"
 ---
 
-Shift left is right. Catch vulnerabilities in code review, in CI, in dependency scanning — before they ship. The DevSecOps community has invested heavily here and the tooling is genuinely good. But shift left has a blind spot: it only covers the attack surface you anticipated. Attackers don't respect your threat model. They operate in production, against live systems, exploiting behavior that passed every scan because it wasn't a vulnerability until it was combined with a specific runtime condition, a specific data pattern, or a specific sequence of requests. The answer isn't to abandon shift left — it's to complement it with **shift right**: instrumentation in production that makes anomalous behavior visible before it becomes an incident.
+Shift left is right. Catch vulnerabilities in code review, in CI, in dependency scanning - before they ship. The DevSecOps community has invested heavily here and the tooling is genuinely good. But shift left has a blind spot: it only covers the attack surface you anticipated. Attackers don't respect your threat model. They operate in production, against live systems, exploiting behavior that passed every scan because it wasn't a vulnerability until it was combined with a specific runtime condition, a specific data pattern, or a specific sequence of requests. The answer isn't to abandon shift left - it's to complement it with **shift right**: instrumentation in production that makes anomalous behavior visible before it becomes an incident.
 
-The reason this gets skipped is understandable. Shift-left tooling is largely automatic — you plug in Dependabot, add a CodeQL workflow, and the scans run without anyone thinking about them. Shift-right requires decisions: what to instrument, what thresholds to set, where to route alerts, how to avoid drowning your team in noise. Those decisions aren't hard, but they require intention. This post makes the argument for doing it, shows how to instrument a Node.js service with **OpenTelemetry** for security-relevant signals, and routes those signals into GitHub Security alerts — where your team is already reviewing Dependabot and CodeQL findings — so the operational overhead stays close to zero.
+The reason this gets skipped is understandable. Shift-left tooling is largely automatic - you plug in Dependabot, add a CodeQL workflow, and the scans run without anyone thinking about them. Shift-right requires decisions: what to instrument, what thresholds to set, where to route alerts, how to avoid drowning your team in noise. Those decisions aren't hard, but they require intention. This post makes the argument for doing it, shows how to instrument a Node.js service with **OpenTelemetry** for security-relevant signals, and routes those signals into GitHub Security alerts - where your team is already reviewing Dependabot and CodeQL findings - so the operational overhead stays close to zero.
 
 ---
 
@@ -25,7 +25,7 @@ Here is the core argument: everything your security team wants to see in a SIEM 
 - A process spawning a child process might be a legitimate job runner. It might be a shell injection exploit in progress.
 - Authentication failures at 3am from a single IP might be a developer locked out. It might be a brute-force attempt.
 
-None of these interpretations require different data. They require different context and different thresholds applied to the same stream. Most organizations run separate tooling for observability (Datadog, Grafana, OpenTelemetry collectors) and security (SIEM, GitHub Security alerts, Dependabot). They are looking at the same signals twice through different products, paying twice, and — critically — the integration between the two stacks is usually manual, asynchronous, and owned by nobody. The better model is to define security-relevant thresholds inside your observability instrumentation and route high-severity signals to security tooling directly.
+None of these interpretations require different data. They require different context and different thresholds applied to the same stream. Most organizations run separate tooling for observability (Datadog, Grafana, OpenTelemetry collectors) and security (SIEM, GitHub Security alerts, Dependabot). They are looking at the same signals twice through different products, paying twice, and - critically - the integration between the two stacks is usually manual, asynchronous, and owned by nobody. The better model is to define security-relevant thresholds inside your observability instrumentation and route high-severity signals to security tooling directly.
 
 > Observability asks: "What is my system doing right now?" Security asks: "Is my system being abused right now?" At the production layer, these questions share an answer.
 
@@ -33,40 +33,40 @@ None of these interpretations require different data. They require different con
 
 ## The Three Signal Categories Worth Instrumenting for Security
 
-Not everything in your telemetry is security-relevant. The goal is not to route all traces into a SIEM — it's to identify the narrow set of signals where an anomaly is evidence of abuse rather than just a bug. Three categories cover most of what matters for a typical web application.
+Not everything in your telemetry is security-relevant. The goal is not to route all traces into a SIEM - it's to identify the narrow set of signals where an anomaly is evidence of abuse rather than just a bug. Three categories cover most of what matters for a typical web application.
 
 ### Authentication and Authorization Signals
 
 Failed logins are the most observable leading indicator of account-based attacks. What to track:
 
-- **Failed authentication attempts** — rate, source IP, target account
-- **Successful auth after N prior failures** — credential stuffing success signal; this is the event that matters most
-- **Privilege escalation events** — role changes, permission grants, admin flag toggles
-- **Token anomalies** — same token presented from multiple distinct IPs, token used after recorded revocation
+- **Failed authentication attempts** - rate, source IP, target account
+- **Successful auth after N prior failures** - credential stuffing success signal; this is the event that matters most
+- **Privilege escalation events** - role changes, permission grants, admin flag toggles
+- **Token anomalies** - same token presented from multiple distinct IPs, token used after recorded revocation
 
 The trick with auth signals is baselining. A handful of failed logins per hour is normal. Fifty from a single IP over five minutes is not. Establish a 30-day rolling baseline for failed auth rate per hour, alert when the current rate exceeds 3× baseline sustained for five or more minutes. This single threshold eliminates the noise from developers mistyping their passwords while catching the early ramp of a stuffing attack.
 
 ### Outbound Connection Patterns
 
-Server-side applications have a predictable set of outbound destinations. Your API calls GitHub, Slack, maybe a payment processor. That list changes infrequently and is known in advance. An unexpected outbound connection is anomalous by definition — it doesn't require a baseline, because the baseline is your allowlist.
+Server-side applications have a predictable set of outbound destinations. Your API calls GitHub, Slack, maybe a payment processor. That list changes infrequently and is known in advance. An unexpected outbound connection is anomalous by definition - it doesn't require a baseline, because the baseline is your allowlist.
 
 What to track:
-- **Outbound connections to new or unknown hosts** — first-time destinations not on the allowlist
-- **DNS resolution of domains outside the allowlist** — catches connections that haven't been made yet
-- **Data volume spikes on established outbound connections** — potential exfiltration even to a known destination
+- **Outbound connections to new or unknown hosts** - first-time destinations not on the allowlist
+- **DNS resolution of domains outside the allowlist** - catches connections that haven't been made yet
+- **Data volume spikes on established outbound connections** - potential exfiltration even to a known destination
 
 This pattern is particularly high-value because it catches post-exploitation activity. An attacker who has achieved code execution in your application will eventually try to beacon home or exfiltrate data. The outbound connection is often the first observable evidence.
 
 ### Process and Runtime Behavior
 
-For Node.js specifically, **`child_process.exec`** and **`child_process.spawn`** with user-controlled input are a common injection vector. Logging every process spawn with its full argument list is cheap — the events are rare in a healthy application — and the signal-to-noise ratio when something anomalous appears is excellent.
+For Node.js specifically, **`child_process.exec`** and **`child_process.spawn`** with user-controlled input are a common injection vector. Logging every process spawn with its full argument list is cheap - the events are rare in a healthy application - and the signal-to-noise ratio when something anomalous appears is excellent.
 
 What to watch for:
 - **Unexpected child process spawns**, especially shell interpreters: `sh`, `bash`, `cmd.exe`, `powershell.exe`
-- **File system writes to locations outside expected application directories** — binaries dropping to `/tmp`, writes to cron directories
-- **Memory usage anomalies** — some exploit payloads and deserialization attacks cause distinctive heap growth patterns
+- **File system writes to locations outside expected application directories** - binaries dropping to `/tmp`, writes to cron directories
+- **Memory usage anomalies** - some exploit payloads and deserialization attacks cause distinctive heap growth patterns
 
-A Node.js web application should almost never spawn a shell. If one appears in your process spawn log, that is not a false positive you tune away — it is the beginning of an incident response.
+A Node.js web application should almost never spawn a shell. If one appears in your process spawn log, that is not a false positive you tune away - it is the beginning of an incident response.
 
 Instrument spawns by wrapping `child_process.spawn` at a single callsite in your application:
 
@@ -103,13 +103,13 @@ export function spawn(command, args = [], options = {}) {
 }
 ```
 
-Use `lib/safe-spawn.js` everywhere in your application instead of importing `child_process` directly — the wrapper is a `eslint` rule away from being enforced (`no-restricted-imports`).
+Use `lib/safe-spawn.js` everywhere in your application instead of importing `child_process` directly - the wrapper is a `eslint` rule away from being enforced (`no-restricted-imports`).
 
 ***
 
 ## Instrumenting a Node.js App with OpenTelemetry
 
-OpenTelemetry's auto-instrumentation handles the baseline — HTTP spans, framework-level timing, error tracking — without code changes. The security-relevant work is adding custom attributes to existing spans and emitting structured logs alongside them.
+OpenTelemetry's auto-instrumentation handles the baseline - HTTP spans, framework-level timing, error tracking - without code changes. The security-relevant work is adding custom attributes to existing spans and emitting structured logs alongside them.
 
 **Install the core packages:**
 
@@ -119,7 +119,7 @@ npm install @opentelemetry/sdk-node \
   @opentelemetry/exporter-otlp-http
 ```
 
-**Bootstrap the SDK** — load this before anything else using `--require ./instrumentation.js`. Using `spanProcessors` explicitly lets you compose the export pipeline with custom processors (the `OutboundAnomalyProcessor` defined below):
+**Bootstrap the SDK** - load this before anything else using `--require ./instrumentation.js`. Using `spanProcessors` explicitly lets you compose the export pipeline with custom processors (the `OutboundAnomalyProcessor` defined below):
 
 ```js
 // instrumentation.js
@@ -171,7 +171,7 @@ export function authMiddleware(req, res, next) {
     span?.setAttributes({ 'auth.failure_reason': 'invalid_credentials' });
     span?.setStatus({ code: SpanStatusCode.ERROR, message: 'auth_failure' });
 
-    // Structured log alongside the span — queryable by your log aggregator
+    // Structured log alongside the span - queryable by your log aggregator
     console.log(JSON.stringify({
       level: 'warn',
       event: 'auth.failure',
@@ -223,7 +223,7 @@ Register the processor in your SDK config by passing it to `spanProcessors` alon
 
 ## Routing Security Signals to GitHub Security Alerts
 
-Your team already reviews Dependabot and CodeQL findings in the GitHub Security tab. Routing runtime signals to the same interface means one fewer tool to check and no new alerting channel to maintain. GitHub's Code Scanning API accepts **SARIF** (Static Analysis Results Interchange Format) — a JSON schema that was designed for static analysis but works equally well as a transport for runtime anomaly results.
+Your team already reviews Dependabot and CodeQL findings in the GitHub Security tab. Routing runtime signals to the same interface means one fewer tool to check and no new alerting channel to maintain. GitHub's Code Scanning API accepts **SARIF** (Static Analysis Results Interchange Format) - a JSON schema that was designed for static analysis but works equally well as a transport for runtime anomaly results.
 
 **A GitHub Actions workflow to ingest a batch of security signals:**
 
@@ -260,7 +260,7 @@ jobs:
           category: runtime-security
 ```
 
-The `category: runtime-security` field keeps runtime signals visually separated from your static analysis results in the Security tab. **The SARIF your conversion script emits** needs to be schema-valid — here is the minimal structure for an auth failure spike result:
+The `category: runtime-security` field keeps runtime signals visually separated from your static analysis results in the Security tab. **The SARIF your conversion script emits** needs to be schema-valid - here is the minimal structure for an auth failure spike result:
 
 ```json
 {
@@ -291,7 +291,7 @@ The `category: runtime-security` field keeps runtime signals visually separated 
 }
 ```
 
-The `physicalLocation.artifactLocation.uri` maps the alert to the relevant source file — the auth middleware, the HTTP client wrapper, wherever the instrumented code lives. GitHub uses this to anchor the alert in code review context.
+The `physicalLocation.artifactLocation.uri` maps the alert to the relevant source file - the auth middleware, the HTTP client wrapper, wherever the instrumented code lives. GitHub uses this to anchor the alert in code review context.
 
 **The `signals-to-sarif.js` conversion script** reads a newline-delimited JSON file of signal objects emitted by your application (each line: `{ ruleId, message, level, uri }`) and produces the SARIF document:
 
@@ -339,7 +339,7 @@ writeFileSync(values.output, JSON.stringify(sarif, null, 2));
 console.log(`Wrote ${signals.length} signal(s) to ${values.output}`);
 ```
 
-Your runtime alerting code (rate-threshold logic, correlation checks) writes to the signals file; this script is the schema adapter. Keep them separate — the converter is stateless and easy to test; the threshold logic is where the real decisions live.
+Your runtime alerting code (rate-threshold logic, correlation checks) writes to the signals file; this script is the schema adapter. Keep them separate - the converter is stateless and easy to test; the threshold logic is where the real decisions live.
 
 ***
 
@@ -347,17 +347,17 @@ Your runtime alerting code (rate-threshold logic, correlation checks) writes to 
 
 The hardest part of runtime security alerting is the signal-to-noise ratio. Alert on everything anomalous and the team stops reading alerts within a week. Alert on nothing and the whole exercise is a waste of instrumentation work. A practical framework has two layers.
 
-**Rate-based thresholds** apply to signals with a predictable normal distribution — auth failures, error rates, request volume:
+**Rate-based thresholds** apply to signals with a predictable normal distribution - auth failures, error rates, request volume:
 - Establish a 30-day rolling baseline per metric
-- Alert at 3× baseline sustained for 5+ minutes — this filters transient spikes from deploys and traffic bursts
-- Page at 10× baseline sustained for 2+ minutes — this is almost certainly not normal traffic under any reasonable interpretation
+- Alert at 3× baseline sustained for 5+ minutes - this filters transient spikes from deploys and traffic bursts
+- Page at 10× baseline sustained for 2+ minutes - this is almost certainly not normal traffic under any reasonable interpretation
 
-**Novelty-based thresholds** apply to signals that should be near-zero in a healthy application — no baseline required:
+**Novelty-based thresholds** apply to signals that should be near-zero in a healthy application - no baseline required:
 - First occurrence of a new outbound destination: medium alert
 - First occurrence of a process spawn with a shell interpreter: high alert immediately (this should not happen in a Node.js web server)
 - First successful auth from an IP that had 10+ prior failures in the preceding hour: high alert
 
-**Correlation is where the signal-to-noise math actually improves.** Single anomalous events are noisy — each one has plausible innocent explanations. Two correlated anomalies from the same source within a short window have very few:
+**Correlation is where the signal-to-noise math actually improves.** Single anomalous events are noisy - each one has plausible innocent explanations. Two correlated anomalies from the same source within a short window have very few:
 
 - Auth failure spike from IP X *and* successful auth from IP X within 30 minutes → credential stuffing success, critical
 - Error rate spike *and* unknown outbound connection *and* new process spawn within the same 5-minute window → potential active exploit, critical
@@ -370,20 +370,20 @@ Correlation is the difference between alert fatigue and actionable detection. Bu
 
 ## Shift-Right Implementation Checklist
 
-- [ ] Install OpenTelemetry with `@opentelemetry/auto-instrumentations-node` — baseline HTTP and framework spans are free
+- [ ] Install OpenTelemetry with `@opentelemetry/auto-instrumentations-node` - baseline HTTP and framework spans are free
 - [ ] Add security-relevant attributes to auth spans: IP, user agent, failure reason
-- [ ] Log every auth failure as structured JSON (not free-text) — machines need to count these
+- [ ] Log every auth failure as structured JSON (not free-text) - machines need to count these
 - [ ] Build a known-destinations allowlist and use `OutboundAnomalyProcessor` to flag first-time outbound connections
 - [ ] Log every `child_process` spawn with full argument list
 - [ ] Define 30-day rolling rate baselines for auth failures and error rates
 - [ ] Set alert thresholds at 3× baseline sustained for 5 minutes; page at 10×
 - [ ] Add correlation rules: auth spike + auth success from same IP; error spike + unknown outbound + process spawn
 - [ ] Route high-severity signals to GitHub Security via SARIF upload with `category: runtime-security`
-- [ ] Review security signal alerts in the same workflow as Dependabot and CodeQL — same interface, same team, same weekly review cadence
+- [ ] Review security signal alerts in the same workflow as Dependabot and CodeQL - same interface, same team, same weekly review cadence
 
 </div>
 
-Shift left is necessary. It is not sufficient. Every security posture has a boundary where it stops — and for shift-left tooling, that boundary is the production environment. Attackers don't respect that boundary. They operate where your SAST scanner doesn't run, where your dependency auditor has no visibility, where the only evidence of compromise is a pattern in your logs that nobody was watching for.
+Shift left is necessary. It is not sufficient. Every security posture has a boundary where it stops - and for shift-left tooling, that boundary is the production environment. Attackers don't respect that boundary. They operate where your SAST scanner doesn't run, where your dependency auditor has no visibility, where the only evidence of compromise is a pattern in your logs that nobody was watching for.
 
 Observability instrumentation doesn't require a dedicated security team or a SIEM contract. It requires structured logging, OpenTelemetry, a set of thresholds, and the discipline to review alerts in the same tool where you review everything else. The shift is small. The coverage gap it closes is not.
 

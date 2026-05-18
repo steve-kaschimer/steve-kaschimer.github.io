@@ -1,6 +1,6 @@
 # spec-kit-bugfix
 
-A [Spec Kit](https://github.com/github/spec-kit) extension that adds a structured bugfix workflow — capture bugs discovered during implementation, trace them to spec artifacts, and surgically patch specs without regenerating from scratch.
+A [Spec Kit](https://github.com/github/spec-kit) extension that adds a structured bugfix workflow - capture bugs discovered during implementation, trace them to spec artifacts, and surgically patch specs without regenerating from scratch.
 
 ## Problem
 
@@ -8,7 +8,7 @@ When bugs surface during implementation, the SDD workflow breaks down:
 
 - No structured way to capture bugs and trace them back to spec requirements
 - Spec gaps and conflicts are discovered but not recorded anywhere
-- Developers fix code without updating spec, plan, or tasks — causing artifact drift
+- Developers fix code without updating spec, plan, or tasks - causing artifact drift
 - Tasks marked complete turn out to be wrong, but there is no reopen mechanism
 - No way to verify that bugfix changes are consistent across all artifacts
 
@@ -18,9 +18,9 @@ The Bugfix Workflow extension adds three commands that close the gap between bug
 
 | Command | Purpose | Modifies Files? |
 |---------|---------|-----------------|
-| `/speckit.bugfix.report` | Capture a bug and trace it back to the relevant spec, plan, and task artifacts | Yes — creates bug report file |
-| `/speckit.bugfix.patch` | Surgically update spec, plan, and tasks to address the reported bug | Yes — spec.md, plan.md, tasks.md |
-| `/speckit.bugfix.verify` | Verify that bugfix patches are consistent across all spec artifacts | No — read-only |
+| `/speckit.bugfix.report` | Capture a bug and trace it back to the relevant spec, plan, and task artifacts | Yes - creates bug report file |
+| `/speckit.bugfix.patch` | Surgically update spec, plan, and tasks to address the reported bug | Yes - spec.md, plan.md, tasks.md |
+| `/speckit.bugfix.verify` | Verify that bugfix patches are consistent across all spec artifacts | No - read-only |
 
 ## Installation
 
@@ -75,7 +75,7 @@ Surgically updates spec artifacts based on a bug report:
 
 - Adds missing requirements to spec.md under the affected user story
 - Marks conflicting text with strikethrough and reason (never deletes)
-- Reopens falsely completed tasks with `(reopened — BUG-NNN)` annotation
+- Reopens falsely completed tasks with `(reopened - BUG-NNN)` annotation
 - Adds new tasks with sequential IDs and proper dependencies
 - Updates Wave DAG if present
 - Tracks all changes with bugfix notes and dates
@@ -98,12 +98,12 @@ The extension registers an optional hook:
 
 ## Design Decisions
 
-- **Report before patch** — always capture and classify the bug before modifying artifacts
-- **Surgical updates** — only change what is necessary, never regenerate from scratch
-- **Never delete content** — superseded text gets strikethrough, preserving history
-- **Reopen, don't delete tasks** — falsely completed tasks are reopened with annotation
-- **Bug report files** — each bug gets its own file for traceability and history
-- **Consistent with Spec Kit patterns** — uses the same refinement note format and staleness tracking
+- **Report before patch** - always capture and classify the bug before modifying artifacts
+- **Surgical updates** - only change what is necessary, never regenerate from scratch
+- **Never delete content** - superseded text gets strikethrough, preserving history
+- **Reopen, don't delete tasks** - falsely completed tasks are reopened with annotation
+- **Bug report files** - each bug gets its own file for traceability and history
+- **Consistent with Spec Kit patterns** - uses the same refinement note format and staleness tracking
 
 ## Requirements
 
@@ -111,7 +111,7 @@ The extension registers an optional hook:
 
 ## Related
 
-- Issue [#619](https://github.com/github/spec-kit/issues/619) — New `/bugfix` Slash Command (25+ upvotes, maintainer-approved as extension)
+- Issue [#619](https://github.com/github/spec-kit/issues/619) - New `/bugfix` Slash Command (25+ upvotes, maintainer-approved as extension)
 
 ## License
 

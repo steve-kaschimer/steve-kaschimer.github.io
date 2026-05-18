@@ -1,6 +1,6 @@
 ---
 name: "speckit-iterate-define"
-description: "Define an iteration on the current feature — analyze the change request against current spec state and implementation progress, then write a reviewable iteration plan."
+description: "Define an iteration on the current feature - analyze the change request against current spec state and implementation progress, then write a reviewable iteration plan."
 compatibility: "Requires spec-kit project structure with .specify/ directory"
 metadata:
   author: "aisdlc-framework"
@@ -18,11 +18,11 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
-The text the user typed after `/speckit-iterate-define` **is** the change request. It describes what should be added, modified, or removed from the current feature — either the whole feature or a specific phase/subtask.
+The text the user typed after `/speckit-iterate-define` **is** the change request. It describes what should be added, modified, or removed from the current feature - either the whole feature or a specific phase/subtask.
 
 ## Outline
 
-Goal: Analyze a requested change against the feature's current spec state and implementation progress, then produce a reviewable iteration plan written to `pending-iteration.md`. This command does **not** modify any spec artifacts — it only writes the pending iteration file.
+Goal: Analyze a requested change against the feature's current spec state and implementation progress, then produce a reviewable iteration plan written to `pending-iteration.md`. This command does **not** modify any spec artifacts - it only writes the pending iteration file.
 
 ### 1. Initialize Feature Context
 
@@ -48,13 +48,13 @@ Check if `FEATURE_DIR/pending-iteration.md` already exists. If it does:
 
 Read all available artifacts from FEATURE_DIR:
 
-- **REQUIRED**: `spec.md` — requirements, user stories, edge cases, scope
-- **IF EXISTS**: `plan.md` — tech stack, architecture, file structure, phases
-- **IF EXISTS**: `tasks.md` — task list with IDs, phases, checkboxes, dependencies
-- **IF EXISTS**: `data-model.md` — entities, attributes, relationships
-- **IF EXISTS**: `research.md` — technical decisions and constraints
-- **IF EXISTS**: `quickstart.md` — integration/test scenarios
-- **IF EXISTS**: `checklists/` — quality checklists
+- **REQUIRED**: `spec.md` - requirements, user stories, edge cases, scope
+- **IF EXISTS**: `plan.md` - tech stack, architecture, file structure, phases
+- **IF EXISTS**: `tasks.md` - task list with IDs, phases, checkboxes, dependencies
+- **IF EXISTS**: `data-model.md` - entities, attributes, relationships
+- **IF EXISTS**: `research.md` - technical decisions and constraints
+- **IF EXISTS**: `quickstart.md` - integration/test scenarios
+- **IF EXISTS**: `checklists/` - quality checklists
 
 Build an internal model of the feature's current state: user stories, requirements, tasks, phases, scope boundaries, and assumptions.
 
@@ -88,8 +88,8 @@ git diff --name-only --staged
 
 Cross-reference changed files with tasks in `tasks.md`:
 
-- **Mapped**: File appears in a task description — that task is likely complete or in-progress
-- **Unmapped**: File was changed but no task references it — note as adhoc work
+- **Mapped**: File appears in a task description - that task is likely complete or in-progress
+- **Unmapped**: File was changed but no task references it - note as adhoc work
 
 #### C. Build progress summary
 
@@ -114,7 +114,7 @@ Parse the user's change request (`$ARGUMENTS`) and classify it:
 | Subtraction | Explicitly removes scope, user story, or requirement | "Remove the TPA Support card from the redesign" |
 | Pivot | Fundamentally changes the approach or architecture | "Switch from tab removal to accordion collapse" |
 
-**Impact assessment** — determine which artifacts need updating:
+**Impact assessment** - determine which artifacts need updating:
 
 | Change affects... | Update |
 |-------------------|--------|
@@ -167,7 +167,7 @@ Before writing the pending iteration file, present a concise impact summary to t
 
 Wait for user confirmation before writing the file.
 
-**If completed tasks are invalidated**: Warn the user explicitly — "Tasks TXXX–TYYY are already marked complete but would be affected by this change. They may need re-implementation after apply." Ask how to proceed.
+**If completed tasks are invalidated**: Warn the user explicitly - "Tasks TXXX–TYYY are already marked complete but would be affected by this change. They may need re-implementation after apply." Ask how to proceed.
 
 **If the change is a Pivot**: Warn that this is a significant direction change and recommend running `/speckit-specify` with an updated description instead, unless the user explicitly wants an in-place iteration.
 
@@ -202,11 +202,11 @@ scope: "<Feature-wide | Phase N | Task TXXX | Subtraction | Pivot>"
 | spec.md | Modify | <sections and why> |
 | plan.md | Modify | <what changes> |
 | tasks.md | Add/Modify | <tasks affected> |
-| data-model.md | No change | — |
+| data-model.md | No change | - |
 
 ## Risk Checks
 
-- [x] No completed tasks invalidated (or: Tasks TXXX affected — user acknowledged)
+- [x] No completed tasks invalidated (or: Tasks TXXX affected - user acknowledged)
 - [x] No scope boundary violations
 - [x] No downstream dependency breaks
 
@@ -252,11 +252,11 @@ You can:
 
 ## Behavior Rules
 
-- **Never modify spec artifacts** — this command only writes `pending-iteration.md`. All spec changes happen in `/speckit-iterate-apply`.
-- **Safe to re-run** — running define again overwrites the pending iteration file (with user confirmation if one exists).
-- **Respect user intent** — if the change request is ambiguous, ask one clarifying question before proceeding (do not guess on high-impact decisions).
-- **Account for reality** — always check implementation progress before planning changes. An iteration plan that ignores completed work is useless.
-- **Preserve completed work by default** — flag risks when completed tasks are affected, but don't refuse the iteration. The user decides.
-- **Be specific in planned changes** — the pending iteration file should list concrete changes (add FR-012, modify Phase 2 tasks, etc.), not vague descriptions. This is what `apply` will execute.
+- **Never modify spec artifacts** - this command only writes `pending-iteration.md`. All spec changes happen in `/speckit-iterate-apply`.
+- **Safe to re-run** - running define again overwrites the pending iteration file (with user confirmation if one exists).
+- **Respect user intent** - if the change request is ambiguous, ask one clarifying question before proceeding (do not guess on high-impact decisions).
+- **Account for reality** - always check implementation progress before planning changes. An iteration plan that ignores completed work is useless.
+- **Preserve completed work by default** - flag risks when completed tasks are affected, but don't refuse the iteration. The user decides.
+- **Be specific in planned changes** - the pending iteration file should list concrete changes (add FR-012, modify Phase 2 tasks, etc.), not vague descriptions. This is what `apply` will execute.
 
 Context for iteration: $ARGUMENTS

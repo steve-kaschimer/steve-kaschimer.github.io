@@ -591,7 +591,7 @@ except Exception:
 
     if ($layerPaths.Count -eq 0) { return $null }
 
-    # If the top (highest-priority) layer is replace, it wins entirely —
+    # If the top (highest-priority) layer is replace, it wins entirely -
     # lower layers are irrelevant regardless of their strategies.
     if ($layerStrategies[0] -eq 'replace') {
         return (Get-Content $layerPaths[0] -Raw)

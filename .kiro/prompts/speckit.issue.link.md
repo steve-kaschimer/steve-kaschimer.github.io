@@ -6,7 +6,7 @@ description: "Link a spec artifact to a GitHub Issue for bidirectional traceabil
 
 Establish a bidirectional traceability link between the current feature's spec artifacts and a GitHub Issue. Records the association locally in the traceability file and optionally posts a cross-reference comment on the GitHub issue pointing back to the spec.
 
-Use this command when you already have a `spec.md` and want to associate it with an existing GitHub issue — as opposed to `/speckit.issue.import`, which creates the spec from the issue.
+Use this command when you already have a `spec.md` and want to associate it with an existing GitHub issue - as opposed to `/speckit.issue.import`, which creates the spec from the issue.
 
 ## User Input
 
@@ -73,8 +73,8 @@ Verify that `.specify/features/<feature-dir>/spec.md` exists. If it does not:
 ❌ No spec.md found for feature '<feature-dir>'.
 
    Create spec artifacts first:
-     /speckit.specify          — to write a spec from scratch
-     /speckit.issue.import     — to generate a spec from a GitHub issue
+     /speckit.specify          - to write a spec from scratch
+     /speckit.issue.import     - to generate a spec from a GitHub issue
 ```
 
 ### 4. Add the Issue Reference to spec.md
@@ -84,13 +84,13 @@ Open `.specify/features/<feature-dir>/spec.md` and add or update the source refe
 If no source reference line exists, insert:
 
 ```markdown
-> **Source**: [#<number>](<issue-url>) — linked on <today's date (YYYY-MM-DD)>
+> **Source**: [#<number>](<issue-url>) - linked on <today's date (YYYY-MM-DD)>
 ```
 
 If a `> **Source**:` or `> **Sources**:` line already exists, append the new reference to it (preserving all existing references):
 
 ```markdown
-> **Sources**: [#<existing>](<existing-url>), [#<number>](<issue-url>) — linked on <date>
+> **Sources**: [#<existing>](<existing-url>), [#<number>](<issue-url>) - linked on <date>
 ```
 
 ### 5. Record the Traceability Link

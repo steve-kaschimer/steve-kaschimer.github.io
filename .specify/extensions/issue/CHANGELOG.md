@@ -8,6 +8,6 @@
 - **Sync** a linked spec with the latest issue state, merging new content additively, annotating additions with their source, and flagging contradictions for manual review rather than silently overwriting spec content
 
 ### Added
-- `speckit.issue.import` — Fetch a GitHub Issue (title, body, labels, comments) and generate `spec.md` with structured requirements, scenarios, and acceptance criteria
-- `speckit.issue.link` — Associate an existing `spec.md` with a GitHub Issue for bidirectional traceability; optionally posts a cross-reference comment on the issue
-- `speckit.issue.sync` — Pull updates from the linked source issue into `spec.md`, merging new requirements and acceptance criteria while preserving local additions and flagging conflicts
+- `speckit.issue.import` - Fetch a GitHub Issue (title, body, labels, comments) and generate `spec.md` with structured requirements, scenarios, and acceptance criteria
+- `speckit.issue.link` - Associate an existing `spec.md` with a GitHub Issue for bidirectional traceability; optionally posts a cross-reference comment on the issue
+- `speckit.issue.sync` - Pull updates from the linked source issue into `spec.md`, merging new requirements and acceptance criteria while preserving local additions and flagging conflicts

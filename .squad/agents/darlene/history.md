@@ -1,4 +1,4 @@
-# Darlene — History
+# Darlene - History
 
 ## Core Context
 
