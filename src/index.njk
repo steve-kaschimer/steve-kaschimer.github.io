@@ -87,12 +87,13 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
         <picture>
           <source
             srcset="{{ post.data.image | replace('.webp', '-400w.webp') }} 400w,
+                    {{ post.data.image | replace('.webp', '-600w.webp') }} 600w,
                     {{ post.data.image | replace('.webp', '-800w.webp') }} 800w,
                     {{ post.data.image }} 1200w"
-            sizes="(min-width: 1280px) 280px,
-                   (min-width: 1024px) calc(50vw - 200px),
-                   (min-width: 768px) calc(50vw - 2rem),
-                   100vw"
+            sizes="(min-width: 1280px) calc(33vw - 149px),
+                   (min-width: 1024px) calc(50vw - 208px),
+                   (min-width: 768px) calc(50vw - 40px),
+                   calc(100vw - 32px)"
             type="image/webp">
           <img
             src="{{ post.data.image }}"
