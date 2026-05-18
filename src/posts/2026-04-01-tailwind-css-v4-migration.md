@@ -262,7 +262,7 @@ v4 tightens the arbitrary value parser. The bracket syntax for inline CSS variab
 
 ```html
 <!-- v3 -->
-<div class="bg-[var(--color-brand)]">
+<div class="bg-(--color-brand)">
 
 <!-- v4: CSS variable references use parenthesis syntax -->
 <div class="bg-(--color-brand)">
