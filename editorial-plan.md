@@ -148,7 +148,7 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-copilot`, `github-actions`, `ai`, `code-review`, `developer-productivity`
 
 ### OpenID Connect in GitHub Actions: Replacing Long-Lived Secrets with Short-Lived Tokens
-- **Status:** `idea`
+- **Status:** `in-progress`
 - **Scheduled:** 2026-06-12
 - **Issue:** #110
 - **Pitch:** Long-lived cloud credentials stored as GitHub secrets are a supply-chain risk - OIDC lets GitHub Actions authenticate to AWS, Azure, and GCP without any stored secret at all.
