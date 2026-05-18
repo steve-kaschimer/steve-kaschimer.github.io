@@ -85,12 +85,20 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
       {% if post.data.image %}
       <div class="aspect-video overflow-hidden bg-gray-200 dark:bg-gray-700">
         <picture>
-          <source srcset="{{ post.data.image | replace('.png', '.webp') }}" type="image/webp">
+          <source
+            srcset="{{ post.data.image | replace('.webp', '-400w.webp') }} 400w,
+                    {{ post.data.image | replace('.webp', '-800w.webp') }} 800w,
+                    {{ post.data.image }} 1200w"
+            sizes="(min-width: 1280px) 280px,
+                   (min-width: 1024px) calc(50vw - 200px),
+                   (min-width: 768px) calc(50vw - 2rem),
+                   100vw"
+            type="image/webp">
           <img
             src="{{ post.data.image }}"
             alt="{{ post.data.title }}"
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            fetchpriority=high
+            loading="lazy"
             decoding="async"
             width="1200"
             height="800"
