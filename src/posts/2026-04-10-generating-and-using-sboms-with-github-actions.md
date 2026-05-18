@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-04-10
-image: /images/posts/2026-04-10-hero.png
+image: /images/posts/2026-04-10-hero.webp
 image_prompt: "A dark-mode technical illustration on a deep charcoal background with cool blue and amber accent tones. Center of the composition: a stylized document icon labeled 'sbom.cyclonedx.json' rendered in crisp white monospaced text, with a faint glowing amber border suggesting an artifact under version control, not a static report. Branching outward from the document: a tree of interconnected hexagonal package nodes representing direct and transitive dependencies, each labeled with a PURL-style identifier in small monospaced type. One node deep in the tree is highlighted in red with a small vulnerability badge; the chain of dependency edges from the root to that node is traced in glowing amber - a visual audit trail. On the right: a minimalist sigstore attestation seal - a thin geometric shield with a checkmark - connected back to the document by a cryptographic chain of small lock icons. At the top: a GitHub Actions tag event icon ('v1.2.0') with a subtle downward arrow pointing to the document, indicating automated generation at release time. Mood: methodical, auditworthy - the feeling of knowing exactly what shipped and being able to prove it. Avoid: generic padlock imagery, abstract circuit boards, compliance badge ribbons, red warning triangles."
 layout: post.njk
 site_title: Tech Notes

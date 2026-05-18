@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-05-15
-image: /images/posts/2026-05-15-hero.png
+image: /images/posts/2026-05-15-hero.webp
 image_prompt: "A dark-mode technical editorial illustration with near-black background and sharp teal, amber, and soft-red accents. Split composition: left side shows a stylized CI/CD pipeline - sequential stages labeled 'lint,' 'scan,' 'test,' 'deploy' - rendered in clean teal, glowing with confidence, conveying shift-left coverage. Right side bleeds into a live production environment: a cluster of server nodes emitting subtle signal arcs, logs scrolling, a single amber trace line threading through. Connecting the two halves, a thin horizontal arrow labeled 'shift right' in small monospaced type. Overlaid on the production side, faint anomaly markers - a spike on an auth-failure rate chart, a red dot on an outbound connection to an unknown host - rendered as miniature technical widgets. The mood is not alarm; it is instrumentation - the quiet satisfaction of a system that is actually watching itself. Avoid: generic padlock or shield imagery, fire or explosion motifs, cartoon hacker figures, circuit board textures."
 layout: post.njk
 site_title: Tech Notes

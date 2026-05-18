@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-04-03
-image: /images/posts/2026-04-03-hero.png
+image: /images/posts/2026-04-03-hero.webp
 image_prompt: "A dark-mode technical illustration with deep charcoal background and sharp red, amber, and teal accents. Center-stage is a large numerical score - '9.8' - rendered in bold red digits, slightly oversized, radiating a faint warning glow. Surrounding it, an eight-cell matrix table shows abbreviated CVSS vector components (AV, AC, PR, UI, S, C, I, A) each in a crisp monospaced label, connected to the score by thin converging lines. On the left: a stylized public-facing API tower with network signal arcs - fully lit, color-coded red. On the right: an identical package icon nestled inside a local CI/build environment box - dimmed, isolated, teal. The contrast is the point: same score, different contexts. A faint full vector string 'CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H' floats as ghost text beneath the score. Mood: analytical calm - the feeling of understanding something most people treat as a black box. Avoid: generic padlock/shield imagery, cartoon bugs, red alarm bells, fire iconography."
 layout: post.njk
 site_title: Tech Notes

@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-04-01
-image: /images/posts/2026-04-01-hero.png
+image: /images/posts/2026-04-01-hero.webp
 image_prompt: "A wide, high-contrast illustration in a technical editorial style - deep navy blue background with electric cyan, pure white, and amber accents. The left half shows a JavaScript configuration object rendered as faded, receding code - module.exports, content arrays, darkMode keys - slightly desaturated and drifting off-screen, as if being archived. The right half shows clean, modern CSS - @import tailwindcss, @theme blocks with CSS custom properties, @variant dark - sharp and forward-facing. Between them, a thin vertical Rust-orange lightning bolt separator suggests the engine underneath. At the bottom, a faint benchmark bar chart in cyan shows two bars: a taller one labeled v3 and a dramatically shorter one labeled v4. Mood: purposeful technical progress - not nostalgia for the old, but clarity about the new. Avoid: generic CSS icons, Tailwind logo, circuit board textures, any software brand logos."
 layout: post.njk
 site_title: Tech Notes

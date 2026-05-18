@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-05-01
-image: /images/posts/2026-05-01-hero.png
+image: /images/posts/2026-05-01-hero.webp
 image_prompt: "A clean, architectural illustration in a technical editorial style - near-black background with slate blue, warm amber, and off-white accents. Central composition: a single Markdown file rendered as a softly glowing document card, its contents visible - a structured ADR with sections for Context, Decision, Alternatives, and Consequences, the text crisp and legible. Surrounding the card, a constellation of thin connecting lines links it to three faint icons: a git branch commit node, a pull request review thread, and a GitHub Discussions speech bubble. In the background, a ghosted calendar - months receding backward - implies the document persisting through time. Mood: institutional memory, the satisfaction of a question answered before it was asked, the quiet confidence of a codebase that explains itself. Avoid: generic filing cabinet metaphors, cartoon lightbulbs, circuit board textures, any reference to specific tool logos."
 layout: post.njk
 site_title: Tech Notes

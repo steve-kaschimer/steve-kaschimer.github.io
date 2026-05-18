@@ -84,11 +84,18 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
       <!-- Image -->
       {% if post.data.image %}
       <div class="aspect-video overflow-hidden bg-gray-200 dark:bg-gray-700">
-        <img
-          src="{{ post.data.image }}"
-          alt="{{ post.data.title }}"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        >
+        <picture>
+          <source srcset="{{ post.data.image | replace('.png', '.webp') }}" type="image/webp">
+          <img
+            src="{{ post.data.image }}"
+            alt="{{ post.data.title }}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="800"
+          >
+        </picture>
       </div>
       {% else %}
       <div class="aspect-video bg-linear-to-br from-primary-400 to-primary-600 flex items-center justify-center">
@@ -127,7 +134,7 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
         </p>
 
         <!-- Read More -->
-        <div class="mt-4 flex items-center text-primary-600 dark:text-primary-400 font-medium">
+        <div class="mt-4 flex items-center text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors font-medium">
           <span>Read more</span>
           <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>

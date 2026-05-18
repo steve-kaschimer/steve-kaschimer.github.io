@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-05-29
-image: /images/posts/2026-05-29-hero.png
+image: /images/posts/2026-05-29-hero.webp
 image_prompt: "A precise, dark-mode technical editorial illustration - near-black background with electric green, steel blue, and off-white accents. The central composition shows a vertical pipeline of four labeled boxes connected by clean arrows: 'changes (detect paths)' → 'test (runs if src/ changed)' → 'coverage (runs if test ran)' → 'ci-gate (always runs)'. The ci-gate box glows distinctly in electric green with a thin concentric border, and a small label below it reads 'Required Status Check - Ruleset'. To the left of the pipeline, four thin red warning cards float at staggered heights, each labeled in small caps: 'FLAKY TESTS', 'SLOW PIPELINE', 'VACUOUS PASS', 'NO COVERAGE FLOOR'. Each card has a faint diagonal strikethrough in green, implying each failure mode has been resolved. The mood is clinical and resolved - not a chaotic system, but one that has been deliberately engineered. Avoid: generic green checkmarks, circuit-board textures, cartoon pipeline icons, any specific company or framework logos."
 layout: post.njk
 site_title: Tech Notes

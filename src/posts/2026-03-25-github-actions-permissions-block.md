@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-03-25
-image: /images/posts/2026-03-25-hero.png
+image: /images/posts/2026-03-25-hero.webp
 image_prompt: "A dark-mode technical illustration on a near-black background with cool steel blue, amber, and off-white accents. Center-left: a stylized YAML snippet - a GitHub Actions workflow file rendered in crisp monospaced text - with the permissions block conspicuously absent, its absence marked by a faint red gap in the file's left border gutter. Emanating from that gap: thin amber arrows fanning outward to a ring-3 of labeled permission nodes - 'contents: write,' 'pull-requests: write,' 'packages: write,' 'issues: write,' each node glowing faintly, representing the blast radius of unconstrained default permissions. Center-right: a second, contrasting workflow file where the permissions block is present and tightly scoped - only two nodes lit, 'contents: read' and 'checks: write,' the rest dimmed to near-black. Between the two files, a vertical divider. At the bottom of the right-side composition, a small GITHUB_TOKEN badge outlined in clean steel blue, its scope indicator showing a minimal sliver rather than a full ring. Mood: the moment a developer realizes the blast radius was always there - and that the fix is three lines of YAML. Avoid: generic lock icons, circuit board textures, padlock clipart, any specific org or company logos."
 layout: post.njk
 site_title: Tech Notes

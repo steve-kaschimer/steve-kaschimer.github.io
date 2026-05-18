@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-06-05
-image: /images/posts/2026-06-05-hero.png
+image: /images/posts/2026-06-05-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with steel blue, violet, and off-white accents. The central composition shows a pull request diff - two columns of code, red deletions on the left, green additions on the right - with six inline comment threads pinned to specific lines. Three of the comment threads are authored by a stylized 'C' avatar in violet (Copilot); each one contains a short, crisp observation: 'Unhandled promise rejection', 'Hardcoded credential', 'N+1 query pattern'. The other three threads are dimmed, marked 'Resolved'. At the top of the image, a horizontal pipeline bar shows three stages: 'lint', 'test', and 'copilot-review' - the first two are solid green; 'copilot-review' glows violet with a small advisory badge rather than a blocking X. At the bottom right, a faint CODEOWNERS snippet shows a path pattern mapped to '@team/backend' with a violet 'Copilot' label alongside it. Mood: high-signal review noise without blocking velocity. Avoid: robot faces, chat bubble icons, any specific company logos, generic AI imagery."
 layout: post.njk
 site_title: Tech Notes

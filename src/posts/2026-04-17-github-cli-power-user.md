@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-04-17
-image: /images/posts/2026-04-17-hero.png
+image: /images/posts/2026-04-17-hero.webp
 image_prompt: "A dark-mode developer workstation aesthetic on a deep charcoal background with cool blue and electric green accent tones. Centered: a crisp terminal window displaying a sequence of 'gh' CLI commands - 'gh pr checkout 342', 'gh run watch --exit-status', 'gh issue develop 88 --checkout' - rendered in sharp monospaced white text with syntax-highlighted flags in electric green. Flanking the terminal: a stylized ghost-outline of a web browser window with a red X through it, representing eliminated browser context-switches. Behind the terminal, faint ghost-text layers show GitHub pull request status badges, workflow run logs, and secret key icons dissolving into the terminal frame - the web collapsing into the command line. Mood: focused, productive, the feeling of flow state when you stop reaching for the mouse. Avoid: cartoon robots, abstract circuit textures, GitHub Octocat mascot imagery, generic keyboard close-ups."
 layout: post.njk
 site_title: Tech Notes

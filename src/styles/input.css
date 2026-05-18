@@ -18,21 +18,11 @@
 }
 
 .prose {
-  --tw-prose-body: #374151;
-  --tw-prose-headings: #111827;
-  --tw-prose-links: #0284c7;
-  --tw-prose-bold: #111827;
-  --tw-prose-code: #111827;
-  --tw-prose-pre-bg: #f3f4f6;
-}
+  --tw-prose-links: var(--color-primary-600);
 
-.prose-invert {
-  --tw-prose-body: #d1d5db;
-  --tw-prose-headings: #ffffff;
-  --tw-prose-links: #38bdf8;
-  --tw-prose-bold: #ffffff;
-  --tw-prose-code: #ffffff;
-  --tw-prose-pre-bg: #1f2937;
+  @variant dark {
+    --tw-prose-links: var(--color-primary-400);
+  }
 }
 
 @layer base {

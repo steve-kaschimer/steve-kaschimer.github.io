@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-05-08
-image: /images/posts/2026-05-08-hero.png
+image: /images/posts/2026-05-08-hero.webp
 image_prompt: "A precise, architectural illustration in a dark-mode technical editorial style - near-black background with steel blue, amber, and off-white accents. Split composition: on the left, a softly glowing repository card labeled 'Classic Branch Protection' with a visible gap - a breach - in its protective border, a single muted amber arrow slipping through labeled 'admin bypass.' On the right, a sharper, more complete shield labeled 'Rulesets' with concentric enforcement rings, each ring-3 annotated with fine text: 'branches,' 'tags,' 'org-level,' 'bypass actors.' Between the two, a thin vertical dividing line. Below the shield, a faint org-tree - three repo nodes branching from a single root - connected by clean lines, implying the single Ruleset governing all. Mood: the satisfying moment when a security model is actually complete - not paranoid, just correct. Avoid: generic lock icons, circuit board textures, cartoon padlocks, any specific org or company logos."
 layout: post.njk
 site_title: Tech Notes
