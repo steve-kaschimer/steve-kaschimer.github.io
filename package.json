@@ -20,7 +20,10 @@
     "tailwind"
   ],
   "author": "",
-  "license": "MIT",
+  "license": "MIT",  
+  "overrides": {
+    "handlebars": "4.7.9"
+  },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "@11ty/eleventy-plugin-rss": "^1.2.0",
