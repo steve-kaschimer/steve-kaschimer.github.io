@@ -1,4 +1,4 @@
-# Romero — History
+# Romero - History
 
 ## Core Context
 

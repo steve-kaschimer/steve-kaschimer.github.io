@@ -1,4 +1,4 @@
-# Ralph — History
+# Ralph - History
 
 ## Core Context
 

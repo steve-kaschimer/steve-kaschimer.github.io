@@ -1,29 +1,29 @@
 ---
 author: Steve Kaschimer
 date: 2026-04-01
-image: /images/posts/2026-04-01-hero.png
-image_prompt: "A wide, high-contrast illustration in a technical editorial style — deep navy blue background with electric cyan, pure white, and amber accents. The left half shows a JavaScript configuration object rendered as faded, receding code — module.exports, content arrays, darkMode keys — slightly desaturated and drifting off-screen, as if being archived. The right half shows clean, modern CSS — @import tailwindcss, @theme blocks with CSS custom properties, @variant dark — sharp and forward-facing. Between them, a thin vertical Rust-orange lightning bolt separator suggests the engine underneath. At the bottom, a faint benchmark bar chart in cyan shows two bars: a taller one labeled v3 and a dramatically shorter one labeled v4. Mood: purposeful technical progress — not nostalgia for the old, but clarity about the new. Avoid: generic CSS icons, Tailwind logo, circuit board textures, any software brand logos."
+image: /images/posts/2026-04-01-hero.webp
+image_prompt: "A wide, high-contrast illustration in a technical editorial style - deep navy blue background with electric cyan, pure white, and amber accents. The left half shows a JavaScript configuration object rendered as faded, receding code - module.exports, content arrays, darkMode keys - slightly desaturated and drifting off-screen, as if being archived. The right half shows clean, modern CSS - @import tailwindcss, @theme blocks with CSS custom properties, @variant dark - sharp and forward-facing. Between them, a thin vertical Rust-orange lightning bolt separator suggests the engine underneath. At the bottom, a faint benchmark bar chart in cyan shows two bars: a taller one labeled v3 and a dramatically shorter one labeled v4. Mood: purposeful technical progress - not nostalgia for the old, but clarity about the new. Avoid: generic CSS icons, Tailwind logo, circuit board textures, any software brand logos."
 layout: post.njk
 site_title: Tech Notes
-summary: Tailwind CSS v4 ships a Rust-powered engine and CSS-native configuration that replaces tailwind.config.js — this post walks through migrating this blog's actual v3 config, and flags the three breaking changes most likely to catch you off-guard.
+summary: Tailwind CSS v4 ships a Rust-powered engine and CSS-native configuration that replaces tailwind.config.js - this post walks through migrating this blog's actual v3 config, and flags the three breaking changes most likely to catch you off-guard.
 tags: ["tailwind-css", "eleventy"]
 title: "Tailwind CSS v4: What Actually Changed and How to Migrate"
 ---
 
-Tailwind v4 isn't a config syntax refresh with a migration codemod attached. It's a rewritten engine — **Oxide**, built in Rust — that changes how configuration works, how CSS is generated, how plugins are authored, and how the CLI operates. The headline benchmarks (full builds 5× faster, incremental builds 100×+ faster) are real, but the migration isn't purely mechanical. For developers with custom color palettes, class-based dark mode, or typography plugin overrides, there are breaking changes the codemod doesn't handle.
+Tailwind v4 isn't a config syntax refresh with a migration codemod attached. It's a rewritten engine - **Oxide**, built in Rust - that changes how configuration works, how CSS is generated, how plugins are authored, and how the CLI operates. The headline benchmarks (full builds 5× faster, incremental builds 100×+ faster) are real, but the migration isn't purely mechanical. For developers with custom color palettes, class-based dark mode, or typography plugin overrides, there are breaking changes the codemod doesn't handle.
 
-This post walks through what actually changed, migrates this blog's real v3 `tailwind.config.js` to v4 line by line, and flags the three breaking changes most likely to catch you off-guard. The migration is manageable — under an hour for a typical Eleventy blog — but you need to know what you're walking into.
+This post walks through what actually changed, migrates this blog's real v3 `tailwind.config.js` to v4 line by line, and flags the three breaking changes most likely to catch you off-guard. The migration is manageable - under an hour for a typical Eleventy blog - but you need to know what you're walking into.
 
 ---
 
 ## What the Engine Change Means
 
-The first thing to understand is that `tailwind.config.js` isn't just changing syntax — it's going away. Configuration moves into CSS using `@theme`, `@utility`, and `@variant` directives. The JS file is replaced by a CSS entry point that becomes the single source of truth for everything previously split between the config file and your CSS.
+The first thing to understand is that `tailwind.config.js` isn't just changing syntax - it's going away. Configuration moves into CSS using `@theme`, `@utility`, and `@variant` directives. The JS file is replaced by a CSS entry point that becomes the single source of truth for everything previously split between the config file and your CSS.
 
 Four changes that affect every project:
 
 - **No more `tailwind.config.js`**: everything moves to CSS. The `@tailwindcss/upgrade` codemod generates a starter `@theme` block from your existing config, but complex customizations need manual migration.
-- **No more `content` array**: v4 uses automatic content detection. It scans your project for Nunjucks, HTML, Markdown, and JS files automatically. The explicit `content: ['./src/**/*.{html,md,njk,js}']` entry is no longer needed — though if you have non-standard locations or extensions, `@source` provides an explicit escape hatch.
+- **No more `content` array**: v4 uses automatic content detection. It scans your project for Nunjucks, HTML, Markdown, and JS files automatically. The explicit `content: ['./src/**/*.{html,md,njk,js}']` entry is no longer needed - though if you have non-standard locations or extensions, `@source` provides an explicit escape hatch.
 - **`@tailwindcss/cli` replaces `tailwindcss` for CLI invocations**: any `npx tailwindcss` call in your build scripts becomes `npx @tailwindcss/cli`.
 - **`@tailwindcss/postcss` replaces `tailwindcss`** as the PostCSS plugin package name, if you're using PostCSS.
 
@@ -33,7 +33,7 @@ Four changes that affect every project:
 
 ## The v3 Config: What We're Starting From
 
-This blog's `tailwind.config.js` is a representative v3 config — a custom color scale, class-based dark mode, the typography plugin, and prose variable overrides:
+This blog's `tailwind.config.js` is a representative v3 config - a custom color scale, class-based dark mode, the typography plugin, and prose variable overrides:
 
 ```js
 /** @type {import('tailwindcss').Config} */
@@ -105,7 +105,7 @@ Those three directives are the first thing to replace. Everything else follows f
 ### The `content` array → gone
 
 ```js
-// v3 — delete this block entirely
+// v3 - delete this block entirely
 content: [
   "./src/**/*.{html,md,njk,js}",
 ],
@@ -139,18 +139,18 @@ The naming convention is direct: `theme.extend.colors.primary[500]` becomes `--c
 ### The `plugins` array → `@plugin`
 
 ```js
-// v3 — remove this
+// v3 - remove this
 plugins: [
   require('@tailwindcss/typography'),
 ],
 ```
 
 ```css
-/* v4 — add to input.css */
+/* v4 - add to input.css */
 @plugin "@tailwindcss/typography";
 ```
 
-The `require()` call is replaced by a `@plugin` directive. The `prose` class, `prose-sm`, `prose-lg`, `prose-invert` — all work identically on the consuming side.
+The `require()` call is replaced by a `@plugin` directive. The `prose` class, `prose-sm`, `prose-lg`, `prose-invert` - all work identically on the consuming side.
 
 ### Typography theme overrides → direct CSS variables
 
@@ -187,7 +187,7 @@ This is the breaking change with the most teeth, and the one the codemod silentl
 @variant dark (&:where(.dark, .dark *));
 ```
 
-Without this line, all the `dark:` prefixed classes in the templates — `dark:bg-gray-900`, `dark:text-gray-100`, `dark:prose-invert` — will silently fall back to media-query behavior instead of responding to the `.dark` class toggled by JavaScript. The pages will still look fine in a system-level dark mode setting. The bug is invisible unless you test with the actual JS toggle.
+Without this line, all the `dark:` prefixed classes in the templates - `dark:bg-gray-900`, `dark:text-gray-100`, `dark:prose-invert` - will silently fall back to media-query behavior instead of responding to the `.dark` class toggled by JavaScript. The pages will still look fine in a system-level dark mode setting. The bug is invisible unless you test with the actual JS toggle.
 
 ### The migrated `input.css`
 
@@ -247,7 +247,7 @@ Putting it together, the v3 entry point's three directives collapse into a singl
 
 ### 1. Dark mode configuration
 
-Already covered above, but worth stating plainly: **`darkMode: 'class'` has no automatic equivalent in v4, and the upgrade codemod does not emit the `@variant dark` line**. If you skip it, your dark mode silently switches from class-based to media-query-based — a behavior change that's invisible in automated tests and only obvious when you manually click the dark mode toggle.
+Already covered above, but worth stating plainly: **`darkMode: 'class'` has no automatic equivalent in v4, and the upgrade codemod does not emit the `@variant dark` line**. If you skip it, your dark mode silently switches from class-based to media-query-based - a behavior change that's invisible in automated tests and only obvious when you manually click the dark mode toggle.
 
 The fix is one line:
 ```css
@@ -262,13 +262,13 @@ v4 tightens the arbitrary value parser. The bracket syntax for inline CSS variab
 
 ```html
 <!-- v3 -->
-<div class="bg-[var(--color-brand)]">
+<div class="bg-(--color-brand)">
 
 <!-- v4: CSS variable references use parenthesis syntax -->
 <div class="bg-(--color-brand)">
 ```
 
-The `(--variable)` syntax replaces `[var(--variable)]` everywhere. If your templates reference CSS variables inline in Tailwind classes — common for dynamic theming or per-component tokens — this is a targeted find-and-replace across your template files. Run a grep for `[var(--` before considering the migration done.
+The `(--variable)` syntax replaces `[var(--variable)]` everywhere. If your templates reference CSS variables inline in Tailwind classes - common for dynamic theming or per-component tokens - this is a targeted find-and-replace across your template files. Run a grep for `[var(--` before considering the migration done.
 
 ### 3. Custom screen breakpoints
 
@@ -323,7 +323,7 @@ The CLI package name changes from `tailwindcss` to `@tailwindcss/cli`. For this 
 }
 ```
 
-The `build`, `start`, `dev`, and `deploy` scripts are unchanged — only the two that invoke the Tailwind CLI directly need updating.
+The `build`, `start`, `dev`, and `deploy` scripts are unchanged - only the two that invoke the Tailwind CLI directly need updating.
 
 **Step 4: Update `input.css`**
 
@@ -341,15 +341,15 @@ Replace the three `@tailwind` directives with `@import "tailwindcss"`, add `@plu
 npm run build:css
 ```
 
-Check the output file size — v4's dead-code elimination is more aggressive, so the output should be at least as small as v3, typically smaller. If you see deprecation warnings, address those before calling it done.
+Check the output file size - v4's dead-code elimination is more aggressive, so the output should be at least as small as v3, typically smaller. If you see deprecation warnings, address those before calling it done.
 
 ***
 
 ## Build Time: What to Expect
 
-For this blog's stack — Eleventy v2 with a moderate number of Tailwind utility classes — the Rust engine should drop cold build time from roughly 2–4 seconds to under a second, and reduce watch mode latency to something effectively instant.
+For this blog's stack - Eleventy v2 with a moderate number of Tailwind utility classes - the Rust engine should drop cold build time from roughly 2–4 seconds to under a second, and reduce watch mode latency to something effectively instant.
 
-The practical impact on the `npm run dev` script — which uses `npm-run-all --parallel start watch:css` to run Eleventy and Tailwind side by side — is that the `watch:css` process stops being something you wait for. The bottleneck shifts fully to Eleventy's templating and data cascade. That's exactly where you want it; the CSS layer should be invisible overhead, not a noticeable pause.
+The practical impact on the `npm run dev` script - which uses `npm-run-all --parallel start watch:css` to run Eleventy and Tailwind side by side - is that the `watch:css` process stops being something you wait for. The bottleneck shifts fully to Eleventy's templating and data cascade. That's exactly where you want it; the CSS layer should be invisible overhead, not a noticeable pause.
 
 ***
 
@@ -357,21 +357,21 @@ The practical impact on the `npm run dev` script — which uses `npm-run-all --p
 
 ## v4 Migration Checklist
 
-- [ ] Run `npx @tailwindcss/upgrade` first — handles the mechanical parts
+- [ ] Run `npx @tailwindcss/upgrade` first - handles the mechanical parts
 - [ ] `npm install tailwindcss@next @tailwindcss/cli@next @tailwindcss/typography@next`
 - [ ] Replace `@tailwind base/components/utilities` with `@import "tailwindcss"` in `input.css`
 - [ ] Add `@plugin "@tailwindcss/typography"` to `input.css` (replaces the `plugins` array)
-- [ ] Add `@variant dark (&:where(.dark, .dark *));` — **the codemod does not emit this**
+- [ ] Add `@variant dark (&:where(.dark, .dark *));` - **the codemod does not emit this**
 - [ ] Move `theme.extend.colors` to `@theme` CSS custom properties
 - [ ] Resolve typography overrides to actual hex values in `.prose` and `.prose-invert`
 - [ ] Update build scripts: `npx tailwindcss` → `npx @tailwindcss/cli`
 - [ ] Grep for `[var(--` and update to `(--` parenthesis syntax
 - [ ] Check any custom breakpoint values against v4 defaults
-- [ ] Delete `tailwind.config.js` — if the build passes, you're done
+- [ ] Delete `tailwind.config.js` - if the build passes, you're done
 
 </div>
 
-v4 is a better tool. The Rust engine is genuinely faster, the CSS-native config is more coherent than a JavaScript object that mirrors CSS concepts, and automatic content detection eliminates the whole category of "why aren't my classes generating?" debugging sessions. The migration has real rough edges — the `darkMode: 'class'` gap and the arbitrary value syntax change are both things the codemod won't catch for you. But for an Eleventy blog like this one, the full migration runs under an hour. The codemod handles 80% of it; the remaining 20% is a focused search-and-replace and one line of CSS. The result is a faster build, less config to maintain, and one fewer JavaScript file in your project root.
+v4 is a better tool. The Rust engine is genuinely faster, the CSS-native config is more coherent than a JavaScript object that mirrors CSS concepts, and automatic content detection eliminates the whole category of "why aren't my classes generating?" debugging sessions. The migration has real rough edges - the `darkMode: 'class'` gap and the arbitrary value syntax change are both things the codemod won't catch for you. But for an Eleventy blog like this one, the full migration runs under an hour. The codemod handles 80% of it; the remaining 20% is a focused search-and-replace and one line of CSS. The result is a faster build, less config to maintain, and one fewer JavaScript file in your project root.
 
 ***
 

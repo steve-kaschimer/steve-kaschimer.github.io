@@ -1,8 +1,8 @@
 ---
 author: Steve Kaschimer
 date: 2025-11-24
-image: /images/posts/2025-11-24-hero.png
-image_prompt: "A dark-mode technical illustration on a near-black background with deep violet, steel blue, and amber accents. Center: an abstract visualization of code-as-database — a JavaScript source code fragment on the left (a function with unsanitized user input) dissolves rightward into a structured relational schema, nodes representing functions, variables, and call relationships connected by directed graph edges. From the schema, a CodeQL query panel sits on the right: crisp .ql syntax highlighting 'from,' 'where,' and 'select' clauses, with a glowing result row at the bottom: 'Possible SQL injection detected at line 42.' Above the schema, a faint three-step extraction pipeline reads 'Parse → Database → Query.' The composition suggests a lens — source code enters one side as raw text and exits the other as precise, structured intelligence. Mood: precision and depth, the quiet confidence of a tool that truly understands code rather than just scanning for string patterns. Avoid: magnifying glass clipart, generic bug icons, binary code rain, circuit board textures, GitHub Octocat."
+image: /images/posts/2025-11-24-hero.webp
+image_prompt: "A dark-mode technical illustration on a near-black background with deep violet, steel blue, and amber accents. Center: an abstract visualization of code-as-database - a JavaScript source code fragment on the left (a function with unsanitized user input) dissolves rightward into a structured relational schema, nodes representing functions, variables, and call relationships connected by directed graph edges. From the schema, a CodeQL query panel sits on the right: crisp .ql syntax highlighting 'from,' 'where,' and 'select' clauses, with a glowing result row at the bottom: 'Possible SQL injection detected at line 42.' Above the schema, a faint three-step extraction pipeline reads 'Parse → Database → Query.' The composition suggests a lens - source code enters one side as raw text and exits the other as precise, structured intelligence. Mood: precision and depth, the quiet confidence of a tool that truly understands code rather than just scanning for string patterns. Avoid: magnifying glass clipart, generic bug icons, binary code rain, circuit board textures, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes
 summary: Master CodeQL's query-based static analysis by treating your codebase as a database. Learn to write custom queries, integrate with CI/CD pipelines, and detect vulnerabilities with precision.
@@ -28,7 +28,7 @@ For DevSecOps engineers, this flexibility is gold. It allows you to go beyond ge
 
 ### **How CodeQL Works Behind the Scenes**
 
-![codeql architecture](/images/posts/2025-11-24-codeql-architecture.png)
+![codeql architecture](/images/posts/2025-11-24-codeql-architecture.webp)
 
 To appreciate CodeQL’s capabilities, it helps to understand its workflow. When you run CodeQL, three major steps occur:
 
@@ -79,7 +79,7 @@ For example, suppose your team uses a custom sanitization function called `sanit
 
 Testing custom queries is straightforward with the CodeQL CLI. You can run queries locally against your codebase, iterate quickly, and then integrate them into your CI/CD pipeline once validated.
 
-![query lifecycle](/images/posts/2025-11-24-query-lifecycle.png)
+![query lifecycle](/images/posts/2025-11-24-query-lifecycle.webp)
 
 ### **Integrating CodeQL into Your Workflows**
 

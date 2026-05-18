@@ -1,4 +1,4 @@
-# Scribe — History
+# Scribe - History
 
 ## Core Context
 

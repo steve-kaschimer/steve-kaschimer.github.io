@@ -1,0 +1,11 @@
+{
+  "ai": "codex",
+  "integration": "codex",
+  "branch_numbering": "sequential",
+  "context_file": "AGENTS.md",
+  "here": true,
+  "preset": "aisdlc-core",
+  "script": "sh",
+  "speckit_version": "0.8.11",
+  "ai_skills": true
+}

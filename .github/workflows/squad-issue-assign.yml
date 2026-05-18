@@ -14,10 +14,10 @@ jobs:
     if: startsWith(github.event.label.name, 'squad:')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Identify assigned member and trigger work
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
@@ -27,13 +27,13 @@ jobs:
             // Extract member name from label (e.g., "squad:ripley" → "ripley")
             const memberName = label.replace('squad:', '').toLowerCase();
 
-            // Read team roster — check .squad/ first, fall back to .ai-team/
+            // Read team roster - check .squad/ first, fall back to .ai-team/
             let teamFile = '.squad/team.md';
             if (!fs.existsSync(teamFile)) {
               teamFile = '.ai-team/team.md';
             }
             if (!fs.existsSync(teamFile)) {
-              core.warning('No .squad/team.md or .ai-team/team.md found — cannot assign work');
+              core.warning('No .squad/team.md or .ai-team/team.md found - cannot assign work');
               return;
             }
 
@@ -83,7 +83,7 @@ jobs:
               comment = [
                 `### 🤖 Routed to @copilot (Coding Agent)`,
                 '',
-                `**Issue:** #${issue.number} — ${issue.title}`,
+                `**Issue:** #${issue.number} - ${issue.title}`,
                 '',
                 `@copilot has been assigned and will pick this up automatically.`,
                 '',
@@ -94,7 +94,7 @@ jobs:
               comment = [
                 `### 📋 Assigned to ${assignedMember.name} (${assignedMember.role})`,
                 '',
-                `**Issue:** #${issue.number} — ${issue.title}`,
+                `**Issue:** #${issue.number} - ${issue.title}`,
                 '',
                 `${assignedMember.name} will pick this up in the next Copilot session.`,
                 '',
@@ -116,7 +116,7 @@ jobs:
       # Separate step: assign @copilot using PAT (required for coding agent)
       - name: Assign @copilot coding agent
         if: github.event.label.name == 'squad:copilot'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.COPILOT_ASSIGN_TOKEN }}
           script: |

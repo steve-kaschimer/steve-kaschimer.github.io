@@ -1,4 +1,4 @@
-# Mr. Robot — History
+# Mr. Robot - History
 
 ## Core Context
 

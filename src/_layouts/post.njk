@@ -7,11 +7,14 @@ layout: base.njk
 <header class="relative h-96 bg-gray-900 overflow-hidden">
   <!-- Background Image -->
   <div class="absolute inset-0">
-    <img src="{{ image }}" alt="{{ title }}" class="w-full h-full object-cover opacity-60">
+    <picture>
+      <source srcset="{{ image | replace('.png', '.webp') }}" type="image/webp">
+      <img src="{{ image }}" alt="{{ title }}" class="w-full h-full object-cover opacity-60" loading="eager" decoding="async" width="1200" height="800">
+    </picture>
   </div>
 
   <!-- Overlay Gradient -->
-  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900/80"></div>
+  <div class="absolute inset-0 bg-linear-to-b from-transparent via-transparent to-gray-900/80"></div>
 
   <!-- Title and Meta -->
   <div class="relative h-full flex flex-col justify-end max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
@@ -36,7 +39,7 @@ layout: base.njk
 </header>
 {% else %}
 <!-- Fallback Header without Image -->
-<header class="bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-800 dark:to-primary-900 py-16">
+<header class="bg-linear-to-r from-primary-600 to-primary-800 dark:from-primary-800 dark:to-primary-900 py-16">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <h1 class="text-4xl md:text-5xl font-bold text-white mb-6 text-center">
       {{ title }}
