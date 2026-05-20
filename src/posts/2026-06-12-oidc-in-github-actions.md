@@ -290,3 +290,33 @@ OIDC is the right solution for cloud provider authentication from GitHub Actions
 **Self-hosted runner credentials** - if your self-hosted runners need to authenticate to resources at startup (not at workflow execution time), OIDC does not apply. Those credentials are infrastructure-level and belong in a secrets manager (Azure Key Vault, AWS Secrets Manager), not GitHub.
 
 The practical target: after a full OIDC migration, your GitHub secrets should contain only third-party API credentials, and your cloud provider access should require no secrets at all. Most repositories can reach that state within a sprint.
+
+***
+
+<div class="callout-box">
+
+## OIDC Migration Checklist
+
+Run this against each repository before and during the migration:
+
+- [ ] Search for static cloud credentials: `grep -r "AWS_ACCESS_KEY_ID\|AZURE_CREDENTIALS\|GCP_SA_KEY\|secrets\..*[Kk]ey\|secrets\..*[Cc]redential" .github/workflows/`
+- [ ] For each credential found: identify the cloud provider, the scope (subscription vs. resource group vs. specific service), and whether the workflow triggers on `pull_request` from forks
+- [ ] Prioritize: fork-triggerable workflows first, then broad-scope credentials (subscription Contributor, AdministratorAccess), then credentials that have never been rotated
+- [ ] Azure: create an App Registration with a Workload Identity federated credential; scope the entity to a **GitHub Environment**, not a branch
+- [ ] AWS: register the GitHub OIDC Identity Provider once per account (`https://token.actions.githubusercontent.com`, audience `sts.amazonaws.com`), then create an IAM role with a trust policy using `StringEquals` on the `sub` claim
+- [ ] For each role or App Registration: attach only the minimum permissions the workflow actually needs - no `AdministratorAccess`, no subscription-level `Contributor` unless absolutely required
+- [ ] Update each workflow: add `permissions: id-token: write`, add `environment:` on the job (matching the federated credential entity), replace the secret-based login step with the OIDC-enabled login action (`azure/login@v2` or `aws-actions/configure-aws-credentials@v4`)
+- [ ] Move non-sensitive identifiers (client IDs, tenant IDs, role ARNs, subscription IDs) from secrets to repository **variables** (`vars.*`)
+- [ ] Run the migrated workflow end-to-end and confirm successful cloud authentication before revoking the static credential
+- [ ] Revoke the static credential immediately after successful validation - do not leave it active as a fallback
+- [ ] After completing all migrations: audit GitHub secrets and confirm no cloud provider credentials remain; only third-party API keys should be left
+
+</div>
+
+OIDC is not a complicated migration. The implementation steps are mechanical and the trust model is sound. The credential that cannot be exfiltrated cannot be misused - and that is a meaningfully different security posture than the one most workflows start with.
+
+***
+
+Questions about OIDC setup, IAM trust policy design, or auditing workflows across an org? Reach out.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)
