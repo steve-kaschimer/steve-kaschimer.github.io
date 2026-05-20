@@ -57,10 +57,10 @@ Three behavior details matter for rollout:
 
 Copilot review still requires Copilot Business or Enterprise, but delivery happens in two layers:
 
-- **Org/repo policy** enables Copilot review capability.
+- **Org/repo policy** is the prerequisite that enables Copilot code review for the account or repository.
 - **Repository workflow** controls when and how `github/copilot-code-review` runs.
 
-This split is useful: platform admins can enable the capability broadly while each repo keeps the workflow versioned, reviewable, and constrained to its own risk profile.
+This split is useful: platform admins enable the feature once, while each repo keeps execution details versioned, reviewable, and constrained to its own risk profile.
 
 ***
 
