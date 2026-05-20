@@ -60,7 +60,7 @@ Copilot review still requires Copilot Business or Enterprise, but delivery happe
 - **Org/repo policy** is the prerequisite that enables Copilot code review for the account or repository.
 - **Repository workflow** controls when and how `github/copilot-code-review` runs.
 
-Org admins configure this in **Settings → Copilot → Policies → Code review** (or repository-level Copilot settings for per-repo control). If policy is disabled, the workflow can still run but Copilot will not post review output on PRs, which is easy to misread as "it executed successfully."
+Org admins configure this in **Settings → Copilot → Policies → Code review** (or repository-level Copilot settings for per-repo control). If policy is disabled, the workflow can appear successful in CI logs, but Copilot will not post review output on PRs.
 
 This split is useful: platform admins enable the feature once, while each repo keeps execution details versioned, reviewable, and constrained to its own risk profile.
 
@@ -79,6 +79,7 @@ The action supports `path_filters`, so you can keep review focused on high-signa
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     path_filters: |
+      # `!` excludes paths from review
       - 'src/**'
       - '.github/workflows/**'
       - '!src/generated/**'
@@ -86,7 +87,6 @@ The action supports `path_filters`, so you can keep review focused on high-signa
 ```
 
 This should be conservative by default: include source and workflow paths first, then explicitly exclude generated artifacts and fixtures. Revisit filters as your repo evolves so Copilot keeps looking where humans want help.
-In the example above, patterns prefixed with `!` are exclusions.
 
 ### Custom Review Instructions
 
