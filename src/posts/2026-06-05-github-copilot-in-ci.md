@@ -79,14 +79,11 @@ The action supports `path_filters`, so you can keep review focused on high-signa
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
     path_filters: |
-      # `!` excludes paths from review
       - 'src/**'
       - '.github/workflows/**'
-      - '!src/generated/**'
-      - '!**/*.snap'
 ```
 
-This should be conservative by default: include source and workflow paths first, then explicitly exclude generated artifacts and fixtures. Revisit filters as your repo evolves so Copilot keeps looking where humans want help.
+This should be conservative by default: include only high-signal source and workflow paths first, then expand as needed. Revisit filters as your repo evolves so Copilot keeps looking where humans want help.
 
 ### Custom Review Instructions
 
