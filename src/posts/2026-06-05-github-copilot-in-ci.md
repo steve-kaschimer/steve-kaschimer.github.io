@@ -60,6 +60,8 @@ Copilot review still requires Copilot Business or Enterprise, but delivery happe
 - **Org/repo policy** is the prerequisite that enables Copilot code review for the account or repository.
 - **Repository workflow** controls when and how `github/copilot-code-review` runs.
 
+Org admins configure this in **Settings → Copilot → Policies → Code review** (or repository-level Copilot settings for per-repo control). If policy is disabled, adding the workflow alone will not produce Copilot review output on PRs.
+
 This split is useful: platform admins enable the feature once, while each repo keeps execution details versioned, reviewable, and constrained to its own risk profile.
 
 ***
@@ -136,6 +138,8 @@ jobs:
       github.event.pull_request.user.login != 'github-copilot[bot]' &&
       github.event.pull_request.user.login != 'copilot-swe-agent[bot]'
 ```
+
+`github-copilot[bot]` is the review bot identity, and `copilot-swe-agent[bot]` is a common bot identity for Copilot-authored PRs created by coding agents. Excluding both prevents bot-written changes from being auto-approved by bot-only logic.
 
 Pair that with branch protection requiring at least one human approval. The practical rule: Copilot can suggest and comment, but a human still owns merge intent.
 
