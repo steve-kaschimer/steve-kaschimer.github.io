@@ -5,6 +5,10 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'DM Sans', ui-sans-serif, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
+
   --color-primary-50: #f0f9ff;
   --color-primary-100: #e0f2fe;
   --color-primary-200: #bae6fd;
@@ -32,6 +36,14 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 }
 
