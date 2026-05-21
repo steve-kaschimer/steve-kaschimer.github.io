@@ -164,9 +164,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `agentic-development`, `azure`, `llm`
 
 ### GitHub Projects Automation: Custom Fields, Workflows, and the GraphQL API
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-06-26
-- **Issue:** [#116](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/116)
+- **Issue:** [#116](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/116) ✅ closed
+- **File:** `src/posts/2026-06-26-github-projects-automation-custom-fields-workflows-graphql-api.md`
 - **Pitch:** GitHub Projects v2 has a powerful automation layer that most teams barely touch - this post shows how to build a lightweight engineering workflow without leaving GitHub.
 - **Angle:** Covers custom field types (iteration, single-select, number), built-in auto-add and status workflows, and the GraphQL API for programmatic project updates from GitHub Actions. Practical example: auto-assigning sprint, linking PR status to issue progress, and generating a weekly digest via a scheduled workflow.
 - **Tags:** `github`, `developer-productivity`, `project-management`, `github-actions`
