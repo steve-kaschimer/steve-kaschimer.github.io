@@ -156,7 +156,7 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-actions`, `security`, `devsecops`, `oidc`, `ci-cd`
 
 ### Azure AI Foundry: A Developer's First Look at Agentic AI Workflows
-- **Status:** `idea`
+- **Status:** `in-progress`
 - **Scheduled:** 2026-06-19
 - **Issue:** [#115](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/115)
 - **Pitch:** Azure AI Foundry is Microsoft's unified platform for building, evaluating, and deploying AI agents - this is the practical orientation post for developers who've heard the name but haven't built anything with it yet.
