@@ -10,9 +10,9 @@ tags: ["infrastructure-as-code", "security", "devsecops", "terraform", "github-a
 title: "IaC Security Scanning in CI: Catching Terraform and Bicep Misconfigurations Before They Deploy"
 ---
 
-An S3 bucket with public read access. A storage account without encryption at rest. A virtual machine with SSH open to `0.0.0.0/0`. These are not exotic attack vectors — they are the default configuration in half the tutorials on the internet, and they ship to production every day because nobody ran a scanner before `terraform apply`.
+An S3 bucket with public read access. A storage account without encryption at rest. A virtual machine with SSH open to `0.0.0.0/0`. These are not exotic attack vectors - they are the default configuration in half the tutorials on the internet, and they ship to production every day because nobody ran a scanner before `terraform apply`.
 
-IaC misconfigurations are infrastructure bugs. The same discipline that catches application bugs in CI — write a check, fail the build, fix before merge — applies here. The tooling exists. The GitHub Actions integration is straightforward. The reason most teams don't do this isn't complexity; it's that nobody set it up on the first sprint, and now the pipeline has been running without it for eighteen months.
+IaC misconfigurations are infrastructure bugs. The same discipline that catches application bugs in CI - write a check, fail the build, fix before merge - applies here. The tooling exists. The GitHub Actions integration is straightforward. The reason most teams don't do this isn't complexity; it's that nobody set it up on the first sprint, and now the pipeline has been running without it for eighteen months.
 
 This post sets it up. Checkov and tfsec for Terraform, PSRule for Bicep, SARIF output to the GitHub Security tab, thresholds that block on exploitable misconfigurations without halting every PR for cosmetic issues, and inline suppressions that are visible in PR diffs so they actually get reviewed.
 
@@ -20,7 +20,7 @@ This post sets it up. Checkov and tfsec for Terraform, PSRule for Bicep, SARIF o
 
 ## The Cost Curve
 
-The argument for catching misconfigurations in CI is simple arithmetic. A Checkov finding caught in a pull request takes five minutes to fix. The same misconfiguration caught by a cloud security posture management tool after deployment takes hours to investigate, validate, and remediate — with a window of exposure that starts at merge and ends when someone acts on the alert. Caught post-breach, the cost is measured differently.
+The argument for catching misconfigurations in CI is simple arithmetic. A Checkov finding caught in a pull request takes five minutes to fix. The same misconfiguration caught by a cloud security posture management tool after deployment takes hours to investigate, validate, and remediate - with a window of exposure that starts at merge and ends when someone acts on the alert. Caught post-breach, the cost is measured differently.
 
 The CI integration is a one-time investment. Every PR that runs through it gets a scan for free.
 
@@ -32,9 +32,9 @@ Three tools cover most of the ground:
 
 **Checkov** is the most broadly adopted. It's a Python-based static analysis framework from Bridgecrew (now Prisma Cloud) that covers Terraform, Bicep, ARM, CloudFormation, Kubernetes manifests, Dockerfiles, and more. It has over 1,000 built-in rules, produces SARIF natively, and has both a CLI and an official GitHub Action. It's the right default for mixed-provider or multi-format repositories.
 
-**tfsec** is a Go-based scanner focused exclusively on Terraform. It's fast — faster than Checkov on large Terraform directories — and its rule set has different coverage than Checkov's. The two scanners are complements: running both in parallel catches things either one might miss. tfsec was acquired by Aqua Security and is actively maintained as `aquasecurity/tfsec`.
+**tfsec** is a Go-based scanner focused exclusively on Terraform. It's fast - faster than Checkov on large Terraform directories - and its rule set has different coverage than Checkov's. The two scanners are complements: running both in parallel catches things either one might miss. tfsec was acquired by Aqua Security and is actively maintained as `aquasecurity/tfsec`.
 
-**PSRule for Azure** is a PowerShell-based framework from Microsoft, purpose-built for Bicep and ARM templates. It covers naming conventions, SKU restrictions, security baselines, and Azure Well-Architected Framework alignment. If your infrastructure is Azure-first and you're using Bicep, PSRule is the right tool for that layer — its rules are closer to Azure-native than the generic cloud rules in Checkov.
+**PSRule for Azure** is a PowerShell-based framework from Microsoft, purpose-built for Bicep and ARM templates. It covers naming conventions, SKU restrictions, security baselines, and Azure Well-Architected Framework alignment. If your infrastructure is Azure-first and you're using Bicep, PSRule is the right tool for that layer - its rules are closer to Azure-native than the generic cloud rules in Checkov.
 
 The short version: use Checkov as the baseline for everything, add tfsec for Terraform for faster feedback and additional coverage, and add PSRule for Bicep if you're on Azure.
 
@@ -42,7 +42,7 @@ The short version: use Checkov as the baseline for everything, add tfsec for Ter
 
 ## Checkov for Terraform
 
-Checkov's GitHub Action is `bridgecrewio/checkov-action`. It scans a directory, applies your rule configuration, and — critically — produces SARIF output that uploads directly to the GitHub Security tab.
+Checkov's GitHub Action is `bridgecrewio/checkov-action`. It scans a directory, applies your rule configuration, and - critically - produces SARIF output that uploads directly to the GitHub Security tab.
 
 A minimal step:
 
@@ -56,7 +56,7 @@ A minimal step:
     soft_fail: true
 ```
 
-`soft_fail: true` means the step exits 0 even when findings exist — the build failure comes later, after the SARIF is uploaded. This is the right pattern: you want findings in the Security tab regardless of whether they block the build.
+`soft_fail: true` means the step exits 0 even when findings exist - the build failure comes later, after the SARIF is uploaded. This is the right pattern: you want findings in the Security tab regardless of whether they block the build.
 
 Key flags to know when using the CLI directly (`pip install checkov`):
 
@@ -106,13 +106,13 @@ jobs:
           category: checkov
 ```
 
-`if: always()` on the upload step is not optional. When Checkov finds HIGH or CRITICAL issues and exits non-zero, subsequent steps don't run by default. `if: always()` ensures the SARIF upload happens even when the scan step fails — which is exactly when you most need the results in the Security tab.
+`if: always()` on the upload step is not optional. When Checkov finds HIGH or CRITICAL issues and exits non-zero, subsequent steps don't run by default. `if: always()` ensures the SARIF upload happens even when the scan step fails - which is exactly when you most need the results in the Security tab.
 
 ***
 
 ## tfsec for Terraform
 
-tfsec is faster than Checkov on pure Terraform — it compiles to a single Go binary and doesn't have the Python startup overhead. For a large Terraform monorepo, the difference is meaningful. Its rule set also differs from Checkov's; running both in parallel catches more than either alone.
+tfsec is faster than Checkov on pure Terraform - it compiles to a single Go binary and doesn't have the Python startup overhead. For a large Terraform monorepo, the difference is meaningful. Its rule set also differs from Checkov's; running both in parallel catches more than either alone.
 
 The official action is `aquasecurity/tfsec-action`:
 
@@ -142,7 +142,7 @@ tfsec terraform/ \
   --minimum-severity HIGH
 ```
 
-`--minimum-severity HIGH` means tfsec exits non-zero only when it finds HIGH or CRITICAL issues. LOW and MEDIUM are still written to the SARIF file and appear in the Security tab — they just don't break the build. This mirrors the Checkov threshold design and makes both scanners consistent in their blocking behavior.
+`--minimum-severity HIGH` means tfsec exits non-zero only when it finds HIGH or CRITICAL issues. LOW and MEDIUM are still written to the SARIF file and appear in the Security tab - they just don't break the build. This mirrors the Checkov threshold design and makes both scanners consistent in their blocking behavior.
 
 To run Checkov and tfsec in parallel (the right default for Terraform repositories), use separate jobs:
 
@@ -187,7 +187,7 @@ jobs:
           category: tfsec
 ```
 
-Two parallel jobs, two SARIF uploads, two categories in the Security tab. The `category` parameter keeps the findings separated — Checkov findings and tfsec findings don't merge into a single undifferentiated list.
+Two parallel jobs, two SARIF uploads, two categories in the Security tab. The `category` parameter keeps the findings separated - Checkov findings and tfsec findings don't merge into a single undifferentiated list.
 
 ***
 
@@ -231,7 +231,7 @@ configuration:
   AZURE_BICEP_FILE_EXPANSION: true
 ```
 
-`AZURE_BICEP_FILE_EXPANSION: true` tells PSRule to expand Bicep templates before analysis rather than scanning the raw HCL-like syntax — this produces more accurate results for templates that use modules.
+`AZURE_BICEP_FILE_EXPANSION: true` tells PSRule to expand Bicep templates before analysis rather than scanning the raw HCL-like syntax - this produces more accurate results for templates that use modules.
 
 ***
 
@@ -242,20 +242,20 @@ SARIF (Static Analysis Results Interchange Format) is the common language betwee
 What the Security tab gives you:
 
 - A persistent list of open findings, tied to the file and line that introduced them
-- Grouping by rule, severity, and category — so you can see "all PUBLIC_ACL findings" without grepping through JSON
+- Grouping by rule, severity, and category - so you can see "all PUBLIC_ACL findings" without grepping through JSON
 - Automatic dismissal when the finding is no longer present (the scanner doesn't find it in the next run)
 - A history of when findings were introduced, dismissed, or reopened
 - Ability to manually dismiss findings with a reason (false positive, won't fix, risk accepted)
 
-The SARIF upload deduplicates: if Checkov and tfsec both report the same misconfiguration, they appear as separate findings from separate tools, not as a single merged finding. This is useful — it confirms the misconfiguration is real when two independent scanners agree.
+The SARIF upload deduplicates: if Checkov and tfsec both report the same misconfiguration, they appear as separate findings from separate tools, not as a single merged finding. This is useful - it confirms the misconfiguration is real when two independent scanners agree.
 
-One important caveat: the Security tab with SARIF code scanning requires **GitHub Advanced Security** for private repositories. Public repositories get it for free. For private repos on GitHub Enterprise Cloud or GitHub Enterprise Server, GHAS must be enabled on the repository. If you're on a plan without GHAS and running private repos, the SARIF upload step will fail silently or produce a 403 — run it conditionally or accept that findings will only appear in workflow logs.
+One important caveat: the Security tab with SARIF code scanning requires **GitHub Advanced Security** for private repositories. Public repositories get it for free. For private repos on GitHub Enterprise Cloud or GitHub Enterprise Server, GHAS must be enabled on the repository. If you're on a plan without GHAS and running private repos, the SARIF upload step will fail silently or produce a 403 - run it conditionally or accept that findings will only appear in workflow logs.
 
 ***
 
 ## Break-on-Severity Thresholds
 
-The default behavior of every scanner in this post is to fail on any finding. That's the wrong default for day-to-day CI. A Terraform module that's been in production for two years will have dozens of LOW and MEDIUM findings. Failing the build on all of them means every PR that touches infrastructure blocks until someone works through the entire backlog — which means developers start suppressing everything to get PRs to merge, which defeats the purpose.
+The default behavior of every scanner in this post is to fail on any finding. That's the wrong default for day-to-day CI. A Terraform module that's been in production for two years will have dozens of LOW and MEDIUM findings. Failing the build on all of them means every PR that touches infrastructure blocks until someone works through the entire backlog - which means developers start suppressing everything to get PRs to merge, which defeats the purpose.
 
 The right threshold design:
 
@@ -280,7 +280,7 @@ tfsec threshold configuration:
 tfsec terraform/ --minimum-severity HIGH
 ```
 
-PSRule doesn't have a native severity threshold in the same sense — its `outcome` parameter controls which result types cause a non-zero exit. For severity-based control, use a PSRule suppression group (covered in the next section) or a `.ps-rule/Baseline.Rule.yaml` to exclude specific rule severities.
+PSRule doesn't have a native severity threshold in the same sense - its `outcome` parameter controls which result types cause a non-zero exit. For severity-based control, use a PSRule suppression group (covered in the next section) or a `.ps-rule/Baseline.Rule.yaml` to exclude specific rule severities.
 
 The key principle: the threshold is a policy decision, not a tool decision. Write it down in your team's contributing guide, not just in the workflow YAML. When someone asks "why is this HIGH finding blocking my PR?", the answer should be in a document, not lost in a commit comment on the workflow file.
 
@@ -288,7 +288,7 @@ The key principle: the threshold is a policy decision, not a tool decision. Writ
 
 ## Handling False Positives
 
-False positives are inevitable. A scanner sees a public S3 bucket and flags it. The bucket is your static website's CDN origin — public by design. The right response is a suppression with a reason, not a suppression without one.
+False positives are inevitable. A scanner sees a public S3 bucket and flags it. The bucket is your static website's CDN origin - public by design. The right response is a suppression with a reason, not a suppression without one.
 
 The key principle: **every suppression must include a reason, and the reason must be visible in the PR diff**. A suppression comment without a reason is indistinguishable from "I didn't want to fix this." A suppression that's buried in a config file and not visible in the code is easy to miss in review.
 
@@ -304,7 +304,7 @@ resource "aws_s3_bucket" "website" {
 }
 ```
 
-The format is `#checkov:skip=<CHECK_ID>:<reason>`. The reason is not optional in the sense that Checkov will accept the suppression without it — it's optional in the sense that your code review should reject it without one.
+The format is `#checkov:skip=<CHECK_ID>:<reason>`. The reason is not optional in the sense that Checkov will accept the suppression without it - it's optional in the sense that your code review should reject it without one.
 
 ### tfsec Inline Suppression
 
@@ -342,7 +342,7 @@ spec:
     served via Azure CDN. Access is read-only and content is not sensitive.
 ```
 
-This suppression is file-scoped — it only suppresses the rule for `storage/website-assets.bicep`, not for all storage accounts in the repository. File-scoped suppressions are preferable to rule-wide suppressions because they fail safely: if a new storage account is added to a different file, it still gets scanned.
+This suppression is file-scoped - it only suppresses the rule for `storage/website-assets.bicep`, not for all storage accounts in the repository. File-scoped suppressions are preferable to rule-wide suppressions because they fail safely: if a new storage account is added to a different file, it still gets scanned.
 
 ***
 
@@ -437,19 +437,19 @@ jobs:
 
 A few notes on this workflow:
 
-The `paths` filter on the trigger means the workflow only runs when IaC files change. A PR that touches only application code doesn't pay the scan cost. This is important for monorepos where infrastructure and application code coexist — you don't want every frontend PR waiting for a Terraform scan.
+The `paths` filter on the trigger means the workflow only runs when IaC files change. A PR that touches only application code doesn't pay the scan cost. This is important for monorepos where infrastructure and application code coexist - you don't want every frontend PR waiting for a Terraform scan.
 
-The `permissions` block is at the workflow level and applies to all jobs. `security-events: write` is required for SARIF upload. `contents: read` is the minimum for checkout. If your workflow also needs to comment on PRs or create check annotations, add `pull-requests: write` and `checks: write` as needed — but only those.
+The `permissions` block is at the workflow level and applies to all jobs. `security-events: write` is required for SARIF upload. `contents: read` is the minimum for checkout. If your workflow also needs to comment on PRs or create check annotations, add `pull-requests: write` and `checks: write` as needed - but only those.
 
 The `checkov` and `tfsec` jobs run in parallel. Both upload to the Security tab with different `category` values. The build fails if either job fails (both are required jobs with no `continue-on-error`).
 
-The `psrule` job has a conditional that tries to detect whether `.bicep` files changed. Note that `github.event.pull_request.changed_files` is not a reliable API for this — a more robust approach uses `dorny/paths-filter` or a dedicated detection step. For a repository where Bicep files are in a known directory, the `paths` filter on the trigger is sufficient and the per-job conditional is redundant; I've included it to show the pattern.
+The `psrule` job has a conditional that tries to detect whether `.bicep` files changed. Note that `github.event.pull_request.changed_files` is not a reliable API for this - a more robust approach uses `dorny/paths-filter` or a dedicated detection step. For a repository where Bicep files are in a known directory, the `paths` filter on the trigger is sufficient and the per-job conditional is redundant; I've included it to show the pattern.
 
 ***
 
 ## Closing
 
-IaC is code. The same process that prevents application bugs from reaching production — write a test, run it in CI, block the merge if it fails — applies to infrastructure misconfigurations. An S3 bucket that's accidentally public is a bug. A storage account without encryption is a bug. They show up in the codebase before they show up in the cloud; that's when they're cheapest to fix.
+IaC is code. The same process that prevents application bugs from reaching production - write a test, run it in CI, block the merge if it fails - applies to infrastructure misconfigurations. An S3 bucket that's accidentally public is a bug. A storage account without encryption is a bug. They show up in the codebase before they show up in the cloud; that's when they're cheapest to fix.
 
 The CI integration shown here is a one-time setup. After that, every PR that touches Terraform or Bicep gets scanned automatically. Findings appear in the Security tab with file and line context. Suppressions are inline, with reasons, visible in PR diffs. HIGH and CRITICAL issues block merges. Everything else is tracked for remediation without stopping work.
 
