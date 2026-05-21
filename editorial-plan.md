@@ -229,9 +229,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `agentic-development`, `multi-agent`, `azure`
 
 ### IaC Security Scanning in CI: Catching Terraform and Bicep Misconfigurations Before They Deploy
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-07-31
-- **Issue:** [#121](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/121)
+- **Issue:** [#121](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/121) ✅ closed
+- **File:** `src/posts/2026-07-31-iac-security-scanning-terraform-bicep-ci.md`
 - **Pitch:** Misconfigured infrastructure is one of the most common causes of cloud security incidents, and catching it in CI costs nothing compared to fixing it post-deployment.
 - **Angle:** Shows how to integrate Checkov and tfsec into a GitHub Actions workflow for Terraform, and PSRule for Bicep. Covers converting results to SARIF for the GitHub Security tab, setting break-on-severity thresholds, and handling false positives with inline suppressions that are reviewable in PRs.
 - **Tags:** `infrastructure-as-code`, `security`, `devsecops`, `terraform`, `github-actions`
