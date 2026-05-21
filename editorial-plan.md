@@ -201,7 +201,7 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Angle:** Builds a working agent that uses a Foundry-hosted model, registers a plugin with a tool function, and executes a multi-step plan. Explains the kernel, memory, planner, and plugin concepts in concrete code rather than diagrams. Includes a GitHub Actions workflow for deploying the agent to Azure Container Apps.
 - **Tags:** `azure-ai-foundry`, `semantic-kernel`, `ai-agents`, `dotnet`, `agentic-development`
 
-### GitHub Actions Advanced Caching: Strategies That Actually Cut Build Times ✅
+### GitHub Actions Advanced Caching: Strategies That Actually Cut Build Times
 - **Status:** `draft`
 - **Scheduled:** 2026-07-10
 - **Issue:** [#118](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/118) ✅ closed
@@ -211,9 +211,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-actions`, `ci-cd`, `developer-productivity`, `performance`
 
 ### Container Image Security in CI: Scanning with Trivy and GitHub Advanced Security
-- **Status:** `idea`
+- **Status:** `draft` ✅
 - **Scheduled:** 2026-07-17
-- **Issue:** [#119](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/119)
+- **Issue:** [#119](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/119) (closed)
+- **File:** `src/posts/2026-07-17-container-image-security-trivy-github-advanced-security.md`
 - **Pitch:** Scanning container images for vulnerabilities before they ship is table stakes for DevSecOps, but most teams don't know how to get actionable signal out of the noise.
 - **Angle:** Shows how to run Trivy in a GitHub Actions workflow, convert output to SARIF, upload to the GitHub Security tab, and configure severity thresholds that block builds without creating alert fatigue. Also covers base image pinning, multi-stage build hardening, and what to do when your base image has unfixable CVEs.
 - **Tags:** `container-security`, `github-advanced-security`, `devsecops`, `trivy`, `docker`
