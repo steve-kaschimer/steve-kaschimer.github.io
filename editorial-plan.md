@@ -220,9 +220,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `container-security`, `github-advanced-security`, `devsecops`, `trivy`, `docker`
 
 ### Multi-Agent Patterns with Azure AI Foundry: Orchestration, Handoff, and Shared State
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-07-24
-- **Issue:** [#120](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/120)
+- **Issue:** [#120](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/120) ✅ closed
+- **File:** `src/posts/2026-07-24-multi-agent-patterns-azure-ai-foundry-orchestration-handoff-shared-state.md`
 - **Pitch:** Single agents hit a ceiling quickly - real agentic applications route tasks across specialized agents, and Azure AI Foundry provides the primitives to do this without building your own orchestration layer.
 - **Angle:** Covers the three core multi-agent patterns (sequential pipeline, parallel fan-out, hierarchical orchestrator/sub-agent) with concrete Foundry implementations. Discusses shared memory and state management across agents, error handling when a sub-agent fails, and observability - how to trace a user request through a chain of agents.
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `agentic-development`, `multi-agent`, `azure`
