@@ -14,7 +14,7 @@ The bottleneck in agentic systems isn't the model. It's the orchestration.
 
 A single agent eventually runs into three walls: the context window fills up before a complex task is done, specialization conflicts with generalization (a security reviewer that also writes code does both worse), and latency stacks up when one agent is responsible for every step of a pipeline. None of those are model problems. They're architecture problems.
 
-Azure AI Foundry provides the primitives to solve them — managed agent runtime, thread-based message passing, tool registration — without requiring you to build orchestration infrastructure from scratch. But Foundry doesn't tell you *which pattern to reach for*. That's the design decision, and it determines whether your multi-agent system scales or collapses under real workloads.
+Azure AI Foundry provides the primitives to solve them - managed agent runtime, thread-based message passing, tool registration - without requiring you to build orchestration infrastructure from scratch. But Foundry doesn't tell you *which pattern to reach for*. That's the design decision, and it determines whether your multi-agent system scales or collapses under real workloads.
 
 This post covers three patterns: sequential pipeline, parallel fan-out, and hierarchical orchestrator/sub-agent. Each one addresses a different constraint. They're not mutually exclusive. The closing section covers shared state, error handling, and observability across all three.
 
@@ -45,7 +45,7 @@ client = AIProjectClient(
 )
 ```
 
-`AZURE_AI_PROJECT_ENDPOINT` is the endpoint URI for your Foundry project — find it in the portal under your project's **Overview** tab.
+`AZURE_AI_PROJECT_ENDPOINT` is the endpoint URI for your Foundry project - find it in the portal under your project's **Overview** tab.
 
 ---
 
@@ -53,13 +53,13 @@ client = AIProjectClient(
 
 Each agent's output is the next agent's input. The pipeline runs to completion in order. No step starts until the previous step finishes.
 
-**Use case:** a content pipeline — research agent gathers sources, draft agent writes from them, review agent flags problems, publish agent formats the final output. Each stage depends strictly on the previous one's output. You can't draft before you have sources; you can't review a draft that doesn't exist.
+**Use case:** a content pipeline - research agent gathers sources, draft agent writes from them, review agent flags problems, publish agent formats the final output. Each stage depends strictly on the previous one's output. You can't draft before you have sources; you can't review a draft that doesn't exist.
 
-**When to use it:** strict data dependencies between stages. The output of stage N is meaningfully different from the input to stage N — it's not just forwarded, it's transformed.
+**When to use it:** strict data dependencies between stages. The output of stage N is meaningfully different from the input to stage N - it's not just forwarded, it's transformed.
 
-**Where it breaks:** error propagation and latency. A failure in stage 2 kills stages 3 and 4. And because stages run serially, total latency is the sum of all stage latencies. Don't use this pattern for independent subtasks — that's what fan-out is for.
+**Where it breaks:** error propagation and latency. A failure in stage 2 kills stages 3 and 4. And because stages run serially, total latency is the sum of all stage latencies. Don't use this pattern for independent subtasks - that's what fan-out is for.
 
-Here's a minimal sequential pipeline with three agents — researcher, drafter, and reviewer:
+Here's a minimal sequential pipeline with three agents - researcher, drafter, and reviewer:
 
 ```python
 import asyncio
@@ -107,7 +107,7 @@ async def run_sequential_pipeline(topic: str) -> str:
         )
         research_output = await _get_last_message(agents_client, thread.id)
 
-        # Stage 2: Draft — pass research output as input to a new thread
+        # Stage 2: Draft - pass research output as input to a new thread
         thread = await agents_client.create_thread()
         await agents_client.create_message(
             thread_id=thread.id,
@@ -119,7 +119,7 @@ async def run_sequential_pipeline(topic: str) -> str:
         )
         draft_output = await _get_last_message(agents_client, thread.id)
 
-        # Stage 3: Review — pass draft as input
+        # Stage 3: Review - pass draft as input
         thread = await agents_client.create_thread()
         await agents_client.create_message(
             thread_id=thread.id,
@@ -151,15 +151,15 @@ async def _get_last_message(agents_client, thread_id: str) -> str:
     return content[0].text.value if content else ""
 ```
 
-Each stage gets its own thread. The state handoff is explicit: the orchestrator extracts the final message from stage N and passes it as the user message to stage N+1. This is intentional — implicit state sharing between threads creates hard-to-trace bugs. Make the data flow visible in the code.
+Each stage gets its own thread. The state handoff is explicit: the orchestrator extracts the final message from stage N and passes it as the user message to stage N+1. This is intentional - implicit state sharing between threads creates hard-to-trace bugs. Make the data flow visible in the code.
 
 ---
 
 ## Pattern 2: Parallel Fan-Out
 
-The orchestrator dispatches to N specialist agents simultaneously and collects results. Stages don't depend on each other — they run in parallel and converge at aggregation.
+The orchestrator dispatches to N specialist agents simultaneously and collects results. Stages don't depend on each other - they run in parallel and converge at aggregation.
 
-**Use case:** analyzing a codebase across multiple dimensions simultaneously — security vulnerabilities, performance anti-patterns, code style violations. Each dimension is independent. Running them sequentially wastes time.
+**Use case:** analyzing a codebase across multiple dimensions simultaneously - security vulnerabilities, performance anti-patterns, code style violations. Each dimension is independent. Running them sequentially wastes time.
 
 **When to use it:** independent subtasks that don't need each other's output before they start. Total latency is bounded by the slowest agent, not the sum of all agents.
 
@@ -256,19 +256,19 @@ async def run_parallel_fanout(codebase_summary: str) -> dict[str, AgentResult]:
 
 `asyncio.gather()` dispatches all coroutines concurrently. If one agent call raises an unhandled exception, `gather` propagates it by default. The `try/except` inside `analyze_dimension` converts agent-level failures into structured `AgentResult` objects so the aggregation layer can reason about them without crashing.
 
-The caller decides what to do with partial results. That's the right place for that policy — not buried inside the agent call.
+The caller decides what to do with partial results. That's the right place for that policy - not buried inside the agent call.
 
 ---
 
 ## Pattern 3: Hierarchical Orchestrator/Sub-Agent
 
-A planner agent decomposes an incoming task and routes subtasks to specialists via tool calls. The orchestrator never executes domain logic directly — it delegates. Specialists never decide what to work on — they only execute what's delegated.
+A planner agent decomposes an incoming task and routes subtasks to specialists via tool calls. The orchestrator never executes domain logic directly - it delegates. Specialists never decide what to work on - they only execute what's delegated.
 
 **Use case:** a customer support system. An orchestrator receives incoming requests and routes to a billing agent, a technical support agent, or an escalation agent based on the content. The orchestrator understands intent; the specialists own execution.
 
-**When to use it:** dynamic routing where the task structure isn't known in advance. The orchestrator figures out which specialist to call based on the input — something you can't hard-code in a sequential pipeline.
+**When to use it:** dynamic routing where the task structure isn't known in advance. The orchestrator figures out which specialist to call based on the input - something you can't hard-code in a sequential pipeline.
 
-**Where it breaks:** prompt quality for the orchestrator. If the orchestrator's routing logic is vague, it will hallucinate routing decisions. Tool definitions must be precise — the orchestrator picks tools the same way models pick any function: based on the description.
+**Where it breaks:** prompt quality for the orchestrator. If the orchestrator's routing logic is vague, it will hallucinate routing decisions. Tool definitions must be precise - the orchestrator picks tools the same way models pick any function: based on the description.
 
 The orchestrator's tools are wrappers around sub-agent calls. Define them as standard function tools:
 
@@ -380,7 +380,7 @@ async def run_orchestrator(customer_query: str) -> str:
         instructions=(
             "You are a customer support orchestrator. Analyze the customer query and route it "
             "to the appropriate specialist using the available tools. You do not answer "
-            "domain questions directly — you always delegate. If the query spans multiple "
+            "domain questions directly - you always delegate. If the query spans multiple "
             "domains, make multiple tool calls. Synthesize the specialist responses into a "
             "single coherent reply for the customer."
         ),
@@ -436,17 +436,17 @@ async def run_orchestrator(customer_query: str) -> str:
         await agents_client.delete_agent(orchestrator.id)
 ```
 
-The orchestrator reasons about the query and decides which tool to call — or both, in sequence or parallel, if the query spans domains. Your application code handles the dispatch; the orchestrator handles the routing logic. Neither leaks into the other's domain.
+The orchestrator reasons about the query and decides which tool to call - or both, in sequence or parallel, if the query spans domains. Your application code handles the dispatch; the orchestrator handles the routing logic. Neither leaks into the other's domain.
 
 ---
 
 ## Shared State and Memory
 
-Agents don't share memory by default. Every thread is isolated. That isolation is a feature — it prevents state contamination across runs. But real pipelines need shared context. There are three ways to provide it, and they trade off differently.
+Agents don't share memory by default. Every thread is isolated. That isolation is a feature - it prevents state contamination across runs. But real pipelines need shared context. There are three ways to provide it, and they trade off differently.
 
-**Passing state in messages** is the simplest approach and the one used in all the examples above. The orchestrator extracts output from agent N and passes it as input to agent N+1. The data flow is explicit and traceable. The limitation: large context increases token usage at every step, and there's no retrieval — if agent N+3 needs something from agent N, the orchestrator has to carry it the whole way.
+**Passing state in messages** is the simplest approach and the one used in all the examples above. The orchestrator extracts output from agent N and passes it as input to agent N+1. The data flow is explicit and traceable. The limitation: large context increases token usage at every step, and there's no retrieval - if agent N+3 needs something from agent N, the orchestrator has to carry it the whole way.
 
-**Azure AI Search as a shared vector store** works well when agents need to retrieve knowledge from a shared corpus — documentation, previous run outputs, domain knowledge. Each agent gets an Azure AI Search connection and performs retrieval before generating its response. The agents don't share working memory; they share a retrieval layer.
+**Azure AI Search as a shared vector store** works well when agents need to retrieve knowledge from a shared corpus - documentation, previous run outputs, domain knowledge. Each agent gets an Azure AI Search connection and performs retrieval before generating its response. The agents don't share working memory; they share a retrieval layer.
 
 ```python
 from azure.ai.projects.models import AzureAISearchTool
@@ -465,7 +465,7 @@ agent = await agents_client.create_agent(
 )
 ```
 
-**Azure Cosmos DB or Blob Storage for structured shared state** is the right choice when agents need to write state that other agents will read — progress records, intermediate computation results, task queues. The orchestrator writes a structured record after each agent completes; the next agent reads it at startup. This decouples agents from each other in time, which matters for long-running pipelines where agents may run hours apart.
+**Azure Cosmos DB or Blob Storage for structured shared state** is the right choice when agents need to write state that other agents will read - progress records, intermediate computation results, task queues. The orchestrator writes a structured record after each agent completes; the next agent reads it at startup. This decouples agents from each other in time, which matters for long-running pipelines where agents may run hours apart.
 
 The tradeoff is straightforward: pass state in messages when it's small and the pipeline is short; externalize it when it's large, needs retrieval, or spans a pipeline that runs over minutes or hours.
 
@@ -475,7 +475,7 @@ The tradeoff is straightforward: pass state in messages when it's small and the 
 
 Sub-agents fail. Networks time out, rate limits hit, model responses come back malformed. The orchestrator needs to handle these failures gracefully rather than propagating exceptions upward blindly.
 
-The key design decision: errors from sub-agents should be structured, not plain text. The orchestrator is a model — it reasons over tool outputs. A structured error gives the model enough information to make a policy decision (retry, fallback, degrade gracefully). A plain text exception does not.
+The key design decision: errors from sub-agents should be structured, not plain text. The orchestrator is a model - it reasons over tool outputs. A structured error gives the model enough information to make a policy decision (retry, fallback, degrade gracefully). A plain text exception does not.
 
 ```python
 import asyncio
@@ -516,7 +516,7 @@ async def call_agent_with_retry(
                 delay = base_delay * (2 ** attempt)
                 await asyncio.sleep(delay)
 
-    # All retries exhausted — return a structured failure
+    # All retries exhausted - return a structured failure
     return {
         "status": "failed",
         "error_type": type(last_error).__name__,
@@ -525,7 +525,7 @@ async def call_agent_with_retry(
     }
 ```
 
-The orchestrator receives a dict in both the success and failure cases. If `status == "failed"`, the orchestrator can choose a fallback path — a simpler agent, a cached response, a graceful degradation message to the user — without that decision being forced on it by an unhandled exception.
+The orchestrator receives a dict in both the success and failure cases. If `status == "failed"`, the orchestrator can choose a fallback path - a simpler agent, a cached response, a graceful degradation message to the user - without that decision being forced on it by an unhandled exception.
 
 Return structured JSON errors, not plain text. A model reading `"The billing service is unavailable due to a transient error after 3 attempts."` has less to work with than a model reading `{"status": "failed", "error_type": "TimeoutError", "attempts": 3}`. The latter is something it can act on.
 
@@ -588,7 +588,7 @@ async def run_pipeline_with_tracing(topic: str) -> str:
         return review_output
 ```
 
-What to record at each handoff: input token count, output content hash or length (not the full content — keep spans lightweight), the model and deployment name, the thread ID and run ID, and latency. The thread ID and run ID let you correlate a span in your trace backend with the full conversation in the Foundry portal.
+What to record at each handoff: input token count, output content hash or length (not the full content - keep spans lightweight), the model and deployment name, the thread ID and run ID, and latency. The thread ID and run ID let you correlate a span in your trace backend with the full conversation in the Foundry portal.
 
 Correlate the Foundry `run_id` with your trace spans by attaching it as an attribute. When a run fails, you can pivot from your trace view directly to the Foundry thread that contains the full model interaction.
 
@@ -600,7 +600,7 @@ The decision is mechanical once you understand the constraints:
 
 **Sequential pipeline** when: stage N's output is the direct input to stage N+1, and partial results from stage N have no value if stage N+1 never runs. Use it when data transformation between stages is the point.
 
-**Parallel fan-out** when: subtasks are independent — they don't read each other's outputs before they start. Use it when the bottleneck is latency and the subtasks can run side-by-side.
+**Parallel fan-out** when: subtasks are independent - they don't read each other's outputs before they start. Use it when the bottleneck is latency and the subtasks can run side-by-side.
 
 **Hierarchical orchestrator/sub-agent** when: the routing decision is dynamic and can't be hard-coded. The orchestrator reasons about what to call and when. Use it when different requests need different agent combinations.
 
@@ -612,7 +612,7 @@ Patterns compose. A hierarchical orchestrator can route to a sequential pipeline
 
 The orchestration layer is where agentic applications win or lose. A single agent with GPT-4o and a good prompt is a prototype. A multi-agent system that correctly decomposes tasks, routes dynamically, shares state explicitly, handles partial failures gracefully, and produces traceable execution is production infrastructure.
 
-Azure AI Foundry gives you the building blocks: managed agent runtime, thread isolation, tool registration, built-in observability. The architecture is still yours to design. The three patterns here — sequential pipeline, parallel fan-out, hierarchical orchestrator — cover most of the routing problems you'll encounter. What they don't do is choose themselves.
+Azure AI Foundry gives you the building blocks: managed agent runtime, thread isolation, tool registration, built-in observability. The architecture is still yours to design. The three patterns here - sequential pipeline, parallel fan-out, hierarchical orchestrator - cover most of the routing problems you'll encounter. What they don't do is choose themselves.
 
 Pick the pattern that matches the constraint. Don't add orchestration complexity until you've hit the wall that requires it.
 
