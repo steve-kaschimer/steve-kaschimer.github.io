@@ -2,15 +2,15 @@
 author: Steve Kaschimer
 date: 2026-07-03
 image: /images/posts/2026-07-03-hero.webp
-image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric violet, and off-white accents. The central composition is a vertical agent execution flow rendered as a clean diagram. At the top, a C# code card labeled 'Kernel' shows two connected boxes: 'AzureOpenAIChatCompletion' (teal) and 'DevOpsPlugin' (violet). Below it, an execution trace panel shows three steps in monospaced type: '1. User: What is the build status?' → '2. Tool call: get_pipeline_status(\"api-service\")' → '3. Agent: The api-service pipeline is passing.' Each step is connected by a downward arrow. To the right, a compact Azure AI Foundry card shows three fields: Hub, Project, and Deployment, stacked with a small connection indicator. At the bottom, a GitHub Actions YAML card with a Docker and Container Apps icon shows 'azure/container-apps-deploy-action' highlighted in teal. The mood is precise, developer-first, and architectural — no marketing language, no humanoid figures, no abstract AI imagery."
+image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric violet, and off-white accents. The central composition is a vertical agent execution flow rendered as a clean diagram. At the top, a C# code card labeled 'Kernel' shows two connected boxes: 'AzureOpenAIChatCompletion' (teal) and 'DevOpsPlugin' (violet). Below it, an execution trace panel shows three steps in monospaced type: '1. User: What is the build status?' → '2. Tool call: get_pipeline_status(\"api-service\")' → '3. Agent: The api-service pipeline is passing.' Each step is connected by a downward arrow. To the right, a compact Azure AI Foundry card shows three fields: Hub, Project, and Deployment, stacked with a small connection indicator. At the bottom, a GitHub Actions YAML card with a Docker and Container Apps icon shows 'azure/container-apps-deploy-action' highlighted in teal. The mood is precise, developer-first, and architectural - no marketing language, no humanoid figures, no abstract AI imagery."
 layout: post.njk
 site_title: Tech Notes
-summary: "Semantic Kernel is Microsoft's open-source SDK for building AI agents. Azure AI Foundry is where you deploy the model. Together they give .NET developers a production-ready agent path — the same orchestration-plus-hosting story Python teams get from LangChain, without leaving the Microsoft ecosystem. This post builds a working agent end-to-end."
+summary: "Semantic Kernel is Microsoft's open-source SDK for building AI agents. Azure AI Foundry is where you deploy the model. Together they give .NET developers a production-ready agent path - the same orchestration-plus-hosting story Python teams get from LangChain, without leaving the Microsoft ecosystem. This post builds a working agent end-to-end."
 tags: ["azure-ai-foundry", "semantic-kernel", "ai-agents", "dotnet", "agentic-development"]
 title: "Semantic Kernel and Azure AI Foundry: Building Your First AI Agent in .NET"
 ---
 
-Python has LangChain. .NET has Semantic Kernel. They solve the same problem — how do you wire a language model to tools, memory, and business logic in a way that's testable and deployable — but for a different runtime and a different operational context.
+Python has LangChain. .NET has Semantic Kernel. They solve the same problem - how do you wire a language model to tools, memory, and business logic in a way that's testable and deployable - but for a different runtime and a different operational context.
 
 This post builds a working agent from scratch: a `Kernel` instance backed by a Foundry-hosted model, a plugin with a real tool function the model can call, and a multi-step interaction where the agent decides when to invoke the tool and uses the result in its answer. At the end, a GitHub Actions workflow deploys the whole thing to Azure Container Apps with no stored secrets.
 
@@ -22,10 +22,10 @@ If you've read the [Foundry first-look post](/posts/2026-06-19-azure-ai-foundry-
 
 Semantic Kernel (SK) is an orchestration SDK. It doesn't host models. It doesn't manage infrastructure. What it does is define a composable execution model for agents:
 
-- **Kernel** — the central object. Holds services (AI connectors, logging) and a plugin registry.
-- **Plugin** — a class with annotated methods the model can call as tools.
-- **Chat completion service** — the connector to the underlying model (Foundry, Azure OpenAI, OpenAI, etc.).
-- **FunctionChoiceBehavior** — tells SK whether to let the model decide which tools to call, require a specific one, or call none.
+- **Kernel** - the central object. Holds services (AI connectors, logging) and a plugin registry.
+- **Plugin** - a class with annotated methods the model can call as tools.
+- **Chat completion service** - the connector to the underlying model (Foundry, Azure OpenAI, OpenAI, etc.).
+- **FunctionChoiceBehavior** - tells SK whether to let the model decide which tools to call, require a specific one, or call none.
 
 Azure AI Foundry hosts the model endpoint the kernel connects to. SK handles the rest: tool discovery, function call dispatch, result injection, conversation state.
 
@@ -37,8 +37,8 @@ You need:
 
 - An Azure subscription with access to Azure AI Foundry.
 - A Foundry hub and project created. If you haven't done this yet, follow Steps 1–2 from the [Foundry first-look post](/posts/2026-06-19-azure-ai-foundry-first-look-agentic-ai-workflows/).
-- A model deployment inside the project — for example, `gpt-4o-mini-chat`.
-- Your deployment's endpoint URL and API key (or a managed identity — more on that below).
+- A model deployment inside the project - for example, `gpt-4o-mini-chat`.
+- Your deployment's endpoint URL and API key (or a managed identity - more on that below).
 - .NET 8 SDK.
 
 ---
@@ -55,13 +55,13 @@ dotnet add package Microsoft.SemanticKernel.Connectors.AzureOpenAI
 dotnet add package Azure.Identity
 ```
 
-`Microsoft.SemanticKernel` is the core SDK. `Microsoft.SemanticKernel.Connectors.AzureOpenAI` provides the Azure OpenAI connector SK uses to talk to your Foundry-hosted model. `Azure.Identity` is for `DefaultAzureCredential` — the right way to authenticate in Azure-hosted deployments.
+`Microsoft.SemanticKernel` is the core SDK. `Microsoft.SemanticKernel.Connectors.AzureOpenAI` provides the Azure OpenAI connector SK uses to talk to your Foundry-hosted model. `Azure.Identity` is for `DefaultAzureCredential` - the right way to authenticate in Azure-hosted deployments.
 
 ---
 
 ## Wiring Up the Kernel
 
-The kernel is built with a builder pattern. You add services — starting with the chat completion connector — and then call `Build()`:
+The kernel is built with a builder pattern. You add services - starting with the chat completion connector - and then call `Build()`:
 
 ```csharp
 using Azure.Identity;
@@ -78,7 +78,7 @@ builder.AddAzureOpenAIChatCompletion(
 var kernel = builder.Build();
 ```
 
-For production — where you want managed identity instead of a stored API key — swap the credential parameter:
+For production - where you want managed identity instead of a stored API key - swap the credential parameter:
 
 ```csharp
 builder.AddAzureOpenAIChatCompletion(
@@ -88,13 +88,13 @@ builder.AddAzureOpenAIChatCompletion(
 );
 ```
 
-The endpoint format is the Azure OpenAI endpoint for your Foundry project. In the Foundry portal, find it under **Deployments → your deployment → Target URI**, and strip the path — you want just `https://<resource-name>.openai.azure.com/`. The deployment name is the name you assigned when you created the model deployment, not the model's marketing name.
+The endpoint format is the Azure OpenAI endpoint for your Foundry project. In the Foundry portal, find it under **Deployments → your deployment → Target URI**, and strip the path - you want just `https://<resource-name>.openai.azure.com/`. The deployment name is the name you assigned when you created the model deployment, not the model's marketing name.
 
 ---
 
 ## Plugins and Tool Functions
 
-A plugin is a C# class. Methods you want the model to be able to call get a `[KernelFunction]` attribute. The `[Description]` attribute on the method and its parameters is what the model sees — treat those descriptions the same way you'd treat API documentation, because they directly affect whether the model calls the right tool with the right arguments.
+A plugin is a C# class. Methods you want the model to be able to call get a `[KernelFunction]` attribute. The `[Description]` attribute on the method and its parameters is what the model sees - treat those descriptions the same way you'd treat API documentation, because they directly affect whether the model calls the right tool with the right arguments.
 
 ```csharp
 using System.ComponentModel;
@@ -140,7 +140,7 @@ var kernel = builder.Build();
 kernel.Plugins.AddFromType<DevOpsPlugin>("DevOps");
 ```
 
-SK inspects the class at registration time, reads the `[KernelFunction]` and `[Description]` attributes, and builds a tool schema the model can reason over. The model never sees your C# method names directly — it sees the function name you passed to `[KernelFunction]` and the descriptions you wrote.
+SK inspects the class at registration time, reads the `[KernelFunction]` and `[Description]` attributes, and builds a tool schema the model can reason over. The model never sees your C# method names directly - it sees the function name you passed to `[KernelFunction]` and the descriptions you wrote.
 
 ---
 
@@ -187,7 +187,7 @@ response = await chatService.GetChatMessageContentAsync(
 Console.WriteLine(response.Content);
 ```
 
-`FunctionChoiceBehavior.Auto()` is the key setting. It tells SK to let the model decide when to call tools. In practice: the model receives the conversation history and the available tool schemas; when it decides a tool call is warranted, SK intercepts the tool call response, dispatches it to the registered plugin method, appends the result to the conversation, and sends the updated history back to the model automatically. Your application code doesn't need to handle the function call / function result round-trip — SK manages that loop.
+`FunctionChoiceBehavior.Auto()` is the key setting. It tells SK to let the model decide when to call tools. In practice: the model receives the conversation history and the available tool schemas; when it decides a tool call is warranted, SK intercepts the tool call response, dispatches it to the registered plugin method, appends the result to the conversation, and sends the updated history back to the model automatically. Your application code doesn't need to handle the function call / function result round-trip - SK manages that loop.
 
 For the second turn, the model will typically call `list_repositories` first (because it doesn't know the full list), then call `get_pipeline_status` for each repo, then synthesize the answer. That's a multi-step plan executed without any orchestration code on your side.
 
@@ -213,7 +213,7 @@ Memory is worth a post of its own. The short version: for agents that need to re
 
 ## Deploying to Azure Container Apps
 
-The agent above is a console app. To run it as a persistent service — listening on a queue, exposing an HTTP endpoint, or processing events — containerize it and deploy to Azure Container Apps. Here's a workflow that does the full build-push-deploy cycle with OIDC authentication and no stored cloud credentials.
+The agent above is a console app. To run it as a persistent service - listening on a queue, exposing an HTTP endpoint, or processing events - containerize it and deploy to Azure Container Apps. Here's a workflow that does the full build-push-deploy cycle with OIDC authentication and no stored cloud credentials.
 
 First, the Dockerfile (place this at the repo root, adjust paths to match your project layout):
 
@@ -283,7 +283,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
-      - name: Azure login (OIDC — no stored credentials)
+      - name: Azure login (OIDC - no stored credentials)
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -301,7 +301,7 @@ jobs:
 
 A few things worth noting:
 
-**OIDC instead of service principal secrets.** The `azure/login@v2` step exchanges a short-lived GitHub OIDC token for a short-lived Azure access token — no `AZURE_CREDENTIALS` JSON, no credential rotation. You configure a federated identity credential on the Azure managed identity or app registration once; the workflow runs without stored secrets from then on. The OIDC post covers this setup in detail if you haven't configured it yet.
+**OIDC instead of service principal secrets.** The `azure/login@v2` step exchanges a short-lived GitHub OIDC token for a short-lived Azure access token - no `AZURE_CREDENTIALS` JSON, no credential rotation. You configure a federated identity credential on the Azure managed identity or app registration once; the workflow runs without stored secrets from then on. The OIDC post covers this setup in detail if you haven't configured it yet.
 
 **`GITHUB_TOKEN` for GHCR.** The `packages: write` permission and `secrets.GITHUB_TOKEN` handle container registry authentication. No PAT needed.
 
@@ -311,9 +311,9 @@ A few things worth noting:
 
 ## Closing
 
-Python developers reaching for LangChain get orchestration, tool calling, memory, and a deployment story. .NET developers get the same thing with Semantic Kernel and Azure AI Foundry — the kernel manages orchestration and tool dispatch, Foundry manages model hosting and deployment boundaries, and Container Apps runs the workload in a managed environment without cluster overhead.
+Python developers reaching for LangChain get orchestration, tool calling, memory, and a deployment story. .NET developers get the same thing with Semantic Kernel and Azure AI Foundry - the kernel manages orchestration and tool dispatch, Foundry manages model hosting and deployment boundaries, and Container Apps runs the workload in a managed environment without cluster overhead.
 
-The pattern here — kernel + plugin + `FunctionChoiceBehavior.Auto` + Foundry endpoint — is the smallest complete unit of a production-ready .NET agent. It's not a prototype. The same structure scales to multi-plugin agents, streaming responses, Redis or Azure AI Search-backed memory, and distributed agent networks with explicit handoff rules. You grow by adding plugins and services to the kernel, not by rearchitecting.
+The pattern here - kernel + plugin + `FunctionChoiceBehavior.Auto` + Foundry endpoint - is the smallest complete unit of a production-ready .NET agent. It's not a prototype. The same structure scales to multi-plugin agents, streaming responses, Redis or Azure AI Search-backed memory, and distributed agent networks with explicit handoff rules. You grow by adding plugins and services to the kernel, not by rearchitecting.
 
 For teams already deployed on Azure, this is the path of least resistance. For teams evaluating frameworks, it's the path that keeps infrastructure and orchestration inside the same ecosystem.
 

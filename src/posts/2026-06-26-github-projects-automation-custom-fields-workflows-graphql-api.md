@@ -5,7 +5,7 @@ image: /images/posts/2026-06-26-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and slate-blue accents. The central composition shows a GitHub Projects board with three labeled columns: 'Todo', 'In Progress', 'Done'. Above the board, a compact field configuration panel lists three custom field types with type badges: Iteration (calendar icon, teal), Single Select (dropdown icon, amber), Number (hash icon, slate-blue). To the right, a narrow terminal panel shows a GraphQL mutation snippet with highlighted field names and values in monospaced type. At the bottom, a GitHub Actions workflow YAML card shows a scheduled cron trigger and a curl call to api.github.com/graphql. Connecting lines flow from the workflow card into the project board, showing automation. The overall mood is precise, developer-first, and practical. Avoid: Kanban marketing imagery, generic gear icons, humanoid figures, abstract circuit textures."
 layout: post.njk
 site_title: Tech Notes
-summary: "GitHub Projects v2 ships with a GraphQL API, custom field types, and built-in workflow triggers that most teams never configure. This post shows how to wire them together: auto-assign sprints, sync PR status to issue state, and generate a weekly digest — all without leaving GitHub."
+summary: "GitHub Projects v2 ships with a GraphQL API, custom field types, and built-in workflow triggers that most teams never configure. This post shows how to wire them together: auto-assign sprints, sync PR status to issue state, and generate a weekly digest - all without leaving GitHub."
 tags: ["github", "developer-productivity", "project-management", "github-actions"]
 title: "GitHub Projects Automation: Custom Fields, Workflows, and the GraphQL API"
 ---
@@ -24,11 +24,11 @@ The three field types worth understanding are **Iteration**, **Single Select**, 
 
 ### Iteration
 
-An iteration field models a sprint. You define a cadence — say, two-week periods starting on Mondays — and GitHub generates named iterations automatically. Each iteration has an `id`, a `title` (e.g., `"Iteration 3"`), a `startDate`, and a `duration` in days.
+An iteration field models a sprint. You define a cadence - say, two-week periods starting on Mondays - and GitHub generates named iterations automatically. Each iteration has an `id`, a `title` (e.g., `"Iteration 3"`), a `startDate`, and a `duration` in days.
 
 To add an iteration field to your project in the UI: open the project, click **+** to add a field, choose **Iteration**, and configure the cadence. You'll configure the start date and duration once; subsequent iterations are created automatically.
 
-The iteration field is the key to sprint assignment automation. When you have its field ID and the current iteration's option ID, you can set it programmatically on any project item — including items added in the last hour.
+The iteration field is the key to sprint assignment automation. When you have its field ID and the current iteration's option ID, you can set it programmatically on any project item - including items added in the last hour.
 
 ### Single Select
 
@@ -38,16 +38,16 @@ Single-select is what built-in workflows operate on. When you configure a workfl
 
 ### Number
 
-A number field stores a decimal value. Use it for story points, effort estimates, or cycle time. There's no special behavior from the API perspective — you set it the same way you set any other field — but it unlocks grouping by numeric range and aggregate views in the project's insight charts.
+A number field stores a decimal value. Use it for story points, effort estimates, or cycle time. There's no special behavior from the API perspective - you set it the same way you set any other field - but it unlocks grouping by numeric range and aggregate views in the project's insight charts.
 
 ### Adding Fields via the UI
 
-You don't need the API to create fields — use the project UI for one-time configuration, and the API for automation:
+You don't need the API to create fields - use the project UI for one-time configuration, and the API for automation:
 
 1. Open your project.
 2. Click the **+** icon at the right of the column headers to add a field.
 3. Choose the field type and configure it (options for single-select, cadence for iteration).
-4. Note the field names exactly — you'll need them when querying the API.
+4. Note the field names exactly - you'll need them when querying the API.
 
 ---
 
@@ -55,10 +55,10 @@ You don't need the API to create fields — use the project UI for one-time conf
 
 GitHub Projects ships four built-in workflow triggers you should turn on for any active project:
 
-1. **Auto-add to project** — when an issue or PR is opened in a linked repository, it's automatically added to the project. Requires no code. Enable it under **Workflows** in the project settings.
-2. **Auto-archive closed items** — when an issue or PR is closed and a configurable time passes (default: 7 days), the item is archived. Keeps the board from accumulating closed noise.
-3. **Set status when PR is merged** — when a linked PR is merged, the associated project item's status field is set to a value you configure (typically `Done`). Requires a single-select field named `Status`.
-4. **Set status when PR is opened** — sets a status value when a PR linked to an issue is opened. Use this to move an item to `In Progress` automatically when someone begins the work.
+1. **Auto-add to project** - when an issue or PR is opened in a linked repository, it's automatically added to the project. Requires no code. Enable it under **Workflows** in the project settings.
+2. **Auto-archive closed items** - when an issue or PR is closed and a configurable time passes (default: 7 days), the item is archived. Keeps the board from accumulating closed noise.
+3. **Set status when PR is merged** - when a linked PR is merged, the associated project item's status field is set to a value you configure (typically `Done`). Requires a single-select field named `Status`.
+4. **Set status when PR is opened** - sets a status value when a PR linked to an issue is opened. Use this to move an item to `In Progress` automatically when someone begins the work.
 
 To configure: open your project, click **...** → **Workflows**, and enable the relevant triggers. Each workflow lets you choose which field to set and which option to use.
 
@@ -98,7 +98,7 @@ query {
 }
 ```
 
-The `id` returned is a base64-encoded node ID like `PVT_kwDOA...`. Store this as a repository variable — it doesn't change.
+The `id` returned is a base64-encoded node ID like `PVT_kwDOA...`. Store this as a repository variable - it doesn't change.
 
 ### Fetching Field IDs and Option IDs
 
@@ -141,7 +141,7 @@ query {
 }
 ```
 
-Run this once and record the IDs for each field and option you'll automate. The field IDs are stable. Iteration option IDs change each sprint — that's the piece you'll query dynamically.
+Run this once and record the IDs for each field and option you'll automate. The field IDs are stable. Iteration option IDs change each sprint - that's the piece you'll query dynamically.
 
 ### Updating a Field Value
 
@@ -287,7 +287,7 @@ The `projects_v2_item` event requires the `PROJECT_TOKEN` to have `project` scop
 
 ### 2. Set "In Progress" When a Linked PR Is Opened
 
-Built-in workflows handle this for the common case, but if you need custom logic — for example, only triggering on PRs from non-draft state, or updating a secondary field alongside status — a workflow gives you full control:
+Built-in workflows handle this for the common case, but if you need custom logic - for example, only triggering on PRs from non-draft state, or updating a secondary field alongside status - a workflow gives you full control:
 
 ```yaml
 name: Set In Progress on PR Open
@@ -354,7 +354,7 @@ jobs:
             -f optionId="$IN_PROGRESS_OPTION_ID"
 ```
 
-Store `STATUS_FIELD_ID` and `IN_PROGRESS_OPTION_ID` as repository variables — you get them from the field query above.
+Store `STATUS_FIELD_ID` and `IN_PROGRESS_OPTION_ID` as repository variables - you get them from the field query above.
 
 ### 3. Weekly Digest via Scheduled Workflow
 
@@ -436,7 +436,7 @@ jobs:
 
           # Build the digest body using jq
           BODY=$(echo "$DIGEST" | jq -r '
-            "## Weekly Project Digest — " + (now | strftime("%Y-%m-%d")) + "\n\n" +
+            "## Weekly Project Digest - " + (now | strftime("%Y-%m-%d")) + "\n\n" +
             (
               .data.node.items.nodes
               | map(
@@ -460,7 +460,7 @@ jobs:
               | map(
                   "### " + (.[0].status) + "\n\n" +
                   (
-                    map("- [#\(.number) \(.title)](\(.url)) — \(.assignees)")
+                    map("- [#\(.number) \(.title)](\(.url)) - \(.assignees)")
                     | join("\n")
                   )
                 )
@@ -471,7 +471,7 @@ jobs:
           # Post the digest as a new issue
           gh issue create \
             --repo "${{ github.repository }}" \
-            --title "Weekly Digest — $TODAY" \
+            --title "Weekly Digest - $TODAY" \
             --label "digest" \
             --body "$BODY"
 ```
@@ -491,13 +491,13 @@ Before running any of these workflows, configure the following as repository var
 | `STATUS_FIELD_ID` | Run the fields query; copy the `id` of your single-select Status field |
 | `IN_PROGRESS_OPTION_ID` | From the Status field's `options` array; copy the `id` for `In Progress` |
 
-Store the `PROJECT_TOKEN` as a **secret** (it's a credential). Store everything else as a variable — none of the IDs are sensitive.
+Store the `PROJECT_TOKEN` as a **secret** (it's a credential). Store everything else as a variable - none of the IDs are sensitive.
 
 ---
 
 ## You Don't Need Jira
 
-Every engineering team has an implicit project management tax: the time spent maintaining a tool that lives outside the actual work. Jira is powerful for the organizations that need its full feature set. For a team that lives in GitHub — where issues, PRs, code review, and CI/CD all coexist — the coordination overhead of a separate tool is real and rarely justified.
+Every engineering team has an implicit project management tax: the time spent maintaining a tool that lives outside the actual work. Jira is powerful for the organizations that need its full feature set. For a team that lives in GitHub - where issues, PRs, code review, and CI/CD all coexist - the coordination overhead of a separate tool is real and rarely justified.
 
 GitHub Projects v2, with custom fields and the GraphQL API, covers the things that matter for most teams: sprint tracking, status visibility, and automation that keeps the board accurate without human ceremony. You configure it once, you wire up two or three workflows, and then it runs.
 
