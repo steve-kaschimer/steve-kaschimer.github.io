@@ -1,7 +1,7 @@
 ---
 author: Steve Kaschimer
-date: 2026-06-12
-image: /images/posts/2026-06-12-hero.webp
+date: 2026-06-19
+image: /images/posts/2026-06-19-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. The central composition is a sequence diagram rendered as a clean three-column flow. Left column labeled 'GitHub Actions Runner' shows a workflow YAML snippet with 'permissions: id-token: write' highlighted in teal. Center column labeled 'GitHub OIDC Endpoint' shows a JWT token card - compact, monospaced, with visible fields: iss, sub, aud, repo, environment - glowing teal. Right column labeled 'Azure / AWS' shows a cloud role badge and a short-lived access token card in amber, marked 'expires: 1h'. Between the columns, two arrows: one going right labeled 'exchange JWT' and one going right labeled 'receive access token'. At the bottom, a crossed-out padlock icon with a label 'no stored secret' in off-white. The mood is clean, precise, and secure - the feeling of a system designed correctly from the start. Avoid: cloud provider logos, specific brand colors, circuit board textures, generic key or shield icons."
 layout: post.njk
 site_title: Tech Notes
@@ -290,3 +290,33 @@ OIDC is the right solution for cloud provider authentication from GitHub Actions
 **Self-hosted runner credentials** - if your self-hosted runners need to authenticate to resources at startup (not at workflow execution time), OIDC does not apply. Those credentials are infrastructure-level and belong in a secrets manager (Azure Key Vault, AWS Secrets Manager), not GitHub.
 
 The practical target: after a full OIDC migration, your GitHub secrets should contain only third-party API credentials, and your cloud provider access should require no secrets at all. Most repositories can reach that state within a sprint.
+
+***
+
+<div class="callout-box">
+
+## OIDC Migration Checklist
+
+Run this against each repository before and during the migration:
+
+- [ ] Search for static cloud credentials: `grep -r "AWS_ACCESS_KEY_ID\|AZURE_CREDENTIALS\|GCP_SA_KEY\|secrets\..*[Kk]ey\|secrets\..*[Cc]redential" .github/workflows/`
+- [ ] For each credential found: identify the cloud provider, the scope (subscription vs. resource group vs. specific service), and whether the workflow triggers on `pull_request` from forks
+- [ ] Prioritize: fork-triggerable workflows first, then broad-scope credentials (subscription Contributor, AdministratorAccess), then credentials that have never been rotated
+- [ ] Azure: create an App Registration with a Workload Identity federated credential; scope the entity to a **GitHub Environment**, not a branch
+- [ ] AWS: register the GitHub OIDC Identity Provider once per account (`https://token.actions.githubusercontent.com`, audience `sts.amazonaws.com`), then create an IAM role with a trust policy using `StringEquals` on the `sub` claim
+- [ ] For each role or App Registration: attach only the minimum permissions the workflow actually needs - no `AdministratorAccess`, no subscription-level `Contributor` unless absolutely required
+- [ ] Update each workflow: add `permissions: id-token: write`, add `environment:` on the job (matching the federated credential entity), replace the secret-based login step with the OIDC-enabled login action (`azure/login@v2` or `aws-actions/configure-aws-credentials@v4`)
+- [ ] Move non-sensitive identifiers (client IDs, tenant IDs, role ARNs, subscription IDs) from secrets to repository **variables** (`vars.*`)
+- [ ] Run the migrated workflow end-to-end and confirm successful cloud authentication before revoking the static credential
+- [ ] Revoke the static credential immediately after successful validation - do not leave it active as a fallback
+- [ ] After completing all migrations: audit GitHub secrets and confirm no cloud provider credentials remain; only third-party API keys should be left
+
+</div>
+
+OIDC is not a complicated migration. The implementation steps are mechanical and the trust model is sound. The credential that cannot be exfiltrated cannot be misused - and that is a meaningfully different security posture than the one most workflows start with.
+
+***
+
+Questions about OIDC setup, IAM trust policy design, or auditing workflows across an org? Reach out.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)
