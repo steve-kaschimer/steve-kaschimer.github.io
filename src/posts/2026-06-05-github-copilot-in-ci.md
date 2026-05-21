@@ -16,33 +16,53 @@ This post covers how to wire up Copilot code review in a way that actually helps
 
 ---
 
-## What Copilot Code Review Actually Does
+## Wiring `github/copilot-code-review` in CI
 
-Before tuning anything, it helps to understand what the feature is and isn't. Copilot code review is a platform feature - not an action - that GitHub runs automatically when a PR is opened or updated. It reads the diff, applies your configured instructions, and posts inline comments on the PR. The comments appear under a `copilot` identity and are clearly marked as AI-generated.
+The fastest way to operationalize Copilot review across every PR is the `github/copilot-code-review` action. It runs on PR events, analyzes the diff, and posts review comments directly on changed lines.
 
-Three things that matter for how you configure and use it:
+Start with a minimal workflow:
 
-**It never posts an approving review.** Copilot can post `COMMENT` or `REQUEST_CHANGES` review types, but it is not permitted to post `APPROVE`. This is intentional and non-configurable. It means Copilot's output can never satisfy a required-reviewer rule in branch protection or rulesets, no matter how many comments it leaves. You cannot accidentally let Copilot gate your merges via the approval mechanism.
+```yaml
+name: copilot-code-review
 
-**It reviews the diff, not the full codebase.** Copilot sees the changed lines and a small window of surrounding context, not the entire repository. This means it is good at spotting localized issues - an unhandled error, a missing null check, a hardcoded value that should be a constant - and poor at evaluating architectural decisions that span multiple files or systems. Set expectations accordingly: it is a diff reviewer, not a design reviewer.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
-**It counts as a check, not a reviewer.** From the branch protection perspective, Copilot review is not a status check in the traditional sense - it does not appear in the "required status checks" list. It appears in the PR review section. If you want to make Copilot review blocking, you do so through ruleset configuration, not workflow gates. The architectural decision of whether to do that at all is covered below.
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/copilot-code-review@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Three behavior details matter for rollout:
+
+**It never approves PRs.** Treat Copilot as a comment stream, not an approver. Required reviewer policies should still be human-only.
+
+**It reviews the diff, not your whole architecture.** It catches local issues in changed code; it does not replace design review.
+
+**It should be tuned before broad rollout.** Scope and instruction quality determine whether teams see signal or noise.
 
 ***
 
-## Enabling It: Org-Level vs. Repository-Level
+## Enabling It: Org Policy vs. Repo Workflow
 
-Copilot code review requires a GitHub Copilot Business or Enterprise plan. Enabling it follows the same layered model as other Copilot features.
+Copilot review still requires Copilot Business or Enterprise, but delivery happens in two layers:
 
-**At the organization level** (recommended for teams with multiple repos):
+- **Organization or repository-level policy** is the prerequisite that enables Copilot code review.
+- **Repository workflow** controls when and how `github/copilot-code-review` runs.
 
-Navigate to **Organization Settings → Copilot → Policies → Code review**. You can enable it for all repositories or for selected repositories. Enabling at the org level means any new repository automatically gets Copilot review - you don't have to remember to turn it on per repo.
+Org admins configure this in **Settings → Copilot → Policies → Code review** (or repository-level Copilot settings for per-repo control). If policy is disabled, the workflow will complete successfully in CI logs without posting any review comments on the PR.
 
-**At the repository level**:
-
-Navigate to **Repository Settings → Copilot → Code review**. This overrides the org default for this specific repo. Useful for repos where Copilot review would generate excessive noise - large generated files, migration scripts, data - and you'd rather opt out.
-
-The principle of least surprise applies here: enable at the org level with sensible exclusions rather than enabling per repo. The overhead of remembering to enable a tool that should be always-on is not worth the control it provides.
+This split is useful: platform admins enable the feature once, while each repo keeps execution details versioned, reviewable, and constrained to its own risk profile.
 
 ***
 
@@ -50,32 +70,20 @@ The principle of least surprise applies here: enable at the org level with sensi
 
 Out of the box, Copilot reviews everything in every diff. That is the wrong default for most real codebases. Machine-generated files, test fixtures, migration scripts, and vendored code will generate comments that nobody wants to read. Configuring scope before you roll this out to a team matters.
 
-### Path Exclusions
+### Path Filters
 
-Path exclusions are configured in the repository settings under **Settings → Copilot → Code review → Excluded paths**. The syntax is glob patterns, one per line:
+The action supports `path_filters`, so you can keep review focused on high-signal files:
 
-```text
-# Generated files
-src/generated/**
-*.pb.go
-*.pb.ts
-
-# Database migrations
-db/migrations/**
-
-# Vendored dependencies
-vendor/**
-node_modules/**
-
-# Test fixtures and snapshots
-**/__snapshots__/**
-**/testdata/**
-**/*.fixture.*
+```yaml
+- uses: github/copilot-code-review@v1
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    path_filters: |
+      - 'src/**'
+      - '.github/workflows/**'
 ```
 
-Excluded paths are silently skipped - Copilot produces no output for them. This is different from CODEOWNERS exclusions, which still route files to reviewers; here, Copilot does not analyze the file at all.
-
-The paths list needs maintenance. As your codebase evolves, new generated directories or fixture patterns appear. A quarterly review of the exclusions list - checking whether Copilot is commenting on files it should be ignoring - is a reasonable cadence.
+This should be conservative by default: include only high-signal source and workflow paths first, then expand as needed. Revisit filters as your repo evolves so Copilot keeps looking where humans want help.
 
 ### Custom Review Instructions
 
@@ -114,6 +122,24 @@ at `src/routes/public.ts`.
 The instruction file is committed to the repository, versioned, and reviewable in PRs like any other configuration. That is a feature - when the team decides to add a new focus area or update a convention, the change goes through a PR, gets discussed, and lands with a clear commit history.
 
 > Custom instructions have a length limit (currently around 8,000 characters). Prioritize security-relevant patterns and team-specific conventions over general best practices; Copilot already knows general best practices. The value of custom instructions is encoding the knowledge that is specific to *your* codebase.
+
+***
+
+## Preventing Copilot from "Approving Itself"
+
+Copilot review comments are advisory, but teams often run separate automation that auto-approves bot PRs (for dependency updates or chore changes). Add an explicit Copilot denylist there so Copilot-authored changes cannot be auto-approved by bot logic:
+
+```yaml
+jobs:
+  auto-approve-bot-prs:
+    if: >
+      github.event.pull_request.user.login != 'github-copilot[bot]' &&
+      github.event.pull_request.user.login != 'copilot-swe-agent[bot]'
+```
+
+`github-copilot[bot]` is the review bot identity, and `copilot-swe-agent[bot]` is a common bot identity for Copilot-authored PRs created by coding agents. Excluding both prevents bot-written changes from being auto-approved by bot-only logic.
+
+Pair that with branch protection requiring at least one human approval. The practical rule: Copilot can suggest and comment, but a human still owns merge intent.
 
 ***
 
@@ -158,7 +184,7 @@ on:
 jobs:
   triage:
     if: >
-      github.event.review.user.login == 'copilot[bot]' &&
+      github.event.review.user.login == 'github-copilot[bot]' &&
       github.event.review.state == 'changes_requested'
     runs-on: ubuntu-latest
     permissions:
