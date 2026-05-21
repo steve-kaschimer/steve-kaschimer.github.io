@@ -204,7 +204,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Actions Advanced Caching: Strategies That Actually Cut Build Times ✅
 - **Status:** `draft`
 - **Scheduled:** 2026-07-10
-- **Issue:** [#118](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/118) (closed)
+- **Issue:** [#118](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/118) ✅ closed
 - **File:** `src/posts/2026-07-10-github-actions-advanced-caching-strategies.md`
 - **Pitch:** Most teams use `actions/cache` with a single key and wonder why cache hit rates are low - this post covers the cache key strategies that actually work for real build systems.
 - **Angle:** Covers restore-keys fallback chains, scoping cache by branch vs. by PR, matrix-aware cache keys, and per-job vs. per-workflow cache sharing. Includes worked examples for npm, Gradle, pip, and Docker layer caching. Addresses the cache poisoning risk and how GitHub's isolation model mitigates it.
