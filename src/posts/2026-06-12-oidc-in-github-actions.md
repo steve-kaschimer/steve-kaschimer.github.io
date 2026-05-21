@@ -1,6 +1,6 @@
 ---
 author: Steve Kaschimer
-date: 2026-06-19
+date: 2026-06-12
 image: /images/posts/2026-06-19-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. The central composition is a sequence diagram rendered as a clean three-column flow. Left column labeled 'GitHub Actions Runner' shows a workflow YAML snippet with 'permissions: id-token: write' highlighted in teal. Center column labeled 'GitHub OIDC Endpoint' shows a JWT token card - compact, monospaced, with visible fields: iss, sub, aud, repo, environment - glowing teal. Right column labeled 'Azure / AWS' shows a cloud role badge and a short-lived access token card in amber, marked 'expires: 1h'. Between the columns, two arrows: one going right labeled 'exchange JWT' and one going right labeled 'receive access token'. At the bottom, a crossed-out padlock icon with a label 'no stored secret' in off-white. The mood is clean, precise, and secure - the feeling of a system designed correctly from the start. Avoid: cloud provider logos, specific brand colors, circuit board textures, generic key or shield icons."
 layout: post.njk
