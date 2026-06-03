@@ -388,11 +388,17 @@ Register `ci-gate` as the required status check in your Ruleset. Everything else
 Run this against your current setup before the next sprint planning:
 
 [ ] List your required status check names (`gh api /repos/{owner}/{repo}/branches/main/protection --jq '.required_status_checks.contexts'`) and verify they match actual job names running on recent PRs
+
 [ ] Check whether "Include administrators" is enforced on classic branch protection - or migrate to Rulesets (see May 8 post) where admin bypass is explicitly configurable
+
 [ ] Identify any test jobs that fail non-deterministically across the last 20 runs - quarantine them with `continue-on-error: true` and file them as bugs with an SLA
+
 [ ] Measure CI wall-clock time on the last 10 PRs - is the median under 10 minutes? If not, identify which serial jobs can be parallelized
+
 [ ] If using `paths` filters on the workflow trigger: verify you have a `ci-gate` job with `if: always()` that is the registered required check name
+
 [ ] Set a coverage threshold at current coverage minus 2–3% - then raise it 5 points per quarter
+
 [ ] Name the job registered as required status check something stable (`ci-gate`) so workflow refactoring never silently disables enforcement
 
 </div>
