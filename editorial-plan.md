@@ -37,7 +37,7 @@ All three posts in this batch have been published.
 
 ---
 
-## � April–May 2026 - Completed
+## � April-May 2026 - Completed
 
 Both posts in this batch have been published.
 

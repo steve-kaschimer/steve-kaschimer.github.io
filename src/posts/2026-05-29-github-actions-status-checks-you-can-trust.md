@@ -397,7 +397,7 @@ Run this against your current setup before the next sprint planning:
 
 [ ] If using `paths` filters on the workflow trigger: verify you have a `ci-gate` job with `if: always()` that is the registered required check name
 
-[ ] Set a coverage threshold at current coverage minus 2–3% - then raise it 5 points per quarter
+[ ] Set a coverage threshold at current coverage minus 2-3% - then raise it 5 points per quarter
 
 [ ] Name the job registered as required status check something stable (`ci-gate`) so workflow refactoring never silently disables enforcement
 

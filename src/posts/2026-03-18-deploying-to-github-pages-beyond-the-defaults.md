@@ -20,7 +20,7 @@ The official `actions/deploy-pages` action - introduced in 2022 and now the GitH
 
 Before the fix, the failure list:
 
-- **No caching**: every run reinstalls all npm packages from scratch, adding 60–90 seconds to every deploy
+- **No caching**: every run reinstalls all npm packages from scratch, adding 60-90 seconds to every deploy
 - **Broad token permissions**: classic `GITHUB_TOKEN`-based deploys grant write access to the entire repository context; OIDC-based deployment scopes that to the Pages deployment specifically
 - **No environment protection**: the site deploys directly on every push to `main` - no reviewer gate, no way to stop a bad deploy before it goes live
 - **Artifact leakage**: `actions/upload-pages-artifact` defaults to a 90-day retention window; a blog with daily publishing accumulates artifacts fast against your GitHub storage quota
@@ -258,7 +258,7 @@ GitHub Pages doesn't natively support per-PR preview URLs. If that's a requireme
 ## GitHub Pages Deployment Checklist
 
 - [ ] Set Pages source to **GitHub Actions** in Repository Settings - not a branch
-- [ ] Use `actions/setup-node` with `cache: 'npm'` - eliminates 60–90 seconds of install time on unchanged deps
+- [ ] Use `actions/setup-node` with `cache: 'npm'` - eliminates 60-90 seconds of install time on unchanged deps
 - [ ] Run `npm ci` not `npm install` - reproducible, lockfile-respecting installs; fails loudly on lockfile drift
 - [ ] Use `npm run deploy` (not parallel dev scripts) - Eleventy must build `_site/` before `build:css` can write into it
 - [ ] Set `retention-days: 1` on the Pages artifact - it only needs to survive until the `deploy` job runs in the same workflow

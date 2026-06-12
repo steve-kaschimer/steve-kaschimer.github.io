@@ -38,7 +38,7 @@ entries:
     status: scaffold-only
   - id: constitution
     category: governance
-    path: .specify/memory/constitution.md
+    path: .claude/memory/constitution.md
     summary: Bootstrap or review this file before depending on it as project-specific guidance.
     source_paths: []
     confidence: low

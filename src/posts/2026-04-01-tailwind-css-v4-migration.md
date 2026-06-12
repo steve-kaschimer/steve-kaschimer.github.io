@@ -347,7 +347,7 @@ Check the output file size - v4's dead-code elimination is more aggressive, so t
 
 ## Build Time: What to Expect
 
-For this blog's stack - Eleventy v2 with a moderate number of Tailwind utility classes - the Rust engine should drop cold build time from roughly 2–4 seconds to under a second, and reduce watch mode latency to something effectively instant.
+For this blog's stack - Eleventy v2 with a moderate number of Tailwind utility classes - the Rust engine should drop cold build time from roughly 2-4 seconds to under a second, and reduce watch mode latency to something effectively instant.
 
 The practical impact on the `npm run dev` script - which uses `npm-run-all --parallel start watch:css` to run Eleventy and Tailwind side by side - is that the `watch:css` process stops being something you wait for. The bottleneck shifts fully to Eleventy's templating and data cascade. That's exactly where you want it; the CSS layer should be invisible overhead, not a noticeable pause.
 

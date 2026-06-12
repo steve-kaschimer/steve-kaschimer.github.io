@@ -36,7 +36,7 @@ Azure AI Foundry hosts the model endpoint the kernel connects to. SK handles the
 You need:
 
 - An Azure subscription with access to Azure AI Foundry.
-- A Foundry hub and project created. If you haven't done this yet, follow Steps 1–2 from the [Foundry first-look post](/posts/2026-06-19-azure-ai-foundry-first-look-agentic-ai-workflows/).
+- A Foundry hub and project created. If you haven't done this yet, follow Steps 1-2 from the [Foundry first-look post](/posts/2026-06-19-azure-ai-foundry-first-look-agentic-ai-workflows/).
 - A model deployment inside the project - for example, `gpt-4o-mini-chat`.
 - Your deployment's endpoint URL and API key (or a managed identity - more on that below).
 - .NET 8 SDK.

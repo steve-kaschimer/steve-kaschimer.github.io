@@ -12,7 +12,7 @@ title: "GitHub Actions Advanced Caching: Strategies That Actually Cut Build Time
 
 Your CI takes four minutes to install dependencies. With a well-designed cache, it takes eighteen seconds. The gap between those two numbers is almost never about network speed or disk I/O - it's about whether your cache key is written correctly.
 
-`actions/cache` is deceptively simple to use and deceptively easy to use wrong. A key that's too broad invalidates on every run. A key that's too narrow never hits. Most teams land somewhere in the middle: a single key that hits inconsistently, a 30–40% hit rate they've stopped questioning, and CI minutes burning at the rate of a full install on every other push.
+`actions/cache` is deceptively simple to use and deceptively easy to use wrong. A key that's too broad invalidates on every run. A key that's too narrow never hits. Most teams land somewhere in the middle: a single key that hits inconsistently, a 30-40% hit rate they've stopped questioning, and CI minutes burning at the rate of a full install on every other push.
 
 This post is the fix. Cache key anatomy, restore-keys fallback chains, branch scoping, matrix-aware keys, per-ecosystem examples, and the security model that keeps it all safe.
 

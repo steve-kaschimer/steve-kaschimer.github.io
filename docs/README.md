@@ -22,7 +22,7 @@ Start here after `aisdlc init`:
 - [`context/repo-map.md`](context/repo-map.md): high-signal source, test, config, and workflow entrypoints
 - [`context/gaps.md`](context/gaps.md): unresolved questions, stale context, and weak signals that should not be guessed through
 - [`context/bootstrap-report.md`](context/bootstrap-report.md): snapshot review artifact from the last bootstrap pass
-- [`.specify/memory/constitution.md`](../.specify/memory/constitution.md): durable project principles and workflow guardrails
+- [`.claude/memory/constitution.md`](../.claude/memory/constitution.md): durable project principles and workflow guardrails
 
 ## Directory Structure
 
@@ -50,6 +50,3 @@ Treat them as reference scaffolds until they are adapted to the real repo. Do no
 - Label assumptions when the repo does not prove something directly.
 - Keep unresolved questions in `docs/context/gaps.md` instead of burying them in always-loaded agent files.
 - Treat sample or example docs as reference material until they are clearly adapted for this repo.
-- Use `/speckit.aisdlc.triage` when you need to turn raw intake into a repo-aware recommendation before opening a feature spec.
-- Use `/speckit.aisdlc.mockup` after `/speckit.specify` when UI-relevant stories need static product/design review artifacts before planning.
-- Use `/speckit.aisdlc.promote` after meaningful feature work so the docs stay current without rerunning the full bootstrap every time.

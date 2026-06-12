@@ -257,7 +257,7 @@ updates:
           - "patch"
 ```
 
-What this produces in practice: one grouped PR per week for dev dependencies, one for AWS SDK packages (if applicable), one for ESLint plugins, individual PRs for production dependency minor and major bumps, a grouped PR for action patches and minor versions, individual PRs for action major versions, and immediate individual PRs for any security advisory. The average team running this configuration sees 3–5 Dependabot PRs per week instead of 15–50.
+What this produces in practice: one grouped PR per week for dev dependencies, one for AWS SDK packages (if applicable), one for ESLint plugins, individual PRs for production dependency minor and major bumps, a grouped PR for action patches and minor versions, individual PRs for action major versions, and immediate individual PRs for any security advisory. The average team running this configuration sees 3-5 Dependabot PRs per week instead of 15-50.
 
 ***
 

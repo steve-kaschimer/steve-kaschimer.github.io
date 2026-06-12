@@ -17,7 +17,7 @@ No decisions recorded yet.
 **What was accomplished:**
 - Converted `editorial-plan.md` to a full editorial calendar (`This Period / Next Up / Backlog`) with status tracking and GitHub Issue links
 - Created 19 GitHub Issue labels (squad routing, work type, priority, status)
-- Created 17 GitHub Issues: 14 editorial posts (#95–#108) + 3 site improvements (#109–#111)
+- Created 17 GitHub Issues: 14 editorial posts (#95-#108) + 3 site improvements (#109-#111)
 - Wrote `.squad/WORKFLOW.md` - session kickoff ritual, label taxonomy, agent quick reference
 - Fixed P0 build blocker: `markdownTemplateEngine: false` in `.eleventy.js` (Nunjucks was processing `${{ }}` in GitHub Actions code examples inside posts, crashing the build)
 - Fixed P1 CI gaps: PR build-check workflow, deploy.yml build order, `checkout@v4`, Node 20 pinning

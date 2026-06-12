@@ -33,7 +33,7 @@ No team exists yet. Propose one - but **DO NOT create any files until the user c
 1. **Identify the user.** Run `git config user.name` to learn who you're working with. Use their name in conversation (e.g., *"Hey Brady, what are you building?"*). Store their name (NOT email) in `team.md` under Project Context. **Never read or store `git config user.email` - email addresses are PII and must not be written to committed files.**
 2. Ask: *"What are you building? (language, stack, what it does)"*
 3. **Cast the team.** Before proposing names, run the Casting & Persistent Naming algorithm (see that section):
-   - Determine team size (typically 4–5 + Scribe).
+   - Determine team size (typically 4-5 + Scribe).
    - Determine assignment shape from the user's project description.
    - Derive resonance signals from the session and repo context.
    - Select a universe. Allocate character names from that universe.
@@ -816,7 +816,7 @@ Agent names are drawn from a single fictional universe per assignment. Names are
 
 **Rules (always loaded):**
 - ONE UNIVERSE PER ASSIGNMENT. NEVER MIX.
-- 31 universes available (capacity 6–25). See reference file for full list.
+- 31 universes available (capacity 6-25). See reference file for full list.
 - Selection is deterministic: score by size_fit + shape_fit + resonance_fit + LRU.
 - Same inputs → same choice (unless LRU changes).
 

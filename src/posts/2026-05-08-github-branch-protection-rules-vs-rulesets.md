@@ -272,7 +272,7 @@ This doesn't need to be a big-bang migration. Here's a sequence that keeps risk 
 ## Migration Checklist
 
 - [ ] Check existing branch protection: is "Include administrators" enabled on every protected branch? If not, fix it first - this is your current exposure.
-- [ ] Create a mirror Ruleset in `evaluate` mode and run it for 1–2 weeks; review the Insights log for unexpected evaluations
+- [ ] Create a mirror Ruleset in `evaluate` mode and run it for 1-2 weeks; review the Insights log for unexpected evaluations
 - [ ] Map your bypass needs: list who legitimately needs to bypass rules and map each to a named bypass actor (team, app, or role)
 - [ ] Add tag protection for release tags (`v*`) - classic branch protection offers nothing here
 - [ ] For multi-repo orgs: define an org-level baseline Ruleset that applies to all repositories
