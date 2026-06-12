@@ -11,3 +11,6 @@ _site
 .squad/sessions/
 # Squad: SubSquad activation file (local to this machine)
 .squad-workstream
+
+# Claude Code: local/personal settings overrides
+.claude/settings.local.json

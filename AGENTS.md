@@ -3,62 +3,44 @@
 
 ## Overview
 
-This project uses Spec Kit v0.8.11 plus the AI-SDLC core preset, context extension, and workflow.
+This project uses Spec Kit v0.8.13, installed self-contained under `.claude/` for Claude Code.
 
 ## Quick Reference
 
 ### Before Any Implementation
 
-1. **Bootstrap context if needed**: `.agents/prompts/bootstrap-context-repo.md`
-2. **Read project context**: `docs/README.md`
-3. **Check for specs**: `specs/{feature-name}/`
-4. **Use skills**: start with preinstalled `skill-creator`, then add more via `npx skills`
-5. **Follow patterns**: apply spec + project guidance
-6. **Verify**: tests, security, and docs before completion
+1. **Read project context**: `docs/README.md`
+2. **Check for specs**: `specs/{feature-name}/`
+3. **Follow patterns**: apply spec + project guidance
+4. **Verify**: tests, security, and docs before completion
 
-### Preinstalled Skill
+### Spec-Driven Commands
 
-- Included by `aisdlc init`: `.agents/skills/skill-creator`
-- Linked into selected agent-native skills directories when supported
+Available as Claude Code skills (`.claude/skills/*/SKILL.md`), invoked as slash commands:
 
-### Add More Skills
+- `/constitution` - Create/update the project constitution at `.claude/memory/constitution.md`
+- `/specify` - Create/update a feature spec (typically `specs/{feature-name}/spec.md`)
+- `/clarify` - Ask focused questions to remove ambiguity before planning/implementing
+- `/plan` - Produce a technical plan from a spec (typically `specs/{feature-name}/plan.md`)
+- `/tasks` - Break a plan into implementable tasks (typically `specs/{feature-name}/tasks.md`)
+- `/implement` - Implement the next task(s) from tasks while consulting project context
+- `/checklist` - Run a pre-finish checklist (tests, security, docs, edge cases)
+- `/analyze` - Analyze the existing codebase to inform planning/changes
+- `/taskstoissues` - Convert `tasks.md` into GitHub issues (optional)
 
-- Learn more: https://skills.sh/
-- Install additional skills:
-  `npx skills add https://github.com/anthropics/skills --skill <skill-name>`
+The git extension (`/git-feature`, `/git-commit`, `/git-initialize`, `/git-remote`, `/git-validate`) runs automatically via hooks configured in `.claude/extensions.yml` - e.g. `/specify` creates a feature branch first, and most commands auto-commit afterward.
 
-### Spec-Kit Prompts
-
-Spec Kit is installed under `.specify/`. Skills-enabled agents expose the workflow as `speckit-*` skills, while markdown-based agents expose `/speckit.*` commands.
-
-- `.agents/prompts/bootstrap-context-repo.md` - AI-SDLC bootstrap prompt for durable repo context
-- `/speckit.aisdlc.bootstrap` - Bootstrap durable project context for a brownfield repo
-- `/speckit.constitution` - Create/update the project constitution at `.specify/memory/constitution.md`
-- `/speckit.specify` - Create/update a feature spec (typically `specs/{feature-name}/spec.md`)
-- `/speckit.aisdlc.mockup` - Generate static UI mockups and handoff notes for UI-relevant specs
-- `/speckit.clarify` - Ask focused questions to remove ambiguity before planning/implementing
-- `/speckit.plan` - Produce a technical plan from a spec (typically `specs/{feature-name}/plan.md`)
-- `/speckit.tasks` - Break a plan into implementable tasks (typically `specs/{feature-name}/tasks.md`)
-- `/speckit.implement` - Implement the next task(s) from tasks while consulting project context + installed skills
-- `/speckit.checklist` - Run a pre-finish checklist (tests, security, docs, edge cases)
-- `/speckit.analyze` - Analyze the existing codebase to inform planning/changes
-- `/speckit.taskstoissues` - Convert `tasks.md` into GitHub issues (optional)
-- `/speckit.aisdlc.promote` - Promote durable implementation knowledge back into `docs/` and feature context
-
-Canonical templates, scripts, extensions, presets, and workflows live under `.specify/`.
+Canonical templates, scripts, extensions, and config live under `.claude/`.
 
 Recommended sequence:
 
-1. `.agents/prompts/bootstrap-context-repo.md` or `/speckit.aisdlc.bootstrap`
-2. `/speckit.specify` -> optional `/speckit.aisdlc.mockup` for UI specs -> `/speckit.clarify` -> `/speckit.plan` -> `/speckit.tasks` -> `/speckit.analyze` (per feature)
-3. `/speckit.implement` -> `/speckit.checklist`
-4. `/speckit.aisdlc.promote` (capture durable context updates)
-
-Use `/speckit.constitution` when bootstrap has not been run yet or when the constitution needs an intentional rewrite.
+1. `/constitution` (first time, or when project principles change)
+2. `/specify` -> `/clarify` -> `/plan` -> `/tasks` -> `/analyze` (per feature)
+3. `/implement` -> `/checklist`
 
 ## Project Constitution
 
-See `.specify/memory/constitution.md` for project-specific guidelines and decisions.
+See `.claude/memory/constitution.md` for project-specific guidelines and decisions.
 
 ## Project Context
 
