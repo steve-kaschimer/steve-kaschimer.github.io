@@ -153,6 +153,16 @@ description: Welcome to Tech Notes where I share thoughts on technology, program
     </a>
     {% endfor %}
   </div>
+
+  <div id="posts-load-more-wrap" class="mt-8 flex justify-center">
+    <button
+      id="posts-load-more"
+      type="button"
+      class="btn btn-primary hidden"
+    >
+      Load more posts
+    </button>
+  </div>
   {% else %}
   <div class="text-center py-12">
     <p class="text-xl text-gray-600 dark:text-gray-400">No posts yet. Check back soon!</p>
