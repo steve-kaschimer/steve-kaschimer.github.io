@@ -264,9 +264,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `llm`, `testing`, `ai-agents`, `azure-ai-foundry`, `ci-cd`
 
 ### GitHub Secret Scanning Custom Patterns: Finding Business-Specific Credentials Before They Ship
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-08-28
 - **Issue:** [#125](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/125)
+- **File:** `src/posts/2026-08-28-github-secret-scanning-custom-patterns.md`
 - **Pitch:** GitHub's built-in secret scanning covers common provider tokens, but internal API keys, connection strings, and proprietary credential formats require custom patterns - which most teams never configure.
 - **Angle:** Walks through writing a custom secret scanning pattern (regex + test strings), deploying it at the org level, setting up push protection to block commits containing matches, and routing alerts to a security dashboard. Includes patterns for common internal formats: JWT with known issuer, internal API key prefix, database connection strings.
 - **Tags:** `secret-scanning`, `github-advanced-security`, `devsecops`, `security`
