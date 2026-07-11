@@ -46,7 +46,7 @@ Filenames follow `YYYY-MM-DD-slug.md`; that date is just for ordering files on d
 ### Client-side JS (`src/js/`, passthrough-copied, no bundler/build step)
 
 - `theme.js`: light/dark mode via `localStorage['theme-preference']` + `.dark` class on `<html>`, toggled by `#theme-toggle`, synced across tabs via the `storage` event.
-- `tag-filter-checkboxes.js`: client-side filter of `#posts-grid .post-card` elements against checked `.tag-checkbox` inputs - **OR logic** (a post shows if it matches *any* checked tag), persists selection to the URL hash (`#tags=...`) and restores it on load.
+- `tag-filter-checkboxes.js`: client-side filter of `#posts-grid .post-card` elements against checked `.tag-checkbox` inputs - **OR logic** (a post shows if it matches *any* checked tag), persists selection to the URL hash (`#tags=...`) and restores it on load. Also owns progressive rendering of the (already fully server-rendered) grid: only the first 10 matching posts are shown at a time; the `#posts-load-more` button reveals 10 more per click and auto-triggers via `IntersectionObserver` as it scrolls into view. Filter changes reset back to the first 10.
 - `code-copy.js`: adds copy-to-clipboard buttons to Prism-highlighted code blocks.
 
 ### Styling (`src/styles/input.css` -> `_site/styles/output.css`)

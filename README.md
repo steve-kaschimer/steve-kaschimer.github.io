@@ -11,6 +11,8 @@ A modern, responsive blog built with Eleventy and Tailwind CSS, featuring light/
 - 🚀 Fast static site generation with Eleventy
 - 🎯 SEO-friendly
 - 🖼️ Blog post cards with images, author, date, and summary
+- 📜 Progressive post loading - homepage grid loads 10 posts at a time, with more revealed as you scroll
+- 🏷️ Client-side tag filtering with OR logic and URL-hash persistence
 
 ## Getting Started
 
