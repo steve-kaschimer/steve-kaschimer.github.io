@@ -53,7 +53,8 @@
 }
 
 @utility btn-primary {
-  @apply bg-primary-600 hover:bg-primary-700 text-white;
+  /* primary-700, not -600: white-on-primary-600 is 4.1:1, below the 4.5:1 WCAG AA text-contrast minimum */
+  @apply bg-primary-700 hover:bg-primary-800 text-white;
 }
 
 @utility callout-box {
@@ -169,8 +170,9 @@
 }
 
 @utility copy-code-button {
-  /* Copy code button */
-  @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 rounded-sm transition-colors duration-200;
+  /* Copy code button. primary-700, not -600/-500: white text needs >=4.5:1
+     (WCAG AA); -600 is 4.1:1 and -500 is 2.77:1, both fail. -700 is 5.93:1. */
+  @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 rounded-sm transition-colors duration-200;
 
   & .copy-icon {
     @apply flex-shrink-0;
