@@ -18,6 +18,12 @@ module.exports = function(eleventyConfig) {
     });
   });
 
+  // Find a page in a collection by its output URL (used by sitemap.njk to
+  // pull an accurate <lastmod> for the static top-level pages)
+  eleventyConfig.addFilter("findByUrl", (collection, url) => {
+    return collection.find(page => page.url === url);
+  });
+
   // Sort posts by date (newest first) and filter out future posts
   eleventyConfig.addCollection("posts", function(collectionApi) {
     const now = new Date();

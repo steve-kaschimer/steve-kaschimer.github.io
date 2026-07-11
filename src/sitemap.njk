@@ -7,24 +7,28 @@ eleventyExcludeFromCollections: true
 
   <url>
     <loc>{{ site.url }}/</loc>
+    <lastmod>{{ (collections.all | findByUrl("/")).date | dateToRfc3339 }}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>{{ site.url }}/about/</loc>
+    <lastmod>{{ (collections.all | findByUrl("/about/")).date | dateToRfc3339 }}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>{{ site.url }}/privacy/</loc>
+    <lastmod>{{ (collections.all | findByUrl("/privacy/")).date | dateToRfc3339 }}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
 
   <url>
     <loc>{{ site.url }}/terms/</loc>
+    <lastmod>{{ (collections.all | findByUrl("/terms/")).date | dateToRfc3339 }}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

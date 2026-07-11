@@ -24,9 +24,10 @@ There is no test suite and no lint script in this repo. Node 24 is required (`.n
 - `input: src`, `output: _site`, includes/layouts dirs under `src/_includes` / `src/_layouts`
 - `templateFormats: ["md", "njk", "html"]`; `markdownTemplateEngine: false` (markdown is rendered as-is, then wrapped by the `njk` layout named in front matter)
 - Passthrough copy: `src/images/**` and `src/js/**` go straight to `_site` unprocessed
-- `posts` collection: globs `src/posts/*.md`, **filters out posts whose front-matter `date` is in the future**, sorted newest-first
+- `posts` collection: globs `src/posts/*.md`, **filters out posts whose front-matter `date` is in the future**, sorted newest-first. Note: this only gates the homepage/RSS/sitemap listing - Eleventy still builds a real, public, unauthenticated HTML page for every post file regardless of date, so a future-dated post's URL is live (just unlinked) before its listed publish date. This is a known, intentional tradeoff (not currently gated with `noindex`).
 - `tagListWithCounts` collection: aggregates tag counts across non-future posts (excludes the `posts`/`all` tags), drives the homepage tag-filter sidebar
 - `readableDate` filter formats dates for display
+- `findByUrl` filter: `collection | findByUrl(url)` - finds a page in a collection by its output `url`; used by `sitemap.njk` to read each static page's own `date` for `<lastmod>`
 
 ### Content model (`src/posts/*.md`)
 
@@ -37,11 +38,12 @@ Filenames follow `YYYY-MM-DD-slug.md`; that date is just for ordering files on d
 ### Layouts (`src/_layouts/`)
 
 - `base.njk`: full HTML shell - nav, theme toggle, footer, all `<head>` metadata (OG/Twitter cards fall back to `/images/og-default.png` if a post has no `image`), Clarity + GA4 analytics, loads `/styles/output.css`. Loads `theme.js` synchronously in `<head>` (avoids flash-of-wrong-theme) and `tag-filter-checkboxes.js` / `code-copy.js` at the end of `<body>`, plus Prism.js + per-language components via CDN (currently yaml/bash/javascript/json - add another `<script src=".../prism-<lang>.min.js">` here if a post needs highlighting for another language).
+  - SEO: `og:type` is `article` (with `article:published_time`/`article:author`) on `/posts/*` URLs and `website` elsewhere, detected via `page.url.startsWith('/posts/')`. JSON-LD is emitted in `<head>` - `BlogPosting` + `BreadcrumbList` (`@graph`) on posts, `WebSite` elsewhere - built as a Nunjucks object literal and serialized with the `dump` filter (`| dump | safe`, not manual string interpolation, so titles/descriptions containing quotes don't break the JSON). Any page can opt into `<meta name="robots">` by setting a `robots` front-matter value (used by `404.njk` for `noindex`).
 - `post.njk`: extends `base.njk`. Renders a hero - full-bleed image with `<picture>`/webp source if `image` is set, otherwise a gradient fallback - then post content inside `.prose`, then a "Back to all posts" link.
 
 ### Top-level pages (`src/*.njk`)
 
-`index.njk` (homepage post grid + tag-filter sidebar over `collections.posts` / `collections.tagListWithCounts`), `feed.njk` (Atom feed at `/feed/` via `@11ty/eleventy-plugin-rss`), `about.njk`, `privacy.njk`, `terms.njk`, `robots.njk`, `sitemap.njk`.
+`index.njk` (homepage post grid + tag-filter sidebar over `collections.posts` / `collections.tagListWithCounts`), `feed.njk` (Atom feed at `/feed/` via `@11ty/eleventy-plugin-rss`), `about.njk`, `privacy.njk`, `terms.njk`, `robots.njk`, `sitemap.njk` (uses the custom `findByUrl` Eleventy filter to pull each static page's own git-derived `date` for an accurate `<lastmod>`), `404.njk` (permalink `/404.html` - GitHub Pages serves this automatically for unmatched URLs; sets `robots: noindex`).
 
 ### Client-side JS (`src/js/`, passthrough-copied, no bundler/build step)
 
