@@ -35,6 +35,8 @@ Front matter used across templates: `layout: post.njk`, `title`, `author`, `date
 
 Filenames follow `YYYY-MM-DD-slug.md`; that date is just for ordering files on disk - the front-matter `date` is authoritative.
 
+**Hero images:** this environment's outbound network policy blocks direct calls to `api.openai.com`, so image generation can't be automated from inside a Claude Code session here. When a post is drafted without a hero image, remind the user to generate one from the post's `image_prompt` field using **ChatGPT** (their preferred tool), then hand the resulting image back so it can be converted into the standard asset set (`<slug>-hero.png` source, full-size `.webp`, plus `-400w`/`-600w`/`-800w` responsive variants at quality 95, matching the existing posts).
+
 ### Layouts (`src/_layouts/`)
 
 - `base.njk`: full HTML shell - nav, theme toggle, footer, all `<head>` metadata (OG/Twitter cards fall back to `/images/og-default.png` if a post has no `image`), Clarity + GA4 analytics, loads `/styles/output.css`. Loads `theme.js` synchronously in `<head>` (avoids flash-of-wrong-theme) and `tag-filter-checkboxes.js` / `code-copy.js` at the end of `<body>`, plus Prism.js + per-language components via CDN (currently yaml/bash/javascript/json - add another `<script src=".../prism-<lang>.min.js">` here if a post needs highlighting for another language).
