@@ -62,6 +62,20 @@ Tailwind v4 with **CSS-native config** (`@theme`, `@utility`, `@variant`) - ther
 - Custom utilities for post/UI chrome: `callout-box`, `card`, `btn`/`btn-primary`, `code-block-wrapper`/`copy-code-button`, etc.
 - GitHub-light/dark Prism token colors are defined **twice** (once under `.prose`, once as a standalone `@utility token` block) - keep both in sync when changing syntax-highlight colors
 
+## Accessibility
+
+Lighthouse CI's accessibility category (`.lighthouserc.json`, `>=0.9 error`) only catches a fraction of real WCAG issues - it's not a substitute for a real scan. `scripts/a11y-check.js` runs axe-core (WCAG 2.1 A/AA + best-practice rules) against a representative page set (home, a post, about, privacy, terms, 404) in both light and dark mode, using a real headless browser (color-contrast checks need actual computed styles, which a DOM-only tool can't give you).
+
+**Run it after any change that touches shared templates, layouts, or `input.css` - and after adding a new post, since post content can introduce new headings or embedded HTML.** Fix violations before considering the work done; don't just report them.
+
+```bash
+npm run deploy                                    # build the site first
+npm install --no-save axe-core playwright          # on-demand, not a committed dependency (see below)
+node scripts/a11y-check.js
+```
+
+`playwright`/`axe-core` are deliberately **not** in `package.json` - adding them would make `npm ci` download a full Chromium browser on every `build-check.yml`/`deploy.yml` run for a check that isn't wired into CI. Install them on-demand per session instead.
+
 ## CI/CD (`.github/workflows/`)
 
 - `build-check.yml`: PR gate against `main` - `npm ci` then `npm run deploy` must succeed
