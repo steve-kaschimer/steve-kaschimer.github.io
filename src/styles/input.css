@@ -22,7 +22,9 @@
 }
 
 .prose {
-  --tw-prose-links: var(--color-primary-600);
+  /* primary-700, not -600: -600 on white is 4.1:1, below the 4.5:1 WCAG AA
+     minimum. Dark mode's primary-400 already passes (8.28:1 on gray-900). */
+  --tw-prose-links: var(--color-primary-700);
 
   @variant dark {
     --tw-prose-links: var(--color-primary-400);
@@ -585,8 +587,10 @@
 }
 
 @utility line-numbers {
-  /* Line numbers */
-  @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-4 pr-3 pl-3 select-none;
+  /* Line numbers. dark:text-gray-300, not -400: -400 on dark:bg-gray-700 is
+     3.96:1, below the 4.5:1 WCAG AA minimum (aria-hidden doesn't exempt
+     visually-rendered text from contrast requirements for low-vision users). */
+  @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-4 pr-3 pl-3 select-none;
   display: flex;
   flex-direction: column;
   line-height: 1.5;
