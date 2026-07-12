@@ -284,9 +284,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `rag`, `azure-ai-search`, `agentic-development`
 
 ### GitHub Merge Queues: Safe, Scalable Merging Without Branch Protection Bottlenecks
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-11
 - **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127)
+- **File:** `src/posts/2026-09-11-github-merge-queues.md`
 - **Pitch:** At scale, required status checks on protected branches create a thundering herd problem where every PR re-runs CI after every merge - merge queues solve this without sacrificing safety.
 - **Angle:** Explains the merge queue model (batching, pre-merge CI, jump-the-queue for urgent fixes), shows how to configure one via Rulesets, and covers the failure modes (stale base detection, batch splitting on failure). Compares merge queues to the older `bors`/`homu` bots used in large open-source projects.
 - **Tags:** `github`, `ci-cd`, `developer-productivity`, `branch-protection`, `platform-engineering`
