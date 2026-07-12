@@ -39,7 +39,7 @@ Filenames follow `YYYY-MM-DD-slug.md`; that date is just for ordering files on d
 
 ### Layouts (`src/_layouts/`)
 
-- `base.njk`: full HTML shell - nav, theme toggle, footer, all `<head>` metadata (OG/Twitter cards fall back to `/images/og-default.png` if a post has no `image`), Clarity + GA4 analytics, loads `/styles/output.css`. Loads `theme.js` synchronously in `<head>` (avoids flash-of-wrong-theme) and `tag-filter-checkboxes.js` / `code-copy.js` at the end of `<body>`, plus Prism.js + per-language components via CDN (currently yaml/bash/javascript/json - add another `<script src=".../prism-<lang>.min.js">` here if a post needs highlighting for another language).
+- `base.njk`: full HTML shell - nav, theme toggle, footer, all `<head>` metadata (OG/Twitter cards fall back to `/images/og-default.png` if a post has no `image`), Clarity + GA4 analytics, loads `/styles/output.css`. Loads `theme.js` synchronously in `<head>` (avoids flash-of-wrong-theme) and `tag-filter-checkboxes.js` / `code-copy.js` at the end of `<body>`, plus Prism.js + per-language components via CDN (currently yaml/bash/javascript/json/python - add another `<script src=".../prism-<lang>.min.js">` here if a post needs highlighting for another language; several existing posts already use csharp/sql/hcl/graphql/typescript code fences that render unhighlighted since those components aren't loaded yet).
   - SEO: `og:type` is `article` (with `article:published_time`/`article:author`) on `/posts/*` URLs and `website` elsewhere, detected via `page.url.startsWith('/posts/')`. JSON-LD is emitted in `<head>` - `BlogPosting` + `BreadcrumbList` (`@graph`) on posts, `WebSite` elsewhere - built as a Nunjucks object literal and serialized with the `dump` filter (`| dump | safe`, not manual string interpolation, so titles/descriptions containing quotes don't break the JSON). Any page can opt into `<meta name="robots">` by setting a `robots` front-matter value (used by `404.njk` for `noindex`).
 - `post.njk`: extends `base.njk`. Renders a hero - full-bleed image with `<picture>`/webp source if `image` is set, otherwise a gradient fallback - then post content inside `.prose`, then a "Back to all posts" link.
 
@@ -61,6 +61,20 @@ Tailwind v4 with **CSS-native config** (`@theme`, `@utility`, `@variant`) - ther
 - Custom `primary-*` color scale and font vars for Space Grotesk / DM Sans / DM Mono (fonts loaded from Google Fonts in `base.njk`)
 - Custom utilities for post/UI chrome: `callout-box`, `card`, `btn`/`btn-primary`, `code-block-wrapper`/`copy-code-button`, etc.
 - GitHub-light/dark Prism token colors are defined **twice** (once under `.prose`, once as a standalone `@utility token` block) - keep both in sync when changing syntax-highlight colors
+
+## Accessibility
+
+Lighthouse CI's accessibility category (`.lighthouserc.json`, `>=0.9 error`) only catches a fraction of real WCAG issues - it's not a substitute for a real scan. `scripts/a11y-check.js` runs axe-core (WCAG 2.1 A/AA + best-practice rules) against a representative page set (home, a post, about, privacy, terms, 404) in both light and dark mode, using a real headless browser (color-contrast checks need actual computed styles, which a DOM-only tool can't give you).
+
+**Run it after any change that touches shared templates, layouts, or `input.css` - and after adding a new post, since post content can introduce new headings or embedded HTML.** Fix violations before considering the work done; don't just report them.
+
+```bash
+npm run deploy                                    # build the site first
+npm install --no-save axe-core playwright          # on-demand, not a committed dependency (see below)
+node scripts/a11y-check.js
+```
+
+`playwright`/`axe-core` are deliberately **not** in `package.json` - adding them would make `npm ci` download a full Chromium browser on every `build-check.yml`/`deploy.yml` run for a check that isn't wired into CI. Install them on-demand per session instead.
 
 ## CI/CD (`.github/workflows/`)
 

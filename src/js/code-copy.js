@@ -22,6 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
+    // Wide code blocks overflow horizontally (overflow-x: auto on <pre>);
+    // without this, that scroll region has no keyboard access (WCAG 2.1.1).
+    // No role="region" here on purpose - landmarking every code block pollutes
+    // screen-reader landmark navigation with dozens of identically-named stops.
+    pre.setAttribute('tabindex', '0');
+    pre.setAttribute('aria-label', `${language} code snippet`);
+
     // Create header bar
     const headerBar = document.createElement('div');
     headerBar.className = 'code-header';

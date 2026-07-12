@@ -275,17 +275,19 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Azure AI Foundry Agents: Memory, Tool Calling, and Retrieval-Augmented Generation
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-04
 - **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126)
+- **File:** `src/posts/2026-09-04-azure-ai-foundry-agents-memory-tool-calling-rag.md`
 - **Pitch:** Memory and RAG are what separate a useful agent from a stateless chatbot - this post covers the Foundry primitives for both and when to use each.
 - **Angle:** Distinguishes conversation memory (thread state), semantic memory (vector search over documents), and episodic memory (structured facts about the user/session). Shows how to connect an Azure AI Search index to a Foundry agent, write a tool function that queries it, and ground responses in retrieved context without hallucinating citations.
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `rag`, `azure-ai-search`, `agentic-development`
 
 ### GitHub Merge Queues: Safe, Scalable Merging Without Branch Protection Bottlenecks
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-11
 - **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127)
+- **File:** `src/posts/2026-09-11-github-merge-queues.md`
 - **Pitch:** At scale, required status checks on protected branches create a thundering herd problem where every PR re-runs CI after every merge - merge queues solve this without sacrificing safety.
 - **Angle:** Explains the merge queue model (batching, pre-merge CI, jump-the-queue for urgent fixes), shows how to configure one via Rulesets, and covers the failure modes (stale base detection, batch splitting on failure). Compares merge queues to the older `bors`/`homu` bots used in large open-source projects.
 - **Tags:** `github`, `ci-cd`, `developer-productivity`, `branch-protection`, `platform-engineering`
