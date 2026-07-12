@@ -302,9 +302,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `rag`, `azure-ai-search`, `azure-ai-foundry`, `llm`, `agentic-development`
 
 ### GitHub Packages as an Internal Registry: Publishing and Consuming npm, Docker, and Maven Artifacts
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-25
 - **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129)
+- **File:** `src/posts/2026-09-25-github-packages-internal-registry.md`
 - **Pitch:** GitHub Packages is an underused alternative to JFrog, Nexus, or a public registry for teams that want artifact management without extra infrastructure.
 - **Angle:** Covers publishing npm packages, Docker images, and Maven artifacts to GitHub Packages from a GitHub Actions workflow, consuming them in downstream workflows using the GITHUB_TOKEN (no PAT required), and setting package visibility and retention policies. Addresses the one real limitation: cross-org consumption requires a PAT.
 - **Tags:** `github-packages`, `github-actions`, `ci-cd`, `artifact-management`, `platform-engineering`
