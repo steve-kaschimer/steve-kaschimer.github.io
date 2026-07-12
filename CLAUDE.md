@@ -76,6 +76,17 @@ node scripts/a11y-check.js
 
 `playwright`/`axe-core` are deliberately **not** in `package.json` - adding them would make `npm ci` download a full Chromium browser on every `build-check.yml`/`deploy.yml` run for a check that isn't wired into CI. Install them on-demand per session instead.
 
+## Documentation
+
+**At the end of any development work, update whichever of these are now stale - don't leave it for a later session to rediscover:**
+
+- `CLAUDE.md` (this file) - architecture/convention changes, new scripts or workflow rules, anything a future session would otherwise have to re-derive from the code
+- `README.md` - anything a human contributor setting up or extending the project would need (setup steps, front-matter conventions, project structure)
+- `editorial-plan.md` - per-post `Status`/`File` fields as posts move `idea` → `draft` → `published`
+- `docs/` - `docs/context/gaps.md` if the change resolves or introduces an open question, `docs/decisions/` for a new durable implementation choice worth explaining later, `docs/patterns/` if a reusable approach changed. See `docs/README.md` for what belongs where.
+
+Verify claims against the actual repo state (grep the code, check the workflow file, run the command) rather than writing what should be true from memory - several stale/incorrect doc claims found and fixed this way already (a `README.md` describing manual `gh-pages` deployment when `deploy.yml` already automated it; a `tailwind.config.js` reference for a file that doesn't exist under Tailwind v4's CSS-native config).
+
 ## CI/CD (`.github/workflows/`)
 
 - `build-check.yml`: PR gate against `main` - `npm ci` then `npm run deploy` must succeed

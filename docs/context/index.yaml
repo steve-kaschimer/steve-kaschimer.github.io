@@ -1,46 +1,45 @@
 # Context manifest for later AI-SDLC phases.
-# Replace these scaffold summaries with repo-specific content during bootstrap.
 
 version: 1
-last_bootstrapped: null
+last_bootstrapped: 2026-07-12
 entries:
   - id: product-overview
     category: product
     path: docs/product/overview.md
-    summary: Scaffold only. Bootstrap this file before relying on it for product context.
-    source_paths: []
-    confidence: low
-    last_verified: null
-    status: scaffold-only
+    summary: Static Eleventy/Tailwind blog on GitHub Pages, single author, no backend. Covers user/actor roles (reader, maintainer, Claude Code sessions, dormant Squad framework) and implementation-relevant rules (date-gated visibility, manual hero-image handoff, mandatory a11y-check).
+    source_paths: [".eleventy.js", "CLAUDE.md", "editorial-plan.md", ".squad/"]
+    confidence: high
+    last_verified: 2026-07-12
+    status: bootstrapped
   - id: architecture-overview
     category: architecture
     path: docs/architecture/overview.md
-    summary: Scaffold only. Bootstrap this file before relying on it for architecture context.
-    source_paths: []
-    confidence: low
-    last_verified: null
-    status: scaffold-only
+    summary: Pure static site - Eleventy build + Tailwind build, no server/database. Covers key modules, the dev/PR/deploy/accessibility flows, and CDN/network-policy characteristics observed in this sandbox.
+    source_paths: [".eleventy.js", "src/_layouts/base.njk", "package.json", ".github/workflows/build-check.yml", ".github/workflows/deploy.yml", ".lighthouserc.json", "scripts/a11y-check.js"]
+    confidence: high
+    last_verified: 2026-07-12
+    status: bootstrapped
   - id: product-glossary
     category: product
     path: docs/product/glossary.md
-    summary: Scaffold only. Bootstrap this file before relying on it for terminology.
-    source_paths: []
-    confidence: low
-    last_verified: null
-    status: scaffold-only
+    summary: Repo-specific terms - hero image handoff, Ruleset vs. classic branch protection, zero-baseline permissions, the Squad framework, editorial calendar conventions.
+    source_paths: ["CLAUDE.md", "src/posts/2026-05-08-github-branch-protection-rules-vs-rulesets.md", ".squad/"]
+    confidence: medium
+    last_verified: 2026-07-12
+    status: bootstrapped
   - id: repo-map
     category: context
     path: docs/context/repo-map.md
-    summary: Scaffold only. Replace starter paths with the repo entrypoints future work should read first.
-    source_paths: []
-    confidence: low
-    last_verified: null
-    status: scaffold-only
+    summary: Read-order and key/supporting entry points for fast orientation - CLAUDE.md and editorial-plan.md first, then the Eleventy/layout/JS/CI files.
+    source_paths: [".eleventy.js", "src/_layouts/base.njk", "src/js/", "package.json", ".github/workflows/"]
+    confidence: high
+    last_verified: 2026-07-12
+    status: bootstrapped
   - id: constitution
     category: governance
     path: .claude/memory/constitution.md
-    summary: Bootstrap or review this file before depending on it as project-specific guidance.
+    summary: File does not exist in this repo - the /constitution Spec Kit command has not been run. Not bootstrapped here; out of scope for a docs/ content pass.
     source_paths: []
     confidence: low
-    last_verified: null
-    status: scaffold-only
+    last_verified: 2026-07-12
+    status: not-created
