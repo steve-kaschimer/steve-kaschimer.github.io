@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-09-11
+image: /images/posts/2026-09-11-hero.webp
 image_prompt: "A precise, architectural illustration in a dark-mode technical editorial style - near-black background with steel blue, amber, and off-white accents. A queue of five pull-request cards lines up left to right, each with a small green checkmark, feeding into a bracket labeled 'Batch' that groups three of them together. The batch flows into a single temporary merge-commit node, which splits into a CI pipeline bar showing one consolidated test run rather than five separate ones. Below, a smaller inset shows a batch mid-failure: one card highlighted amber and ejected sideways while the rest of the batch continues forward with a green arrow, illustrating bisection. The mood is orderly and mechanical - a well-engineered queue, not a traffic jam."
 layout: post.njk
 site_title: Tech Notes
