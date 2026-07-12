@@ -18,8 +18,8 @@ A modern, responsive blog built with Eleventy and Tailwind CSS, featuring light/
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js 24 (see `.nvmrc` - CI pins to this exact version)
+- npm
 
 ### Installation
 
@@ -62,51 +62,44 @@ layout: post.njk
 title: Your Post Title
 author: Steve Kaschimer
 date: 2025-10-31
-image: /images/your-image.jpg
-summary: A brief summary of your post
+image: /images/posts/2025-10-31-your-slug-hero.webp
+image_prompt: "Describes the hero image for provenance - not rendered, just documentation for whoever generates the image."
+summary: A brief summary of your post (used for the card excerpt, meta/OG description, and RSS)
 tags: ['tag1', 'tag2']
+site_title: Tech Notes
 ---
 
 Your content here...
 ```
 
+The hero `image` should be a `.webp` under `src/images/posts/`, with `-400w`/`-600w`/`-800w` responsive variants alongside the full-size file (see any existing post's images for the naming convention) - the homepage card and post hero both derive a `srcset` from those filename suffixes. A post without an `image` field falls back to a gradient header/card automatically, so it's fine to omit while a post is still a draft.
+
 ## Deployment to GitHub Pages
 
-1. Make sure your repository is named `<username>.github.io`
-2. Run the build command: `npm run deploy`
-3. Push the `_site` directory contents to the `gh-pages` branch, or configure GitHub Pages to use the `main` branch with the `_site` folder
+Deployment is already automated - `.github/workflows/deploy.yml` builds (`npm run build` + `npm run build:css`) and deploys `_site` to GitHub Pages via `actions/deploy-pages`, no `gh-pages` branch involved. It runs on every push to `main`, on a daily cron, and via manual dispatch, then runs Lighthouse CI against the deployed URL (`.lighthouserc.json`). `.github/workflows/build-check.yml` gates pull requests the same way (`npm ci` + `npm run deploy` must succeed) without deploying.
 
-### Option 1: Manual Deployment
-
-```bash
-npm run deploy
-cd _site
-git init
-git add .
-git commit -m "Deploy to GitHub Pages"
-git push -f git@github.com:<username>/<username>.github.io.git main:gh-pages
-```
-
-### Option 2: GitHub Actions (Recommended)
-
-Create a `.github/workflows/deploy.yml` file for automatic deployment on push.
+In other words: merge to `main` and the site deploys itself. There's nothing to run manually.
 
 ## Project Structure
 
 ```
 ├── src/
-│   ├── _includes/         # Reusable components
+│   ├── _data/site.json    # Site title, description, URL, author info
 │   ├── _layouts/          # Page layouts
-│   │   ├── base.njk      # Base layout with navbar and footer
-│   │   └── post.njk      # Blog post layout
-│   ├── posts/            # Blog posts (markdown)
-│   ├── styles/           # CSS files
-│   ├── js/               # JavaScript files
-│   ├── images/           # Images
-│   ├── index.njk         # Homepage
-│   └── about.njk         # About page
-├── .eleventy.js          # Eleventy configuration
-├── tailwind.config.js    # Tailwind configuration
+│   │   ├── base.njk      # HTML shell - nav, footer, all <head> metadata/SEO
+│   │   └── post.njk      # Blog post layout (extends base.njk)
+│   ├── posts/             # Blog posts (markdown, YYYY-MM-DD-slug.md)
+│   ├── styles/input.css   # Tailwind v4 CSS-native config + custom utilities
+│   ├── js/                # Client-side JS (theme toggle, tag filter, code copy)
+│   ├── images/posts/      # Post hero images (.png source + .webp variants)
+│   ├── index.njk          # Homepage (post grid + tag filter)
+│   ├── about.njk / privacy.njk / terms.njk / 404.njk
+│   ├── feed.njk           # Atom feed
+│   └── sitemap.njk / robots.njk
+├── scripts/a11y-check.js  # axe-core accessibility scan (see CLAUDE.md)
+├── .github/workflows/     # build-check.yml (PR gate), deploy.yml (auto-deploy)
+├── editorial-plan.md      # Content calendar
+├── .eleventy.js           # Eleventy configuration
 └── package.json
 ```
 
@@ -114,26 +107,14 @@ Create a `.github/workflows/deploy.yml` file for automatic deployment on push.
 
 ### Theme Colors
 
-Edit `tailwind.config.js` to customize the color scheme:
-
-```javascript
-theme: {
-  extend: {
-    colors: {
-      primary: {
-        // Your custom colors
-      }
-    }
-  }
-}
-```
+Tailwind v4 uses CSS-native configuration - there's no `tailwind.config.js`. Edit the `primary-*` color scale (and font variables) in the `@theme` block at the top of `src/styles/input.css`.
 
 ### Site Information
 
-Update the following files:
-- `src/_layouts/base.njk` - Site name and logo
+Update the following:
+- `src/_data/site.json` - site title, description, canonical URL, author/contact info (used across templates and meta tags)
+- `src/_layouts/base.njk` - nav/footer markup and logo SVG
 - `src/about.njk` - About page content
-- Contact information
 
 ## License
 

@@ -293,17 +293,19 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github`, `ci-cd`, `developer-productivity`, `branch-protection`, `platform-engineering`
 
 ### RAG in Production: Chunking, Indexing, and Observability with Azure AI Search
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-18
 - **Issue:** [#128](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/128)
+- **File:** `src/posts/2026-09-18-rag-in-production-chunking-indexing-observability-azure-ai-search.md`
 - **Pitch:** Getting a RAG prototype working is easy - getting it to produce accurate, grounded responses at scale requires deliberate decisions about chunking strategy, index design, and retrieval evaluation.
 - **Angle:** Covers chunking strategies (fixed-size, sentence-boundary, semantic), hybrid search (keyword + vector), re-ranking with Azure AI Search semantic ranker, and how to measure retrieval quality. Includes an Azure AI Foundry evaluation run that scores groundedness and relevance on a test query set.
 - **Tags:** `rag`, `azure-ai-search`, `azure-ai-foundry`, `llm`, `agentic-development`
 
 ### GitHub Packages as an Internal Registry: Publishing and Consuming npm, Docker, and Maven Artifacts
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-25
 - **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129)
+- **File:** `src/posts/2026-09-25-github-packages-internal-registry.md`
 - **Pitch:** GitHub Packages is an underused alternative to JFrog, Nexus, or a public registry for teams that want artifact management without extra infrastructure.
 - **Angle:** Covers publishing npm packages, Docker images, and Maven artifacts to GitHub Packages from a GitHub Actions workflow, consuming them in downstream workflows using the GITHUB_TOKEN (no PAT required), and setting package visibility and retention policies. Addresses the one real limitation: cross-org consumption requires a PAT.
 - **Tags:** `github-packages`, `github-actions`, `ci-cd`, `artifact-management`, `platform-engineering`

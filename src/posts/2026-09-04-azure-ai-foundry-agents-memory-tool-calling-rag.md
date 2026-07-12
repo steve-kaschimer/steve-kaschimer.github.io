@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-09-04
+image: /images/posts/2026-09-04-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and violet accents. Three labeled panels arranged left to right: 'Conversation Memory' showing a thread icon with a stack of chat bubbles, 'Semantic Memory' showing a document corpus icon feeding into a vector-search magnifying glass with small citation tags ('doc_412', 'doc_98') attached to retrieved results, and 'Episodic Memory' showing a small user-profile icon connected to a structured record card listing key-value facts. Below the three panels, a thin connecting line shows all three feeding into a single central agent node. The mood is systematic and architectural - three distinct memory subsystems, clearly delineated, feeding one coherent agent."
 layout: post.njk
 site_title: Tech Notes
