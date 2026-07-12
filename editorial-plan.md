@@ -275,9 +275,10 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Azure AI Foundry Agents: Memory, Tool Calling, and Retrieval-Augmented Generation
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-04
 - **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126)
+- **File:** `src/posts/2026-09-04-azure-ai-foundry-agents-memory-tool-calling-rag.md`
 - **Pitch:** Memory and RAG are what separate a useful agent from a stateless chatbot - this post covers the Foundry primitives for both and when to use each.
 - **Angle:** Distinguishes conversation memory (thread state), semantic memory (vector search over documents), and episodic memory (structured facts about the user/session). Shows how to connect an Azure AI Search index to a Foundry agent, write a tool function that queries it, and ground responses in retrieved context without hallucinating citations.
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `rag`, `azure-ai-search`, `agentic-development`
