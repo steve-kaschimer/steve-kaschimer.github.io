@@ -266,7 +266,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Secret Scanning Custom Patterns: Finding Business-Specific Credentials Before They Ship
 - **Status:** `draft`
 - **Scheduled:** 2026-08-28
-- **Issue:** [#125](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/125)
+- **Issue:** [#125](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/125) ✅ closed
 - **File:** `src/posts/2026-08-28-github-secret-scanning-custom-patterns.md`
 - **Pitch:** GitHub's built-in secret scanning covers common provider tokens, but internal API keys, connection strings, and proprietary credential formats require custom patterns - which most teams never configure.
 - **Angle:** Walks through writing a custom secret scanning pattern (regex + test strings), deploying it at the org level, setting up push protection to block commits containing matches, and routing alerts to a security dashboard. Includes patterns for common internal formats: JWT with known issuer, internal API key prefix, database connection strings.
@@ -277,7 +277,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### Azure AI Foundry Agents: Memory, Tool Calling, and Retrieval-Augmented Generation
 - **Status:** `draft`
 - **Scheduled:** 2026-09-04
-- **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126)
+- **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126) ✅ closed
 - **File:** `src/posts/2026-09-04-azure-ai-foundry-agents-memory-tool-calling-rag.md`
 - **Pitch:** Memory and RAG are what separate a useful agent from a stateless chatbot - this post covers the Foundry primitives for both and when to use each.
 - **Angle:** Distinguishes conversation memory (thread state), semantic memory (vector search over documents), and episodic memory (structured facts about the user/session). Shows how to connect an Azure AI Search index to a Foundry agent, write a tool function that queries it, and ground responses in retrieved context without hallucinating citations.
@@ -286,7 +286,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Merge Queues: Safe, Scalable Merging Without Branch Protection Bottlenecks
 - **Status:** `draft`
 - **Scheduled:** 2026-09-11
-- **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127)
+- **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127) ✅ closed
 - **File:** `src/posts/2026-09-11-github-merge-queues.md`
 - **Pitch:** At scale, required status checks on protected branches create a thundering herd problem where every PR re-runs CI after every merge - merge queues solve this without sacrificing safety.
 - **Angle:** Explains the merge queue model (batching, pre-merge CI, jump-the-queue for urgent fixes), shows how to configure one via Rulesets, and covers the failure modes (stale base detection, batch splitting on failure). Compares merge queues to the older `bors`/`homu` bots used in large open-source projects.
@@ -295,7 +295,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### RAG in Production: Chunking, Indexing, and Observability with Azure AI Search
 - **Status:** `draft`
 - **Scheduled:** 2026-09-18
-- **Issue:** [#128](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/128)
+- **Issue:** [#128](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/128) ✅ closed
 - **File:** `src/posts/2026-09-18-rag-in-production-chunking-indexing-observability-azure-ai-search.md`
 - **Pitch:** Getting a RAG prototype working is easy - getting it to produce accurate, grounded responses at scale requires deliberate decisions about chunking strategy, index design, and retrieval evaluation.
 - **Angle:** Covers chunking strategies (fixed-size, sentence-boundary, semantic), hybrid search (keyword + vector), re-ranking with Azure AI Search semantic ranker, and how to measure retrieval quality. Includes an Azure AI Foundry evaluation run that scores groundedness and relevance on a test query set.
@@ -304,7 +304,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Packages as an Internal Registry: Publishing and Consuming npm, Docker, and Maven Artifacts
 - **Status:** `draft`
 - **Scheduled:** 2026-09-25
-- **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129)
+- **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129) ✅ closed
 - **File:** `src/posts/2026-09-25-github-packages-internal-registry.md`
 - **Pitch:** GitHub Packages is an underused alternative to JFrog, Nexus, or a public registry for teams that want artifact management without extra infrastructure.
 - **Angle:** Covers publishing npm packages, Docker images, and Maven artifacts to GitHub Packages from a GitHub Actions workflow, consuming them in downstream workflows using the GITHUB_TOKEN (no PAT required), and setting package visibility and retention policies. Addresses the one real limitation: cross-org consumption requires a PAT.
