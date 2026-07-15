@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-10-02
+image: /images/posts/2026-10-02-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and off-white accents. A vertical pipeline of four gate icons stacked top to bottom, each a rounded rectangle with a distinct symbol and label: a shield icon labeled 'Content Safety', a balance-scale icon labeled 'Bias Check', a clipboard-with-checkmark icon labeled 'Model Card Complete', and a person-silhouette-with-checkmark icon labeled 'Governance Sign-Off'. Each gate has a thin connecting line to the next, and the first three gates show a small severity-score readout in amber ('severity: 2 / threshold: 4'). At the bottom, the pipeline terminates in a 'Deploy' node that only lights up green once all four gates pass. The mood is procedural and serious without being alarmist - governance as an engineered checkpoint sequence, not a binder on a shelf."
 layout: post.njk
 site_title: Tech Notes

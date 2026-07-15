@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-10-23
+image: /images/posts/2026-10-23-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with steel blue, amber, and off-white accents. Split composition: on the left, a single persistent server-rack icon labeled 'Self-Hosted Runner' with a faint red crack running through it and a small amber warning icon, connected by a long unbroken line through several job icons labeled 'Job 1', 'Job 2', 'Job 3' - implying shared, lingering state. On the right, a row of ephemeral container icons, each labeled 'Job' with a single lifecycle arrow curving from spawn to destroy beneath it, no lines connecting one to the next. Between the two halves, a thin vertical divider. Below, a small fork-icon PR card with a padlock and 'Approval required' badge. The mood is a security model correction - infrastructure that finally matches GitHub-hosted runners' fresh-VM-per-job guarantee, self-hosted."
 layout: post.njk
 site_title: Tech Notes

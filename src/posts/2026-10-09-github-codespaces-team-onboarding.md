@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-10-09
+image: /images/posts/2026-10-09-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and amber accents. A laptop-outline icon on the left labeled 'New Hire, Day 1' with a small clock reading '4 min' beside it, connected by a bright teal arrow to a cloud-shaped container icon labeled 'Codespace' in the center. Inside the cloud, five small stacked component blocks are visible: 'devcontainer.json', 'Features', 'Prebuild cache', 'Dotfiles', 'Secrets'. To the right, the cloud connects to a browser-window icon showing a running application with a green 'localhost forwarded' badge. Below, a faint horizontal bar chart compares 'Local setup: 3 days' against 'Codespace: 4 minutes', both bars ending in the same checkmark. The mood is efficient and reassuring - friction engineered away, not hidden."
 layout: post.njk
 site_title: Tech Notes
