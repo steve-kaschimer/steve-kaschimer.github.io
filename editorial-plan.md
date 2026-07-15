@@ -360,9 +360,10 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Azure AI Foundry Fine-Tuning: When to Customize a Model vs. When to Prompt Better
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-06
 - **Issue:** [#135](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/135)
+- **File:** `src/posts/2026-11-06-azure-ai-foundry-fine-tuning-customize-vs-prompt.md`
 - **Pitch:** Fine-tuning is often the wrong answer - it's expensive, opaque, and fragile - but for the right problem it dramatically outperforms prompt engineering alone. This post helps you decide.
 - **Angle:** Sets up the decision framework: when few-shot examples consistently get the format right but aren't reliable enough (fine-tune), vs. when the model doesn't have the domain knowledge (RAG). Shows how to prepare a training dataset, run a supervised fine-tune job in Azure AI Foundry, evaluate the fine-tuned model against the base, and deploy both behind an A/B traffic split.
 - **Tags:** `azure-ai-foundry`, `fine-tuning`, `llm`, `agentic-development`, `azure`
