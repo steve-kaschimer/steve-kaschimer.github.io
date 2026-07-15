@@ -398,33 +398,37 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### GitHub Advanced Security at the Org Level: Rolling Out GHAS Across 100+ Repos
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-04
 - **Issue:** [#139](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/139)
+- **File:** `src/posts/2026-12-04-github-advanced-security-org-rollout.md`
 - **Pitch:** Enabling GHAS on one repo is easy; rolling it out consistently across a large org without alert fatigue or developer friction requires a deliberate strategy.
 - **Angle:** Covers the rollout sequence (secret scanning first, then code scanning, then Dependabot alerts with auto-dismiss rules), using the GitHub REST API and `gh` CLI to audit enablement status across repos, setting org-level default setup for CodeQL, and building a compliance dashboard with GitHub Actions that reports on coverage weekly.
 - **Tags:** `github-advanced-security`, `devsecops`, `platform-engineering`, `codeql`, `secret-scanning`
 
 ### Azure AI Foundry MCP Servers: Building and Registering Custom Tools for Your Agents
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-11
 - **Issue:** [#140](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/140)
+- **File:** `src/posts/2026-12-11-azure-ai-foundry-mcp-servers-custom-tools.md`
 - **Pitch:** The Model Context Protocol lets agents call external tools over a standard interface - Azure AI Foundry's MCP server support means you can extend your agents with custom capabilities without forking the runtime.
 - **Angle:** Builds an MCP server that exposes two tools (a GitHub API wrapper and an internal knowledge base query), registers it with a Foundry agent, and shows the agent routing tool calls correctly. Covers the MCP schema, authentication between the agent and the server, and deploying the MCP server as an Azure Container App alongside the agent.
 - **Tags:** `azure-ai-foundry`, `mcp`, `ai-agents`, `agentic-development`, `azure`
 
 ### The DevSecOps Year in Review 2026: What Shipped, What Mattered, What's Next
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-18
 - **Issue:** [#141](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/141)
+- **File:** `src/posts/2026-12-18-devsecops-year-in-review-2026.md`
 - **Pitch:** A retrospective on the year's most significant shifts in developer security, CI/CD, and AI-assisted development - written for practitioners who want signal, not press releases.
 - **Angle:** Structured as three sections: what shipped (concrete features from GitHub, Azure, and the ecosystem), what actually mattered in practice (the things teams adopted vs. the things that stayed theoretical), and what to watch in 2027 (agentic pipelines, AI-native security tooling, platform engineering consolidation). Personal and opinionated.
 - **Tags:** `devsecops`, `year-in-review`, `github`, `azure-ai-foundry`, `editorial`
 
 ### Async-First Development: Writing Code and Processes That Work Across Time Zones
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-25
 - **Issue:** [#142](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/142)
+- **File:** `src/posts/2026-12-25-async-first-development-across-time-zones.md`
 - **Pitch:** The best remote engineering teams aren't just distributed - they're async-first, which means their code, processes, and tooling are designed to work without real-time coordination.
 - **Angle:** Covers the practices that separate async-capable teams from ones that just have standup on Zoom: commit message discipline, ADR-driven decision-making, self-documenting PRs, GitHub Discussions for async deliberation, and using GitHub Actions to automate the status updates that would otherwise require a Slack message. Light enough for the holiday week, substantive enough to be worth reading.
 - **Tags:** `developer-productivity`, `remote-work`, `writing-for-engineers`, `git`, `async`
