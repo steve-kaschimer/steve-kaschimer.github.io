@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-12-04
+image: /images/posts/2026-12-04-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and teal accents. A vertical rollout sequence of three stages, each a labeled panel with a small progress bar filling left to right: 'Secret Scanning' (fully filled, green), 'Code Scanning / CodeQL' (partially filled, teal), 'Dependabot Alerts' (just starting, amber). To the right, a grid of small repository icons - most showing a green checkmark, a handful showing a grey question mark, implying partial org-wide coverage. Below, a small dashboard panel with a bar chart labeled 'Weekly Coverage Report' and a single summary line 'furniture co: 87% of repos covered'. The mood is systematic and gradual - a phased rollout across a large surface area, not a single switch flipped everywhere at once."
 layout: post.njk
 site_title: Tech Notes
