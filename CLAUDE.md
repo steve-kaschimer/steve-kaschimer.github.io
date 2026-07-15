@@ -87,11 +87,55 @@ node scripts/a11y-check.js
 
 Verify claims against the actual repo state (grep the code, check the workflow file, run the command) rather than writing what should be true from memory - several stale/incorrect doc claims found and fixed this way already (a `README.md` describing manual `gh-pages` deployment when `deploy.yml` already automated it; a `tailwind.config.js` reference for a file that doesn't exist under Tailwind v4's CSS-native config).
 
+## Development Workflow (Agent-Based)
+
+Work is orchestrated through **Claude Code agents** defined in `.claude/agents/`. This replaces the previous squad framework with a pure agent-based pipeline.
+
+**Main workflow:**
+1. **Planner** reads the requirement (GitHub Issue, editorial calendar entry, or explicit instruction)
+2. **Planner** designs a complete implementation plan:
+   - Which files change (in dependency order)
+   - Order of operations
+   - Test validation
+   - Rollback strategy
+3. **Planner** dispatches to specialists based on task type:
+   - **Coder** for code changes (refactoring, features, bug fixes)
+   - **Blog-Writer** for new blog posts or editorial content
+   - **Elliot** (via consultation) for architectural decisions
+4. **Specialist executes** per plan
+5. **Reviewer** validates that changes match the plan
+6. **Scribe** documents significant decisions for long-term memory
+
+**Key agents:**
+- `planner` (orchestrator, main thread) - Read, Glob, Grep only
+- `coder` (execution) - Read, Edit, Write, Bash
+- `reviewer` (quality gate) - Read, Bash, Glob, Grep
+- `blog-writer` (content) - Read, Write, Edit, Grep
+- `scribe` (documentation) - Read, Edit, Write, Bash, Grep
+
+See `docs/AGENT_ARCHITECTURE.md` for complete architecture, dispatch patterns, and examples.
+
+**Start a session:**
+1. Identify the task (GitHub Issue, editorial calendar entry, etc.)
+2. Invoke Planner: "Planner, design a plan for [task description]"
+3. Planner returns a detailed plan
+4. Dispatch specialist: "Coder, implement this plan: [plan]" or "Blog-Writer, draft this post: [spec]"
+5. Wait for execution
+6. Dispatch Reviewer: "Reviewer, validate against the plan: [original plan] [specialist summary]"
+7. If Pass: Optionally dispatch Scribe to document if the work introduced new patterns/decisions
+
+**For parallel work:**
+```
+Team, let's tackle this in parallel.
+Coder, implement [task A] per plan below.
+Blog-Writer, draft [post] with spec below.
+[plans/specs]
+```
+
 ## CI/CD (`.github/workflows/`)
 
 - `build-check.yml`: PR gate against `main` - `npm ci` then `npm run deploy` must succeed
 - `deploy.yml`: on push to `main` (+ daily cron + manual dispatch) - builds via `npm run build` + `npm run build:css`, deploys `_site` to GitHub Pages, then runs Lighthouse CI against the deployed URL per `.lighthouserc.json` (performance >=0.8 warn, accessibility >=0.9 error, best-practices/seo >=0.9 warn)
-- `squad-*.yml`: separate issue-triage/assignment automation (Squad framework), not part of the build/deploy path
 
 <!-- AI-SDLC:CLAUDE START -->
 # Claude Code Instructions

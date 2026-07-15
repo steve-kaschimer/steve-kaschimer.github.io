@@ -435,6 +435,393 @@ One post per Friday through end of year. Topics rotate across the established De
 
 ---
 
+## 📅 January-February 2027 - Open
+
+Eight posts to kick off the year with foundational multi-cloud patterns and cost optimization strategies.
+
+### AWS Lambda in 2027: Container Images, Performance Insights, and the $0.20/Million Invocation Reality
+- **Status:** `idea`
+- **Scheduled:** 2027-01-07
+- **Pitch:** Lambda dominates serverless, but most teams leave performance and cost on the table by not understanding the container image layer, initialization times, and the often-hidden scaling costs at high volume.
+- **Angle:** Deep dive into Lambda's modern runtime (container images, SnapStart for Java, provisioned concurrency trade-offs), profiling cold-start times per language, right-sizing memory for CPU scaling, and a cost model showing when Lambda stops making sense vs. ECS/EC2. Practical: comparing a Dockerfile-based function vs. a minimal ZIP deployment.
+- **Tags:** `aws`, `serverless`, `cost-optimization`, `lambda`, `devops`
+
+### Google Cloud Run: From Container to Production Without Thinking About Infrastructure
+- **Status:** `idea`
+- **Scheduled:** 2027-01-14
+- **Pitch:** Cloud Run abstracts away infrastructure completely - you push a container, get a URL, it scales - but the simplicity hides knobs you'll wish you'd found sooner (concurrency, max instances, request timeouts, startup overhead).
+- **Angle:** Walkthrough deploying a real app (Node.js, Python, Go) to Cloud Run, comparing startup latency vs. Lambda, understanding concurrent request handling and autoscaling limits, debugging the "request timeout after 60s" wall, and a checklist for production readiness. Cost comparison: when Cloud Run beats Lambda and when it doesn't.
+- **Tags:** `gcp`, `serverless`, `google-cloud-run`, `containers`, `devops`
+
+### Cost Optimization Across AWS, Azure, and GCP: The Three-Month Audit Framework
+- **Status:** `idea`
+- **Scheduled:** 2027-01-21
+- **Pitch:** Cloud cost management is a discipline, not a tool - this post builds a repeatable framework for finding and eliminating 20-40% waste that every enterprise cloud bill carries.
+- **Angle:** Structured audit covering: compute right-sizing (VMs running at 5% CPU), storage sprawl (old snapshots, unused backups), data transfer costs (cross-region egress you forgot about), and idle resources. Cloud-native tools: AWS Compute Optimizer, Azure Advisor, GCP Recommender. Includes a GitHub Actions workflow that runs this audit weekly and posts a dashboard to a Slack channel.
+- **Tags:** `cloud-cost`, `aws`, `azure`, `gcp`, `devops`, `platform-engineering`
+
+### Terraform Modules for Multi-Cloud: Writing Once, Deploying Everywhere (and When Not To)
+- **Status:** `idea`
+- **Scheduled:** 2027-01-28
+- **Pitch:** Write-once infrastructure sounds good until you try to abstract AWS, Azure, and GCP into the same module - this post shows what's actually portable and what requires vendor-specific implementations.
+- **Angle:** Case study: deploying the same web app (containerized Node.js + database + cache) across all three clouds using Terraform. Covers what abstracts cleanly (compute, networking basics), what doesn't (database engines, auth mechanisms, managed services), and the pragmatic pattern: shared core module + cloud-specific submodules. Includes real examples of where multi-cloud abstractions saved effort vs. where they added complexity.
+- **Tags:** `terraform`, `infrastructure-as-code`, `aws`, `azure`, `gcp`, `devops`
+
+### AWS EventBridge: Event-Driven Architecture Without the Operational Debt
+- **Status:** `idea`
+- **Scheduled:** 2027-02-04
+- **Pitch:** EventBridge is AWS's underrated superpower - a serverless event bus that decouples services and scales without maintenance, but most teams implement it wrong and end up with spaghetti event schemas.
+- **Angle:** Builds an event-driven workflow from scratch (order placed → payment processed → inventory updated → notification sent), showing how EventBridge Routes preserve the audit trail and enable replay. Covers schema validation, dead-letter handling, and the critical decision: archive events or replay them. Compares to SNS/SQS and explains when EventBridge actually wins.
+- **Tags:** `aws`, `event-driven-architecture`, `eventbridge`, `serverless`, `devops`
+
+### GCP Pub/Sub vs. AWS SQS/SNS: Picking the Right Messaging Layer
+- **Status:** `idea`
+- **Scheduled:** 2027-02-11
+- **Pitch:** Every cloud has a messaging service and they're not interchangeable - this post cuts through the feature spreadsheets and shows you the operational and cost differences that actually matter.
+- **Angle:** Compares the three across: ordering guarantees (Pub/Sub topics are unordered; SQS FIFO adds cost; Pub/Sub subscriptions allow filtering), replay semantics, pricing under different load patterns, and migration paths if you start with one and outgrow it. Includes worked examples of a real workflow on each platform.
+- **Tags:** `gcp`, `aws`, `messaging`, `devops`, `architecture`
+
+### Azure Container Apps: When You Need More Than Functions But Less Than Kubernetes
+- **Status:** `idea`
+- **Scheduled:** 2027-02-18
+- **Pitch:** Container Apps is Azure's answer to Google Cloud Run, but with tighter Kubernetes integration and a different scaling model - it fills a real gap for teams using AKS but needing simpler deployments for microservices.
+- **Angle:** Compares Container Apps to Azure Functions, App Service, and AKS (when to pick each). Deploys a multi-container application with environment scaling rules, explores the cost model vs. Functions and App Service, and shows how managed identity authentication works without secrets in environment variables. Addresses the learning curve: just enough Kubernetes without running a full cluster.
+- **Tags:** `azure`, `container-apps`, `serverless`, `kubernetes`, `devops`
+
+### Multi-Cloud Cost Visibility: Building a Central Dashboard in 10 Hours With GitHub Actions and BigQuery
+- **Status:** `idea`
+- **Scheduled:** 2027-02-25
+- **Pitch:** Cost reporting from AWS, Azure, and GCP stays siloed by default - this post shows how to pull all three APIs into a BigQuery dataset and build a dashboard that executives can actually read.
+- **Angle:** Uses AWS Cost Explorer, Azure Cost Management, and GCP Cloud Billing APIs to feed a daily ETL into BigQuery. Builds a Looker Studio dashboard (or equivalent) showing cost by cloud, by service, cost trends. Includes a GitHub Actions workflow that runs the ETL nightly and alerts Slack if any single day's spend exceeds forecast. Practical: starting with your own account, scaling to org-level multi-account/multi-project setups.
+- **Tags:** `cloud-cost`, `aws`, `azure`, `gcp`, `dashboards`, `devops`
+
+---
+
+## 📅 March-May 2027 - Open
+
+Twelve posts on cloud-native infrastructure patterns, IaC at scale, and multi-cloud networking.
+
+### AWS Lambda Power Tuning and Performance Profiling: Finding the Optimal Memory-Cost Sweet Spot
+- **Status:** `idea`
+- **Scheduled:** 2027-03-04
+- **Pitch:** Lambda billing on memory (and therefore CPU) means every 128MB increment changes cost and latency - most teams guess. This post shows how to profile scientifically and find the true optimal point.
+- **Angle:** Walks through the AWS Lambda Power Tuning open-source tool, profiling a real function across memory configurations, analyzing the cost/performance curve, and automating this profiling in CI. Shows how latency usually improves linearly with memory up to a point, then plateaus due to contention elsewhere (database, API). Practical: when to invest in profiling vs. just bumping memory.
+- **Tags:** `aws`, `lambda`, `performance`, `cost-optimization`, `devops`
+
+### GCP Cloud Functions to Cloud Run Migration: When to Upgrade and How to Do It Without Downtime
+- **Status:** `idea`
+- **Scheduled:** 2027-03-11
+- **Pitch:** Cloud Functions 2nd gen runs on Cloud Run under the hood - migrating existing Gen 1 functions is straightforward but has gotchas (dependency injection changes, concurrency model, pricing).
+- **Angle:** Side-by-side comparison of Gen 1 and Gen 2 syntax, shows the migration path for a real function (async handler, dependency injection, startup time), addresses the concurrency model change (Gen 1: one request per instance; Gen 2: multiple requests concurrently). Includes zero-downtime migration pattern using Cloud Load Balancer and traffic splitting.
+- **Tags:** `gcp`, `cloud-functions`, `cloud-run`, `migration`, `devops`
+
+### Bicep on Azure: Infrastructure as Code Without YAML Fatigue
+- **Status:** `idea`
+- **Scheduled:** 2027-03-18
+- **Pitch:** Bicep is Azure's answer to Terraform - a domain-specific language for ARM templates that's cleaner and more maintainable than either ARM JSON or YAML wrappers.
+- **Angle:** Refactors a realistic Azure deployment (app service + database + storage + networking) from ARM JSON to Bicep, shows how Bicep modules compose for reuse, compares syntax and ergonomics to Terraform, and explains when Bicep wins (deep integration with ARM, native to Azure tooling, no state management learning curve) and when Terraform is better (multi-cloud, larger community).
+- **Tags:** `azure`, `bicep`, `infrastructure-as-code`, `iac`, `devops`
+
+### AWS CodePipeline as a Multi-Account Deployment Orchestrator: Centralizing CI/CD Across Your AWS Organization
+- **Status:** `idea`
+- **Scheduled:** 2027-03-25
+- **Pitch:** At enterprise scale, you need a single source of truth for deployments across dev/staging/prod accounts - AWS CodePipeline can be that orchestrator if you set up cross-account roles correctly.
+- **Angle:** Builds a pipeline that tests in a shared account, then deploys to dev/staging/prod accounts using IAM role assumption and artifact handoff. Covers the IAM policy dance (what each account needs to assume), how to pass artifacts across accounts securely, and integrating CodePipeline with third-party gates (approval workflows, integration tests in isolated accounts). Compares to GitHub Actions + AWS OIDC for teams wanting to stay GitHub-centric.
+- **Tags:** `aws`, `codepipeline`, `ci-cd`, `multi-account`, `governance`, `devops`
+
+### OpenTofu: The Open-Source Terraform Fork and When to Make the Switch
+- **Status:** `idea`
+- **Scheduled:** 2027-04-01
+- **Pitch:** HashiCorp's license change forked the Terraform community - OpenTofu is a fully compatible open-source fork with momentum. This post helps you decide if and when to migrate.
+- **Angle:** Compares OpenTofu and Terraform head-to-head (compatibility, performance, community pace), shows that most `.tf` files run identically on both, covers the migration process (spoiler: usually just a binary swap), and discusses the organizational calculus: open-source assurance vs. vendor support trade-offs. Includes a GitHub Actions workflow that tests infrastructure code against both tools.
+- **Tags:** `terraform`, `opentofu`, `infrastructure-as-code`, `open-source`, `devops`
+
+### Secrets Management Across AWS, Azure, and GCP: The Multi-Cloud Pattern Without the Complexity
+- **Status:** `idea`
+- **Scheduled:** 2027-04-08
+- **Pitch:** Each cloud has a secrets service (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager) - syncing secrets across clouds creates operational debt. This post shows the minimal viable pattern.
+- **Angle:** Introduces the concept of a "source of truth" cloud (often whichever hosts your primary database or auth system), then shows how to read secrets from that cloud in the others (using IAM roles for fine-grained access). Covers rotation strategies that work across clouds. Compares to external secret sync solutions (HashiCorp Vault, External Secrets Operator) and why you probably don't need them until you hit enterprise compliance requirements.
+- **Tags:** `aws`, `azure`, `gcp`, `security`, `secrets-management`, `devops`
+
+### Networking Across AWS, Azure, and GCP: VPN, Virtual Peering, and When to Build a Private Network Fabric
+- **Status:** `idea`
+- **Scheduled:** 2027-04-15
+- **Pitch:** Connecting workloads across clouds sounds simple (VPN or peering) until you hit DNS resolution, routing conflicts, and compliance requirements - this post builds the right mental model.
+- **Angle:** Case study: connecting a web tier in AWS, a database in Azure, and APIs in GCP. Covers the networking options (VPN with overlapping CIDRs, vnet/VPC peering, private connectivity services), DNS strategies (split-view DNS, conditional forwarding), and when to add a WAF/firewall in front. Addresses the operational overhead: monitoring cross-cloud traffic, debugging connectivity, auditing who has access. Practical: when a VPN is enough vs. when you need a dedicated network orchestration layer.
+- **Tags:** `aws`, `azure`, `gcp`, `networking`, `devops`, `architecture`
+
+### AWS VPC Endpoints: Reducing Data Egress Costs and Improving Security Posture
+- **Status:** `idea`
+- **Scheduled:** 2027-04-22
+- **Pitch:** Every GB of data leaving AWS costs money and creates a security surface - VPC Endpoints let you talk to AWS services and external APIs without leaving the VPC, but the configuration is counterintuitive.
+- **Angle:** Covers gateway endpoints (S3, DynamoDB - free, simple) and interface endpoints (most other services - more flexible, small charge). Shows how to set up an endpoint for S3, verify it's being used (CloudTrail logging), and save on egress. Addresses common gotchas: DNS resolution, security groups, and the "why is my Lambda still going through NAT Gateway" debugging journey.
+- **Tags:** `aws`, `vpc`, `cost-optimization`, `security`, `devops`
+
+### GCP VPC Service Controls: Perimeter-Based Access Control and Compliance Automation
+- **Status:** `idea`
+- **Scheduled:** 2027-04-29
+- **Pitch:** VPC Service Controls creates a security perimeter around GCP services - once you're inside, no exfiltration is possible without leaving the perimeter. It's a compliance superpower if configured correctly.
+- **Angle:** Sets up a service perimeter for a real project (container registry, storage, BigQuery), then attempts to exfiltrate data (shows it fails). Covers ingress/egress policies, exemptions for emergencies, and integration with Cloud Audit Logs for compliance reporting. Compares to AWS PrivateLink/VPC Endpoints for teams building on both clouds.
+- **Tags:** `gcp`, `security`, `compliance`, `devops`, `network-security`
+
+### Database Replication Across AWS Regions and Clouds: Consistency Models You Can Actually Understand
+- **Status:** `idea`
+- **Scheduled:** 2027-05-06
+- **Pitch:** Replicating a database across regions or clouds is table-stakes for availability, but the consistency guarantees and failure semantics are different for each engine and deployment model - get this wrong and you get lost updates or diverged state.
+- **Angle:** Covers the consistency spectrum (immediate consistency, eventual consistency, causal consistency) with real examples. Compares approaches: managed replication (AWS RDS cross-region read replica, Azure Replication, GCP Cloud SQL), application-layer replication (event sourcing, CQRS), and hybrid approaches. Includes a test suite that catches consistency bugs before they hit production.
+- **Tags:** `databases`, `replication`, `aws`, `azure`, `gcp`, `distributed-systems`
+
+### Infrastructure Testing for Multi-Cloud: Validating Configuration Without Breaking Production
+- **Status:** `idea`
+- **Scheduled:** 2027-05-13
+- **Pitch:** IaC gives you a single source of truth, but if that source is wrong, you've now automated your mistakes across multiple clouds - this post shows how to test infrastructure code as rigorously as application code.
+- **Angle:** Covers local testing (Terraform plan, policy as code validation), integration testing (spinning up resources in a test account, validating they work, tearing down), and compliance testing (ensuring the deployed configuration matches org policy). Tools: Terraform test blocks, OPA, Checkov across all three clouds. Includes patterns for CI/CD gates that catch misconfigurations before they deploy.
+- **Tags:** `terraform`, `testing`, `devops`, `infrastructure-as-code`, `policy-as-code`
+
+### Observability and Monitoring for Multi-Cloud: Unified Visibility Without Vendor Lock-In
+- **Status:** `idea`
+- **Scheduled:** 2027-05-20
+- **Pitch:** Monitoring AWS, Azure, and GCP from three separate dashboards defeats the purpose - this post shows how to collect signals uniformly and route them to a single pane of glass.
+- **Angle:** Uses OpenTelemetry (logs, metrics, traces) as the common layer - each cloud has its own receiver (AWS CloudWatch, Azure Monitor, GCP Cloud Logging), but all feed into a central OTEL collector (self-hosted or cloud-hosted). Compares to managed observability vendors (Datadog, New Relic, Splunk) and shows the cost/flexibility trade-off. Practical: starting with metrics, adding traces, gradually onboarding logs.
+- **Tags:** `observability`, `monitoring`, `opentelemetry`, `aws`, `azure`, `gcp`, `devops`
+
+---
+
+## 📅 June-August 2027 - Open
+
+Thirteen posts on agentic development at scale, multi-cloud AI workloads, and cost optimization for ML.
+
+### AWS Bedrock Agents: Building Multi-Step Workflows Without Managing Infrastructure
+- **Status:** `idea`
+- **Scheduled:** 2027-06-03
+- **Pitch:** Bedrock Agents runs agents on AWS infrastructure without you managing Lambda functions, containers, or state - it's serverless AI orchestration, and it changes the cost/complexity game for agentic applications.
+- **Angle:** Builds a real agent (e.g., a customer support agent that can look up orders, process refunds, escalate to human) from scratch using Bedrock Agents. Covers tool definition (XML syntax), memory management, multi-turn conversations, and the pricing model (per invocation). Compares to building agents on Lambda + API Gateway + Step Functions (more control, more operational burden).
+- **Tags:** `aws`, `bedrock`, `ai-agents`, `serverless`, `agentic-development`
+
+### GCP Vertex AI Agents: Google's Agentic Framework and When It Beats Multi-Cloud Abstractions
+- **Status:** `idea`
+- **Scheduled:** 2027-06-10
+- **Pitch:** Vertex AI Agents are Google's vertically-integrated agent platform (models, evaluation, deployment, monitoring all in one place) - this post evaluates whether vendor lock-in is worth the integration gains.
+- **Angle:** Builds the same customer support agent on Vertex AI Agents, then compares the development experience, cost, and operational overhead to an AWS Bedrock version. Shows what Vertex AI does exceptionally well (model selection, prompt evaluation, monitoring) and where it creates lock-in. Addresses the question: for teams committed to GCP, is Vertex AI Agents better than a general framework like LangChain?
+- **Tags:** `gcp`, `vertex-ai`, `ai-agents`, `agentic-development`, `llm`
+
+### Evaluating Agents at Scale: Cost-Effective Testing for Agentic Applications
+- **Status:** `idea`
+- **Scheduled:** 2027-06-17
+- **Pitch:** Agent evaluation is harder than LLM evaluation because agents have tool calls, multi-step reasoning, and stochastic behavior - this post builds a practical framework for catching regressions without breaking the budget.
+- **Angle:** Covers deterministic evaluation (tool call correctness, output format), semantic evaluation (using an LLM to grade agent reasoning), and production evaluation (sampling real user interactions, manual review). Shows how to integrate agent evaluation into CI so bad prompts and tool definitions don't ship. Uses AWS Bedrock or Vertex AI as the evaluation backbone and GitHub Actions for orchestration.
+- **Tags:** `ai-agents`, `testing`, `evaluation`, `agentic-development`, `aws`, `gcp`
+
+### Multi-Agent Orchestration Patterns: When to Use Central Coordinator vs. Direct Handoff
+- **Status:** `idea`
+- **Scheduled:** 2027-06-24
+- **Pitch:** Single agents hit a ceiling - real agentic systems route tasks across specialists - this post shows the three patterns that actually work and when to use each.
+- **Angle:** Covers: (1) central coordinator agent that decides which specialist to call, (2) direct handoff where one agent calls another agent, and (3) self-organizing where agents negotiate. Shows concrete trade-offs: coordinator is simpler but a bottleneck; handoff is faster but harder to debug; self-organizing is elegant but requires teaching agents to cooperate. Uses AWS Bedrock or Vertex AI Agents as the runtime.
+- **Tags:** `ai-agents`, `multi-agent`, `agentic-development`, `architecture`
+
+### Cost Optimization for LLM Inference: Caching, Batch Processing, and Knowing When to Fine-Tune
+- **Status:** `idea`
+- **Scheduled:** 2027-07-01
+- **Pitch:** LLM inference costs scale with token volume - this post shows where you're burning money and how to cut 30-50% without sacrificing quality.
+- **Angle:** Covers prompt caching (reducing redundant prefill overhead), batch processing (cheaper token rates, same results), distillation (switching to smaller models for specific tasks), and fine-tuning (only when it actually saves tokens). Includes a framework for deciding which optimization to apply to your bottleneck. Cost accounting: showing which parts of your agentic application are expensive and where to focus.
+- **Tags:** `llm`, `cost-optimization`, `ai-agents`, `aws`, `gcp`, `azure-ai-foundry`
+
+### Agentic Observability: Tracing Multi-Step Workflows and Debugging Tool Call Failures
+- **Status:** `idea`
+- **Scheduled:** 2027-07-08
+- **Pitch:** When an agent fails in production, you need to see every step: what it was thinking, what it tried to do, where the tool call failed - standard application monitoring isn't enough.
+- **Angle:** Covers OpenTelemetry instrumentation for agentic applications (capturing agent thoughts, tool calls, results as spans), distributed tracing across agent boundaries, and the critical: root-cause attribution. Shows how to build a dashboard that surfaces `agent_id, user_id, step_number, tool_name, error` so on-call can triage incidents. Includes a pattern for replay-driven debugging (re-run the agent with the exact same inputs to reproduce failures).
+- **Tags:** `observability`, `ai-agents`, `monitoring`, `opentelemetry`, `agentic-development`
+
+### Azure Prompt Flow at Scale: Production Workflows for Complex Agentic Applications
+- **Status:** `idea`
+- **Scheduled:** 2027-07-15
+- **Pitch:** Azure Prompt Flow is built for multi-step LLM workflows - this post shows how to move Prompt Flow applications from prototyping to production with monitoring, versioning, and A/B testing.
+- **Angle:** Builds a real workflow (multi-step research task that queries APIs, reasons about results, and synthesizes a report), versions it with Git, sets up evaluation gates in CI, deploys to Azure Container Apps, and runs A/B tests on prompt variations. Covers the prompt flow development experience (web UI, CLI, SDK), comparing it to code-first frameworks like LangChain.
+- **Tags:** `azure`, `azure-ai-foundry`, `prompt-flow`, `agentic-development`, `llm`
+
+### Agentic Code Generation: Using Agents to Scaffold and Refactor Code Without Hallucination
+- **Status:** `idea`
+- **Scheduled:** 2027-07-22
+- **Pitch:** Agents that write code sound scary but they're useful for specific tasks - scaffolding repetitive patterns, refactoring, generating tests - if constrained correctly.
+- **Angle:** Builds an agent that takes a Python class definition and generates comprehensive unit tests, then one that refactors legacy code toward modern patterns. Covers the constraints that make this safe: code analysis for groundedness (generated code parses), static analysis to catch obvious mistakes, human review gates. Shows where code-generating agents fail (novel algorithms, domain-specific problems) and where they excel (boilerplate, known patterns).
+- **Tags:** `ai-agents`, `code-generation`, `agentic-development`, `testing`, `developer-productivity`
+
+### Fine-Tuning LLMs for Agentic Tasks: When Domain Adaptation Actually Helps Agent Reasoning
+- **Status:** `idea`
+- **Scheduled:** 2027-07-29
+- **Pitch:** Most fine-tuning projects fail - this post shows the narrow slice where fine-tuning actually improves agent reasoning (not just task accuracy) and how to measure whether you've crossed that line.
+- **Angle:** Covers the decision framework: few-shot prompting rarely works for agents (multi-step reasoning is too brittle), RAG helps with grounding but not reasoning, fine-tuning is expensive but can improve planning. Shows how to evaluate whether your domain-specific tasks would benefit from fine-tuning by running ablations: base model vs. fine-tuned on test queries. Addresses the cost calculus: fine-tuning investment vs. API cost savings.
+- **Tags:** `llm`, `fine-tuning`, `ai-agents`, `agentic-development`, `azure-ai-foundry`
+
+### Responsible AI Governance for Agents: Automated Checks for Bias, Safety, and Compliance
+- **Status:** `idea`
+- **Scheduled:** 2027-08-05
+- **Pitch:** Agentic systems make decisions that affect users - governance (logging, review, rollback) isn't optional. This post builds audit-grade infrastructure into agent deployments.
+- **Angle:** Covers: (1) capturing every decision the agent made (input, reasoning, action, outcome), (2) auditing for bias (systematic differences in behavior across user demographics), (3) safety checks (preventing agents from making harmful commitments), and (4) compliance reporting. Uses Azure AI Content Safety or similar for automated filtering, and GitHub Actions for compliance dashboards.
+- **Tags:** `responsible-ai`, `governance`, `ai-agents`, `compliance`, `agentic-development`
+
+### Building Agent Personas: Teaching Agents to Adopt Different Styles and Constraints for Different Users
+- **Status:** `idea`
+- **Scheduled:** 2027-08-12
+- **Pitch:** A single agent prompt doesn't serve all users - sales agents need urgency, support agents need patience, compliance officers need precision - this post shows how to prompt-engineer for personas without forking the codebase.
+- **Angle:** Covers prompt techniques for personas (instruction layers, dynamic system prompt construction), testing that personas behave as designed, and the operational cost (more prompt variations = more evaluation, more testing). Shows a pattern where persona instructions are stored in a database so ops can update tone/constraints without re-deploying.
+- **Tags:** `ai-agents`, `prompt-engineering`, `agentic-development`, `personalization`
+
+### Agent Hallucination: Detecting, Measuring, and Mitigating False Confident Behavior
+- **Status:** `idea`
+- **Scheduled:** 2027-08-19
+- **Pitch:** Agents hallucinate differently than LLMs - they can confidently call a tool with made-up parameters, making a request that sounds plausible but fails at runtime. This post teaches you to catch and fix it.
+- **Angle:** Covers detection techniques (semantic validation of tool calls before execution, consistency checks across multi-step workflows), measurement (how to score hallucination in evaluation datasets), and mitigation (constraining tool parameters via schema, teaching agents to check before acting). Shows how to add a "confidence scoring" layer that lets you deprioritize low-confidence agent decisions.
+- **Tags:** `ai-agents`, `hallucination`, `agentic-development`, `safety`
+
+### From Prompt Engineering to Agentic Engineering: Teaching LLMs to Reason and Act Reliably
+- **Status:** `idea`
+- **Scheduled:** 2027-08-26
+- **Pitch:** Agentic engineering is an emerging discipline - this post maps the progression from one-shot prompts to full agents and the different skill set required.
+- **Angle:** Structured as a learning path: (1) prompting (static instructions), (2) dynamic prompting (context-aware instructions), (3) in-context learning (few-shot examples), (4) tool use (agent can call functions), (5) planning (agent breaks down problems), (6) memory (agent learns over conversations). Each step trades prompt simplicity for reasoning capability. Includes mental models and debugging techniques for each level.
+- **Tags:** `ai-agents`, `prompt-engineering`, `agentic-development`, `learning-path`
+
+---
+
+## 📅 September-November 2027 - Open
+
+Fourteen posts on platform engineering at scale, cost management, and enterprise agentic deployment.
+
+### Platform Engineering Beyond Backstage: Building Internal Developer Platforms at Enterprise Scale
+- **Status:** `idea`
+- **Scheduled:** 2027-09-02
+- **Pitch:** Backstage is a good foundation but most enterprises need more - this post shows what's missing and how to build it.
+- **Angle:** Covers: (1) golden paths (curated templates for common workloads), (2) self-service infrastructure (VMs, databases, caches), (3) cost transparency (which team owns which resources), and (4) compliance automation (policies enforced on infrastructure). Real examples: service mesh integration (Istio, Linkerd), policy as code enforcement (OPA), audit logging. Shows how to wire all of this into your IDP so developers get productivity without compliance headaches.
+- **Tags:** `platform-engineering`, `developer-productivity`, `internal-developer-platform`, `devops`
+
+### AWS Service Catalog at Scale: Self-Service Infrastructure Without the Operational Debt
+- **Status:** `idea`
+- **Scheduled:** 2027-09-09
+- **Pitch:** Service Catalog is AWS's self-service infrastructure tool - this post shows how to build it correctly so developers get speed without creating sprawl or cost surprise.
+- **Angle:** Covers: setting up an AWS Service Catalog portfolio with AWS CloudFormation and Terraform backends, defining constraints (cost limits, allowed instance sizes), role-based access, and cost reporting. Shows the pattern where dev teams can self-provision (databases, VMs, load balancers) within guardrails set by platform teams. Addresses the most common failure mode: unconstrained self-service creates chaos (everyone spins up expensive resources).
+- **Tags:** `aws`, `service-catalog`, `platform-engineering`, `self-service-infrastructure`
+
+### GCP Service Management and Config Controller: Policy Enforcement for Self-Service Infrastructure
+- **Status:** `idea`
+- **Scheduled:** 2027-09-16
+- **Pitch:** Google's Config Controller brings Kubernetes-native policy enforcement to GCP infrastructure - teams define Intent, infrastructure self-heals to match.
+- **Angle:** Covers setting up Config Controller, defining policies for resource naming, location constraints, security settings, and cost controls. Shows how developers submit desired state (as Kubernetes-like manifests) and Config Controller creates the GCP infrastructure. Compares to AWS Service Catalog and Terraform - different strengths.
+- **Tags:** `gcp`, `platform-engineering`, `config-controller`, `policy-enforcement`, `infrastructure-as-code`
+
+### Multi-Cloud CI/CD: A Single Workflow That Deploys to AWS, Azure, and GCP Simultaneously
+- **Status:** `idea`
+- **Scheduled:** 2027-09-23
+- **Pitch:** Deploying to multiple clouds from a single CI/CD workflow sounds like complexity, but with the right abstractions it's simpler than maintaining separate pipelines.
+- **Angle:** Builds a GitHub Actions workflow that tests once, then deploys the same artifact to AWS (via CodeDeploy), Azure (via Resource Manager), and GCP (via Cloud Deploy) in parallel. Covers the abstraction layer: Terraform modules that work across all three clouds. Includes failure handling (if one cloud fails, what's the rollback strategy?).
+- **Tags:** `ci-cd`, `github-actions`, `aws`, `azure`, `gcp`, `multi-cloud`, `deployment`
+
+### FinOps Culture: Making Cloud Cost Everyone's Problem
+- **Status:** `idea`
+- **Scheduled:** 2027-09-30
+- **Pitch:** FinOps isn't just about tools - it's about culture shift where developers and ops own the cost impact of their choices.
+- **Angle:** Covers: (1) cost allocation (tagging/labeling so each team sees its own bill), (2) budgets and alerts (financial controls), (3) cost-aware architecture decisions (does this need multi-cloud or is one region enough?), and (4) incentives (should teams get credits if they save costs?). Includes patterns for cost reviews (quarterly retrospectives on spend), developer education (teaching cost implications of architectural choices), and executive visibility (dashboards that don't require a finance degree to understand).
+- **Tags:** `cloud-cost`, `finops`, `platform-engineering`, `devops`, `governance`
+
+### Compliance Automation for Enterprise Cloud: From Manual Audits to Self-Healing Infrastructure
+- **Status:** `idea`
+- **Scheduled:** 2027-10-07
+- **Pitch:** Compliance audits are manual, expensive, and slow - this post shows how to automate compliance checks and even auto-remediate common violations.
+- **Angle:** Covers: (1) policy scanning (Checkov, OPA, native tools), (2) automated remediation (if encryption is disabled, enable it), (3) audit logging (capture who changed what), and (4) compliance reporting (aggregating results for auditors). Practical example: enforcing SOC 2 requirements across AWS, Azure, and GCP without hiring a compliance team. Addresses the tension: automation can reduce burden but over-automation can block legitimate operations.
+- **Tags:** `compliance`, `devsecops`, `governance`, `automation`, `aws`, `azure`, `gcp`
+
+### Disaster Recovery and Business Continuity for Multi-Cloud Workloads
+- **Status:** `idea`
+- **Scheduled:** 2027-10-14
+- **Pitch:** Disaster recovery is boring until you need it, then it's critical - this post teaches you to design for it from the start without over-engineering.
+- **Angle:** Covers: (1) RTO/RPO targets (how fast must recovery be, how much data can you lose), (2) failover strategies (active-active, active-passive, multi-cloud redundancy), (3) testing (chaos engineering, regular DR drills), and (4) cost-effective approaches (you don't need hot standby everywhere). Includes templates for DR architecture across AWS/Azure/GCP and a GitHub Actions workflow that periodically tests failover.
+- **Tags:** `disaster-recovery`, `reliability`, `aws`, `azure`, `gcp`, `architecture`
+
+### Testing AI-Assisted Development: Coverage, Evaluation, and Guardrails for Copilot at Scale
+- **Status:** `idea`
+- **Scheduled:** 2027-10-21
+- **Pitch:** Copilot and similar AI coding tools are powerful but they can introduce subtle bugs if you're not careful - this post builds the testing strategy that catches them.
+- **Angle:** Covers: (1) coverage implications (can AI suggestions reduce test coverage?), (2) correctness evaluation (do suggested code pass tests?), (3) security scanning (does Copilot suggest vulnerable patterns?), and (4) cost/benefit analysis (is the dev velocity gain worth the review overhead?). Shows how to integrate Copilot output into your CI, add extra scrutiny to AI-generated code, and measure whether teams using Copilot actually ship faster.
+- **Tags:** `github-copilot`, `testing`, `ai-assisted-development`, `code-quality`, `ci-cd`
+
+### Agent-Assisted Operations: Using Agents to Automate Incident Response and Post-Mortems
+- **Status:** `idea`
+- **Scheduled:** 2027-10-28
+- **Pitch:** Agents can help ops teams by detecting anomalies, gathering context, suggesting remediation, and even executing fixes - this post shows how to build safe automation for operational tasks.
+- **Angle:** Covers: (1) anomaly detection (agent triggers when conditions match), (2) context gathering (agent pulls logs, metrics, recent changes), (3) remediation suggestions (agent recommends fix but requires human approval), and (4) autonomous remediation (for safe operations, agent executes fixes directly). Shows a real example: agent detects high error rate, gathers evidence, suggests rollback, gets approval, rolls back. Addresses the critical safety requirement: agents need guardrails (what they can do, what requires approval).
+- **Tags:** `ai-agents`, `operations`, `devops`, `incident-response`, `automation`
+
+### Agentic Testing: AI Agents That Generate, Execute, and Improve Test Cases
+- **Status:** `idea`
+- **Scheduled:** 2027-11-04
+- **Pitch:** Agents can augment your test suite by generating edge cases, running exploratory testing, and suggesting improvements - this post shows where the pattern works and where it still breaks.
+- **Angle:** Covers: (1) agent-generated test cases (agent reads code, generates tests), (2) exploratory testing (agent finds edge cases humans miss), (3) flakiness detection (agent runs tests multiple times and catches intermittent failures), and (4) test improvement (agent suggests coverage gaps). Shows the limitations: agents still hallucinate (suggesting tests for methods that don't exist), and they need guardrails (not every test agent generates is worth keeping). Frames this as augmentation, not replacement.
+- **Tags:** `ai-agents`, `testing`, `test-generation`, `agentic-development`, `quality-assurance`
+
+### Building Observability Into Agents From Day One: Instrumentation Patterns for Production Safety
+- **Status:** `idea`
+- **Scheduled:** 2027-11-11
+- **Pitch:** Production agents are worth nothing if you can't debug them - this post builds observation into agents from the start, not as an afterthought.
+- **Angle:** Covers: (1) structured logging (agent thoughts, tool calls, results in queryable format), (2) distributed tracing (following a user request through an agent chain), (3) metrics (latency, error rate, tool call frequency), and (4) alerting (anomaly detection for agent behavior). Uses OpenTelemetry as the common layer. Shows how to set up a dashboard that surfaces `agent_id, user_id, step, tool, error` so you can debug incidents. Includes a pattern for reproducing agent behavior (replay the same inputs to see if it happens again).
+- **Tags:** `observability`, `ai-agents`, `monitoring`, `opentelemetry`, `devops`
+
+### Designing Agents That Learn From Feedback: Building Human-in-the-Loop Systems Without the Operational Chaos
+- **Status:** `idea`
+- **Scheduled:** 2027-11-18
+- **Pitch:** Agents that improve over time sound great, but feedback loops and continuous retraining create operational burden if not designed carefully.
+- **Angle:** Covers: (1) feedback collection (capturing user corrections), (2) signal quality (not all feedback is equal), (3) retraining cadence (daily, weekly, only on significant changes), and (4) safety gates (bad updates can't ship without review). Shows patterns that work: ranking feedback by confidence, requiring multiple reports before action, and human review gates for significant model/prompt changes. Addresses the organizational question: who owns continuous improvement - ML team, product team, ops?
+- **Tags:** `ai-agents`, `feedback-loops`, `continuous-improvement`, `agentic-development`, `governance`
+
+### Multi-Tenant Agent Platforms: Isolation, Cost Allocation, and Compliance for SaaS
+- **Status:** `idea`
+- **Scheduled:** 2027-11-25
+- **Pitch:** Running agents for multiple customers in a SaaS requires isolation (one customer's data doesn't leak), cost tracking (who pays for API calls), and compliance (audits per tenant) - this post shows how to build it without the overhead.
+- **Angle:** Covers: (1) logical isolation (separate Azure AI Foundry projects per tenant vs. shared project with tenant context), (2) cost tracking (API call attribution to customer), (3) quota enforcement (prevent one customer from consuming all resources), and (4) audit logging (compliance per tenant). Shows the trade-off: more isolation = more operational burden but easier compliance; shared infrastructure = cheaper but harder to audit.
+- **Tags:** `ai-agents`, `multi-tenant`, `saas`, `compliance`, `cost-allocation`
+
+---
+
+## 📅 December 2027 - Open
+
+Five posts to close the year with reflection and forward-looking content.
+
+### The Agentic Year in Review 2027: What Shipped, What Actually Mattered, What's Ahead
+- **Status:** `idea`
+- **Scheduled:** 2027-12-02
+- **Pitch:** A retrospective on agentic development in 2027 - what left the prototype phase, what turned out to be hype, and what's worth watching in 2028.
+- **Angle:** Structured as three sections: what shipped (agentic products, platforms, tools), what mattered (which approaches actually worked in production), and what broke (hype that didn't materialize). Personal and opinionated, grounded in experience shipping agents. Covers the emerging best practices that crystallized in 2027 (evaluation methods, safety patterns, cost models).
+- **Tags:** `ai-agents`, `agentic-development`, `year-in-review`, `editorial`
+
+### Multi-Cloud Platform Engineering: The 2027-2028 Transition
+- **Status:** `idea`
+- **Scheduled:** 2027-12-09
+- **Pitch:** Multi-cloud strategies matured in 2027 - this post reflects on what worked, what we got wrong, and where the field is headed.
+- **Angle:** Covers: (1) tools that matured (Terraform, OpenTelemetry, OTEL collectors), (2) patterns that stuck (avoid true multi-cloud apps in favor of multi-cloud deployment of single-cloud architectures), (3) where abstractions still fail (managed services remain cloud-specific), and (4) organizational lessons (FinOps, cost ownership). Opinionated take on whether true portability is a goal worth pursuing or whether cloud-specific expertise is better.
+- **Tags:** `multi-cloud`, `platform-engineering`, `architecture`, `editorial`
+
+### Cloud Native Security in Retrospect: What's Still Hard, What's Table Stakes Now
+- **Status:** `idea`
+- **Scheduled:** 2027-12-16
+- **Pitch:** Security tooling matured dramatically in 2027 - this post reflects on what's now expected baseline vs. still cutting-edge.
+- **Angle:** Covers: (1) baseline expectations (policy as code, shift-left scanning, RBAC), (2) still hard (supply chain security at scale, evaluating third-party tools), (3) emerging threats (agentic system attacks, multi-cloud exploitation). Includes a security self-assessment checklist for 2028: have you covered the fundamentals?
+- **Tags:** `security`, `devsecops`, `cloud-native`, `editorial`, `year-in-review`
+
+### Building for Humans: The Non-Technical Skills That Separate Senior Teams From the Rest
+- **Status:** `idea`
+- **Scheduled:** 2027-12-23
+- **Pitch:** Technical skills got us here, but async communication, documentation discipline, and decision-making processes are what scale teams - this post reflects on the non-technical stuff that matters.
+- **Angle:** Light enough for the holiday week, substantive enough to be worth reading. Covers: (1) writing skills (good documentation and commit messages), (2) async-first communication (GitHub Discussions, ADRs instead of Slack threads), (3) decision frameworks (How do we choose between AWS and GCP?), and (4) learning culture (encouraging experimentation without chaos).
+- **Tags:** `team-culture`, `developer-productivity`, `writing-for-engineers`, `editorial`
+
+### Thinking Forward: What DevSecOps, Platform Engineering, and Agentic Development Will Look Like in 2028
+- **Status:** `idea`
+- **Scheduled:** 2027-12-30
+- **Pitch:** The year is ending - time to think about what's next. This post makes predictions on where the field is headed and what bets worth making.
+- **Angle:** Opinionated but grounded: (1) agentic systems will hit production at scale, (2) multi-cloud will continue but with clearer trade-offs understood, (3) FinOps will be table stakes (every org tracks cost per team), (4) platform engineering consolidates around Backstage + cloud service catalogs, (5) security shifts to runtime anomaly detection (shift right). Includes things worth learning in early 2028 (specific agents for your domain, cost modeling for your workload, new evaluation methods as they emerge).
+- **Tags:** `editorial`, `predictions`, `devops`, `platform-engineering`, `ai-agents`
+
+---
+
 ## 📐 How to Use This Calendar
 
 ### Moving items between sections
@@ -456,9 +843,59 @@ Change the `**Status:**` field in-place as the post moves through the pipeline:
 
 Once you open a GitHub Issue for a post, replace `#TBD` with the issue number (e.g. `#42`). The `#42` syntax auto-links in GitHub's Markdown renderer. One issue per post; use the issue for draft feedback, outline review, and final sign-off comments.
 
-### Session kickoff ritual
+### Agent-Based Workflow for Blog Posts
 
-1. **Ralph** opens the session and queries the calendar for any entries whose status has changed or whose target period has elapsed.
-2. Ralph reports the backlog count and flags any posts that are overdue or blocked.
-3. The coordinator fans out tasks: **Trenton** picks up a writing or editing task; **Mr. Robot** handles any tooling or deployment work surfaced during the review.
-4. At session close, update status fields and commit the calendar so the next session opens with fresh state.
+Blog posts flow through the Planner → Blog-Writer → Reviewer → Scribe pipeline:
+
+**1. When a post is ready to work on (move from 📦 Backlog to 🗓 This Period):**
+   - Create a GitHub Issue: `[Blog Post] Post Title Here` with a body containing the Pitch and Angle from this calendar
+   - Link the issue: update this calendar entry with `#NNN`
+
+**2. To draft the post:**
+   - Invoke Blog-Writer: 
+     ```
+     Blog-Writer, draft this post per the editorial calendar:
+     [copy the post entry from this calendar]
+     ```
+   - Blog-Writer will read the editorial plan and similar posts, then produce a complete draft with front matter, structure, and prose
+
+**3. To review the draft:**
+   - Invoke Reviewer:
+     ```
+     Reviewer, validate this draft:
+     Title: [title]
+     File: src/posts/YYYY-MM-DD-slug.md
+     
+     Check: front matter completeness, prose quality, technical accuracy, links work
+     ```
+
+**4. To publish:**
+   - Commit the post to main
+   - Update status to `published` and add the live URL
+
+**5. Optional: Document learnings (if the post introduced new content patterns):**
+   - Invoke Scribe:
+     ```
+     Scribe, document learnings from this post:
+     [context about the post and any new patterns]
+     ```
+
+### Session checklist
+
+At the start of each working session:
+
+1. Review this calendar for posts that are:
+   - Scheduled but still in `idea` status (likely overdue)
+   - In `in-progress` for more than a week (likely blocked)
+   - Ready to promote from 📦 Backlog to 🗓 This Period
+
+2. For each item needing work:
+   - Create or update its GitHub Issue (if not already created)
+   - Invoke Planner to design how to approach it, or
+   - Invoke Blog-Writer directly if it's a straightforward post draft
+
+3. At session close:
+   - Update status fields in this calendar
+   - Commit the calendar so the next session has fresh state
+
+See `CLAUDE.md` and `docs/AGENT_ARCHITECTURE.md` for complete agent documentation.
