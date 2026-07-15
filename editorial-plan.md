@@ -313,9 +313,10 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Responsible AI in the SDLC: Governance Gates You Can Automate with GitHub Actions
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-02
 - **Issue:** [#130](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/130)
+- **File:** `src/posts/2026-10-02-responsible-ai-governance-gates-github-actions.md`
 - **Pitch:** Responsible AI isn't just a policy document - it's a set of checks you can automate into your deployment pipeline to catch bias, safety violations, and compliance issues before they ship.
 - **Angle:** Maps the Microsoft Responsible AI principles to concrete CI checks: content safety filtering via Azure AI Content Safety, bias detection on model evaluation datasets, documentation completeness for model cards, and sign-off gates in GitHub Environments. Shows how to fail a deployment workflow when a content safety score exceeds a threshold.
 - **Tags:** `responsible-ai`, `azure-ai-foundry`, `devsecops`, `compliance`, `governance`
