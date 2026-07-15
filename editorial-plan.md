@@ -331,9 +331,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-codespaces`, `developer-productivity`, `devcontainer`, `onboarding`
 
 ### Agentic Code Review: Using AI Agents to Enforce Architecture Rules on Every PR
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-16
 - **Issue:** [#132](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/132)
+- **File:** `src/posts/2026-10-16-agentic-code-review-architecture-rules.md`
 - **Pitch:** Architecture rules that live in documents get violated; architecture rules enforced by an agent on every PR get followed - this post shows how to build the latter.
 - **Angle:** Builds a GitHub Actions-triggered agent that reads a PR diff, checks it against a set of architecture constraints stored in the repo (ADRs, dependency rules, naming conventions), and posts a structured review comment. Uses Azure AI Foundry for the agent runtime and the GitHub REST API for PR interaction. Covers how to keep the rules up to date as the architecture evolves.
 - **Tags:** `ai-agents`, `code-review`, `azure-ai-foundry`, `github-actions`, `architecture`
