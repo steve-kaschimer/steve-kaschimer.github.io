@@ -315,7 +315,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### Responsible AI in the SDLC: Governance Gates You Can Automate with GitHub Actions
 - **Status:** `draft`
 - **Scheduled:** 2026-10-02
-- **Issue:** [#130](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/130)
+- **Issue:** [#130](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/130) ✅ closed
 - **File:** `src/posts/2026-10-02-responsible-ai-governance-gates-github-actions.md`
 - **Pitch:** Responsible AI isn't just a policy document - it's a set of checks you can automate into your deployment pipeline to catch bias, safety violations, and compliance issues before they ship.
 - **Angle:** Maps the Microsoft Responsible AI principles to concrete CI checks: content safety filtering via Azure AI Content Safety, bias detection on model evaluation datasets, documentation completeness for model cards, and sign-off gates in GitHub Environments. Shows how to fail a deployment workflow when a content safety score exceeds a threshold.
@@ -324,7 +324,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Codespaces for Team Onboarding: Eliminating "Works on My Machine" at Scale
 - **Status:** `draft`
 - **Scheduled:** 2026-10-09
-- **Issue:** [#131](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/131)
+- **Issue:** [#131](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/131) ✅ closed
 - **File:** `src/posts/2026-10-09-github-codespaces-team-onboarding.md`
 - **Pitch:** A well-configured Codespace means a new team member goes from zero to running the app in under five minutes on any device - this post shows how to build one.
 - **Angle:** Covers `devcontainer.json` from scratch (base image, features, lifecycle commands, port forwarding), pre-building images to eliminate cold-start time, dotfiles integration for personal preferences, and Codespace secrets for environment-specific config. Includes a cost model for teams considering Codespaces vs. local dev.
@@ -333,7 +333,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### Agentic Code Review: Using AI Agents to Enforce Architecture Rules on Every PR
 - **Status:** `draft`
 - **Scheduled:** 2026-10-16
-- **Issue:** [#132](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/132)
+- **Issue:** [#132](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/132) ✅ closed
 - **File:** `src/posts/2026-10-16-agentic-code-review-architecture-rules.md`
 - **Pitch:** Architecture rules that live in documents get violated; architecture rules enforced by an agent on every PR get followed - this post shows how to build the latter.
 - **Angle:** Builds a GitHub Actions-triggered agent that reads a PR diff, checks it against a set of architecture constraints stored in the repo (ADRs, dependency rules, naming conventions), and posts a structured review comment. Uses Azure AI Foundry for the agent runtime and the GitHub REST API for PR interaction. Covers how to keep the rules up to date as the architecture evolves.
@@ -342,7 +342,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Actions Self-Hosted Runners: Security Hardening for Production Workloads
 - **Status:** `draft`
 - **Scheduled:** 2026-10-23
-- **Issue:** [#133](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/133)
+- **Issue:** [#133](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/133) ✅ closed
 - **File:** `src/posts/2026-10-23-github-actions-self-hosted-runners-security-hardening.md`
 - **Pitch:** Self-hosted runners unlock private network access and custom hardware, but they introduce security risks that GitHub-hosted runners don't have - most teams running them haven't hardened them.
 - **Angle:** Covers the attack surface (persistent runner compromise, malicious PR targeting, secret exfiltration via environment), and the mitigations: ephemeral runners with autoscaling (ARC), network egress controls, workflow approval for external contributors, and runner groups scoped to specific repos. Includes an Azure Container Apps-based ephemeral runner setup.
@@ -351,7 +351,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### LLMOps: Versioning, Testing, and Deploying Prompts as First-Class Artifacts
 - **Status:** `draft`
 - **Scheduled:** 2026-10-30
-- **Issue:** [#134](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/134)
+- **Issue:** [#134](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/134) ✅ closed
 - **File:** `src/posts/2026-10-30-llmops-versioning-testing-deploying-prompts.md`
 - **Pitch:** Prompts are code - they need versioning, testing, and a deployment pipeline. Most teams manage them as strings scattered across application code, which makes regression invisible.
 - **Angle:** Covers storing prompts as versioned files in the repo, running evaluation tests against them in CI using Azure AI Foundry prompt flow, gating deployments on evaluation score thresholds, and rolling back a prompt version the same way you'd roll back a code deployment. Draws the analogy to feature flags for gradual prompt rollout.

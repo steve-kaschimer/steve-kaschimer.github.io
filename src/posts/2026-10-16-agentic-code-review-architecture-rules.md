@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-10-16
+image: /images/posts/2026-10-16-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and amber accents. On the left, a stack of small document icons labeled 'ADR-0012', 'ADR-0018', 'naming-conventions.yml' feeding into a single structured rules panel with a checkmark. A PR diff panel in the center shows added lines with a small dependency arrow crossing from a 'src/ui/' block into a 'src/data/' block, highlighted in amber. An agent node reads both the rules panel and the diff, then produces a structured comment card on the right: a bulleted list with a rule ID, a file/line reference, and a one-line explanation, styled like a real PR review comment. The mood is precise and procedural - a reviewer that actually reads the rules every time, not vibes-based commentary."
 layout: post.njk
 site_title: Tech Notes

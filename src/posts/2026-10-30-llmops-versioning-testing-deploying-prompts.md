@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-10-30
+image: /images/posts/2026-10-30-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and amber accents. A file icon labeled 'summarize-ticket.prompty v4' sits at the top, feeding down through a small evaluation gate showing two side-by-side score bars, 'v3 (current)' and 'v4 (candidate)', with v4 slightly taller and a green checkmark. Below the gate, a rollout dial shows a percentage split '10% -> 50% -> 100%' with a small pointer, and a thin dashed line loops back from the dial to a 'v3' file icon labeled 'rollback', implying a fast reversible path. The mood is procedural and calm - prompt changes treated with the same rigor and reversibility as a code deployment, not a live edit made and hoped for."
 layout: post.njk
 site_title: Tech Notes
