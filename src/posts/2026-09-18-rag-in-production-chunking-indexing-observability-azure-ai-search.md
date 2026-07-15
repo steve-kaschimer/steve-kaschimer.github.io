@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-09-18
+image: /images/posts/2026-09-18-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and amber accents. A source document on the left is shown being segmented into overlapping chunk blocks by a horizontal dotted cut-line, with a small semantic-similarity waveform beneath it showing where the cuts fall at natural dips rather than arbitrary intervals. The chunks feed into a search index cylinder icon. To the right, a query arrow enters the index and produces two parallel result streams - one labeled 'keyword (BM25)' and one labeled 'vector' - that merge into a single ranked list, which then passes through a second, narrower funnel labeled 'semantic re-rank' before reaching a final results panel with reranker scores. The mood is precise and pipeline-oriented - retrieval as an engineered system with visible stages, not a black box."
 layout: post.njk
 site_title: Tech Notes

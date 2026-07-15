@@ -266,7 +266,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Secret Scanning Custom Patterns: Finding Business-Specific Credentials Before They Ship
 - **Status:** `draft`
 - **Scheduled:** 2026-08-28
-- **Issue:** [#125](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/125)
+- **Issue:** [#125](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/125) ✅ closed
 - **File:** `src/posts/2026-08-28-github-secret-scanning-custom-patterns.md`
 - **Pitch:** GitHub's built-in secret scanning covers common provider tokens, but internal API keys, connection strings, and proprietary credential formats require custom patterns - which most teams never configure.
 - **Angle:** Walks through writing a custom secret scanning pattern (regex + test strings), deploying it at the org level, setting up push protection to block commits containing matches, and routing alerts to a security dashboard. Includes patterns for common internal formats: JWT with known issuer, internal API key prefix, database connection strings.
@@ -277,7 +277,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### Azure AI Foundry Agents: Memory, Tool Calling, and Retrieval-Augmented Generation
 - **Status:** `draft`
 - **Scheduled:** 2026-09-04
-- **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126)
+- **Issue:** [#126](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/126) ✅ closed
 - **File:** `src/posts/2026-09-04-azure-ai-foundry-agents-memory-tool-calling-rag.md`
 - **Pitch:** Memory and RAG are what separate a useful agent from a stateless chatbot - this post covers the Foundry primitives for both and when to use each.
 - **Angle:** Distinguishes conversation memory (thread state), semantic memory (vector search over documents), and episodic memory (structured facts about the user/session). Shows how to connect an Azure AI Search index to a Foundry agent, write a tool function that queries it, and ground responses in retrieved context without hallucinating citations.
@@ -286,7 +286,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Merge Queues: Safe, Scalable Merging Without Branch Protection Bottlenecks
 - **Status:** `draft`
 - **Scheduled:** 2026-09-11
-- **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127)
+- **Issue:** [#127](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/127) ✅ closed
 - **File:** `src/posts/2026-09-11-github-merge-queues.md`
 - **Pitch:** At scale, required status checks on protected branches create a thundering herd problem where every PR re-runs CI after every merge - merge queues solve this without sacrificing safety.
 - **Angle:** Explains the merge queue model (batching, pre-merge CI, jump-the-queue for urgent fixes), shows how to configure one via Rulesets, and covers the failure modes (stale base detection, batch splitting on failure). Compares merge queues to the older `bors`/`homu` bots used in large open-source projects.
@@ -295,7 +295,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### RAG in Production: Chunking, Indexing, and Observability with Azure AI Search
 - **Status:** `draft`
 - **Scheduled:** 2026-09-18
-- **Issue:** [#128](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/128)
+- **Issue:** [#128](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/128) ✅ closed
 - **File:** `src/posts/2026-09-18-rag-in-production-chunking-indexing-observability-azure-ai-search.md`
 - **Pitch:** Getting a RAG prototype working is easy - getting it to produce accurate, grounded responses at scale requires deliberate decisions about chunking strategy, index design, and retrieval evaluation.
 - **Angle:** Covers chunking strategies (fixed-size, sentence-boundary, semantic), hybrid search (keyword + vector), re-ranking with Azure AI Search semantic ranker, and how to measure retrieval quality. Includes an Azure AI Foundry evaluation run that scores groundedness and relevance on a test query set.
@@ -304,7 +304,7 @@ One post per Friday through end of year. Topics rotate across the established De
 ### GitHub Packages as an Internal Registry: Publishing and Consuming npm, Docker, and Maven Artifacts
 - **Status:** `draft`
 - **Scheduled:** 2026-09-25
-- **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129)
+- **Issue:** [#129](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/129) ✅ closed
 - **File:** `src/posts/2026-09-25-github-packages-internal-registry.md`
 - **Pitch:** GitHub Packages is an underused alternative to JFrog, Nexus, or a public registry for teams that want artifact management without extra infrastructure.
 - **Angle:** Covers publishing npm packages, Docker images, and Maven artifacts to GitHub Packages from a GitHub Actions workflow, consuming them in downstream workflows using the GITHUB_TOKEN (no PAT required), and setting package visibility and retention policies. Addresses the one real limitation: cross-org consumption requires a PAT.
@@ -313,41 +313,46 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Responsible AI in the SDLC: Governance Gates You Can Automate with GitHub Actions
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-02
 - **Issue:** [#130](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/130)
+- **File:** `src/posts/2026-10-02-responsible-ai-governance-gates-github-actions.md`
 - **Pitch:** Responsible AI isn't just a policy document - it's a set of checks you can automate into your deployment pipeline to catch bias, safety violations, and compliance issues before they ship.
 - **Angle:** Maps the Microsoft Responsible AI principles to concrete CI checks: content safety filtering via Azure AI Content Safety, bias detection on model evaluation datasets, documentation completeness for model cards, and sign-off gates in GitHub Environments. Shows how to fail a deployment workflow when a content safety score exceeds a threshold.
 - **Tags:** `responsible-ai`, `azure-ai-foundry`, `devsecops`, `compliance`, `governance`
 
 ### GitHub Codespaces for Team Onboarding: Eliminating "Works on My Machine" at Scale
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-09
 - **Issue:** [#131](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/131)
+- **File:** `src/posts/2026-10-09-github-codespaces-team-onboarding.md`
 - **Pitch:** A well-configured Codespace means a new team member goes from zero to running the app in under five minutes on any device - this post shows how to build one.
 - **Angle:** Covers `devcontainer.json` from scratch (base image, features, lifecycle commands, port forwarding), pre-building images to eliminate cold-start time, dotfiles integration for personal preferences, and Codespace secrets for environment-specific config. Includes a cost model for teams considering Codespaces vs. local dev.
 - **Tags:** `github-codespaces`, `developer-productivity`, `devcontainer`, `onboarding`
 
 ### Agentic Code Review: Using AI Agents to Enforce Architecture Rules on Every PR
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-16
 - **Issue:** [#132](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/132)
+- **File:** `src/posts/2026-10-16-agentic-code-review-architecture-rules.md`
 - **Pitch:** Architecture rules that live in documents get violated; architecture rules enforced by an agent on every PR get followed - this post shows how to build the latter.
 - **Angle:** Builds a GitHub Actions-triggered agent that reads a PR diff, checks it against a set of architecture constraints stored in the repo (ADRs, dependency rules, naming conventions), and posts a structured review comment. Uses Azure AI Foundry for the agent runtime and the GitHub REST API for PR interaction. Covers how to keep the rules up to date as the architecture evolves.
 - **Tags:** `ai-agents`, `code-review`, `azure-ai-foundry`, `github-actions`, `architecture`
 
 ### GitHub Actions Self-Hosted Runners: Security Hardening for Production Workloads
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-23
 - **Issue:** [#133](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/133)
+- **File:** `src/posts/2026-10-23-github-actions-self-hosted-runners-security-hardening.md`
 - **Pitch:** Self-hosted runners unlock private network access and custom hardware, but they introduce security risks that GitHub-hosted runners don't have - most teams running them haven't hardened them.
 - **Angle:** Covers the attack surface (persistent runner compromise, malicious PR targeting, secret exfiltration via environment), and the mitigations: ephemeral runners with autoscaling (ARC), network egress controls, workflow approval for external contributors, and runner groups scoped to specific repos. Includes an Azure Container Apps-based ephemeral runner setup.
 - **Tags:** `github-actions`, `security`, `devsecops`, `runners`, `platform-engineering`
 
 ### LLMOps: Versioning, Testing, and Deploying Prompts as First-Class Artifacts
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-30
 - **Issue:** [#134](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/134)
+- **File:** `src/posts/2026-10-30-llmops-versioning-testing-deploying-prompts.md`
 - **Pitch:** Prompts are code - they need versioning, testing, and a deployment pipeline. Most teams manage them as strings scattered across application code, which makes regression invisible.
 - **Angle:** Covers storing prompts as versioned files in the repo, running evaluation tests against them in CI using Azure AI Foundry prompt flow, gating deployments on evaluation score thresholds, and rolling back a prompt version the same way you'd roll back a code deployment. Draws the analogy to feature flags for gradual prompt rollout.
 - **Tags:** `llmops`, `azure-ai-foundry`, `prompt-engineering`, `ci-cd`, `agentic-development`

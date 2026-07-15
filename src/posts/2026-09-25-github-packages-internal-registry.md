@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-09-25
+image: /images/posts/2026-09-25-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with steel blue, amber, and off-white accents. A central registry cylinder icon labeled 'GitHub Packages' with three distinct inlets feeding into it from the left, each labeled with a small format badge: 'npm' (red-orange hexagon), a whale-outline container icon for Docker/ghcr.io, and a feather icon for Maven. From the cylinder, a single output arrow labeled 'GITHUB_TOKEN' fans out to two consuming workflow nodes within a dotted boundary labeled 'same org - no PAT needed,' while a third consuming node sits outside that boundary, connected instead by a separate arrow labeled 'PAT required' crossing a thin org-boundary line. The mood is systems-level and matter-of-fact - a registry that was already there, being used properly for the first time."
 layout: post.njk
 site_title: Tech Notes

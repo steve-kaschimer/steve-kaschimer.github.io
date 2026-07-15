@@ -17,11 +17,6 @@
   - **Evidence checked**: `.eleventy.js` collection filter logic; confirmed the built output includes future-dated post pages (e.g. `2026-08-14-github-environments-deep-dive` was live in `_site/` weeks before its listed date during this session).
   - **Next best reviewer or source**: Already raised with the maintainer directly (2026-07-11) - explicitly declined a `noindex` fix at that time ("leave as-is"). Re-confirm if this decision should change; don't silently "fix" it without asking again, per that earlier conversation.
 
-- **Area**: Missing hero image for post #128 (RAG in Production)
-  - **Why it matters**: The first ChatGPT-generated image for #128 had garbled/nonsensical text labels ("Seranker," repeated "1eranker" rows) and a 1:1 aspect ratio instead of the site's 3:2 convention. The maintainer opted to regenerate manually later rather than ship it or crop the flawed version.
-  - **Evidence checked**: Direct visual review of the generated image (2026-07-12); `src/posts/2026-09-18-rag-in-production-*.md` currently has no `image` front-matter field, so the post falls back to the gradient header.
-  - **Next best reviewer or source**: The maintainer will send a regenerated image; the `image_prompt` is already in the post's front matter unchanged.
-
 - **Area**: Prism.js syntax highlighting is loaded for only 6 of ~19 languages actually used in post code fences
   - **Why it matters**: `csharp`, `sql`, `hcl`, `graphql`, `typescript`/`ts`, `regex`, `ql`, `rego` code blocks across several existing posts render as plain unhighlighted text. `yaml`/`bash`/`javascript`/`json`/`python`/`markup` were added incrementally this session as each was directly needed for new content, not as a deliberate full audit.
   - **Evidence checked**: `grep -ohE '\`\`\`[a-z]+' src/posts/*.md | sort | uniq -c` (run 2026-07-12) showed the full language distribution; `src/_layouts/base.njk`'s Prism `<script>` tags show what's actually loaded.

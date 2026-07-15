@@ -17,8 +17,9 @@ The repeatable process for taking an editorial-calendar entry from `idea` to a m
 6. Run the accessibility scan (`node scripts/a11y-check.js`, after `npm install --no-save axe-core playwright` if not already installed this session) - both the standard 6-page sweep and a direct check of the new post's own page, since the standard sweep only tests one arbitrarily-picked existing post.
 7. Update the `editorial-plan.md` entry: `Status: idea` → `draft`, add the `File:` line.
 8. Commit content and any incidental infra fixes (e.g. a missing Prism language component) as **separate commits** - keeps `git log`/PR history reviewable.
-9. Open or update a PR. If a PR from the same branch already exists and is still open, new commits land on it automatically - update the PR title/body to summarize everything currently included, since these PRs tend to accumulate multiple posts/fixes across a working session.
+9. Open or update a PR, with **`Closes #<issue-number>`** in the body so merging auto-closes the tracking issue - this was missed for #125-129 (all closed manually after the fact, 2026-07-15) and shouldn't be repeated. If a PR from the same branch already exists and is still open, new commits land on it automatically - update the PR title/body to summarize everything currently included, since these PRs tend to accumulate multiple posts/fixes across a working session.
 10. Hero image is a separate, later step - see `docs/decisions/2026-07-12-hero-images-are-a-manual-handoff.md`. A post ships and can even go live without one; it falls back to a gradient header/card.
+11. Once merged, verify the linked issue actually closed (auto-close only fires if the PR that contains `Closes #N` is the one GitHub merges to the default branch - a squash-merge from a PR without that text in its final body won't trigger it). Also double check the issue's content actually matches what got published - the issue's `Pitch`/`Angle` was written before the post existed and can drift from what the post ended up covering.
 
 ## Example
 
