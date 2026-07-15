@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-11-20
+image: /images/posts/2026-11-20-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and amber accents. In the center, a service-catalog grid of small card icons, each showing a service name, an owner avatar placeholder, and a tiny health-status dot. Above the grid, a 'catalog-info.yaml' file icon connects down into the grid with a bright teal line. To the left, a cluster of GitHub repository icons (folder-with-branch symbol) feeds into a labeled 'GitHub Entity Provider' node with a sync/refresh icon, which connects to the catalog grid with a dashed auto-discovery line. To the right, a small padlock-and-key icon labeled 'GitHub App - read-only' sits beside the entity provider node. Below, a thin timeline shows 'repo created' and 'repo archived' event dots feeding back into the sync node. The mood is orderly and current - a catalog that stays true because it's wired to the source of truth, not maintained by hand."
 layout: post.njk
 site_title: Tech Notes

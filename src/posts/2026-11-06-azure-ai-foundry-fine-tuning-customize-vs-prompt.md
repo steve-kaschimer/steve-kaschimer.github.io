@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-11-06
+image: /images/posts/2026-11-06-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and teal accents. A decision-tree diagram: a diamond node labeled 'Model gets format wrong?' branches left to a box labeled 'Prompt Engineering' and right down through two more diamonds - 'Missing domain knowledge?' branching to a box labeled 'RAG', and 'Inconsistent despite good examples?' branching to a box labeled 'Fine-Tune'. The fine-tune box connects down to a small training-data icon (stacked document pages) feeding into a gauge/dial labeled 'Base vs. Fine-Tuned' with two comparison bars, then to a final node showing a traffic-split icon '50/50' between two model boxes. The mood is analytical and decision-focused - a flowchart for avoiding an expensive default, not a fine-tuning tutorial."
 layout: post.njk
 site_title: Tech Notes
