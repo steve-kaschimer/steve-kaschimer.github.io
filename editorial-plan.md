@@ -340,9 +340,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `ai-agents`, `code-review`, `azure-ai-foundry`, `github-actions`, `architecture`
 
 ### GitHub Actions Self-Hosted Runners: Security Hardening for Production Workloads
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-23
 - **Issue:** [#133](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/133)
+- **File:** `src/posts/2026-10-23-github-actions-self-hosted-runners-security-hardening.md`
 - **Pitch:** Self-hosted runners unlock private network access and custom hardware, but they introduce security risks that GitHub-hosted runners don't have - most teams running them haven't hardened them.
 - **Angle:** Covers the attack surface (persistent runner compromise, malicious PR targeting, secret exfiltration via environment), and the mitigations: ephemeral runners with autoscaling (ARC), network egress controls, workflow approval for external contributors, and runner groups scoped to specific repos. Includes an Azure Container Apps-based ephemeral runner setup.
 - **Tags:** `github-actions`, `security`, `devsecops`, `runners`, `platform-engineering`
