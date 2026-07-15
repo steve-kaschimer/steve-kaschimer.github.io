@@ -322,9 +322,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `responsible-ai`, `azure-ai-foundry`, `devsecops`, `compliance`, `governance`
 
 ### GitHub Codespaces for Team Onboarding: Eliminating "Works on My Machine" at Scale
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-09
 - **Issue:** [#131](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/131)
+- **File:** `src/posts/2026-10-09-github-codespaces-team-onboarding.md`
 - **Pitch:** A well-configured Codespace means a new team member goes from zero to running the app in under five minutes on any device - this post shows how to build one.
 - **Angle:** Covers `devcontainer.json` from scratch (base image, features, lifecycle commands, port forwarding), pre-building images to eliminate cold-start time, dotfiles integration for personal preferences, and Codespace secrets for environment-specific config. Includes a cost model for teams considering Codespaces vs. local dev.
 - **Tags:** `github-codespaces`, `developer-productivity`, `devcontainer`, `onboarding`
