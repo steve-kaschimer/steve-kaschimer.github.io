@@ -360,33 +360,37 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Azure AI Foundry Fine-Tuning: When to Customize a Model vs. When to Prompt Better
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-06
 - **Issue:** [#135](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/135)
+- **File:** `src/posts/2026-11-06-azure-ai-foundry-fine-tuning-customize-vs-prompt.md`
 - **Pitch:** Fine-tuning is often the wrong answer - it's expensive, opaque, and fragile - but for the right problem it dramatically outperforms prompt engineering alone. This post helps you decide.
 - **Angle:** Sets up the decision framework: when few-shot examples consistently get the format right but aren't reliable enough (fine-tune), vs. when the model doesn't have the domain knowledge (RAG). Shows how to prepare a training dataset, run a supervised fine-tune job in Azure AI Foundry, evaluate the fine-tuned model against the base, and deploy both behind an A/B traffic split.
 - **Tags:** `azure-ai-foundry`, `fine-tuning`, `llm`, `agentic-development`, `azure`
 
 ### Policy as Code with OPA and GitHub Actions: Enforcing Org Standards at the Merge Gate
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-13
 - **Issue:** [#136](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/136)
+- **File:** `src/posts/2026-11-13-policy-as-code-opa-github-actions.md`
 - **Pitch:** Open Policy Agent lets you express compliance rules as code and enforce them in CI - this post shows how to use it to gate merges on policy rather than on a human reviewer's memory.
 - **Angle:** Covers writing Rego policies for common engineering standards (required labels on PRs, allowed base images in Dockerfiles, required fields in workflow files), running OPA in a GitHub Actions workflow, and surfacing policy violations as PR check failures with actionable messages. Includes a policy for enforcing the `permissions` block on all workflow files.
 - **Tags:** `policy-as-code`, `opa`, `github-actions`, `devsecops`, `compliance`
 
 ### Internal Developer Platforms with GitHub: Backstage, Service Catalog, and the GitHub API
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-20
 - **Issue:** [#137](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/137)
+- **File:** `src/posts/2026-11-20-internal-developer-platforms-backstage-github-api.md`
 - **Pitch:** Backstage is the most widely adopted IDP framework, and GitHub is its most natural data source - this post shows how to wire them together so your catalog stays in sync with your actual codebase.
 - **Angle:** Covers deploying Backstage with the GitHub integration, writing catalog-info.yaml for a real service, auto-discovering catalog entries from GitHub repos using the GitHub Entity Provider, and using GitHub Actions to keep the catalog updated when repos are created or archived. Includes a GitHub App setup that gives Backstage read-only access without a PAT.
 - **Tags:** `developer-platform`, `backstage`, `github`, `platform-engineering`, `developer-productivity`
 
 ### Agentic QA: How AI Agents Are Reshaping Test Generation and Exploratory Testing
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-27
 - **Issue:** [#138](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/138)
+- **File:** `src/posts/2026-11-27-agentic-qa-ai-test-generation-exploratory-testing.md`
 - **Pitch:** AI agents that understand a codebase can generate regression tests, explore edge cases, and find issues a human tester would miss - the tooling is early but the results are already useful.
 - **Angle:** Surveys the current landscape (GitHub Copilot test generation, Azure AI Foundry-based test agents, open-source options), builds a simple agent that reads a function and generates a parameterized test suite for it, and discusses where the pattern breaks down (flaky agents, hallucinated assertions, coverage theater). Frames it as augmentation not replacement.
 - **Tags:** `ai-agents`, `testing`, `agentic-development`, `azure-ai-foundry`, `developer-productivity`
