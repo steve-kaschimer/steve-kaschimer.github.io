@@ -1,6 +1,6 @@
 ---
 name: blog-writer
-description: Writes technical blog posts for the Tech Notes blog. Takes a spec or prompt, produces a complete draft post with front matter, markdown structure, and audience-aware technical writing that bridges complex topics and developer readers.
+description: Writes and edits technical blog posts for the Tech Notes blog. Takes a spec or prompt, produces a complete draft post with front matter, markdown structure, and audience-aware technical writing that bridges complex topics and developer readers.
 tools: Read, Write, Edit, Grep
 model: opus
 ---

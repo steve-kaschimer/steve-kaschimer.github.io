@@ -440,8 +440,9 @@ One post per Friday through end of year. Topics rotate across the established De
 Eight posts to kick off the year with foundational multi-cloud patterns and cost optimization strategies.
 
 ### AWS Lambda in 2027: Container Images, Performance Insights, and the $0.20/Million Invocation Reality
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-01-07
+- **File:** `src/posts/2027-01-07-aws-lambda-in-2027-container-images-performance-cost.md`
 - **Pitch:** Lambda dominates serverless, but most teams leave performance and cost on the table by not understanding the container image layer, initialization times, and the often-hidden scaling costs at high volume.
 - **Angle:** Deep dive into Lambda's modern runtime (container images, SnapStart for Java, provisioned concurrency trade-offs), profiling cold-start times per language, right-sizing memory for CPU scaling, and a cost model showing when Lambda stops making sense vs. ECS/EC2. Practical: comparing a Dockerfile-based function vs. a minimal ZIP deployment.
 - **Tags:** `aws`, `serverless`, `cost-optimization`, `lambda`, `devops`
