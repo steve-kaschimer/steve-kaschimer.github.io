@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-12-25
+image: /images/posts/2026-12-25-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and amber accents. A horizontal world-clock strip across the top showing four time zone dials at different hours, connected below to a shared timeline of small artifact icons: a well-formed commit message card, an ADR document icon, a PR with a long descriptive body, and a GitHub Discussions speech-bubble icon - all sitting on the timeline independent of any single clock. No meeting/video-call icon appears anywhere in the composition. The mood is calm and asynchronous - work products that stand on their own across time zones, not a real-time meeting rescheduled four times."
 layout: post.njk
 site_title: Tech Notes

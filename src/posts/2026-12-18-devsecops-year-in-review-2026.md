@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-12-18
+image: /images/posts/2026-12-18-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and teal accents, styled like an annual report cover. A large '2026' rendered in a clean geometric font across the center, with small orbiting icons around it: a GitHub Octocat-style branch icon, a small agent/brain icon, a shield icon, and a policy-document icon, each connected to the numerals by thin light-trail arcs. Below, a minimalist three-column footer of small bar-chart glyphs labeled 'Shipped', 'Mattered', '2027', each with a short upward or flat trend line. The mood is reflective and confident - a year-end retrospective, not a product launch."
 layout: post.njk
 site_title: Tech Notes

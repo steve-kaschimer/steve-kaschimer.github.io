@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-12-11
+image: /images/posts/2026-12-11-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and amber accents. In the center, a hexagonal node labeled 'MCP Server' with two small tool icons plugged into it: a GitHub-mark icon labeled 'github_search' and a database icon labeled 'kb_query'. A dashed connection line runs from the MCP Server node to an agent-brain icon on the right labeled 'Foundry Agent', with a small padlock icon on the connection line labeled 'auth token'. Below, a container icon labeled 'Azure Container App' encloses the MCP Server node, with a small scale-icon suggesting it runs alongside the agent. The mood is modular and interoperable - a standard plug-in interface for agent tools, not a bespoke integration per capability."
 layout: post.njk
 site_title: Tech Notes
