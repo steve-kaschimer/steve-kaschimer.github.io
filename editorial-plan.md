@@ -349,9 +349,10 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-actions`, `security`, `devsecops`, `runners`, `platform-engineering`
 
 ### LLMOps: Versioning, Testing, and Deploying Prompts as First-Class Artifacts
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-30
 - **Issue:** [#134](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/134)
+- **File:** `src/posts/2026-10-30-llmops-versioning-testing-deploying-prompts.md`
 - **Pitch:** Prompts are code - they need versioning, testing, and a deployment pipeline. Most teams manage them as strings scattered across application code, which makes regression invisible.
 - **Angle:** Covers storing prompts as versioned files in the repo, running evaluation tests against them in CI using Azure AI Foundry prompt flow, gating deployments on evaluation score thresholds, and rolling back a prompt version the same way you'd roll back a code deployment. Draws the analogy to feature flags for gradual prompt rollout.
 - **Tags:** `llmops`, `azure-ai-foundry`, `prompt-engineering`, `ci-cd`, `agentic-development`
