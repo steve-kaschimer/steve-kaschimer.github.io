@@ -1,6 +1,7 @@
 ---
 author: Steve Kaschimer
 date: 2026-11-27
+image: /images/posts/2026-11-27-hero.webp
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and amber accents. On the left, a single function-code icon labeled 'calculate_discount()' feeds into an agent node with a small magnifying-glass mark. From the agent, three branching arrows fan out to test-case cards labeled 'happy path', 'boundary: qty=0', and 'edge: negative price' - the last one highlighted in amber with a small bug icon, implying a caught edge case. Below, a smaller panel shows a human silhouette reviewing the generated tests with a checkmark and an X, one approved and one rejected, captioned 'augmentation, not replacement'. The mood is exploratory and honest about limits - a capable assistant surfacing edge cases, still supervised, not an autonomous QA replacement."
 layout: post.njk
 site_title: Tech Notes
