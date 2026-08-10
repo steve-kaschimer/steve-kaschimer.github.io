@@ -138,6 +138,16 @@
   @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
 }
 
+@utility table-wrapper {
+  /* Horizontal scroll for wide tables (see table_open/table_close rule in
+     .eleventy.js). overflow-x-auto keeps this working in both light and
+     dark mode since it's purely a layout property, not a color. No margin
+     here - the wrapped <table> keeps its own @tailwindcss/typography margin,
+     and this div forms a new block formatting context so that margin still
+     renders correctly without doubling up. */
+  @apply overflow-x-auto;
+}
+
 @utility code-block-wrapper {
   /* Code block wrapper with copy button */
   @apply relative my-6;

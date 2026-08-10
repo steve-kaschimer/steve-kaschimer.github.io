@@ -9,6 +9,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/js");
 
+  // Wrap tables in a horizontally-scrollable, keyboard-focusable div (WCAG
+  // 2.1.1) - same rationale as the <pre> tabindex handling in code-copy.js.
+  // Wrapping (rather than e.g. display:block on <table>) keeps native table
+  // semantics intact for assistive tech. No role="region" here on purpose,
+  // for the same landmark-pollution reason documented in code-copy.js.
+  eleventyConfig.amendLibrary("md", (mdLib) => {
+    mdLib.renderer.rules.table_open = () =>
+      '<div class="table-wrapper" tabindex="0" aria-label="Scrollable table">\n<table>\n';
+    mdLib.renderer.rules.table_close = () => '</table>\n</div>\n';
+  });
+
   // Add date filter
   eleventyConfig.addFilter("readableDate", (dateObj) => {
     return new Date(dateObj).toLocaleDateString('en-US', {
