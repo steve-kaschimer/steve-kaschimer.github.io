@@ -137,7 +137,7 @@ The `evaluate()` function in the Azure AI Foundry SDK runs all three tiers again
 
 The test dataset is a JSONL file. Each row is one test case:
 
-```jsonl
+```json
 {"query": "What is the retention policy for audit logs?", "ground_truth": "Audit logs are retained for 90 days by default, configurable up to 365 days.", "context": "Audit log retention defaults to 90 days. Maximum configurable retention is 365 days."}
 {"query": "How do I trigger a manual deployment?", "ground_truth": "Navigate to Actions, select the workflow, and click Run workflow.", "context": "Manual deployments are triggered from the Actions tab using the workflow_dispatch event."}
 {"query": "What regions is the service available in?", "ground_truth": "East US, West Europe, and Southeast Asia.", "context": "Available regions: East US 2, West Europe, Southeast Asia, Australia East."}

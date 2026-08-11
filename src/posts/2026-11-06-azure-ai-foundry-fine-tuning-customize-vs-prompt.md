@@ -32,7 +32,7 @@ The framework, as a single test before starting any fine-tuning work: **have you
 
 Azure AI Foundry's supervised fine-tuning expects the same chat-completion message format your application already sends the model, as JSONL - one training example per line:
 
-```jsonl
+```json
 {"messages": [{"role": "system", "content": "You triage support tickets into a priority and category."}, {"role": "user", "content": "Customer says checkout is throwing a 500 error on the payment step, happening to multiple users since this morning."}, {"role": "assistant", "content": "{\"priority\": \"P1\", \"category\": \"payments\", \"reasoning\": \"Multi-user impact on a revenue-critical path, recent onset suggests a regression.\"}"}]}
 {"messages": [{"role": "system", "content": "You triage support tickets into a priority and category."}, {"role": "user", "content": "User asking how to change their display name in account settings."}, {"role": "assistant", "content": "{\"priority\": \"P4\", \"category\": \"account-settings\", \"reasoning\": \"Self-service question, no functional impact, documentation would resolve it.\"}"}]}
 ```

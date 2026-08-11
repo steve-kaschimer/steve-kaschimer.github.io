@@ -134,7 +134,7 @@ Azure AI Foundry's prompt flow is the testing harness for this. A flow is a DAG 
 
 Start with a test dataset. Store it as a JSONL file in your project:
 
-```jsonl
+```json
 {"question": "Is the api-service pipeline passing?", "expected_tool": "get_pipeline_status", "expected_action": "read"}
 {"question": "Deploy the latest build.", "expected_tool": null, "expected_action": "clarify"}
 {"question": "Deploy to staging.", "expected_tool": "trigger_deployment", "expected_action": "write"}
