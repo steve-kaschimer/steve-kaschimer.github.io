@@ -1,10 +1,10 @@
 # Editorial Calendar
 
-> A living schedule for blog content on steve-kaschimer.github.io. Each section represents a publishing horizon - move entries forward as they progress, update their status, and link GitHub Issues once created. See **📐 How to Use This Calendar** at the bottom for the full workflow.
+> A living schedule for blog content on steve-kaschimer.github.io. Most sections represent a publishing horizon in the main Friday sequence - move entries forward as they progress, update their status, and link GitHub Issues once created. A thematic track running its own cadence gets its own section rather than being interleaved into the Friday horizons (currently: **📅 Tuesday Track - AI Coding Agents**). See **📐 How to Use This Calendar** at the bottom for the full workflow.
 
 ---
 
-## � March 2026 - Completed
+## 📅 March 2026 - Completed
 
 All three posts in this batch have been published.
 
@@ -37,7 +37,7 @@ All three posts in this batch have been published.
 
 ---
 
-## � April-May 2026 - Completed
+## 📅 April-May 2026 - Completed
 
 Both posts in this batch have been published.
 
@@ -61,7 +61,7 @@ Both posts in this batch have been published.
 
 ---
 
-## � This Period - May 2026
+## 📅 This Period - May 2026
 
 One post scheduled and ready to publish on May 29.
 
@@ -148,7 +148,7 @@ One post scheduled and ready to publish on May 29.
 
 ---
 
-## � Pipeline - June-December 2026
+## 📅 Pipeline - June-December 2026
 
 One post per Friday through end of year. Topics rotate across the established DevSecOps/GitHub/CI-CD themes plus a new Azure AI Foundry and agentic development thread.
 
@@ -182,8 +182,8 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `agentic-development`, `azure`, `llm`
 
 ### GitHub Projects Automation: Custom Fields, Workflows, and the GraphQL API
-- **Status:** `draft`
-- **Scheduled:** 2026-06-26
+- **Status:** `published`
+- **Published:** 2026-06-26
 - **Issue:** [#116](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/116) ✅ closed
 - **File:** `src/posts/2026-06-26-github-projects-automation-custom-fields-workflows-graphql-api.md`
 - **Pitch:** GitHub Projects v2 has a powerful automation layer that most teams barely touch - this post shows how to build a lightweight engineering workflow without leaving GitHub.
@@ -193,8 +193,8 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Semantic Kernel and Azure AI Foundry: Building Your First AI Agent in .NET
-- **Status:** `draft`
-- **Scheduled:** 2026-07-03
+- **Status:** `published`
+- **Published:** 2026-07-03
 - **Issue:** [#117](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/117) ✅ closed
 - **File:** `src/posts/2026-07-03-semantic-kernel-azure-ai-foundry-first-agent-dotnet.md`
 - **Pitch:** Semantic Kernel is Microsoft's open-source SDK for building AI agents, and Azure AI Foundry is its natural deployment target - together they give .NET developers a production path for agentic apps.
@@ -202,8 +202,8 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `semantic-kernel`, `ai-agents`, `dotnet`, `agentic-development`
 
 ### GitHub Actions Advanced Caching: Strategies That Actually Cut Build Times
-- **Status:** `draft`
-- **Scheduled:** 2026-07-10
+- **Status:** `published`
+- **Published:** 2026-07-10
 - **Issue:** [#118](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/118) ✅ closed
 - **File:** `src/posts/2026-07-10-github-actions-advanced-caching-strategies.md`
 - **Pitch:** Most teams use `actions/cache` with a single key and wonder why cache hit rates are low - this post covers the cache key strategies that actually work for real build systems.
@@ -211,8 +211,8 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `github-actions`, `ci-cd`, `developer-productivity`, `performance`
 
 ### Container Image Security in CI: Scanning with Trivy and GitHub Advanced Security
-- **Status:** `draft`
-- **Scheduled:** 2026-07-17
+- **Status:** `published`
+- **Published:** 2026-07-17
 - **Issue:** [#119](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/119) ✅ closed
 - **File:** `src/posts/2026-07-17-container-image-security-trivy-github-advanced-security.md`
 - **Pitch:** Scanning container images for vulnerabilities before they ship is table stakes for DevSecOps, but most teams don't know how to get actionable signal out of the noise.
@@ -220,8 +220,8 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `container-security`, `github-advanced-security`, `devsecops`, `trivy`, `docker`
 
 ### Multi-Agent Patterns with Azure AI Foundry: Orchestration, Handoff, and Shared State
-- **Status:** `draft`
-- **Scheduled:** 2026-07-24
+- **Status:** `published`
+- **Published:** 2026-07-24
 - **Issue:** [#120](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/120) ✅ closed
 - **File:** `src/posts/2026-07-24-multi-agent-patterns-azure-ai-foundry-orchestration-handoff-shared-state.md`
 - **Pitch:** Single agents hit a ceiling quickly - real agentic applications route tasks across specialized agents, and Azure AI Foundry provides the primitives to do this without building your own orchestration layer.
@@ -229,8 +229,8 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Tags:** `azure-ai-foundry`, `ai-agents`, `agentic-development`, `multi-agent`, `azure`
 
 ### IaC Security Scanning in CI: Catching Terraform and Bicep Misconfigurations Before They Deploy
-- **Status:** `draft`
-- **Scheduled:** 2026-07-31
+- **Status:** `published`
+- **Published:** 2026-07-31
 - **Issue:** [#121](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/121) ✅ closed
 - **File:** `src/posts/2026-07-31-iac-security-scanning-terraform-bicep-ci.md`
 - **Pitch:** Misconfigured infrastructure is one of the most common causes of cloud security incidents, and catching it in CI costs nothing compared to fixing it post-deployment.
@@ -240,25 +240,28 @@ One post per Friday through end of year. Topics rotate across the established De
 ---
 
 ### Prompt Engineering for Developers: Writing Reliable Instructions for Agentic Systems
-- **Status:** `idea`
-- **Scheduled:** 2026-08-07
+- **Status:** `published`
+- **Published:** 2026-08-07
 - **Issue:** [#122](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/122)
+- **File:** `src/posts/2026-08-07-prompt-engineering-for-developers.md`
 - **Pitch:** Prompt engineering for agents is different from prompting a chatbot - reliability, tool use, and output format predictability matter far more than creativity.
 - **Angle:** Covers system prompt structure for agents (role, context, constraints, output format), few-shot examples for tool selection, handling ambiguous user input gracefully, and testing prompts systematically rather than eyeballing outputs. Uses Azure AI Foundry's prompt flow as the testing harness.
 - **Tags:** `prompt-engineering`, `ai-agents`, `agentic-development`, `azure-ai-foundry`, `llm`
 
 ### GitHub Environments Deep Dive: Deployment Protection Rules, Secrets, and Variables
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-08-14
 - **Issue:** [#123](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/123)
+- **File:** `src/posts/2026-08-14-github-environments-deep-dive.md`
 - **Pitch:** GitHub Environments are the right place to model staging/production deployment gates, but most teams use them only for required reviewer approval and miss the rest of the capability.
 - **Angle:** Covers deployment protection rules (required reviewers, wait timers, branch filters, custom rules via webhooks), the difference between environment secrets and repository secrets, and how to use environment variables to manage config promotion across environments. Includes a GitHub Actions workflow that enforces a staging smoke test before production is unlocked.
 - **Tags:** `github-actions`, `ci-cd`, `deployment`, `devsecops`, `environments`
 
 ### Evaluating LLM Outputs in CI/CD: Testing Your AI Features Like Production Code
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-08-21
 - **Issue:** [#124](https://github.com/steve-kaschimer/steve-kaschimer.github.io/issues/124)
+- **File:** `src/posts/2026-08-21-evaluating-llm-outputs-in-ci-cd.md`
 - **Pitch:** AI features that can't be regression-tested are a deployment liability - this post shows how to treat LLM evaluation as a first-class CI step that blocks bad model updates from shipping.
 - **Angle:** Covers deterministic tests (output format, null checks, latency SLA), semantic similarity scoring for non-deterministic outputs, and LLM-as-judge patterns for subjective quality. Uses Azure AI Foundry's evaluation SDK and shows how to fail a GitHub Actions workflow when evaluation scores drop below a threshold.
 - **Tags:** `llm`, `testing`, `ai-agents`, `azure-ai-foundry`, `ci-cd`
@@ -432,6 +435,60 @@ One post per Friday through end of year. Topics rotate across the established De
 - **Pitch:** The best remote engineering teams aren't just distributed - they're async-first, which means their code, processes, and tooling are designed to work without real-time coordination.
 - **Angle:** Covers the practices that separate async-capable teams from ones that just have standup on Zoom: commit message discipline, ADR-driven decision-making, self-documenting PRs, GitHub Discussions for async deliberation, and using GitHub Actions to automate the status updates that would otherwise require a Slack message. Light enough for the holiday week, substantive enough to be worth reading.
 - **Tags:** `developer-productivity`, `remote-work`, `writing-for-engineers`, `git`, `async`
+
+---
+
+## 📅 Tuesday Track - AI Coding Agents (August-September 2026)
+
+Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps track. A comparison post anchors the track and each of the five follow-ups goes deep on one tool's setup.
+
+### The Top 5 AI Coding Agents Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2026-08-18
+- **File:** `src/posts/2026-08-18-top-5-ai-coding-agents-compared.md`
+- **Pitch:** Claude Code, Copilot, Codex, Cursor, and Kiro are all sold as "AI coding assistants," but they disagree fundamentally about how much control you hand over - this is the orientation piece for a team that has to pick one and defend the choice.
+- **Angle:** Opens with a five-column comparison table across surface, core philosophy, autonomy style, extensibility, and best-fit team, then gives each tool a strengths/weaknesses/best-for breakdown. Closes with a decision section that routes by team situation (already standardized on GitHub, want a programmable agent, want async fire-and-forget work, want agent power without leaving a familiar editor, need traceable spec-first delivery). Explicitly framed as a snapshot rather than a permanent ranking, since this space moves in weeks.
+- **Tags:** `ai-agents`, `agentic-development`, `developer-productivity`, `ai-coding-tools`, `tooling`
+
+### Getting Started with Claude Code: Setup, Environment, and Best Practices
+- **Status:** `draft`
+- **Scheduled:** 2026-08-25
+- **File:** `src/posts/2026-08-25-getting-started-with-claude-code.md`
+- **Pitch:** Claude Code installs in under a minute, which is exactly why most people stop there and end up with a chatbot that happens to have file access. Everything that makes it a programmable agent lives in the setup skipped on day one.
+- **Angle:** Covers the install paths (native installer vs. npm), then the three things that actually decide whether the setup holds up: `CLAUDE.md` for standing project instructions, the permissions model for what the agent can do without asking, and hooks for making non-negotiables deterministic instead of hoping the model remembers an instruction. Includes a verification checklist, guidance on what subagents are genuinely for, and a direct comparison with GitHub Copilot.
+- **Tags:** `ai-agents`, `claude-code`, `agentic-development`, `developer-productivity`, `tooling`
+
+### Getting Started with GitHub Copilot: Setup, Environment, and Best Practices
+- **Status:** `draft`
+- **Scheduled:** 2026-09-01
+- **File:** `src/posts/2026-09-01-getting-started-with-github-copilot.md`
+- **Pitch:** Copilot is the AI tool most developers touch first because it already lives in their editor - and that familiarity is why most teams never get past inline autocomplete. Agent mode and the cloud coding agent are there; they just don't turn themselves on.
+- **Angle:** Walks the layered instruction system - `.github/copilot-instructions.md` for repo-wide rules, `AGENTS.md` as the cross-tool alternative worth maintaining if you only keep one file, and `.github/instructions/*.instructions.md` with `applyTo` globs for monorepos with per-directory conventions. Draws a hard line between in-editor agent mode (watch and interrupt) and the cloud coding agent (assign an issue, get a PR), and includes the one-time onboarding pass that measurably improves how often the cloud agent's PRs clear CI.
+- **Tags:** `ai-agents`, `github-copilot`, `agentic-development`, `developer-productivity`, `tooling`
+
+### Getting Started with OpenAI Codex: Setup, Environment, and Best Practices
+- **Status:** `draft`
+- **Scheduled:** 2026-09-08
+- **File:** `src/posts/2026-09-08-getting-started-with-openai-codex.md`
+- **Pitch:** Codex is built on the assumption that you'll describe a task and walk away, which makes the settings people skip when trying it quickly - sandbox mode, approval policy, `AGENTS.md` - exactly the ones that decide whether an unattended run is safe.
+- **Angle:** Covers installing the CLI, then writing an `AGENTS.md` that names your real test command and off-limits directories so Codex stops guessing. Separates the two dials people conflate: sandbox mode (`read-only`, `workspace-write`, `danger-full-access`) governs what Codex may touch, approval policy governs whether it asks first. Also covers excluding `.env` from sandbox read access explicitly rather than trusting `.gitignore`, `@codex review` / `@codex fix` on GitHub PRs, and isolated git worktrees for running parallel agents against one repo.
+- **Tags:** `ai-agents`, `openai-codex`, `agentic-development`, `developer-productivity`, `tooling`
+
+### Getting Started with Cursor: Setup, Environment, and Best Practices
+- **Status:** `draft`
+- **Scheduled:** 2026-09-15
+- **File:** `src/posts/2026-09-15-getting-started-with-cursor.md`
+- **Pitch:** Cursor feels like the editor you already use right up until it doesn't, and the gap between using Cursor and using Cursor well is almost entirely in two places most people never open: `.cursor/rules/` and the MCP config.
+- **Angle:** Covers migrating off the legacy `.cursorrules` file to scoped `.cursor/rules/` files, the three AI surfaces (Tab autocomplete, chat, Agent and Background Agents) and how to match the surface to the size of the task, and connecting MCP servers to real infrastructure without over-connecting and drowning the context window. Also covers what belongs in version control and how the metered credit model actually bills - the part that surprises teams a month in.
+- **Tags:** `ai-agents`, `cursor`, `agentic-development`, `developer-productivity`, `tooling`
+
+### Getting Started with Kiro: Setup, Environment, and Best Practices
+- **Status:** `draft`
+- **Scheduled:** 2026-09-22
+- **File:** `src/posts/2026-09-22-getting-started-with-kiro.md`
+- **Pitch:** Kiro makes you write the spec before any code gets generated, which genuinely feels slower than just prompting an agent - this post is an honest look at when that upfront cost pays for itself and when it's pure overhead.
+- **Angle:** Covers generating steering documents into `.kiro/steering/` and why stale steering is worse than none, the three-phase spec flow (requirements in EARS notation, then design, then an ordered task breakdown), and event-driven hooks as JSON under `.kiro/hooks/` that fire on file save or task completion. Distinguishes vibe sessions from spec sessions, argues for committing `.kiro/` so intent is versioned alongside output, and compares the model head-to-head with Cursor.
+- **Tags:** `ai-agents`, `kiro`, `agentic-development`, `developer-productivity`, `aws`
 
 ---
 
@@ -827,7 +884,7 @@ Five posts to close the year with reflection and forward-looking content.
 
 ### Moving items between sections
 
-Pull entries **forward** as publishing horizons approach - never delete. When a backlog item becomes a near-term priority, cut it from **📦 Backlog** and paste it into **📋 Next Up** (or directly into **🗓 This Period** if it's urgent). When a period closes, any unstarted entries roll back down to **📋 Next Up** or **📦 Backlog** depending on priority.
+Pull entries **forward** as publishing horizons approach - never delete. Sections are named by month range and suffixed `- Open` (not yet started) or `- Completed` (fully published); the active section in between (currently **📅 Pipeline - June-December 2026**) holds whatever's actually being worked. When a backlog item becomes a near-term priority, cut it from a later `- Open` section (e.g. **📅 January-February 2027 - Open**) and paste it into the active section. When a section fully publishes, retitle its suffix to `- Completed`; any entries that didn't make it roll forward into the next `- Open` section instead.
 
 ### Updating status
 
@@ -842,13 +899,13 @@ Change the `**Status:**` field in-place as the post moves through the pipeline:
 
 ### Linking GitHub Issues
 
-Once you open a GitHub Issue for a post, replace `#TBD` with the issue number (e.g. `#42`). The `#42` syntax auto-links in GitHub's Markdown renderer. One issue per post; use the issue for draft feedback, outline review, and final sign-off comments.
+Once you open a GitHub Issue for a post, add an `- **Issue:**` line with the issue number (e.g. `#42`) - entries without an issue yet simply omit this line rather than using a placeholder. The `#42` syntax auto-links in GitHub's Markdown renderer. One issue per post; use the issue for draft feedback, outline review, and final sign-off comments.
 
 ### Agent-Based Workflow for Blog Posts
 
 Blog posts flow through the Planner → Blog-Writer → Reviewer → Scribe pipeline:
 
-**1. When a post is ready to work on (move from 📦 Backlog to 🗓 This Period):**
+**1. When a post is ready to work on (move it into the active 📅 Pipeline - June-December 2026 section):**
    - Create a GitHub Issue: `[Blog Post] Post Title Here` with a body containing the Pitch and Angle from this calendar
    - Link the issue: update this calendar entry with `#NNN`
 
@@ -888,7 +945,7 @@ At the start of each working session:
 1. Review this calendar for posts that are:
    - Scheduled but still in `idea` status (likely overdue)
    - In `in-progress` for more than a week (likely blocked)
-   - Ready to promote from 📦 Backlog to 🗓 This Period
+   - Ready to promote from a later `- Open` section into the active section
 
 2. For each item needing work:
    - Create or update its GitHub Issue (if not already created)
