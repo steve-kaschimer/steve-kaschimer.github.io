@@ -4,6 +4,92 @@
 
 ---
 
+## 📅 October-December 2025 - Completed
+
+Ten posts covering the blog's first months - DevSecOps foundations, GitHub platform capabilities, and the site build itself. Backfilled after the fact; these predate the calendar.
+
+### Why GitHub is the DevSecOps Platform of Choice
+- **Status:** `published`
+- **Published:** 2025-10-27
+- **File:** `src/posts/2025-10-27-why-github-is-the-devsecops-platform-of-choice.md`
+- **Pitch:** DevSecOps initiatives usually die on tool sprawl and adoption friction, not on the security tooling itself - GitHub wins because it's already where developers work.
+- **Angle:** Argues the platform case on developer familiarity first, then walks the native capabilities that back it up: Actions for automation, CodeQL, secret scanning, dependency review, and Security Overview. Covers the recurring objections (security vs. speed, tool fragmentation, lack of visibility) and closes with the strategic questions worth answering before committing - whether you need Advanced Security, how audit logs map to SOC 2 / ISO 27001 / NIST, and whether the model scales across teams.
+- **Tags:** `devsecops`, `github`, `devops`
+
+### 5 Tailwind CSS Tips for Better Productivity
+- **Status:** `published`
+- **Published:** 2025-10-29
+- **File:** `src/posts/2025-10-29-tailwind-css-tips.md`
+- **Pitch:** Five short, concrete Tailwind habits that cut down the class-string sprawl most people accumulate in their first few weeks with the framework.
+- **Angle:** A deliberately brief tips post: `@apply` for genuinely repeated patterns, what the JIT compiler buys you (including arbitrary values like `w-[347px]`), extending the theme with custom colors, `dark:` variants, and the VS Code IntelliSense extension. Written against Tailwind v3 conventions - the `tailwind.config.js` example predates this site's own move to v4's CSS-native config.
+- **Tags:** `tailwind-css`, `eleventy`, `developer-productivity`
+
+### Getting Started with Eleventy
+- **Status:** `published`
+- **Published:** 2025-10-30
+- **File:** `src/posts/2025-10-30-getting-started-with-eleventy.md`
+- **Pitch:** Eleventy gets you from an empty directory to a live site in three commands, which is the entire argument for choosing it over a heavier static site generator.
+- **Angle:** A short orientation post: why Eleventy (template-language flexibility, fast builds, no client-side JS by default), the minimal `npm install` / `npx @11ty/eleventy --serve` setup, and the three concepts that carry most of the work - layouts, collections, and filters. Ends with next steps rather than depth: styling, custom filters, plugins, and deploying to GitHub Pages or Netlify.
+- **Tags:** `eleventy`, `developer-productivity`
+
+### Secrets Management on GitHub: Best Practices and Pitfalls
+- **Status:** `published`
+- **Published:** 2025-11-05
+- **File:** `src/posts/2025-11-10-secrets-management-on-github-best-practices-and-pitfalls.md`
+- **Pitch:** Version control is designed to remember everything forever, which is exactly why a committed credential is not fixed by a follow-up commit that removes it.
+- **Angle:** Covers GitHub's three relevant surfaces - secret scanning as detection, environment secrets as the storage mechanism, and Dependabot as defense in depth for the libraries that handle those secrets. Spends real time on the failure modes: assuming private repos are safe, never rotating, and losing track of secret sprawl across repos and environments. Recommends scoping secrets at repository/organization/environment levels by least privilege and integrating an external manager (Vault, Key Vault) once org scale demands it.
+- **Tags:** `security`, `github`, `devsecops`
+
+### Security as Code with GitHub Actions: Automating DevSecOps
+- **Status:** `published`
+- **Published:** 2025-11-10
+- **File:** `src/posts/2025-11-03-security-as-code-making-it-real-with-github-actions.md`
+- **Pitch:** Manual security review doesn't survive contact with teams that ship several times a day - codifying the checks as workflow definitions is the only version that scales.
+- **Angle:** Defines Security as Code in terms of what it replaces (ad-hoc scans, manual gates), then covers the three GitHub Actions features that make it practical at org scale: reusable workflows for consistency across repos, Marketplace actions for layered coverage (Snyk, Trivy, Checkov), and matrix builds for environment-specific vulnerabilities. Includes a pull-request workflow running CodeQL and secret scanning, plus the standard failure modes - false positives, developer resistance, and pipeline slowdown.
+- **Tags:** `github-actions`, `devsecops`, `ci-cd`
+
+### Shift Left Without Slowing Down: DevSecOps Pipeline Design
+- **Status:** `published`
+- **Published:** 2025-11-17
+- **File:** `src/posts/2025-11-17-shift-left-without-slowing-down.md`
+- **Pitch:** Teams resist shift-left for a rational reason: badly implemented security checks genuinely do make pipelines slow. The fix is pipeline design, not more discipline.
+- **Angle:** Splits security work by weight - static analysis, secret scanning, and dependency review run in parallel on every pull request, while container and IaC scans move to merge-to-main and nightly schedules. Ships two complete workflows (`pr-pipeline.yml` and `main-security.yml`) plus a reusable org-wide security workflow, and leans on concurrency groups, matrix builds, Trivy DB caching, and minimal `permissions` blocks. Treats false-positive tuning and developer trust as load-bearing, not optional polish.
+- **Tags:** `devsecops`, `ci-cd`, `devops`
+
+### CodeQL Deep Dive: Static Analysis for DevSecOps Engineers
+- **Status:** `published`
+- **Published:** 2025-11-24
+- **File:** `src/posts/2025-11-24-codeql-deep-dive-static-analysis-for-devops-engineers.md`
+- **Pitch:** CodeQL compiles your codebase into a queryable database instead of grepping for suspicious strings, which is why it catches multi-hop vulnerabilities that pattern matchers miss.
+- **Angle:** Walks the three-stage pipeline - extraction into a language-specific database, query execution, SARIF results surfaced as code scanning alerts. Covers the query language structure (imports, predicates, select) with a working hardcoded-AWS-key example, then makes the case for customization: extending queries, teaching CodeQL about your own sanitizer functions to kill false positives, and iterating locally with the CodeQL CLI before wiring it into CI. Includes a workflow running on push, pull request, and a weekly schedule.
+- **Tags:** `security`, `devsecops`, `github`
+
+### DevOps Culture: What It Is, Why It Exists, and Why It Matters
+- **Status:** `published`
+- **Published:** 2025-12-01
+- **File:** `src/posts/2025-12-01-devops-culture.md`
+- **Pitch:** You can buy every tool on the market and still not have DevOps - the transformation is cultural, and the tooling only amplifies whatever culture already exists.
+- **Angle:** Grounded in The Phoenix Project's Three Ways and the 2009 Allspaw/Hammond "10+ Deploys Per Day" talk that started the movement. Covers the enabling practices (IaC, shift-left security, observability, ChatOps), Team Topologies as the organizational design layer, a four-phase transformation roadmap from assessment to ongoing optimization, and DORA metrics as the measurement frame. The most useful sections are the honest ones: ten named anti-patterns (the "DevOps team" silo, rebrand without reform, "you build it, you run it" without support, metrics theater) and rebuttals to the four objections you will actually hear.
+- **Tags:** `devops`
+
+### DevSecOps Metrics That Matter: What to Measure, How to Track It in GitHub, and Why It Matters
+- **Status:** `published`
+- **Published:** 2025-12-08
+- **File:** `src/posts/2025-12-08-devsecops-metrics-that-matter.md`
+- **Pitch:** Measure only speed and you cut corners; measure only security and delivery grinds to a halt. The useful metric set spans both, and GitHub already emits most of it.
+- **Angle:** Pairs the four DORA delivery metrics with four security signals - open vulnerabilities, time to remediate, dependency health, and secret exposure - and gives each one industry benchmarks, common measurement pitfalls, and specific remediation levers. Every metric comes with the actual `gh api` or GraphQL query that produces it, plus a nightly export workflow that dumps code scanning, Dependabot, and secret scanning alerts as artifacts. Insists throughout that metrics are for feedback loops, not for blame.
+- **Tags:** `devsecops`, `devops`
+
+### GitHub Advanced Security: What You Get and How to Use It
+- **Status:** `published`
+- **Published:** 2025-12-15
+- **File:** `src/posts/2025-12-15-github-advanced-security.md`
+- **Pitch:** GHAS is four distinct products sold as one SKU, and teams that enable everything on day one drown in alerts before they get any value out of it.
+- **Angle:** Covers each pillar in turn - Code Scanning via CodeQL, Secret Scanning, Dependency Review, and Security Overview - with UI, API, and workflow-based enablement for each. Includes three case studies (leaked AWS keys caught in minutes, Log4Shell remediation across 47 repos, an enterprise migration that cut security approval from five days to four hours) and a frank ROI section pricing GHAS against breach cost. The back half is where the real value sits: custom secret patterns, CodeQL query filtering and path ignores, alert routing to PagerDuty/Slack/Jira, systematic false-positive handling, and a four-phase rollout that starts with 5-10 pilot repos rather than the whole org.
+- **Tags:** `security`, `devsecops`, `github`
+
+---
+
 ## 📅 March 2026 - Completed
 
 All three posts in this batch have been published.
@@ -895,7 +981,7 @@ Change the `**Status:**` field in-place as the post moves through the pipeline:
 | `idea` | Topic captured, not yet started |
 | `draft` | Outline or first draft exists (link the draft file or branch) |
 | `in-progress` | Actively being written or revised |
-| `published` | Live on the site - add the URL next to the status |
+| `published` | Live on the site - record the date in `**Published:**` and the source path in `**File:**` |
 
 ### Linking GitHub Issues
 
