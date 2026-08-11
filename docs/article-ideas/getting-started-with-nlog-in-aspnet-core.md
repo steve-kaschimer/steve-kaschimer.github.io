@@ -241,7 +241,7 @@ If nothing is logging, check `internal-nlog.txt` first. `throwConfigExceptions="
 
 ## Comparison with Serilog Setup
 
-| | NLog | Serilog |
+| Dimension | NLog | Serilog |
 | --- | --- | --- |
 | Config style | XML file or JSON section | C# fluent API |
 | ASP.NET Core integration | `builder.Host.UseNLog()` | `builder.Host.UseSerilog()` |

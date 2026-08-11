@@ -164,7 +164,7 @@ Removing or changing a feature is just as contained: touch one folder, and confi
 
 ## Comparison with Modular Monolith
 
-| | Vertical Slice Architecture | Modular Monolith |
+| Dimension | Vertical Slice Architecture | Modular Monolith |
 | --- | --- | --- |
 | Unit of organization | Feature / use case | Business capability module |
 | Typical scope | Within a single project | Across multiple modules, each potentially its own project |

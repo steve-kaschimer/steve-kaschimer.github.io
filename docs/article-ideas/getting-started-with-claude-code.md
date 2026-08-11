@@ -138,7 +138,7 @@ Confirm the basics are actually working:
 
 ## Comparison with GitHub Copilot
 
-| | Claude Code | GitHub Copilot |
+| Dimension | Claude Code | GitHub Copilot |
 | --- | --- | --- |
 | Surface | Terminal, desktop app, IDE extensions | IDE extension |
 | Standing instructions | `CLAUDE.md` | `.github/copilot-instructions.md` or `AGENTS.md` |

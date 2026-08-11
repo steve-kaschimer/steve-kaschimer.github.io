@@ -178,7 +178,7 @@ More ceremony than layered architecture for a simple feature, but the payoff is 
 
 ## Comparison with Vertical Slice Architecture
 
-| | Clean Architecture | Vertical Slice Architecture |
+| Dimension | Clean Architecture | Vertical Slice Architecture |
 | --- | --- | --- |
 | Organizing principle | Dependency direction, domain-centered | Feature/use case |
 | Where related code for one feature lives | Spread across Core, UseCases, Infrastructure, Web | Co-located in one slice |

@@ -197,7 +197,7 @@ If log calls aren't compiling or the interpolation isn't being intercepted as ex
 
 ## Comparison with Serilog Setup
 
-| | ZLogger | Serilog |
+| Dimension | ZLogger | Serilog |
 | --- | --- | --- |
 | Config style | Code-based provider registration | C# fluent API or JSON |
 | Log call syntax | Native string interpolation (`ZLogInformation($"...")`), source-generated | Message templates (`LogInformation("... {Prop}", value)`) |

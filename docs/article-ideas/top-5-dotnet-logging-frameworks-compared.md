@@ -8,7 +8,7 @@ If you want hands-on setup guides after deciding, this site has dedicated gettin
 
 ## Quick Comparison
 
-| | Microsoft.Extensions.Logging | Serilog | NLog | log4net | ZLogger |
+| Dimension | Microsoft.Extensions.Logging | Serilog | NLog | log4net | ZLogger |
 | --- | --- | --- | --- | --- | --- |
 | **Setup effort** | None -- built in | Low | Low | Low-Medium | Low |
 | **Config style** | JSON or code | Code-first (fluent API) | XML or JSON | XML | Code-first |

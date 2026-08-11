@@ -241,7 +241,7 @@ If nothing appears, check that `CreateBootstrapLogger()` was actually replaced b
 
 ## Comparison with NLog Setup
 
-| | Serilog | NLog |
+| Dimension | Serilog | NLog |
 | --- | --- | --- |
 | Config style | C# fluent API (or JSON via `Serilog.Settings.Configuration`) | XML file or JSON section |
 | ASP.NET Core integration | `builder.Host.UseSerilog(...)` | `builder.Host.UseNLog()` |

@@ -8,7 +8,7 @@ If you want hands-on setup guides after deciding, this series includes dedicated
 
 ## Quick Comparison
 
-| | Layered (N-Tier) | Clean Architecture | Vertical Slice | Modular Monolith | Microservices |
+| Dimension | Layered (N-Tier) | Clean Architecture | Vertical Slice | Modular Monolith | Microservices |
 | --- | --- | --- | --- | --- | --- |
 | **Organizes code by** | Technical layer (UI, business, data) | Dependency direction, centered on domain | Feature/use case | Business capability module | Independently deployable service |
 | **Deployment unit** | Single app | Single app | Single app | Single app | Many services |

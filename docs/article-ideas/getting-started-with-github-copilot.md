@@ -97,7 +97,7 @@ Prompt agent mode with intent, scope, and a stop condition -- tell it what "done
 
 ## Comparison with Claude Code
 
-| | GitHub Copilot | Claude Code |
+| Dimension | GitHub Copilot | Claude Code |
 | --- | --- | --- |
 | Surface | IDE extension | Terminal, desktop app, IDE extensions |
 | Standing instructions | `.github/copilot-instructions.md` or `AGENTS.md` | `CLAUDE.md` |

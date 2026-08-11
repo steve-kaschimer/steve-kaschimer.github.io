@@ -143,7 +143,7 @@ This is layered architecture's defining trade-off: consistent, predictable struc
 
 ## Comparison with Clean Architecture
 
-| | Layered (N-Tier) | Clean Architecture |
+| Dimension | Layered (N-Tier) | Clean Architecture |
 | --- | --- | --- |
 | Organizing principle | Technical layer | Dependency direction, domain-centered |
 | Ceremony | Minimal | Moderate -- more interfaces and abstraction |

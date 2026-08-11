@@ -155,7 +155,7 @@ Adding a feature starts with a question layered architecture and Vertical Slice 
 
 ## Comparison with Microservices
 
-| | Modular Monolith | Microservices |
+| Dimension | Modular Monolith | Microservices |
 | --- | --- | --- |
 | Deployment unit | One application | Many independently deployable services |
 | Module communication | In-process, through Contracts interfaces | Over the network (HTTP, messaging) |

@@ -8,7 +8,7 @@ This guide breaks down what each of the five actually does well, where it falls 
 
 ## Quick Comparison
 
-| | Claude Code | GitHub Copilot | OpenAI Codex | Cursor | Amazon Kiro |
+| Dimension | Claude Code | GitHub Copilot | OpenAI Codex | Cursor | Amazon Kiro |
 | --- | --- | --- | --- | --- | --- |
 | **Surface** | Terminal, desktop app, IDE extensions | IDE extension (VS Code, JetBrains, etc.) | CLI, cloud sandbox, ChatGPT app | Standalone IDE (VS Code fork) | Standalone IDE (VS Code fork) |
 | **Core philosophy** | Programmable agent with deep extensibility | Ubiquitous assistant baked into existing tools | Autonomous, async task execution | Fast, in-editor multi-file agent | Spec-first: plan before code |

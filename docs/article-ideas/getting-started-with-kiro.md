@@ -125,7 +125,7 @@ For genuinely large features, Kiro's full spec-driven flow is designed to surfac
 
 ## Comparison with Cursor
 
-| | Kiro | Cursor |
+| Dimension | Kiro | Cursor |
 | --- | --- | --- |
 | Core philosophy | Spec-first: plan and approve before code | Fast, direct prompt-to-code editing |
 | Primary artifact | The spec (requirements, design, tasks) | The code itself |

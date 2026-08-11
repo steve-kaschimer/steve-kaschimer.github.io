@@ -117,7 +117,7 @@ Match the surface to the task size -- reaching for full Agent mode on a one-line
 
 ## Comparison with Claude Code
 
-| | Cursor | Claude Code |
+| Dimension | Cursor | Claude Code |
 | --- | --- | --- |
 | Surface | Standalone IDE (VS Code fork) | Terminal, desktop app, IDE extensions |
 | Standing instructions | `.cursor/rules/*.mdc`, scoped by glob | `CLAUDE.md`, hierarchical by directory |

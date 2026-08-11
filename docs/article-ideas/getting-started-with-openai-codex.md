@@ -120,7 +120,7 @@ codex
 
 ## Comparison with Claude Code
 
-| | Codex | Claude Code |
+| Dimension | Codex | Claude Code |
 | --- | --- | --- |
 | Default execution style | Async, sandbox-first -- hand off and review later | Interactive, terminal-first -- watch and steer live |
 | Standing instructions | `AGENTS.md` | `CLAUDE.md` |

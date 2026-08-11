@@ -138,7 +138,7 @@ Adding or changing a service looks different depending on scope:
 
 ## Comparison with Modular Monolith
 
-| | Microservices | Modular Monolith |
+| Dimension | Microservices | Modular Monolith |
 | --- | --- | --- |
 | Deployment unit | Many independent services | One application |
 | Communication | Network calls (HTTP, messaging) | In-process, through Contracts interfaces |
