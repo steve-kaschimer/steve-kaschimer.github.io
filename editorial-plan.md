@@ -1,6 +1,6 @@
 # Editorial Calendar
 
-> A living schedule for blog content on steve-kaschimer.github.io. Most sections represent a publishing horizon in the main Friday sequence - move entries forward as they progress, update their status, and link GitHub Issues once created. A thematic track running its own cadence gets its own section rather than being interleaved into the Friday horizons (currently: **📅 Tuesday Track - AI Coding Agents**). See **📐 How to Use This Calendar** at the bottom for the full workflow.
+> A living schedule for blog content on steve-kaschimer.github.io. Most sections represent a publishing horizon in the main Friday sequence - move entries forward as they progress, update their status, and link GitHub Issues once created. A thematic track running its own cadence gets its own section rather than being interleaved into the Friday horizons (currently the **📅 Tuesday Track**, which runs one six-post series at a time). See **📐 How to Use This Calendar** at the bottom for the full workflow.
 
 ---
 
@@ -578,6 +578,324 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 
 ---
 
+## 📅 Tuesday Track - .NET Architecture Patterns (September-November 2026)
+
+Six posts on how to organize a .NET codebase, picking up the Tuesday cadence directly from the AI coding agents track. A comparison post anchors the track and each of the five follow-ups sets one pattern up end to end.
+
+### The Top 5 .NET Architecture Patterns Compared: Which One Should You Choose?
+- **Status:** `idea`
+- **Scheduled:** 2026-09-29
+- **Source:** `docs/article-ideas/top-5-dotnet-architecture-patterns-compared.md`
+- **Pitch:** Layered, Clean, Vertical Slice, Modular Monolith, and Microservices aren't five points on a scale from bad to good - they're different trades between structure, speed, and organizational scale. This is the orientation piece for a team that has to pick one and defend the choice.
+- **Angle:** Opens with a comparison table across organizing principle, deployment unit, learning curve, change isolation, and operational overhead, then gives each pattern a strengths/weaknesses/choose-this-when breakdown. The load-bearing argument is that several of these compose rather than compete - Vertical Slice or Clean Architecture inside a module of a Modular Monolith is a common and underrated landing spot. Closes on the point that a Modular Monolith is usually the honest predecessor to Microservices rather than its opposite, and that module boundaries only hold when enforcement is structural rather than cultural.
+- **Tags:** `dotnet`, `architecture`, `microservices`, `platform-engineering`, `developer-productivity`
+
+### Getting Started with Clean Architecture in .NET
+- **Status:** `idea`
+- **Scheduled:** 2026-10-06
+- **Source:** `docs/article-ideas/getting-started-with-clean-architecture-dotnet.md`
+- **Pitch:** The dependency rule is easy to state and easy to leave aspirational. Getting the project structure right so the compiler enforces it - rather than code review hoping to catch violations - is where most first attempts go sideways.
+- **Angle:** Scaffolds the solution both from the Ardalis Clean Architecture template and by hand, showing the Core/UseCases/Infrastructure/Web reference graph that turns the dependency rule into a compile error. Covers where entities, handlers, and repository implementations actually belong, the single point in `Program.cs` where the concrete and the abstract meet, and NetArchTest/ArchUnitNET architecture tests that fail the build when `Core` picks up an infrastructure dependency a project reference alone wouldn't catch. Ends on the honest limitation: the ceremony earns its keep only where there's real business logic to protect, and a rules-free CRUD endpoint doesn't need four layers and a MediatR handler.
+- **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
+
+### Getting Started with Layered (N-Tier) Architecture in .NET
+- **Status:** `idea`
+- **Scheduled:** 2026-10-13
+- **Source:** `docs/article-ideas/getting-started-with-layered-architecture-dotnet.md`
+- **Pitch:** Layered architecture still runs a huge share of production .NET, and for genuinely CRUD-shaped applications that's the right call rather than a compromise. The mistake isn't using it - it's using it past the point where it stops fitting the problem.
+- **Angle:** Sets up Web/Business/DataAccess as three separate projects so violating the dependency direction is a compile error rather than a convention people forget, wires EF Core into the data layer, and keeps the business layer free of ASP.NET Core types. Covers DTOs vs. entities at the API boundary, repository interfaces purely for testability, and why the business layer becomes a dumping ground without deliberate internal splitting. Closes with the signal to move on: when most feature changes touch all three layers, that friction is pointing at Vertical Slice or a Modular Monolith, not at adding more structure inside the same three layers.
+- **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
+
+### Getting Started with Vertical Slice Architecture in .NET
+- **Status:** `idea`
+- **Scheduled:** 2026-10-20
+- **Source:** `docs/article-ideas/getting-started-with-vertical-slice-architecture-dotnet.md`
+- **Pitch:** Vertical Slice Architecture asks what a single request actually needs and puts all of it in one folder, so adding a feature means adding a slice rather than touching four existing layers. Its failure mode is teams reading "organize by feature" as "duplicate everything."
+- **Angle:** Builds a complete slice - command, handler, endpoint, validator - under `Features/<Area>/<Feature>/` with MediatR and FastEndpoints, where assembly scanning means new slices register nothing manually. Makes the case that a MediatR pipeline behavior is where validation, logging, and transaction handling belong, since re-implementing cross-cutting concerns slightly differently per slice is what stops many independent slices from feeling like one coherent application. Argues against extracting shared abstractions early and against reflexively hiding `DbContext` behind a repository in every slice, then positions the pattern relative to a Modular Monolith as a different altitude rather than a competing choice.
+- **Tags:** `dotnet`, `architecture`, `developer-productivity`, `tooling`
+
+### Getting Started with Modular Monolith Architecture in .NET
+- **Status:** `idea`
+- **Scheduled:** 2026-10-27
+- **Source:** `docs/article-ideas/getting-started-with-modular-monolith-dotnet.md`
+- **Pitch:** A Modular Monolith is deceptively easy to describe and genuinely hard to keep honest - nothing forces modules to respect each other's boundaries except deliberate enforcement, and the moment enforcement lapses it's a monolith with extra folders.
+- **Angle:** Structures each module as an implementation project plus a `Contracts` project, where modules reference only each other's contracts and implementations are marked `internal` so a cross-module reach is a compile error rather than a code review note. Gives each module its own `DbContext` and self-registering DI extension so the host stays thin, and backs the whole arrangement with architecture tests that fail CI on a boundary violation. Covers the two decisions that actually determine whether the pattern holds - separate schemas vs. separate databases, and in-process events vs. direct contract calls - and argues a Modular Monolith is a complete architecture rather than an unfinished Microservices migration.
+- **Tags:** `dotnet`, `architecture`, `microservices`, `platform-engineering`, `ci-cd`
+
+### Getting Started with Microservices Architecture in .NET
+- **Status:** `idea`
+- **Scheduled:** 2026-11-03
+- **Source:** `docs/article-ideas/getting-started-with-microservices-dotnet.md`
+- **Pitch:** Microservices solve an organizational problem most projects don't have yet: independent teams needing to deploy and scale without blocking each other. .NET Aspire has made the local development side dramatically less painful, but it hasn't changed that trade-off.
+- **Angle:** Scaffolds a multi-service solution with Aspire and describes the whole topology in AppHost - a Postgres container per service, `WithReference` for service discovery instead of hardcoded URLs, and one `dotnet run` that brings everything up with a dashboard showing logs and traces across services. Covers ServiceDefaults as the place shared OpenTelemetry, health checks, and resilience configuration live without coupling services to each other's business logic. Is explicit that AppHost is a development tool that never gets deployed, and that Aspire removes friction from building and running services locally without removing contract versioning, partial failure handling, or distributed data consistency - which are the actual cost of the pattern.
+- **Tags:** `dotnet`, `architecture`, `microservices`, `observability`, `devops`
+
+---
+
+## 📅 Tuesday Track - .NET Logging Frameworks (November-December 2026)
+
+Six posts on .NET logging, continuing the Tuesday cadence. A comparison post anchors the track and each of the five follow-ups is a complete ASP.NET Core setup for one framework.
+
+### The Top 5 .NET Logging Frameworks Compared: Which One Should You Choose?
+- **Status:** `idea`
+- **Scheduled:** 2026-11-10
+- **Source:** `docs/article-ideas/top-5-dotnet-logging-frameworks-compared.md`
+- **Pitch:** Picking a .NET logging framework sounds like a five-minute decision, but these five don't solve the same problem - one is built in, one is structured-logging-first, one optimizes for routing flexibility, one is inherited from a decade ago, and one trades ecosystem breadth for near-zero allocation.
+- **Angle:** Compares Microsoft.Extensions.Logging, Serilog, NLog, log4net, and ZLogger across setup effort, configuration style, structured logging support, performance, and sink ecosystem, then gives each a strengths/weaknesses/choose-this-when breakdown. The framing that matters most: Microsoft.Extensions.Logging isn't really a competitor to the other four, it's the `ILogger<T>` abstraction they all implement. Closes on why that makes the decision unusually reversible - swapping providers touches `Program.cs` and configuration, not the application code that calls the logger.
+- **Tags:** `dotnet`, `logging`, `observability`, `performance`, `tooling`
+
+### Getting Started with Microsoft.Extensions.Logging in ASP.NET Core
+- **Status:** `idea`
+- **Scheduled:** 2026-11-17
+- **Source:** `docs/article-ideas/getting-started-with-microsoft-extensions-logging-in-aspnet-core.md`
+- **Pitch:** There's no package to install and no obvious getting-started moment, which is exactly what trips people up - most developers never learn how the log level hierarchy resolves or why their `appsettings.json` overrides aren't taking effect the way they expect.
+- **Angle:** Covers what `WebApplication.CreateBuilder` already registers, the prefix-based most-specific-match category resolution that makes `Microsoft.AspNetCore` overrides work (and explains why they sometimes don't), and the two configuration paths with the precedence order between them - code-based `AddFilter` calls layer on top of JSON, which accounts for most of the surprises. Shows the startup pattern for both ASP.NET Core and Worker Services, `BeginScope` with `IncludeScopes`, and why no `try/catch/finally` flush is needed here when NLog and log4net both require one. Ends on the real limitation: Console and Debug persist nothing, so this is the foundation the other four build on rather than a production logging story.
+- **Tags:** `dotnet`, `logging`, `observability`, `developer-productivity`
+
+### Getting Started with Serilog in ASP.NET Core
+- **Status:** `idea`
+- **Scheduled:** 2026-11-24
+- **Source:** `docs/article-ideas/getting-started-with-serilog-in-aspnet-core.md`
+- **Pitch:** Serilog's fluent, code-first configuration throws a curveball at anyone used to XML or JSON logging config: there's no single file to point at, and the two-stage bootstrap-logger initialization isn't obvious from the docs alone.
+- **Angle:** Covers both configuration styles - the fluent `LoggerConfiguration` API and `Serilog.Settings.Configuration` for JSON-driven setup - plus enrichers, `MinimumLevel.Override` for framework noise, and rolling file output. Spends real time on the bootstrap logger pattern and the services-aware `UseSerilog` overload that replaces it, since configuring sinks only in the bootstrap logger is the mistake that leaves an app stuck on a minimal console pipeline for its entire lifetime. Makes the structured logging argument concrete rather than abstract: message templates keep `{OrderId}` queryable in Seq or Elasticsearch, and string interpolation throws that capability away entirely.
+- **Tags:** `dotnet`, `logging`, `observability`, `tooling`
+
+### Getting Started with NLog in ASP.NET Core
+- **Status:** `idea`
+- **Scheduled:** 2026-12-01
+- **Source:** `docs/article-ideas/getting-started-with-nlog-in-aspnet-core.md`
+- **Pitch:** NLog setup is straightforward once you've done it once, but the first pass raises three questions at the same time: XML or JSON, how buffered entries get flushed, and why the official guidance wraps `Program.cs` in a `try/catch/finally`.
+- **Angle:** Ships a complete `nlog.config` with an `AsyncWrapper`-wrapped file target plus the equivalent JSON section, and explains the two attributes that matter most - `autoReload` for raising verbosity in production without a restart, and `throwConfigExceptions` because NLog's default silent-failure mode produces an app that runs normally and logs nothing. Covers `UseNLog()` vs. `AddNLog()` for web hosts and Worker Services, `LogManager.Shutdown()` in `finally`, and silencing `Microsoft.*` with `final="true"` before the catch-all rule. Points at `internal-nlog.txt` as the first place to look when logs aren't appearing.
+- **Tags:** `dotnet`, `logging`, `devops`, `tooling`
+
+### Getting Started with ZLogger in ASP.NET Core
+- **Status:** `idea`
+- **Scheduled:** 2026-12-08
+- **Source:** `docs/article-ideas/getting-started-with-zlogger-in-aspnet-core.md`
+- **Pitch:** ZLogger looks like any other `Microsoft.Extensions.Logging` provider right up until the log calls, where it asks for native C# string interpolation instead of message templates in exchange for allocation-free, directly-UTF8-encoded output.
+- **Angle:** Covers the single-package install, `AddZLoggerConsole`/`AddZLoggerRollingFile` registration, and the fact that ZLogger respects the standard `Logging:LogLevel` section - so switching from the built-in providers changes only the provider registration, not the level configuration. Explains what the source generator actually does: it intercepts the interpolated string handler at compile time, so `$"Order {orderId}"` still captures `orderId` as a named structured property rather than flattening it into text. Honest about the constraints - C# 11 and .NET 8 for the full benefit, a much narrower sink ecosystem than Serilog, and that mixing `ZLogInformation` with plain `LogInformation` silently drops calls off the fast path that justified choosing it.
+- **Tags:** `dotnet`, `logging`, `performance`, `observability`
+
+### Getting Started with log4net in ASP.NET Core
+- **Status:** `idea`
+- **Scheduled:** 2026-12-15
+- **Source:** `docs/article-ideas/getting-started-with-log4net-in-aspnet-core.md`
+- **Pitch:** log4net predates `Microsoft.Extensions.Logging` by well over a decade, and its defining property today is that it fails silently on configuration errors - an app that runs normally, logs nothing, and gives you no error pointing at the cause.
+- **Angle:** Covers the two-package install (`log4net` plus the `Microsoft.Extensions.Logging` bridge, so you inject `ILogger<T>` rather than log4net's native `ILog`), a `RollingFileAppender` configuration with date-based rolling and explicit `Microsoft`/`System.Net.Http` level overrides, and the `CopyToOutputDirectory` setting that is the single most common cause of "nothing is logging." Covers `LogManager.Flush()` in a `finally` block, why there's no native JSON configuration schema, and the per-environment config file approach that stands in for one. Lands on the honest recommendation from the comparison post: keep it where it already works, don't start new services on it.
+- **Tags:** `dotnet`, `logging`, `tooling`, `developer-productivity`
+
+---
+
+## 📅 Tuesday Track - .NET Testing Frameworks (January-February 2027)
+
+Six posts on .NET testing frameworks, resuming the Tuesday cadence in January - 2026-12-22 and 2026-12-29 are intentionally skipped for the holidays. A comparison post anchors the track and each of the five follow-ups sets one framework up from scratch.
+
+### The Top 5 .NET Testing Frameworks Compared: Which One Should You Choose?
+- **Status:** `idea`
+- **Scheduled:** 2027-01-05
+- **Source:** `docs/article-ideas/top-5-dotnet-testing-frameworks-compared.md`
+- **Pitch:** "Which .NET testing framework" used to mean picking between three mature options with mostly stylistic differences. Microsoft.Testing.Platform and TUnit's source-generated, reflection-free architecture have made it a genuinely open question again.
+- **Angle:** Compares xUnit, NUnit, MSTest, TUnit, and Expecto across origin, test discovery mechanism, Native AOT support, parallelism, and maturity. The architectural split is the actual story: the three incumbents discover tests via reflection at run time, TUnit does it at compile time via source generators, which is why it supports Native AOT in a way the others structurally can't without a rewrite. Expecto is included deliberately as F#'s own answer rather than a competing C# option. Closes on the migration question - churn for marginal ergonomic gains is rarely worth it, a concrete pain point like CI run time or AOT compatibility is.
+- **Tags:** `dotnet`, `testing`, `performance`, `tooling`, `developer-productivity`
+
+### Getting Started with xUnit in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-01-12
+- **Source:** `docs/article-ideas/getting-started-with-xunit.md`
+- **Pitch:** xUnit's minimal-ceremony design is the whole point, and also the thing that confuses people arriving from NUnit - there's no `[SetUp]` because the constructor does that job, and no `[TearDown]` because `IDisposable` already does.
+- **Angle:** Covers constructor/`IDisposable` setup and teardown, the fact that a fresh test class instance is created per test (which is why shared state needs an explicit `IClassFixture<T>` rather than happening by accident), `IAsyncLifetime` for genuinely async setup, and `[Theory]` with `[InlineData]` vs. `[MemberData]`. Treats default class-level parallelism as a feature rather than an obstacle: intermittent failures that only appear when tests run together are a shared-state design problem to fix, not a reason to disable parallelization and hide it.
+- **Tags:** `dotnet`, `testing`, `ci-cd`, `developer-productivity`
+
+### Getting Started with NUnit in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-01-19
+- **Source:** `docs/article-ideas/getting-started-with-nunit.md`
+- **Pitch:** NUnit front-loads more concepts than xUnit - `[TestFixture]`, `[SetUp]`, `[TearDown]`, `[OneTimeSetUp]` - and each one buys something specific. The part worth getting right early is knowing which setup attribute runs when.
+- **Angle:** Walks the full setup/teardown hierarchy and maps each level onto its xUnit equivalent, then covers what NUnit actually offers over the alternatives: constraint-based assertions that compose with `.And`/`.Or`, `[TestCase]` vs. `[TestCaseSource]` for fixed vs. computed data, and `[Category]` for splitting fast unit tests from slow integration tests inside one project. The two failure modes it names directly are reaching for `[OneTimeSetUp]` on state that should be per-test isolated, and mixing classic `Assert.AreEqual` with constraint-based `Assert.That` across the same codebase.
+- **Tags:** `dotnet`, `testing`, `developer-productivity`, `tooling`
+
+### Getting Started with MSTest in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-01-26
+- **Source:** `docs/article-ideas/getting-started-with-mstest.md`
+- **Pitch:** MSTest's reputation as "the Visual Studio one" undersells where it's actually landed - the feature gap with xUnit and NUnit has narrowed considerably, and the decision that matters now is which test execution platform you're building against.
+- **Angle:** Covers `[TestInitialize]`/`[TestCleanup]` and `[ClassInitialize]`/`[ClassCleanup]`, including the static-method requirement that produces a compile error for anyone arriving from xUnit or NUnit's instance-based lifecycles. Covers `[DataRow]`/`[DynamicData]`, `TestContext` for run-time metadata, and an assertion style closer to xUnit's direct form than NUnit's fluent one. The genuinely useful part is the VSTest vs. Microsoft.Testing.Platform decision, which affects CI behavior in ways the project file doesn't make obvious.
+- **Tags:** `dotnet`, `testing`, `tooling`, `devops`
+
+### Getting Started with TUnit in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-02-02
+- **Source:** `docs/article-ideas/getting-started-with-tunit.md`
+- **Pitch:** TUnit's important characteristic isn't its syntax, it's when test discovery happens - compile time via source generators rather than run time via reflection. That's a different architecture, not a faster implementation of the same idea.
+- **Angle:** Covers the template install and why the project needs `<OutputType>Exe</OutputType>` (TUnit generates a standalone test executable rather than a library an external runner reflects over), `[Before(Test)]`/`[After(Test)]` plus the broader hook scopes, async fluent assertions, reference-counted fixture sharing via `[ClassDataSource<T>]`, and matrix tests for genuine combinatorial coverage. Honest about the trade: pre-1.0 in places, a much smaller community, and a real migration project rather than a find-and-replace - so the strongest case is greenfield adoption or a suite with measured performance pain.
+- **Tags:** `dotnet`, `testing`, `performance`, `ci-cd`, `tooling`
+
+### Getting Started with Expecto in .NET (F#)
+- **Status:** `idea`
+- **Scheduled:** 2027-02-09
+- **Source:** `docs/article-ideas/getting-started-with-expecto.md`
+- **Pitch:** Expecto asks a different question than the other four: what does a test look like if it's just an ordinary F# value? The adjustment isn't syntax, it's the mental model - a test suite is data you build up, not a class the framework introspects.
+- **Angle:** Covers `testList`/`testCase` composition with the test project's own entry point acting as the runner, setup and teardown as higher-order functions wrapping the test body rather than framework attribute hooks, and list comprehensions standing in for `[TestCase]`/`[InlineData]`. Covers FsCheck property-based testing as a first-class built-in rather than an add-on, which is Expecto's most distinctive capability and the one most commonly underused. Explicit throughout that this is the F# answer, not a competing option for C# projects.
+- **Tags:** `dotnet`, `testing`, `developer-productivity`, `tooling`
+
+---
+
+## 📅 Tuesday Track - .NET ORMs (February-March 2027)
+
+Six posts on .NET data access, closing out the Tuesday cadence. A comparison post anchors the track and each of the five follow-ups is a complete setup for one ORM.
+
+### The Top 5 .NET ORMs Compared: Which One Should You Choose?
+- **Status:** `idea`
+- **Scheduled:** 2027-02-16
+- **Source:** `docs/article-ideas/top-5-dotnet-orms-compared.md`
+- **Pitch:** Every .NET data access decision collapses into one question: how much should the ORM do for you, versus how much SQL do you want to write yourself? EF Core and Dapper are the two ends of that axis, and the other three aren't simply worse versions of either.
+- **Angle:** Compares EF Core, Dapper, NHibernate, Linq2Db, and RepoDb across category, query style, change tracking, migrations, performance, and maintainer, then gives each a strengths/weaknesses/choose-this-when breakdown. The recurring argument is that "pick one" is often the wrong framing - EF Core for the domain and migrations with Dapper on specific read paths is a widely supported pattern, not a compromise. Pushes back hard on choosing by benchmark: for most applications the bottleneck is the query, the network, or business logic, not the mapping layer's marginal overhead.
+- **Tags:** `dotnet`, `orm`, `database`, `performance`, `architecture`
+
+### Getting Started with EF Core in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-02-23
+- **Source:** `docs/article-ideas/getting-started-with-ef-core.md`
+- **Pitch:** EF Core is the right default, but the gap between a tutorial's `dotnet ef migrations add` and a setup that stays maintainable is bigger than it looks. Three things trip up most first real projects: change tracking you're paying for on read-only queries, migrations that can't find your `DbContext`, and repository layers added out of habit.
+- **Angle:** Covers the provider and design-time packages - including why `Microsoft.EntityFrameworkCore.Design` belongs in the startup project, the single most common cause of broken migrations in a multi-project solution - plus `DbContext` and relationship configuration, the `--project`/`--startup-project` split, and `IDesignTimeDbContextFactory<T>` as the fallback when the tooling can't instantiate your context. Makes `AsNoTracking()` the default habit for reads, since that one habit accounts for most of the performance gap people attribute to EF Core being slow. Argues against a reflexive repository/unit-of-work layer on top of something that already implements unit of work, and treats reaching for Dapper on specific paths as normal rather than an admission the choice was wrong.
+- **Tags:** `dotnet`, `orm`, `database`, `performance`, `developer-productivity`
+
+### Getting Started with Dapper in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-03-02
+- **Source:** `docs/article-ideas/getting-started-with-dapper.md`
+- **Pitch:** You write the SQL, Dapper maps the results onto your objects, and almost nothing happens in between. What trips people up isn't Dapper's fault so much as the gaps it deliberately doesn't fill - connection lifecycle, migrations, and mapping conventions all become your responsibility.
+- **Angle:** Sets up a DI-registered connection factory where every call site creates and disposes its own connection and ADO.NET pooling does the actual reuse, then covers `QuerySingleOrDefaultAsync`, multi-mapping with `splitOn` for joined queries, and batched writes. Treats parameterization as the one non-negotiable rule - it's the difference between a parameterized query and a SQL injection vulnerability, not a style preference. Names the schema gap directly and pairs Dapper with DbUp or Fluent Migrator rather than pretending migrations are optional, and warns against building a generic repository that slowly reimplements a mini-ORM.
+- **Tags:** `dotnet`, `orm`, `database`, `performance`, `security`
+
+### Getting Started with NHibernate in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-03-09
+- **Source:** `docs/article-ideas/getting-started-with-nhibernate.md`
+- **Pitch:** NHibernate's maturity is real - caching, mapping flexibility, and loading control are all battle-tested after a decade in large enterprise systems - but there's genuine configuration depth to learn before any of it pays off, and skipping straight to "just make it work" produces a setup that fights you.
+- **Angle:** Uses Fluent NHibernate rather than hand-written `.hbm.xml`, covers why entity members must be `virtual` (proxy generation for lazy loading - a non-virtual property compiles fine and silently breaks), and the two lifetimes that matter: `ISessionFactory` as an expensive singleton and `ISession` scoped per unit of work. Covers session-scoped change tracking, the LINQ provider vs. HQL as entry points, `SchemaExport` for local development against a real migration tool for production, and second-level caching as a deliberate per-entity decision rather than a global default. Doesn't pretend this is a greenfield recommendation - it's a guide for extending a codebase already built on it.
+- **Tags:** `dotnet`, `orm`, `database`, `architecture`, `tooling`
+
+### Getting Started with Linq2Db in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-03-16
+- **Source:** `docs/article-ideas/getting-started-with-linq2db.md`
+- **Pitch:** Linq2Db gives you EF Core's most-loved feature - strongly-typed, composable LINQ queries - without the change tracking, identity map, or unit-of-work machinery that comes bundled whether you want it or not.
+- **Angle:** Covers attribute-based entity mapping, a `DataConnection` subclass exposing `ITable<T>` properties, and DI registration where scoping is about connection lifetime rather than preserving tracked entity state. The core adjustment is updates: `Where(...).Set(...).UpdateAsync()` maps to a single `UPDATE` statement with no fetch first, and falling into an EF Core-style fetch-mutate-save habit is the most common first mistake. Same migration gap as Dapper and RepoDb, handled the same way with DbUp or Fluent Migrator, and honest that the real cost is a much smaller community, ecosystem, and hiring pool rather than any technical shortfall.
+- **Tags:** `dotnet`, `orm`, `database`, `performance`, `tooling`
+
+### Getting Started with RepoDb in .NET
+- **Status:** `idea`
+- **Scheduled:** 2027-03-23
+- **Source:** `docs/article-ideas/getting-started-with-repodb.md`
+- **Pitch:** RepoDb exists for one specific complaint: Dapper is fast but leaves you writing the same CRUD SQL over and over, while EF Core writes it for you at a real abstraction cost. It sits deliberately in between.
+- **Angle:** Covers the core plus provider extension packages and the `SqlServerBootstrap.Initialize()` call that's easy to skip and produces confusing runtime errors that look unrelated to the actual missing step. Uses the same connection-factory pattern as Dapper, then contrasts generated CRUD (`InsertAsync`, expression-based `QueryAsync`) against `ExecuteQueryAsync` for anything complex, plus `InsertAllAsync`/`MergeAllAsync` bulk methods that beat row-by-row loops. Names the actual failure mode: treating RepoDb exactly like Dapper and hand-writing SQL for everything, which works fine but discards the only reason to pick it over Dapper in the first place.
+- **Tags:** `dotnet`, `orm`, `database`, `performance`, `developer-productivity`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Twelve six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the ORM series ends on 2027-03-23, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+
+### .NET API Styles (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-api-styles-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then Minimal APIs, Controllers (MVC), GraphQL (Hot Chocolate), SignalR, gRPC
+- **Pitch:** "REST API" has quietly stopped being the only answer to how a service talks to the outside world. Minimal APIs and Controllers are two flavors of the same idea, while gRPC, GraphQL, and SignalR each exist because REST is the wrong shape for a specific problem.
+- **Angle:** The comparison argues this isn't a ranking, it's a match between protocol and problem - fixed response shapes over HTTP, binary RPC between services you control, client-specified queries, or server-initiated push. It makes Minimal APIs the default for new projects (Microsoft's own recommendation) while keeping Controllers as a real answer for large APIs with a mature filter and binding ecosystem. The closing argument is that most production systems combine several of these rather than picking one, so the useful question is per-endpoint, not per-system.
+- **Tags:** `dotnet`, `api-design`, `architecture`, `performance`, `developer-productivity`
+
+### .NET Validation Approaches (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-validation-approaches-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then FluentValidation, DataAnnotations, custom validation, native Minimal API validation (.NET 10+), MiniValidation
+- **Pitch:** .NET 10 shipped first-party validation for Minimal APIs using the same DataAnnotations attributes MVC has relied on for over a decade. That closes the exact gap that pushed teams toward FluentValidation or MiniValidation in the first place, and it changes the calculus for a large share of new projects.
+- **Angle:** Compares the five on style, where each fits natively, performance, and how well each handles conditional and cross-property rules. Leads with a genuinely counterintuitive benchmark result - FluentValidation is the most popular option and routinely the slowest, sometimes by a factor of two - without pretending performance is the whole decision. Resolves on complexity rather than popularity: attributes for straightforward rules, FluentValidation only where conditional and cross-property logic actually earns its ceremony, and hand-written checks for business rules that need database lookups or span entities.
+- **Tags:** `dotnet`, `validation`, `security`, `performance`, `developer-productivity`
+
+### .NET Mapping Libraries (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-mapping-libraries-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then AutoMapper, Mapster, Mapperly, Facet, manual mapping
+- **Pitch:** Object mapping in .NET used to start and end with AutoMapper. Its April 2025 move to commercial licensing did for mapping what Moq's SponsorLink incident did for mocking - it got a lot of teams comparing alternatives for the first time in years instead of defaulting out of habit.
+- **Angle:** Compares the five on mechanism (runtime reflection versus compile-time source generation), performance, license, debuggability, and EF Core `ProjectTo` support. The through-line is that this space has moved to source generators: Mapperly matches hand-written mapping's performance while turning member typos into build errors, and Facet goes further by generating the destination DTO from the domain model rather than just the mapping between them. Treats manual mapping as a legitimate answer rather than a fallback, and is honest that Mapster's slowing development pace is a real risk for new projects.
+- **Tags:** `dotnet`, `tooling`, `performance`, `architecture`, `developer-productivity`
+
+### .NET Caching Solutions (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-caching-solutions-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then IMemoryCache, Redis, Garnet, Memcached, NCache
+- **Pitch:** Caching decisions collapse into "just use Redis" one step too early. The first fork is whether you need a distributed cache at all, since `IMemoryCache` solves a real and common subset of the problem with zero infrastructure and nanosecond-scale reads.
+- **Angle:** Compares the five on scope, latency, data structures, persistence, and how .NET-native each one actually is. The core argument is that in-process and distributed caching are different problems with different right answers, and only once you're running multiple instances do the four distributed options genuinely compete with each other. Redis stays the honest default for the same reason EF Core is the default ORM, while Garnet (Microsoft Research, written in C#, RESP-compatible) and NCache are framed as options worth evaluating rather than defaulting past.
+- **Tags:** `dotnet`, `caching`, `performance`, `architecture`, `devops`
+
+### .NET Message Brokers (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-message-brokers-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then RabbitMQ, Kafka, Azure Service Bus, Amazon SQS, NATS
+- **Pitch:** Broker comparisons get framed as "which one is fastest" when the actual differentiator is shape - routing discrete messages between services, streaming an ordered replayable log, or just decoupling two parts of a system without standing up new infrastructure.
+- **Angle:** Compares the five on model, message replay, hosting, and .NET client experience, then argues that picking on throughput benchmarks alone reliably produces the wrong answer. Makes a practical point most comparisons skip entirely: .NET teams rarely talk to these brokers directly, so the abstraction sitting in between - MassTransit, NServiceBus, or Rebus - often matters as much as the broker choice itself. The managed options (Service Bus, SQS) are evaluated on cloud coupling rather than feature count.
+- **Tags:** `dotnet`, `messaging`, `architecture`, `microservices`, `devops`
+
+### .NET Background Job Libraries (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-background-job-libraries-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then Hangfire, Quartz.NET, Coravel, Wolverine, Azure Functions timer triggers
+- **Pitch:** A `BackgroundService` with a `PeriodicTimer` is genuinely enough for one job. It stops scaling around the third - no persistence, no retry policy, no job history, no cron expressions, no coordination across instances, and an unhandled exception silently kills the loop for the rest of the process's lifetime.
+- **Angle:** Compares the five on persistence, dashboard, clustering, and setup effort, starting from what .NET already gives you for free so the comparison begins at the point a library is actually justified. These aren't all solving the same problem - two are schedulers, Wolverine is a messaging framework that happens to include scheduling, and Azure Functions is a managed runtime rather than a library - so matching the tool to the system matters more than ranking them. Hangfire is the default for most teams; Quartz.NET earns its extra configuration only when the scheduling rules are genuinely complex.
+- **Tags:** `dotnet`, `tooling`, `architecture`, `devops`, `developer-productivity`
+
+### .NET Mocking Libraries (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-mocking-libraries-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then Moq, NSubstitute, FakeItEasy, JustMock, Rocks
+- **Pitch:** Mocking in .NET used to be a two-horse syntax preference between Moq and NSubstitute. Moq 4.20's SponsorLink - which hashed a developer's Git email and sent it to a server without clear consent - was reverted within days, but the trust damage genuinely reshaped adoption, and an honest comparison can't skip it.
+- **Angle:** Compares the five on mechanism, syntax style, what they can actually mock, license, and community trajectory. The technical through-line is the same one running through the mapping and testing series - runtime proxy generation versus compile-time source generation - with Rocks representing the AOT-compatible, compile-time-checked direction. Doesn't declare Moq unusable; it gives the full picture, including that JustMock is the only option here that can mock statics, sealed types, and non-virtual members, which makes it the specific answer for legacy code.
+- **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### .NET Architecture Quality Tools (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-architecture-quality-tools-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then SonarQube, NetArchTest, ArchUnitNET, NDepend, Roslyn Analyzers
+- **Pitch:** A team agrees the domain layer shouldn't reference infrastructure, everyone nods, and eighteen months later a deadline-pressured change adds exactly that reference. Code review might catch it. These tools make it a build failure instead of a hope.
+- **Angle:** Splits the five into two categories that routinely get conflated - architecture-testing libraries where rules are ordinary unit tests (NetArchTest, ArchUnitNET) versus broad static analysis platforms where architectural rules are one capability among many (SonarQube, NDepend, Roslyn Analyzers). Reframes the question from "which is best" to "which layer of enforcement am I adding," since feedback speed differs by orders of magnitude between compiler-integrated analysis, a test run, and a CI batch job. Pairs directly with the Clean Architecture post's claim that a dependency rule isn't real until something enforces it.
+- **Tags:** `dotnet`, `architecture`, `code-quality`, `testing`, `ci-cd`
+
+### CI/CD Platforms for .NET (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-cicd-platforms-dotnet-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then GitHub Actions, Azure DevOps, GitLab CI, Jenkins, TeamCity
+- **Pitch:** GitHub Actions leads organizational adoption at roughly a third of teams, with Jenkins and GitLab CI behind it. But adoption share answers "what do most teams use," not "what should this team use" - and for .NET specifically the answer depends mostly on where the code already lives and how much governance the organization actually needs.
+- **Angle:** Compares the five on hosting model, repo coupling, .NET-specific fit, governance, and cost model. The research is consistent that there's no universal winner, so the comparison resolves on repo host and control appetite rather than a feature matrix. Gives Azure DevOps an honest hearing as frequently the cheapest option for Windows-heavy workloads and the strongest out-of-the-box governance story, which is easy to miss when GitHub Actions is the unexamined default.
+- **Tags:** `dotnet`, `ci-cd`, `devops`, `platform-engineering`, `tooling`
+
+### .NET Deployment Options (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-deployment-options-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then Azure Container Apps, AWS ECS/Fargate, Docker + Kubernetes, IIS, .NET Aspire deploy workflow
+- **Pitch:** Four of these five paths are container-based, so "do we use containers" isn't the real question. The differentiator is how much orchestration and operational burden you keep versus hand to a managed platform - a team running Kubernetes for a service taking 500 requests a day is spending engineering time on something that isn't the problem.
+- **Angle:** Compares the five on operational overhead, portability, and cloud coupling, carrying forward the Microservices post's argument that infrastructure should be sized to the control you actually need rather than to what sounds most modern. That's why IIS stays in the comparison as a valid answer for Windows and on-premises environments instead of a legacy footnote. Treats .NET Aspire as a target-agnostic tooling layer that generates manifests for whichever of the others you pick, not as a competing runtime.
+- **Tags:** `dotnet`, `deployment`, `containers`, `platform-engineering`, `devops`
+
+### Auth & Identity for .NET (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-auth-identity-solutions-dotnet-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then ASP.NET Core Identity, Microsoft Entra External ID, Duende IdentityServer, Keycloak, Auth0
+- **Pitch:** Duende IdentityServer - the direct successor to the free, widely-loved IdentityServer4 - now requires a commercial license for production use above a revenue threshold. That single change reshaped how .NET teams think about self-hosted identity, and this series runs into the same commercial-shift pattern the mapping and mocking series both hit.
+- **Angle:** Compares the five across three genuinely different categories: an embedded user-management library, self-hosted protocol servers you operate yourself, and fully managed identity platforms you configure rather than run. The decision isn't a feature checklist, it's how much of the identity stack you want to own - including uptime, scaling, and security patching, which is where self-hosting costs are usually underestimated. Names OpenIddict as the free, .NET-native alternative that rose directly out of Duende's licensing change, even though it isn't one of the five deep dives.
+- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `architecture`
+
+### .NET IDEs & Editors (6 posts)
+- **Status:** `idea`
+- **Source:** `docs/article-ideas/top-5-dotnet-ides-editors-compared.md` + 5 getting-started drafts
+- **Series:** Top 5 comparison, then Visual Studio, JetBrains Rider, VS Code, Cursor, Neovim
+- **Pitch:** "Visual Studio on Windows" stopped being the automatic answer. Rider has a real claim to being better for day-to-day C# work, VS Code became genuinely solid once the C# Dev Kit shipped, and in mid-2026 JetBrains extended full C# tooling - debugging included - to Cursor and other VS Code-compatible editors.
+- **Angle:** Compares the five on platform support, cost, C# intelligence, and debugging, with Neovim included specifically for the terminal-first crowd rather than as a novelty entry. States the licensing detail that drives most of the current landscape upfront: Microsoft's C# Dev Kit is licensed for genuine VS Code only and does not run on Cursor or other forks, which is exactly the gap JetBrains moved into. Deliberately scoped to the core development experience and cross-references the AI Coding Agents track rather than re-litigating agent capability.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`, `ai-coding-tools`
+
+---
+
 ## 📅 January-February 2027 - Open
 
 Eight posts to kick off the year with foundational multi-cloud patterns and cost optimization strategies.
@@ -982,6 +1300,10 @@ Change the `**Status:**` field in-place as the post moves through the pipeline:
 | `draft` | Outline or first draft exists (link the draft file or branch) |
 | `in-progress` | Actively being written or revised |
 | `published` | Live on the site - record the date in `**Published:**` and the source path in `**File:**` |
+
+### Linking draft source material
+
+When an entry has existing draft material in `docs/article-ideas/`, add a `- **Source:**` line with the path to that file, in the position `- **File:**` would otherwise occupy. It applies only to `idea` entries that have something to write from but no post in `src/posts/` yet, and it's replaced by `- **File:**` once the post is actually written into `src/posts/`.
 
 ### Linking GitHub Issues
 
