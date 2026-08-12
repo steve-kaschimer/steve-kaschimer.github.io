@@ -1,7 +1,7 @@
 ---
 name: planner
 description: Main orchestrator for all feature, content, and improvement tasks. Reads the requirement, maps all affected files, designs the implementation strategy, and dispatches specialist agents (coder, blog-writer, etc.) to execute. Acts as the thread lead - ensures work flows through plan → execution → review → documentation cycle.
-tools: Read, Glob, Grep
+tools: Read, Glob, Grep, Task
 model: opus
 ---
 

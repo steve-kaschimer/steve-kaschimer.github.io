@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-08-14
 image: /images/posts/2026-08-14-hero.webp
+image_alt: "A dev, staging, and production stack where the last stage waits behind reviewer, wait-timer, and branch rules, beside a secret card and a variable card."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, amber, and off-white accents. The central composition is a vertical deployment pipeline rendered as three connected stage blocks: 'dev' in grey, 'staging' in teal with a green checkmark badge, and 'production' in cobalt with a lock icon and an 'awaiting review' amber badge. Between the staging and production blocks, a horizontal protection-rule panel shows three labeled rows: a reviewer avatar icon labeled 'Required reviewer', a clock icon labeled 'Wait 15 min', and a git branch icon labeled 'Branch: main only'. To the right, two side-by-side code cards - the left labeled 'Environment Secret' in amber with a lock glyph and the text 'STRIPE_SECRET_KEY', the right labeled 'Environment Variable' in teal with a config glyph and the text 'API_BASE_URL = https://api.prod.example.com'. The mood is precise, governance-minded, and engineering-first - the feeling of a deployment gate that was designed, not bolted on."
 layout: post.njk
 site_title: Tech Notes

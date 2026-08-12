@@ -18,7 +18,18 @@ The repeatable process for taking an editorial-calendar entry from `idea` to a m
 7. Update the `editorial-plan.md` entry: `Status: idea` → `draft`, add the `File:` line.
 8. Commit content and any incidental infra fixes (e.g. a missing Prism language component) as **separate commits** - keeps `git log`/PR history reviewable.
 9. Open or update a PR, with **`Closes #<issue-number>`** in the body so merging auto-closes the tracking issue - this was missed for #125-129 (all closed manually after the fact, 2026-07-15) and shouldn't be repeated. If a PR from the same branch already exists and is still open, new commits land on it automatically - update the PR title/body to summarize everything currently included, since these PRs tend to accumulate multiple posts/fixes across a working session.
-10. Hero image is a separate, later step - see `docs/decisions/2026-07-12-hero-images-are-a-manual-handoff.md`. A post ships and can even go live without one; it falls back to a gradient header/card.
+10. Hero image is a separate, later step - see `docs/decisions/2026-07-12-hero-images-are-a-manual-handoff.md`. A post ships and can even go live without one; it falls back to a gradient header/card. Write `image_prompt` for large, bold, centrally-composed glyphs with little to no body text: `post.njk` crops a 3:2 source hard into a 384px-tall `object-cover` box at 60% opacity under a dark gradient, and `index.njk`'s smallest responsive card variant is only 400px wide, so fine text and off-center detail don't survive either rendering context. Once the maintainer hands back a PNG generated from `image_prompt`, convert it to the standard asset set:
+    ```bash
+    convert <slug>-hero.png -quality 95 <slug>-hero.webp
+    convert <slug>-hero.png -resize 400x -quality 95 <slug>-hero-400w.webp
+    convert <slug>-hero.png -resize 600x -quality 95 <slug>-hero-600w.webp
+    convert <slug>-hero.png -resize 800x -quality 95 <slug>-hero-800w.webp
+    ```
+    - Tooling: ImageMagick 6 (`convert`, with its built-in webp delegate - no separate `cwebp` binary needed or installed in this environment). IM7 renames the binary to `magick`; check `convert -version` if a command isn't found.
+    - The full-size `.webp` is a straight format conversion with **no resize** - it keeps the source's native resolution (current sources are 1536x1024, 3:2). Don't describe it as 1200x800: that's just the `width`/`height` layout-hint attributes in `index.njk`/`post.njk` for aspect-ratio reservation (also 3:2, so no layout shift), not a literal resize target.
+    - Resized variants land at 400x267 / 600x400 / 800x533 for a 1536x1024 source.
+    - Commit the `.png` source alongside the `.webp` set (provenance, per the 2026-07-12 ADR) - don't delete it after conversion.
+    - Set the post's `image` front-matter to the absolute `/images/posts/<slug>-hero.webp` path once the set exists - see the front-matter gotcha in `CLAUDE.md`'s "Hero images" note (wrong path or extension breaks the responsive `srcset` or 404s on the post page while still looking fine on the homepage).
 11. Once merged, verify the linked issue actually closed (auto-close only fires if the PR that contains `Closes #N` is the one GitHub merges to the default branch - a squash-merge from a PR without that text in its final body won't trigger it). Also double check the issue's content actually matches what got published - the issue's `Pitch`/`Angle` was written before the post existed and can drift from what the post ended up covering.
 
 ## Example

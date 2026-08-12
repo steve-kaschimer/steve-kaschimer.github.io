@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-08-28
 image: /images/posts/2026-08-28-hero.webp
+image_alt: "A pattern definition checked against must-match and must-not-match test strings, a push blocked by a shield, and alerts feeding a dashboard chart."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, amber, and off-white accents. The central composition is a code review panel showing a YAML pattern definition ('name: internal-db-connection-string', 'regex: ...') with a green checkmark next to two 'test: must match' strings and a red X next to one 'test: must not match' string. Below it, a git push is intercepted by a translucent amber shield labeled 'Push Protection' with a blocked commit icon. To the right, a small alert card flows from a GitHub octocat-less hexagon icon through a webhook arrow into a dashboard panel with a bar chart labeled 'Alerts by pattern, last 30 days'. The mood is precise, protective, and quietly technical - the feeling of a net that was custom-built for exactly what this org's secrets look like."
 layout: post.njk
 site_title: Tech Notes

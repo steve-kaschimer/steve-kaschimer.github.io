@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2027-01-07
 image: /images/posts/2027-01-07-hero.webp
+image_alt: "A 48 MB package on one side and a 1.2 GB layered image on the other, above a cost curve plotted against memory with a marked dot at its knee."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. The composition is split into two halves by a thin vertical divider. Left half labeled 'ZIP' shows a small flat package icon with a compact size tag '48 MB' in off-white and a fast teal duration bar. Right half labeled 'Container Image' shows a layered stack of rectangles (image layers) with a size tag '1.2 GB' in amber and a slightly longer duration bar. Below the split, a rising-then-flattening curve plots memory on the x-axis against total cost on the y-axis, with a marked sweet-spot dot glowing teal near the knee of the curve. In the lower corner, a monospaced price label '$0.20 / 1M' glows teal. The mood is precise, engineering-first, cost-aware. Avoid: cloud provider logos, brand colors, circuit-board textures, generic gears or dollar-sign clip art."
 layout: post.njk
 site_title: Tech Notes

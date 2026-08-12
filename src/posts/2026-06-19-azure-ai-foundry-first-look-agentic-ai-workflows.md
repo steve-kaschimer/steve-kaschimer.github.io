@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-06-19
 image: /images/posts/2026-06-19-hero.webp
+image_alt: "An architecture board of hub, project, deployment, and connection zones, tracing one request from a chat input through an agent and a tool to a response."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and soft violet accents. The center shows a clean architecture board split into four labeled zones: Hub, Project, Deployments, and Connections. A single request flow starts at a chat input card, passes through an Agent node, calls a small Tool node (function icon), then reaches a Model Deployment tile and returns a response card. On the side, a compact comparison panel lists three columns: Foundry, OpenAI Assistants, LangChain, with checkmarks for managed runtime, deployment control, and orchestration flexibility. The composition should feel practical and developer-first, with crisp labels and no marketing visuals. Avoid provider logos, humanoid robots, and abstract brain imagery."
 layout: post.njk
 site_title: Tech Notes

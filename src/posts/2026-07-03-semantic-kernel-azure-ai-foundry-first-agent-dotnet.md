@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-07-03
 image: /images/posts/2026-07-03-hero.webp
+image_alt: "A kernel code card above a three-step trace showing a user question, a tool call, and an answer, ending in a container deployment step."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric violet, and off-white accents. The central composition is a vertical agent execution flow rendered as a clean diagram. At the top, a C# code card labeled 'Kernel' shows two connected boxes: 'AzureOpenAIChatCompletion' (teal) and 'DevOpsPlugin' (violet). Below it, an execution trace panel shows three steps in monospaced type: '1. User: What is the build status?' → '2. Tool call: get_pipeline_status(\"api-service\")' → '3. Agent: The api-service pipeline is passing.' Each step is connected by a downward arrow. To the right, a compact Azure AI Foundry card shows three fields: Hub, Project, and Deployment, stacked with a small connection indicator. At the bottom, a GitHub Actions YAML card with a Docker and Container Apps icon shows 'azure/container-apps-deploy-action' highlighted in teal. The mood is precise, developer-first, and architectural - no marketing language, no humanoid figures, no abstract AI imagery."
 layout: post.njk
 site_title: Tech Notes

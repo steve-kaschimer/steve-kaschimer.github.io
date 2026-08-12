@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-11-06
 image: /images/posts/2026-11-06-hero.webp
+image_alt: "A decision tree branching through three diagnostic questions to prompting, retrieval, or training, ending in a fifty-fifty traffic split between two models."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and teal accents. A decision-tree diagram: a diamond node labeled 'Model gets format wrong?' branches left to a box labeled 'Prompt Engineering' and right down through two more diamonds - 'Missing domain knowledge?' branching to a box labeled 'RAG', and 'Inconsistent despite good examples?' branching to a box labeled 'Fine-Tune'. The fine-tune box connects down to a small training-data icon (stacked document pages) feeding into a gauge/dial labeled 'Base vs. Fine-Tuned' with two comparison bars, then to a final node showing a traffic-split icon '50/50' between two model boxes. The mood is analytical and decision-focused - a flowchart for avoiding an expensive default, not a fine-tuning tutorial."
 layout: post.njk
 site_title: Tech Notes
@@ -32,7 +33,7 @@ The framework, as a single test before starting any fine-tuning work: **have you
 
 Azure AI Foundry's supervised fine-tuning expects the same chat-completion message format your application already sends the model, as JSONL - one training example per line:
 
-```jsonl
+```json
 {"messages": [{"role": "system", "content": "You triage support tickets into a priority and category."}, {"role": "user", "content": "Customer says checkout is throwing a 500 error on the payment step, happening to multiple users since this morning."}, {"role": "assistant", "content": "{\"priority\": \"P1\", \"category\": \"payments\", \"reasoning\": \"Multi-user impact on a revenue-critical path, recent onset suggests a regression.\"}"}]}
 {"messages": [{"role": "system", "content": "You triage support tickets into a priority and category."}, {"role": "user", "content": "User asking how to change their display name in account settings."}, {"role": "assistant", "content": "{\"priority\": \"P4\", \"category\": \"account-settings\", \"reasoning\": \"Self-service question, no functional impact, documentation would resolve it.\"}"}]}
 ```

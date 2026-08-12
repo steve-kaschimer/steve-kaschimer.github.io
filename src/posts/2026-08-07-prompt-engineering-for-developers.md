@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-08-07
 image: /images/posts/2026-08-07-hero.webp
+image_alt: "A prompt card split into role, context, constraints, and output format bands, with a test fixture panel and two versions scored against each other."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric violet, and off-white accents. The central composition is a structured system prompt rendered as a code card, divided into four labeled bands: 'Role' (teal), 'Context' (cobalt), 'Constraints' (amber), and 'Output Format' (violet) - each band is a distinct horizontal block with monospaced text inside. To the left, a small test-dataset panel shows three rows of a JSONL fixture: input question, expected_tool, and a pass/fail badge in green or red. To the right, a compact Azure AI Foundry prompt flow diagram: a dataset node feeding into two parallel flow nodes labeled 'Prompt v1' and 'Prompt v2', both converging into an evaluator node that outputs a metrics bar chart with 'tool_accuracy' and 'format_compliance' labels. The mood is precise, engineering-first, and methodical - the feeling of a system designed to be tested, not guessed."
 layout: post.njk
 site_title: Tech Notes
@@ -26,7 +27,7 @@ The most common failure mode in agent system prompts is treating them as a pream
 
 A well-structured agent system prompt has four sections, each doing specific work:
 
-**Role** establishes identity and capability scope. Not "you are a helpful assistant" - that's too broad. Something like: "You are a CI/CD operations agent for Contoso Engineering. You have access to tools for querying pipeline status, triggering deployments, and opening GitHub issues. You do not have access to production databases or secret management systems."
+**Role** establishes identity and capability scope. Not "you are a helpful assistant" - that's too broad. Something like: "You are a CI/CD operations agent for Some Co.. You have access to tools for querying pipeline status, triggering deployments, and opening GitHub issues. You do not have access to production databases or secret management systems."
 
 **Context** provides the operational facts the agent needs that won't arrive in the user message: the environment it's operating in, the downstream consumers of its output, relevant constraints about those consumers. If your agent's answers are consumed by another service rather than displayed to a human, this section should say so.
 
@@ -37,7 +38,7 @@ A well-structured agent system prompt has four sections, each doing specific wor
 Here's what this looks like assembled:
 
 ```
-You are a CI/CD operations agent for Contoso Engineering.
+You are a CI/CD operations agent for Some Co..
 
 CONTEXT
 You have access to three tools: get_pipeline_status, trigger_deployment, and create_github_issue.
@@ -134,7 +135,7 @@ Azure AI Foundry's prompt flow is the testing harness for this. A flow is a DAG 
 
 Start with a test dataset. Store it as a JSONL file in your project:
 
-```jsonl
+```json
 {"question": "Is the api-service pipeline passing?", "expected_tool": "get_pipeline_status", "expected_action": "read"}
 {"question": "Deploy the latest build.", "expected_tool": null, "expected_action": "clarify"}
 {"question": "Deploy to staging.", "expected_tool": "trigger_deployment", "expected_action": "write"}
