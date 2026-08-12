@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-11-13
 image: /images/posts/2026-11-13-hero.webp
+image_alt: "Policy files feeding a single gate that evaluates a flagged base-image line in a diff and returns a failed status check with an actionable message."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, amber, and teal accents. On the left, a stack of small file icons labeled 'required-labels.rego', 'allowed-base-images.rego', 'workflow-permissions.rego' feeding into a single hexagonal gate icon labeled 'OPA' with a small owl-silhouette mark. A PR diff panel in the center shows a Dockerfile line highlighted in amber reading 'FROM ubuntu:latest' with a small warning triangle. An arrow flows from the OPA gate to a GitHub PR status-check row showing three checks: two green checkmarks and one red X labeled 'policy: base-image-not-allowed', with a short actionable message beneath it. The mood is precise and mechanical - compliance rules enforced as a deterministic gate, not a reviewer's memory."
 layout: post.njk
 site_title: Tech Notes

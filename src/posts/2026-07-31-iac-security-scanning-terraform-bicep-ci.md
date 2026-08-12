@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-07-31
 image: /images/posts/2026-07-31-hero.webp
+image_alt: "Infrastructure definition files feeding two parallel scanners whose findings land in a security panel, where a failed build blocks the merge arrow."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, crimson, and off-white accents. The central composition is a split-lane GitHub Actions workflow: the left lane shows a Terraform HCL file and a Bicep file feeding into two parallel scanning steps - one labeled 'checkov' in teal, one labeled 'tfsec' in amber - each emitting a SARIF file represented as a small document icon. The right lane shows the SARIF icons flowing upward into a stylized GitHub Security tab panel with a short list of findings: two in red labeled 'HIGH', one in amber labeled 'MEDIUM', and a 'build failed' badge blocking a merge arrow. In the lower section, an inline code comment in monospaced type - '#checkov:skip=CKV_AWS_18:reason' - glows teal, illustrating a reviewed suppression. The mood is precise, security-minded, and engineering-first - the feeling of misconfiguration caught at the PR gate, not discovered post-breach."
 layout: post.njk
 site_title: Tech Notes

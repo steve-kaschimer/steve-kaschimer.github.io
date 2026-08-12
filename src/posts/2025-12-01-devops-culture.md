@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2025-12-01
 image: /images/posts/2025-12-01-hero.webp
+image_alt: "Three loop diagrams for flow, feedback, and continuous learning, with two figures below facing each other across a shared metrics panel."
 image_prompt: "A wide-format dark editorial illustration on a near-black background with warm amber, muted teal, and off-white accents. The composition is organized around the Three Ways: three interconnected loop diagrams arranged horizontally - 'Flow' (a smooth left-to-right arrow from a developer node to an operations node, unobstructed), 'Feedback' (a bidirectional loop between pipeline stages with pulse markers at each handoff), and 'Continuous Learning' (a gently rotating spiral suggesting iteration and blameless experimentation). At the bottom of the composition, two silhouetted figures - one at a code editor, one at a monitoring dashboard - face each other across a shared metrics panel, suggesting collaboration across a former wall. Behind the figures, a faint timeline glow labels '2009 Velocity Conf' as a historical anchor point. Mood: humanistic and reflective - less about machines, more about people choosing to work differently together. Avoid: ping-pong table imagery, 'move fast and break things' aesthetics, gear-and-wrench iconography, org-chart diagrams, GitHub Octocat."
 layout: post.njk
 site_title: Tech Notes

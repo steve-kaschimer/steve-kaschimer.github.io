@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-08-21
 image: /images/posts/2026-08-21-hero.webp
+image_alt: "A workflow where the deploy step stays locked behind an evaluation job that expands into three scored metric rows, each with a pass threshold."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, amber, and off-white accents. The central composition is a GitHub Actions workflow panel showing three sequential jobs: 'unit-tests' (green checkmark), 'llm-eval' (amber clock, then green), and 'deploy' (locked until llm-eval passes). The llm-eval job expands into three stacked metric rows: a ruler icon labeled 'Format valid: 100%' in teal, a waveform icon labeled 'Semantic similarity: 0.87' in cobalt, and a gavel icon labeled 'Coherence: 4.2 / 5' in violet - each with a threshold annotation in amber ('≥ 0.80', '≥ 4.0'). To the right, a compact JSONL dataset card shows three rows of test input/expected output pairs feeding into an Azure AI Foundry evaluator node. The mood is systematic, quality-minded, and CI-native - the feeling of evaluation as infrastructure, not an afterthought."
 layout: post.njk
 site_title: Tech Notes

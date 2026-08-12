@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-07-10
 image: /images/posts/2026-07-10-hero.webp
+image_alt: "Two workflow paths compared, a four-minute install against an eighteen-second restore, above a three-level key fallback chain."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, electric teal, and off-white accents. The central composition is a GitHub Actions workflow diagram split into two vertical paths. Left path, labeled 'cache miss', shows a full dependency install step with a red-tinted duration bar labeled '4m 12s'. Right path, labeled 'cache hit', shows a restore step with a teal-tinted duration bar labeled '18s'. Between the paths, a cache key expression in monospaced type: 'ubuntu-npm-a3f9c21d' glows teal. Below the paths, a three-level fallback chain: a solid box labeled 'exact key', connected by a downward arrow to a dashed box labeled 'restore-key prefix', connected by a second arrow to a dashed box labeled 'base'. At the bottom, a small hash icon labeled 'hashFiles()' in off-white. The mood is precise, engineering-first, and performance-minded"
 layout: post.njk
 site_title: Tech Notes

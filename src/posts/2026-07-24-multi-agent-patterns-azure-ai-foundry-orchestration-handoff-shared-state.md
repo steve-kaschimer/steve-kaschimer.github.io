@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-07-24
 image: /images/posts/2026-07-24-hero.webp
+image_alt: "Three stacked diagrams - a sequential chain, a fan-out that converges, and a planner delegating to specialists - beside a correlated trace panel."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with cobalt blue, teal, and electric violet accents. The central composition shows three labeled architecture diagrams arranged in a column: 'Sequential Pipeline' (three agent nodes connected left-to-right by arrows), 'Parallel Fan-Out' (one orchestrator node at top fanning out to three parallel agent nodes, then converging to a results aggregator), and 'Hierarchical Orchestrator' (a planner node at top with three tool-call arrows pointing down to three specialist agent nodes). Each node is a clean rounded rectangle with a small function icon and monospaced label. On the side, a compact tracing panel shows a correlated run_id flowing through three agent spans with timing bars. The mood is architectural and developer-first."
 layout: post.njk
 site_title: Tech Notes

@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-07-17
 image: /images/posts/2026-07-17-hero.webp
+image_alt: "A scan beam sweeping a layered image stack and clustering vulnerability badges at the base layer, beside an alert panel and a failed build marker."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. The central composition is a container image represented as a layered stack of rectangles - FROM base, RUN install, COPY app - each layer a slightly lighter shade of charcoal. A scanning beam sweeps horizontally across the stack in teal, and where it intersects the base layer, a cluster of small CVE badge icons appears: two in red labeled 'CRITICAL', one in amber labeled 'HIGH', several in muted grey labeled 'MEDIUM'. To the right: a stylized GitHub Security tab panel with a short list of alerts - the two CRITICAL ones highlighted in red, the rest greyed out - and a small 'build failed' badge in red above the panel. In the lower left: a pinned digest reference in monospaced type, 'node:20-alpine@sha256:a3f9...', glowing teal to indicate correctness. At the top: a minimal GitHub Actions workflow trigger badge. Mood: precise, security-minded, actionable - the feeling of a well-configured gate, not a checkbox."
 layout: post.njk
 site_title: Tech Notes

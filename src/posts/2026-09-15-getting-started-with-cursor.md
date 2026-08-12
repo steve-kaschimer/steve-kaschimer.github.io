@@ -3,6 +3,7 @@ author: Steve Kaschimer
 date: 2026-09-15
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. Composition is an abstract editor window in thin off-white outline filling most of the frame, its sidebar rendered as a short stack of folder rows with one row highlighted teal and labeled '.cursor/rules' in small monospaced type. Three nested brackets of increasing size sit inside the editor body, smallest to largest, labeled 'inline', 'chat', and 'agent', each drawn in a progressively brighter teal to suggest escalating scope. Along the right edge, four small amber plug glyphs connect outward to faint dashed lines that trail off frame, representing MCP servers. A thin amber meter runs across the bottom edge, partially filled, implying metered credit usage. Mood is editor-native, layered, and cost-aware. Avoid: vendor logos, brand colors, circuit-board textures, cursor-arrow clip art, generic gears or lightbulb icons."
 image: /images/posts/2026-09-15-hero.webp
+image_alt: "An editor window with a highlighted rules folder, three nested brackets scaling from inline to chat to agent, and a partly filled usage meter below."
 layout: post.njk
 site_title: Tech Notes
 summary: "Cursor feels like VS Code until you open .cursor/rules/ and MCP config. A setup guide for scoped rules, the three AI surfaces, and keeping credits in check."

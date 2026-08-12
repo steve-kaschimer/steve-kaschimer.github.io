@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-06-26
 image: /images/posts/2026-06-26-hero.webp
+image_alt: "A three-column task board fed by a scheduled workflow card and an API mutation panel, with custom field types and their badges listed above it."
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and slate-blue accents. The central composition shows a GitHub Projects board with three labeled columns: 'Todo', 'In Progress', 'Done'. Above the board, a compact field configuration panel lists three custom field types with type badges: Iteration (calendar icon, teal), Single Select (dropdown icon, amber), Number (hash icon, slate-blue). To the right, a narrow terminal panel shows a GraphQL mutation snippet with highlighted field names and values in monospaced type. At the bottom, a GitHub Actions workflow YAML card shows a scheduled cron trigger and a curl call to api.github.com/graphql. Connecting lines flow from the workflow card into the project board, showing automation. The overall mood is precise, developer-first, and practical. Avoid: Kanban marketing imagery, generic gear icons, humanoid figures, abstract circuit textures."
 layout: post.njk
 site_title: Tech Notes

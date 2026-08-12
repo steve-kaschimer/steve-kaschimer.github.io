@@ -2,6 +2,7 @@
 author: Steve Kaschimer
 date: 2026-04-24
 image: /images/posts/2026-04-24-hero.webp
+image_alt: "Two logs side by side: a blurred column of one-word entries like fix and wip on the left, and crisp structured subject lines on the right."
 image_prompt: "A dark-mode terminal aesthetic on a near-black background with deep indigo and amber accent tones. Split composition: on the left, a blurred, visually chaotic git log output showing commit messages like 'fix', 'wip', 'more fixes', 'update', 'actually fix', 'pr feedback' - rendered in faded, desaturated red-orange, each message bleeding together into noise. On the right, a sharp, crisp git log showing well-structured Conventional Commits messages with type prefixes, scope indicators, and clean subject lines - rendered in bright amber and cool white, clearly readable and ordered. A thin vertical dividing line separates the two halves, glowing faintly. Below both panels, a faint horizontal timeline suggests git history stretching back into the past. Mood: the satisfaction of order over entropy, the feeling of a codebase you can actually navigate. Avoid: cartoon characters, GitHub Octocat, generic keyboard imagery, abstract circuit board textures."
 layout: post.njk
 site_title: Tech Notes
