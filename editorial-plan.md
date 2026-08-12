@@ -32,21 +32,21 @@ Ten posts covering the blog's first months - DevSecOps foundations, GitHub platf
 - **Angle:** A short orientation post: why Eleventy (template-language flexibility, fast builds, no client-side JS by default), the minimal `npm install` / `npx @11ty/eleventy --serve` setup, and the three concepts that carry most of the work - layouts, collections, and filters. Ends with next steps rather than depth: styling, custom filters, plugins, and deploying to GitHub Pages or Netlify.
 - **Tags:** `eleventy`, `developer-productivity`
 
-### Secrets Management on GitHub: Best Practices and Pitfalls
-- **Status:** `published`
-- **Published:** 2025-11-05
-- **File:** `src/posts/2025-11-10-secrets-management-on-github-best-practices-and-pitfalls.md`
-- **Pitch:** Version control is designed to remember everything forever, which is exactly why a committed credential is not fixed by a follow-up commit that removes it.
-- **Angle:** Covers GitHub's three relevant surfaces - secret scanning as detection, environment secrets as the storage mechanism, and Dependabot as defense in depth for the libraries that handle those secrets. Spends real time on the failure modes: assuming private repos are safe, never rotating, and losing track of secret sprawl across repos and environments. Recommends scoping secrets at repository/organization/environment levels by least privilege and integrating an external manager (Vault, Key Vault) once org scale demands it.
-- **Tags:** `security`, `github`, `devsecops`
-
 ### Security as Code with GitHub Actions: Automating DevSecOps
 - **Status:** `published`
-- **Published:** 2025-11-10
+- **Published:** 2025-11-03
 - **File:** `src/posts/2025-11-03-security-as-code-making-it-real-with-github-actions.md`
 - **Pitch:** Manual security review doesn't survive contact with teams that ship several times a day - codifying the checks as workflow definitions is the only version that scales.
 - **Angle:** Defines Security as Code in terms of what it replaces (ad-hoc scans, manual gates), then covers the three GitHub Actions features that make it practical at org scale: reusable workflows for consistency across repos, Marketplace actions for layered coverage (Snyk, Trivy, Checkov), and matrix builds for environment-specific vulnerabilities. Includes a pull-request workflow running CodeQL and secret scanning, plus the standard failure modes - false positives, developer resistance, and pipeline slowdown.
 - **Tags:** `github-actions`, `devsecops`, `ci-cd`
+
+### Secrets Management on GitHub: Best Practices and Pitfalls
+- **Status:** `published`
+- **Published:** 2025-11-10
+- **File:** `src/posts/2025-11-10-secrets-management-on-github-best-practices-and-pitfalls.md`
+- **Pitch:** Version control is designed to remember everything forever, which is exactly why a committed credential is not fixed by a follow-up commit that removes it.
+- **Angle:** Covers GitHub's three relevant surfaces - secret scanning as detection, environment secrets as the storage mechanism, and Dependabot as defense in depth for the libraries that handle those secrets. Spends real time on the failure modes: assuming private repos are safe, never rotating, and losing track of secret sprawl across repos and environments. Recommends scoping secrets at repository/organization/environment levels by least privilege and integrating an external manager (Vault, Key Vault) once org scale demands it.
+- **Tags:** `security`, `github`, `devsecops`
 
 ### Shift Left Without Slowing Down: DevSecOps Pipeline Design
 - **Status:** `published`
@@ -542,7 +542,7 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 - **File:** `src/posts/2026-08-25-getting-started-with-claude-code.md`
 - **Pitch:** Claude Code installs in under a minute, which is exactly why most people stop there and end up with a chatbot that happens to have file access. Everything that makes it a programmable agent lives in the setup skipped on day one.
 - **Angle:** Covers the install paths (native installer vs. npm), then the three things that actually decide whether the setup holds up: `CLAUDE.md` for standing project instructions, the permissions model for what the agent can do without asking, and hooks for making non-negotiables deterministic instead of hoping the model remembers an instruction. Includes a verification checklist, guidance on what subagents are genuinely for, and a direct comparison with GitHub Copilot.
-- **Tags:** `ai-agents`, `claude-code`, `agentic-development`, `developer-productivity`, `tooling`
+- **Tags:** `ai-agents`, `ai-coding-tools`, `agentic-development`, `developer-productivity`, `tooling`
 
 ### Getting Started with GitHub Copilot: Setup, Environment, and Best Practices
 - **Status:** `draft`
@@ -550,7 +550,7 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 - **File:** `src/posts/2026-09-01-getting-started-with-github-copilot.md`
 - **Pitch:** Copilot is the AI tool most developers touch first because it already lives in their editor - and that familiarity is why most teams never get past inline autocomplete. Agent mode and the cloud coding agent are there; they just don't turn themselves on.
 - **Angle:** Walks the layered instruction system - `.github/copilot-instructions.md` for repo-wide rules, `AGENTS.md` as the cross-tool alternative worth maintaining if you only keep one file, and `.github/instructions/*.instructions.md` with `applyTo` globs for monorepos with per-directory conventions. Draws a hard line between in-editor agent mode (watch and interrupt) and the cloud coding agent (assign an issue, get a PR), and includes the one-time onboarding pass that measurably improves how often the cloud agent's PRs clear CI.
-- **Tags:** `ai-agents`, `github-copilot`, `agentic-development`, `developer-productivity`, `tooling`
+- **Tags:** `ai-agents`, `ai-coding-tools`, `agentic-development`, `developer-productivity`, `tooling`
 
 ### Getting Started with OpenAI Codex: Setup, Environment, and Best Practices
 - **Status:** `draft`
@@ -558,7 +558,7 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 - **File:** `src/posts/2026-09-08-getting-started-with-openai-codex.md`
 - **Pitch:** Codex is built on the assumption that you'll describe a task and walk away, which makes the settings people skip when trying it quickly - sandbox mode, approval policy, `AGENTS.md` - exactly the ones that decide whether an unattended run is safe.
 - **Angle:** Covers installing the CLI, then writing an `AGENTS.md` that names your real test command and off-limits directories so Codex stops guessing. Separates the two dials people conflate: sandbox mode (`read-only`, `workspace-write`, `danger-full-access`) governs what Codex may touch, approval policy governs whether it asks first. Also covers excluding `.env` from sandbox read access explicitly rather than trusting `.gitignore`, `@codex review` / `@codex fix` on GitHub PRs, and isolated git worktrees for running parallel agents against one repo.
-- **Tags:** `ai-agents`, `openai-codex`, `agentic-development`, `developer-productivity`, `tooling`
+- **Tags:** `ai-agents`, `ai-coding-tools`, `agentic-development`, `developer-productivity`, `tooling`
 
 ### Getting Started with Cursor: Setup, Environment, and Best Practices
 - **Status:** `draft`
@@ -566,7 +566,7 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 - **File:** `src/posts/2026-09-15-getting-started-with-cursor.md`
 - **Pitch:** Cursor feels like the editor you already use right up until it doesn't, and the gap between using Cursor and using Cursor well is almost entirely in two places most people never open: `.cursor/rules/` and the MCP config.
 - **Angle:** Covers migrating off the legacy `.cursorrules` file to scoped `.cursor/rules/` files, the three AI surfaces (Tab autocomplete, chat, Agent and Background Agents) and how to match the surface to the size of the task, and connecting MCP servers to real infrastructure without over-connecting and drowning the context window. Also covers what belongs in version control and how the metered credit model actually bills - the part that surprises teams a month in.
-- **Tags:** `ai-agents`, `cursor`, `agentic-development`, `developer-productivity`, `tooling`
+- **Tags:** `ai-agents`, `ai-coding-tools`, `agentic-development`, `developer-productivity`, `tooling`
 
 ### Getting Started with Kiro: Setup, Environment, and Best Practices
 - **Status:** `draft`
@@ -574,7 +574,7 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 - **File:** `src/posts/2026-09-22-getting-started-with-kiro.md`
 - **Pitch:** Kiro makes you write the spec before any code gets generated, which genuinely feels slower than just prompting an agent - this post is an honest look at when that upfront cost pays for itself and when it's pure overhead.
 - **Angle:** Covers generating steering documents into `.kiro/steering/` and why stale steering is worse than none, the three-phase spec flow (requirements in EARS notation, then design, then an ordered task breakdown), and event-driven hooks as JSON under `.kiro/hooks/` that fire on file save or task completion. Distinguishes vibe sessions from spec sessions, argues for committing `.kiro/` so intent is versioned alongside output, and compares the model head-to-head with Cursor.
-- **Tags:** `ai-agents`, `kiro`, `agentic-development`, `developer-productivity`, `aws`
+- **Tags:** `ai-agents`, `ai-coding-tools`, `agentic-development`, `developer-productivity`, `aws`
 
 ---
 

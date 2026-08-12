@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-A static blog ("Tech Notes") built with Eleventy (11ty) v2 and Tailwind CSS v4, deployed to GitHub Pages (`steve-kaschimer.github.io`). Content is DevOps/security/cloud-focused markdown posts under `src/posts/`.
+A static blog ("Tech Notes") built with Eleventy (11ty) v3 and Tailwind CSS v4, deployed to GitHub Pages (`steve-kaschimer.github.io`). Content is DevOps/security/cloud-focused markdown posts under `src/posts/`.
 
 ## Commands
 
@@ -15,7 +15,7 @@ A static blog ("Tech Notes") built with Eleventy (11ty) v2 and Tailwind CSS v4, 
 - `npm run build:css` - one-shot minified Tailwind build, `src/styles/input.css` -> `_site/styles/output.css`
 - `npm run deploy` - `build` + `build:css`; this is the full production build and what CI runs
 
-There is no test suite and no lint script in this repo. Node 24 is required (`.nvmrc`, `package.json#engines`, and CI all pin to it).
+There is no test suite and no lint script in this repo. Node 20+1 is required (`.nvmrc`, `package.json#engines`, and CI all pin to it).
 
 ## Architecture
 
@@ -35,7 +35,9 @@ Front matter used across templates: `layout: post.njk`, `title`, `author`, `date
 
 Filenames follow `YYYY-MM-DD-slug.md`; that date is just for ordering files on disk - the front-matter `date` is authoritative.
 
-**Hero images:** this environment's outbound network policy blocks direct calls to `api.openai.com`, so image generation can't be automated from inside a Claude Code session here. When a post is drafted without a hero image, remind the user to generate one from the post's `image_prompt` field using **ChatGPT** (their preferred tool), then hand the resulting image back so it can be converted into the standard asset set (`<slug>-hero.png` source, full-size `.webp`, plus `-400w`/`-600w`/`-800w` responsive variants at quality 95, matching the existing posts).
+**Hero images:** this environment's outbound network policy blocks direct calls to `api.openai.com`, so image generation can't be automated from inside a Claude Code session here. When a post is drafted without a hero image, remind the user to generate one from the post's `image_prompt` field using **ChatGPT** (their preferred tool), then hand the resulting image back so it can be converted into the standard asset set (`<slug>-hero.png` source, full-size `.webp`, plus `-400w`/`-600w`/`-800w` responsive variants at quality 95, matching the existing posts) using ImageMagick's `convert` (full command sequence: `docs/patterns/blog-post-authoring.md`).
+
+The `image` front-matter value **must** be an absolute path (leading `/`) ending in `.webp`, e.g. `/images/posts/2026-08-14-hero.webp` - not `.png`, and not a path missing the leading slash. `index.njk`'s responsive `srcset` does a `.webp` -> `-400w.webp`/`-600w.webp`/`-800w.webp` string replace on this value, so a `.png` path makes every replacement a silent no-op (all four `srcset` candidates resolve to the same full-size file). A path missing the leading slash resolves relative to `/posts/<slug>/` and 404s on the post page **while still working on the homepage** (which resolves image paths from `/`) - this passes a casual homepage-only check and breaks in production.
 
 ### Layouts (`src/_layouts/`)
 

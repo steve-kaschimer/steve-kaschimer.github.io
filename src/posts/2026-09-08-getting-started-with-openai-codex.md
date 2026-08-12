@@ -2,10 +2,11 @@
 author: Steve Kaschimer
 date: 2026-09-08
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. Composition centers on a translucent cube drawn in thin off-white outline, labeled 'sandbox' in small monospaced type, with a compact task card floating inside it rendered in teal. Outside the cube on the left, a single off-white arrow labeled 'hand off' points inward; on the right, a teal arrow labeled 'diff' exits toward a small stacked-lines glyph representing a pull request. Two amber dials sit beneath the cube, one marked 'sandbox mode' and one marked 'approval', drawn as flat concentric arcs at different positions to show they move independently. A faint off-white document glyph marked 'AGENTS.md' rests at the cube's base. Mood is autonomous, contained, and safety-conscious. Avoid: vendor logos, brand colors, circuit-board textures, robot figures, generic padlock or shield clip art."
+image: /images/posts/2026-09-08-hero.webp
 layout: post.njk
 site_title: Tech Notes
 summary: "Codex assumes you'll hand off a task and walk away. Getting that right means AGENTS.md, sandbox mode, and approval policy - not just installing the CLI."
-tags: ["ai-agents", "openai-codex", "agentic-development", "developer-productivity", "tooling"]
+tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-productivity", "tooling"]
 title: "Getting Started with OpenAI Codex: Setup, Environment, and Best Practices"
 ---
 
