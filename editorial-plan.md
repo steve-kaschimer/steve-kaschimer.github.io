@@ -1178,17 +1178,69 @@ Six posts on how a .NET service runs work outside the request/response cycle, pi
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Mocking Libraries (December 2027-January 2028)
 
-Six six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Background Job Libraries series ends on 2027-11-30, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET test isolates a system under test from its dependencies, picking up the Tuesday cadence directly from the Background Job Libraries track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one mocking library.
 
-### .NET Mocking Libraries (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-mocking-libraries-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then Moq, NSubstitute, FakeItEasy, JustMock, Rocks
+### The Top 5 .NET Mocking Libraries Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-12-07
+- **Source:** `docs/article-ideas/top-5-dotnet-mocking-libraries-compared.md`
+- **File:** `src/posts/2027-12-07-top-5-dotnet-mocking-libraries-compared.md`
 - **Pitch:** Mocking in .NET used to be a two-horse syntax preference between Moq and NSubstitute. Moq 4.20's SponsorLink - which hashed a developer's Git email and sent it to a server without clear consent - was reverted within days, but the trust damage genuinely reshaped adoption, and an honest comparison can't skip it.
 - **Angle:** Compares the five on mechanism, syntax style, what they can actually mock, license, and community trajectory. The technical through-line is the same one running through the mapping and testing series - runtime proxy generation versus compile-time source generation - with Rocks representing the AOT-compatible, compile-time-checked direction. Doesn't declare Moq unusable; it gives the full picture, including that JustMock is the only option here that can mock statics, sealed types, and non-virtual members, which makes it the specific answer for legacy code.
 - **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### Getting Started with Moq in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-12-14
+- **Source:** `docs/article-ideas/getting-started-with-moq.md`
+- **File:** `src/posts/2027-12-14-getting-started-with-moq.md`
+- **Pitch:** Moq's `Setup`/`Returns`/`Verify` workflow is likely the mocking syntax the largest share of .NET developers already know. The one thing worth addressing directly: the 2023 SponsorLink incident, fully removed since 4.20.2, and what pinning to a current version actually means in 2026.
+- **Angle:** Covers the `Mock<T>`/`.Object` two-part model as the most common early confusion coming from NSubstitute, `It.IsAny<T>()`/`It.Is<T>()` argument matching, and `SetupSequence` for multi-call scenarios. Settles the version question directly - no need to pin pre-4.20 - and covers `MockBehavior.Strict` for teams that specifically want unconfigured calls to fail loudly.
+- **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### Getting Started with NSubstitute in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-12-21
+- **Source:** `docs/article-ideas/getting-started-with-nsubstitute.md`
+- **File:** `src/posts/2027-12-21-getting-started-with-nsubstitute.md`
+- **Pitch:** NSubstitute's defining decision is that there's no wrapper object - the substitute itself is both the fake and the configuration target, with no `.Setup()` call and no `.Object` to unwrap.
+- **Angle:** Covers the direct-call configuration pattern as the core mental shift from Moq, `Received()`/`DidNotReceive()` as the plain-English verification vocabulary, and the `callInfo` lambda for argument-dependent responses. Direct that NSubstitute doesn't support strict mocking by design - unconfigured calls succeed silently - and frames that as a deliberate trade-off to understand, not a gap to work around.
+- **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### Getting Started with FakeItEasy in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-12-28
+- **Source:** `docs/article-ideas/getting-started-with-fakeiteasy.md`
+- **File:** `src/posts/2027-12-28-getting-started-with-fakeiteasy.md`
+- **Pitch:** FakeItEasy's entire design fits behind one idea: whatever you're doing with a fake, stubbing or verifying, it goes through the same entry point, `A.CallTo(...)`, with no separate mental model for arranging versus asserting.
+- **Angle:** Covers `A.Fake<T>()` and the single `A.CallTo(...)` API for both stubbing and verification, `A<T>.Ignored`/`A<T>.That.Matches(...)` argument matching, and the precise `MustHaveHappened...` variants for exact interaction counts. Frames the one-API consistency as FakeItEasy's core value proposition and the reason to use it deliberately rather than mixing in habits from Moq or NSubstitute.
+- **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### Getting Started with JustMock in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-01-04
+- **Source:** `docs/article-ideas/getting-started-with-justmock.md`
+- **File:** `src/posts/2028-01-04-getting-started-with-justmock.md`
+- **Pitch:** JustMock answers a question the other four libraries in this series can't: what do you do when the code under test has a static dependency, a sealed class, or a non-virtual method, and refactoring it isn't realistic right now.
+- **Angle:** Covers the free JustMock Lite tier (`Mock.Create`/`Mock.Arrange`/`Mock.Assert`, comparable in scope to Moq) against the commercial elevated mode's Profiler API that mocks statics, sealed classes, and non-virtual members. Direct that elevated mode requires explicit CI/IDE enabling and a paid license, and that it's the pragmatic answer for legacy code specifically, not a default for new interface-driven projects.
+- **Tags:** `dotnet`, `testing`, `tooling`, `developer-productivity`
+
+### Getting Started with Rocks in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-01-11
+- **Source:** `docs/article-ideas/getting-started-with-rocks.md`
+- **File:** `src/posts/2028-01-11-getting-started-with-rocks.md`
+- **Pitch:** Rocks asks you to accept one trade upfront: a smaller community and a genuinely different syntax, in exchange for mocks that are ordinary, compiler-checked C# code instead of runtime-generated proxies.
+- **Angle:** Covers the `Rock.Create` → `.Methods()` → `.Instance()` → `.Verify()` flow as a direct consequence of source-generated architecture rather than arbitrary verbosity, and Native AOT/trimmed-deployment compatibility as the concrete reason to accept that trade-off. Honest that its smaller community shifts more troubleshooting burden onto the adopting team, and that it still can't mock statics or sealed classes the way JustMock's elevated mode can.
+- **Tags:** `dotnet`, `testing`, `tooling`, `performance`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Five six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Mocking Libraries series ends on 2028-01-11, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Architecture Quality Tools (6 posts)
 - **Status:** `idea`
