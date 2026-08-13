@@ -1358,17 +1358,69 @@ Six posts on where a .NET team actually runs its builds and deployments, picking
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Deployment Options (April-May 2028)
 
-Three six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the CI/CD Platforms for .NET series ends on 2028-04-04, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET application actually reaches production, picking up the Tuesday cadence directly from the CI/CD Platforms track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one deployment path.
 
-### .NET Deployment Options (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-deployment-options-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then Azure Container Apps, AWS ECS/Fargate, Docker + Kubernetes, IIS, .NET Aspire deploy workflow
+### The Top 5 Ways to Deploy .NET Apps Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2028-04-11
+- **Source:** `docs/article-ideas/top-5-dotnet-deployment-options-compared.md`
+- **File:** `src/posts/2028-04-11-top-5-dotnet-deployment-options-compared.md`
 - **Pitch:** Four of these five paths are container-based, so "do we use containers" isn't the real question. The differentiator is how much orchestration and operational burden you keep versus hand to a managed platform - a team running Kubernetes for a service taking 500 requests a day is spending engineering time on something that isn't the problem.
 - **Angle:** Compares the five on operational overhead, portability, and cloud coupling, carrying forward the Microservices post's argument that infrastructure should be sized to the control you actually need rather than to what sounds most modern. That's why IIS stays in the comparison as a valid answer for Windows and on-premises environments instead of a legacy footnote. Treats .NET Aspire as a target-agnostic tooling layer that generates manifests for whichever of the others you pick, not as a competing runtime.
 - **Tags:** `dotnet`, `deployment`, `containers`, `platform-engineering`, `devops`
+
+### Getting Started with Azure Container Apps for .NET Deployment
+- **Status:** `draft`
+- **Scheduled:** 2028-04-18
+- **Source:** `docs/article-ideas/getting-started-with-azure-container-apps.md`
+- **File:** `src/posts/2028-04-18-getting-started-with-azure-container-apps.md`
+- **Pitch:** Azure Container Apps' whole pitch is containerized, cloud-native deployment without ever touching a Kubernetes manifest or provisioning a cluster - and for a genuinely large share of .NET applications, that trade is exactly right.
+- **Angle:** Covers `--min-replicas 0` scale-to-zero, secret references over plain environment variables, HTTP-concurrency and KEDA-backed autoscaling rules, and `azd` as the integrated workflow once a deployment involves more than one service. Direct about ACA's real edges upfront - no DaemonSets, no privileged containers, no GPU node selection - so the choice is deliberate, not a mid-project discovery, and names the well-defined migration path to AKS if those limits are hit later.
+- **Tags:** `dotnet`, `deployment`, `cloud`, `containers`, `devops`
+
+### Getting Started with AWS ECS/Fargate for .NET Deployment
+- **Status:** `draft`
+- **Scheduled:** 2028-04-25
+- **Source:** `docs/article-ideas/getting-started-with-aws-ecs-fargate.md`
+- **File:** `src/posts/2028-04-25-getting-started-with-aws-ecs-fargate.md`
+- **Pitch:** ECS paired with Fargate solves the same problem Azure Container Apps solves - run containers without managing a cluster - but asks one decision Azure's platform doesn't: EC2-backed ECS or Fargate.
+- **Angle:** Covers task definitions with Secrets Manager references, pairing an ECS service with an Application Load Balancer target group for health-checked routing, registering a new task definition revision per deployment rather than editing in place, and starting with Fargate by default unless there's a specific reason to manage EC2 compute directly. Honest that ECS's scale-to-zero story needs more manual work than ACA's native support, and that .NET-specific tooling is comparatively thinner than Azure's.
+- **Tags:** `dotnet`, `deployment`, `cloud`, `containers`, `devops`
+
+### Getting Started with Docker + Kubernetes for .NET Deployment
+- **Status:** `draft`
+- **Scheduled:** 2028-05-02
+- **Source:** `docs/article-ideas/getting-started-with-docker-kubernetes-dotnet.md`
+- **File:** `src/posts/2028-05-02-getting-started-with-docker-kubernetes-dotnet.md`
+- **Pitch:** Containerizing a .NET application is the easy part. Running that image well in Kubernetes is where the real work lives, and it's also where .NET-specific details - Kestrel binding, graceful shutdown - matter more than generic Kubernetes advice accounts for.
+- **Angle:** Covers a two-stage Dockerfile, Kestrel bound directly to a non-privileged port with TLS terminating at the ingress (genuinely simpler than IIS out-of-process hosting), liveness/readiness health checks, and `IHostApplicationLifetime`-based graceful shutdown as the single most commonly mishandled piece of a first .NET-on-Kubernetes deployment. Names resource requests/limits as non-optional, not tuning, and covers the clean migration path to and from Azure Container Apps since only the orchestration layer changes.
+- **Tags:** `dotnet`, `deployment`, `containers`, `devops`, `architecture`
+
+### Getting Started with IIS for .NET Deployment
+- **Status:** `draft`
+- **Scheduled:** 2028-05-09
+- **Source:** `docs/article-ideas/getting-started-with-iis-dotnet.md`
+- **File:** `src/posts/2028-05-09-getting-started-with-iis-dotnet.md`
+- **Pitch:** IIS deployments have one failure mode that shows up more than any other in this series: a completely correct application returning a 500 error the moment it hits the server, because the .NET Core Hosting Bundle wasn't installed on the Windows Server itself.
+- **Angle:** Covers the Hosting Bundle as a separate install from any SDK, the out-of-process hosting model (IIS as reverse proxy in front of Kestrel) that `dotnet publish` configures automatically via `web.config`, setting `managedRuntimeVersion` to empty for "No Managed Code," and temporarily enabling `stdoutLogEnabled` for first-deployment troubleshooting. Frames IIS as a legitimate answer for existing Windows Server infrastructure and Active Directory integration, not a legacy fallback.
+- **Tags:** `dotnet`, `deployment`, `platform-engineering`, `devops`
+
+### Getting Started with .NET Aspire's Deploy Workflow
+- **Status:** `draft`
+- **Scheduled:** 2028-05-16
+- **Source:** `docs/article-ideas/getting-started-with-aspire-deploy-workflow.md`
+- **File:** `src/posts/2028-05-16-getting-started-with-aspire-deploy-workflow.md`
+- **Pitch:** Aspire's local development story is well known. Less widely known is that Aspire 9.2+ ships a genuine deployment workflow - `aspire publish` and `aspire deploy` - that generates real deployment artifacts from the exact same AppHost model used for local development.
+- **Angle:** Covers `aspire publish` for reviewing generated artifacts before ever applying them, `azd up` as the full Azure provision-and-deploy path with the deepest first-class Aspire integration, targeting Kubernetes instead via the extensible publisher model, and making deployment customizations from the AppHost itself (`PublishAsAzureContainerApp`) rather than hand-editing generated Bicep that drifts on the next publish. Direct throughout that this is a consistency layer over an actual target, not a target itself - the operational realities from the ACA, ECS, and Kubernetes posts in this same track still apply underneath it.
+- **Tags:** `dotnet`, `deployment`, `cloud`, `tooling`, `architecture`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Two six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Deployment Options series ends on 2028-05-16, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### Auth & Identity for .NET (6 posts)
 - **Status:** `idea`
