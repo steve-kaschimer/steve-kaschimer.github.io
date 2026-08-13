@@ -138,55 +138,55 @@
   }
 }
 
-@utility prose {
+@layer components {
   /* GitHub Dark syntax highlighting (for dark mode) */
-  .dark & pre {
+  .dark .prose pre {
     background: #0d1117;
   }
 
-  .dark & pre code .token.attr-name {
+  .dark .prose pre code .token.attr-name {
     color: #79c0ff;
   }
-  .dark & pre code .token.atrule {
+  .dark .prose pre code .token.atrule {
     color: #7ee787;
   }
-  .dark & pre code .token.boolean {
+  .dark .prose pre code .token.boolean {
     color: #ff7b72;
   }
-  .dark & pre code .token.class-name {
+  .dark .prose pre code .token.class-name {
     color: #ffa657;
   }
-  .dark & pre code .token.comment {
+  .dark .prose pre code .token.comment {
     color: #9198a1;
   }
-  .dark & pre code .token.function {
+  .dark .prose pre code .token.function {
     color: #d2a8ff;
   }
-  .dark & pre code .token.keyword {
+  .dark .prose pre code .token.keyword {
     color: #ff7b72;
   }
-  .dark & pre code .token.null {
+  .dark .prose pre code .token.null {
     color: #79c0ff;
   }
-  .dark & pre code .token.number {
+  .dark .prose pre code .token.number {
     color: #79c0ff;
   }
-  .dark & pre code .token.operator {
+  .dark .prose pre code .token.operator {
     color: #ff7b72;
   }
-  .dark & pre code .token.property {
+  .dark .prose pre code .token.property {
     color: #79c0ff;
   }
-  .dark & pre code .token.punctuation {
+  .dark .prose pre code .token.punctuation {
     color: #f0f6fc;
   }
-  .dark & pre code .token.string {
+  .dark .prose pre code .token.string {
     color: #a5d6ff;
   }
-  .dark & pre code .token.tag {
+  .dark .prose pre code .token.tag {
     color: #7ee787;
   }
-  .dark & pre code .token.variable {
+  .dark .prose pre code .token.variable {
     color: #ffa657;
   }
 
@@ -199,31 +199,31 @@
     @apply mt-4 mb-2;
   }
 
-  & hr {
+  .prose hr {
     @apply mt-8 mb-8 border-primary-600 dark:border-primary-400;
   }
 
-  & img {
+  .prose img {
     @apply block mx-auto w-1/2;
   }
 
-  & li {
+  .prose li {
     @apply my-2 marker:text-primary-600 dark:marker:text-primary-400;
   }
 
-  & ol {
+  .prose ol {
     @apply my-2;
   }
 
-  & ol li {
+  .prose ol li {
     @apply marker:text-primary-600 dark:marker:text-primary-400;
   }
 
-  & p {
+  .prose p {
     @apply mb-4;
   }
 
-  & pre {
+  .prose pre {
     @apply bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300 p-4 overflow-x-auto;
     border-radius: 0 0.5rem 0.5rem 0; /* Only right side rounded */
     margin: 0;
@@ -231,298 +231,298 @@
     font-size: 0.875rem; /* 14px */
   }
 
-  & pre code {
+  .prose pre code {
     line-height: 1.5;
     font-size: 0.875rem; /* 14px */
     display: block;
   }
 
   /* GitHub Light syntax highlighting (for light mode) */
-  & pre {
+  .prose pre {
     background: #f6f8fa;
   }
 
-  & pre code .token.attr-name {
+  .prose pre code .token.attr-name {
     color: #0550ae;
   }
-  & pre code .token.atrule {
+  .prose pre code .token.atrule {
     color: #0550ae;
   }
-  & pre code .token.boolean {
+  .prose pre code .token.boolean {
     color: #cf2256;
   }
-  & pre code .token.class-name {
+  .prose pre code .token.class-name {
     color: #953800;
   }
-  & pre code .token.comment {
+  .prose pre code .token.comment {
     color: #59636e;
   }
-  & pre code .token.function {
+  .prose pre code .token.function {
     color: #8250df;
   }
-  & pre code .token.keyword {
+  .prose pre code .token.keyword {
     color: #cf222e;
   }
-  & pre code .token.null {
+  .prose pre code .token.null {
     color: #0550ae;
   }
-  & pre code .token.number {
+  .prose pre code .token.number {
     color: #0550ae;
   }
-  & pre code .token.operator {
+  .prose pre code .token.operator {
     color: #cf222e;
   }
-  & pre code .token.property {
+  .prose pre code .token.property {
     color: #0550ae;
   }
-  & pre code .token.punctuation {
+  .prose pre code .token.punctuation {
     color: #1f2328;
   }
-  & pre code .token.string {
+  .prose pre code .token.string {
     color: #0a3069;
   }
-  & pre code .token.tag {
+  .prose pre code .token.tag {
     color: #116329;
   }
-  & pre code .token.variable {
+  .prose pre code .token.variable {
     color: #953800;
   }
 
-  & ul {
+  .prose ul {
     @apply mt-2 mb-4;
   }
 
-  & ul li {
+  .prose ul li {
     @apply marker:text-primary-600 dark:marker:text-primary-400;
   }
 }
 
-@utility token {
-  .dark .prose pre code &.attr-name {
+@layer components {
+  .dark .prose pre code .token.attr-name {
     color: #79c0ff;
   }
-  .dark .prose pre code &.atrule {
+  .dark .prose pre code .token.atrule {
     color: #7ee787;
   }
-  .dark .prose pre code &.boolean {
+  .dark .prose pre code .token.boolean {
     color: #ff7b72;
   }
-  .dark .prose pre code &.class-name {
+  .dark .prose pre code .token.class-name {
     color: #ffa657;
   }
-  .dark .prose pre code &.comment {
+  .dark .prose pre code .token.comment {
     color: #9198a1;
   }
-  .dark .prose pre code &.function {
+  .dark .prose pre code .token.function {
     color: #d2a8ff;
   }
-  .dark .prose pre code &.keyword {
+  .dark .prose pre code .token.keyword {
     color: #ff7b72;
   }
-  .dark .prose pre code &.null {
+  .dark .prose pre code .token.null {
     color: #79c0ff;
   }
-  .dark .prose pre code &.number {
+  .dark .prose pre code .token.number {
     color: #79c0ff;
   }
-  .dark .prose pre code &.operator {
+  .dark .prose pre code .token.operator {
     color: #ff7b72;
   }
-  .dark .prose pre code &.property {
+  .dark .prose pre code .token.property {
     color: #79c0ff;
   }
-  .dark .prose pre code &.punctuation {
+  .dark .prose pre code .token.punctuation {
     color: #f0f6fc;
   }
-  .dark .prose pre code &.string {
+  .dark .prose pre code .token.string {
     color: #a5d6ff;
   }
-  .dark .prose pre code &.tag {
+  .dark .prose pre code .token.tag {
     color: #7ee787;
   }
-  .dark .prose pre code &.variable {
+  .dark .prose pre code .token.variable {
     color: #ffa657;
   }
 
-  .prose pre code &.attr-name {
+  .prose pre code .token.attr-name {
     color: #0550ae;
   }
-  .prose pre code &.atrule {
+  .prose pre code .token.atrule {
     color: #0550ae;
   }
-  .prose pre code &.boolean {
+  .prose pre code .token.boolean {
     color: #cf2256;
   }
-  .prose pre code &.class-name {
+  .prose pre code .token.class-name {
     color: #953800;
   }
-  .prose pre code &.comment {
+  .prose pre code .token.comment {
     color: #59636e;
   }
-  .prose pre code &.function {
+  .prose pre code .token.function {
     color: #8250df;
   }
-  .prose pre code &.keyword {
+  .prose pre code .token.keyword {
     color: #cf222e;
   }
-  .prose pre code &.null {
+  .prose pre code .token.null {
     color: #0550ae;
   }
-  .prose pre code &.number {
+  .prose pre code .token.number {
     color: #0550ae;
   }
-  .prose pre code &.operator {
+  .prose pre code .token.operator {
     color: #cf222e;
   }
-  .prose pre code &.property {
+  .prose pre code .token.property {
     color: #0550ae;
   }
-  .prose pre code &.punctuation {
+  .prose pre code .token.punctuation {
     color: #1f2328;
   }
-  .prose pre code &.string {
+  .prose pre code .token.string {
     color: #0a3069;
   }
-  .prose pre code &.tag {
+  .prose pre code .token.tag {
     color: #116329;
   }
-  .prose pre code &.variable {
+  .prose pre code .token.variable {
     color: #953800;
   }
 }
 
 @utility attr-name {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #79c0ff;
   }
 
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0550ae;
   }
 }
 
 @utility atrule {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #7ee787;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0550ae;
   }
 }
 
 @utility boolean {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #ff7b72;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #cf2256;
   }
 }
 
 @utility class-name {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #ffa657;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #953800;
   }
 }
 
 @utility comment {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #9198a1;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #59636e;
   }
 }
 
 @utility function {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #d2a8ff;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #8250df;
   }
 }
 
 @utility keyword {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #ff7b72;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #cf222e;
   }
 }
 
 @utility null {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #79c0ff;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0550ae;
   }
 }
 
 @utility number {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #79c0ff;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0550ae;
   }
 }
 
 @utility operator {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #ff7b72;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #cf222e;
   }
 }
 
 @utility property {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #79c0ff;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0550ae;
   }
 }
 
 @utility punctuation {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #f0f6fc;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #1f2328;
   }
 }
 
 @utility string {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #a5d6ff;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #0a3069;
   }
 }
 
 @utility tag {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #7ee787;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #116329;
   }
 }
 
 @utility variable {
-  .dark .prose pre code &.token {
+  .dark .prose pre code .token.token {
     color: #ffa657;
   }
-  .prose pre code &.token {
+  .prose pre code .token.token {
     color: #953800;
   }
 }
@@ -546,7 +546,7 @@
 }
 
 @utility prose-lg {
-  & p {
+  .prose p {
     @apply mb-4 mt-0;
   }
 }
