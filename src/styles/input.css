@@ -2,7 +2,7 @@
 
 @plugin "@tailwindcss/typography";
 
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark &:where(.dark, .dark *);
 
 @theme {
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
@@ -26,7 +26,7 @@
      minimum. Dark mode's primary-400 already passes (8.28:1 on gray-900). */
   --tw-prose-links: var(--color-primary-700);
 
-  @variant dark {
+  .dark & {
     --tw-prose-links: var(--color-primary-400);
   }
 }
@@ -130,7 +130,7 @@
   @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 rounded-sm transition-colors duration-200;
 
   & .copy-icon {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 
   &.copied {
@@ -140,7 +140,7 @@
 
 @utility copy-icon {
   .copy-code-button & {
-    @apply flex-shrink-0;
+    @apply shrink-0;
   }
 }
 
