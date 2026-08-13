@@ -938,17 +938,69 @@ Six posts on how a .NET service validates incoming data, picking up the Tuesday 
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Mapping Libraries (June-July 2027)
 
-Ten six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Validation Approaches series ends on 2027-06-15, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET service converts one type into another, picking up the Tuesday cadence directly from the Validation Approaches track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one mapping approach.
 
-### .NET Mapping Libraries (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-mapping-libraries-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then AutoMapper, Mapster, Mapperly, Facet, manual mapping
+### The Top 5 .NET Mapping Libraries Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-06-22
+- **Source:** `docs/article-ideas/top-5-dotnet-mapping-libraries-compared.md`
+- **File:** `src/posts/2027-06-22-top-5-dotnet-mapping-libraries-compared.md`
 - **Pitch:** Object mapping in .NET used to start and end with AutoMapper. Its April 2025 move to commercial licensing did for mapping what Moq's SponsorLink incident did for mocking - it got a lot of teams comparing alternatives for the first time in years instead of defaulting out of habit.
 - **Angle:** Compares the five on mechanism (runtime reflection versus compile-time source generation), performance, license, debuggability, and EF Core `ProjectTo` support. The through-line is that this space has moved to source generators: Mapperly matches hand-written mapping's performance while turning member typos into build errors, and Facet goes further by generating the destination DTO from the domain model rather than just the mapping between them. Treats manual mapping as a legitimate answer rather than a fallback, and is honest that Mapster's slowing development pace is a real risk for new projects.
 - **Tags:** `dotnet`, `tooling`, `performance`, `architecture`, `developer-productivity`
+
+### Getting Started with AutoMapper in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-06-29
+- **Source:** `docs/article-ideas/getting-started-with-automapper.md`
+- **File:** `src/posts/2027-06-29-getting-started-with-automapper.md`
+- **Pitch:** AutoMapper's convention-based mapping is still exactly as convenient as it was before April 2025. What's changed is that adding it to a new project is no longer a purely technical decision - it's also a licensing one.
+- **Angle:** Covers `Profile`-based configuration, assembly-scan registration, `ProjectTo` for EF Core query projection - still one of AutoMapper's most distinctive and mature capabilities - and `AssertConfigurationIsValid()` as the fix for configuration errors that would otherwise surface as runtime surprises. Frames resolving the licensing question as a business decision to settle explicitly before building architecture around it, not an afterthought.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`, `architecture`
+
+### Getting Started with Mapster in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-07-06
+- **Source:** `docs/article-ideas/getting-started-with-mapster.md`
+- **File:** `src/posts/2027-07-06-getting-started-with-mapster.md`
+- **Pitch:** Mapster's `Adapt()` is the fastest on-ramp of any mapper in this series - zero configuration, works immediately. That immediacy is real, but worth pairing with an honest look at the project's genuinely slowed development pace.
+- **Angle:** Covers zero-config `Adapt<T>()`, `TypeAdapterConfig` for exceptions to convention, the optional compile-time generation mode via `Mapster.Tool` that closes much of the performance gap with Mapperly, and the `IMapper`/`ServiceMapper` DI pattern for testability. Doesn't shy away from the maintenance-trajectory question, naming it as a real factor to weigh for a new, long-lived project rather than glossing over it.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`, `performance`
+
+### Getting Started with Mapperly in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-07-13
+- **Source:** `docs/article-ideas/getting-started-with-mapperly.md`
+- **File:** `src/posts/2027-07-13-getting-started-with-mapperly.md`
+- **Pitch:** Mapperly asks you to declare a partial method with the shape you want, then writes the actual mapping body for you at compile time - no runtime configuration, no reflection, just real generated C# sitting next to your own code.
+- **Angle:** Covers the partial-method pattern as the entire configuration surface, `[MapProperty]` for renamed and flattened properties, `EnumMappingStrategy.ByName` as the fix for a common silent-bug risk when enum numeric values don't align, and reading generated code directly when debugging. Explicit that this is the "starting fresh today" recommendation on technical merits, but not a good fit for a profile-by-profile migration off an existing AutoMapper codebase.
+- **Tags:** `dotnet`, `tooling`, `performance`, `developer-productivity`
+
+### Getting Started with Facet in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-07-20
+- **Source:** `docs/article-ideas/getting-started-with-facet.md`
+- **File:** `src/posts/2027-07-20-getting-started-with-facet.md`
+- **Pitch:** Every other mapper in this series assumes you've already hand-written the destination DTO. Facet asks why - given a domain model and a declarative attribute, it generates both the DTO type and the mapping code from a single source generator pass.
+- **Angle:** Covers the `[Facet(typeof(Source), exclude: [...])]` declaration, generating multiple focused views of the same entity (summary, detail, contact) from one domain model instead of three hand-maintained DTO classes, and extending generated facets with `partial` for computed properties. Scopes Facet honestly to its narrower niche - the "multiple views of one entity" pattern - rather than pitching it as a general-purpose mapper replacement, and flags it as newer and less established than the other four.
+- **Tags:** `dotnet`, `tooling`, `architecture`, `developer-productivity`
+
+### Getting Started with Manual Mapping in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-07-27
+- **Source:** `docs/article-ideas/getting-started-with-manual-mapping.md`
+- **File:** `src/posts/2027-07-27-getting-started-with-manual-mapping.md`
+- **Pitch:** It's easy to dismiss manual mapping as "what you do before you get a real library," but for a genuinely large share of applications it's the fastest, most transparent, and most maintainable option in this entire comparison - not a placeholder for something better.
+- **Angle:** Covers extension methods, static factory methods, and constructor-based mapping as the three common patterns, collection-mapping helper overloads to avoid repeating `.Select()` projections, and the compiler's structural-change detection as manual mapping's built-in safety net. Names inconsistency - not performance or correctness - as its real risk, and gives an honest signal for when the volume of repetitive mapping code makes a library like Mapperly worth reconsidering.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`, `architecture`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Nine six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Mapping Libraries series ends on 2027-07-27, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Caching Solutions (6 posts)
 - **Status:** `idea`
