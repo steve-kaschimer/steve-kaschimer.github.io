@@ -583,49 +583,55 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 Six posts on how to organize a .NET codebase, picking up the Tuesday cadence directly from the AI coding agents track. A comparison post anchors the track and each of the five follow-ups sets one pattern up end to end.
 
 ### The Top 5 .NET Architecture Patterns Compared: Which One Should You Choose?
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-29
 - **Source:** `docs/article-ideas/top-5-dotnet-architecture-patterns-compared.md`
+- **File:** `src/posts/2026-09-29-top-5-dotnet-architecture-patterns-compared.md`
 - **Pitch:** Layered, Clean, Vertical Slice, Modular Monolith, and Microservices aren't five points on a scale from bad to good - they're different trades between structure, speed, and organizational scale. This is the orientation piece for a team that has to pick one and defend the choice.
 - **Angle:** Opens with a comparison table across organizing principle, deployment unit, learning curve, change isolation, and operational overhead, then gives each pattern a strengths/weaknesses/choose-this-when breakdown. The load-bearing argument is that several of these compose rather than compete - Vertical Slice or Clean Architecture inside a module of a Modular Monolith is a common and underrated landing spot. Closes on the point that a Modular Monolith is usually the honest predecessor to Microservices rather than its opposite, and that module boundaries only hold when enforcement is structural rather than cultural.
 - **Tags:** `dotnet`, `architecture`, `microservices`, `platform-engineering`, `developer-productivity`
 
 ### Getting Started with Clean Architecture in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-06
 - **Source:** `docs/article-ideas/getting-started-with-clean-architecture-dotnet.md`
+- **File:** `src/posts/2026-10-06-getting-started-with-clean-architecture-dotnet.md`
 - **Pitch:** The dependency rule is easy to state and easy to leave aspirational. Getting the project structure right so the compiler enforces it - rather than code review hoping to catch violations - is where most first attempts go sideways.
 - **Angle:** Scaffolds the solution both from the Ardalis Clean Architecture template and by hand, showing the Core/UseCases/Infrastructure/Web reference graph that turns the dependency rule into a compile error. Covers where entities, handlers, and repository implementations actually belong, the single point in `Program.cs` where the concrete and the abstract meet, and NetArchTest/ArchUnitNET architecture tests that fail the build when `Core` picks up an infrastructure dependency a project reference alone wouldn't catch. Ends on the honest limitation: the ceremony earns its keep only where there's real business logic to protect, and a rules-free CRUD endpoint doesn't need four layers and a MediatR handler.
 - **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
 
 ### Getting Started with Layered (N-Tier) Architecture in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-13
 - **Source:** `docs/article-ideas/getting-started-with-layered-architecture-dotnet.md`
+- **File:** `src/posts/2026-10-13-getting-started-with-layered-architecture-dotnet.md`
 - **Pitch:** Layered architecture still runs a huge share of production .NET, and for genuinely CRUD-shaped applications that's the right call rather than a compromise. The mistake isn't using it - it's using it past the point where it stops fitting the problem.
 - **Angle:** Sets up Web/Business/DataAccess as three separate projects so violating the dependency direction is a compile error rather than a convention people forget, wires EF Core into the data layer, and keeps the business layer free of ASP.NET Core types. Covers DTOs vs. entities at the API boundary, repository interfaces purely for testability, and why the business layer becomes a dumping ground without deliberate internal splitting. Closes with the signal to move on: when most feature changes touch all three layers, that friction is pointing at Vertical Slice or a Modular Monolith, not at adding more structure inside the same three layers.
 - **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
 
 ### Getting Started with Vertical Slice Architecture in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-20
 - **Source:** `docs/article-ideas/getting-started-with-vertical-slice-architecture-dotnet.md`
+- **File:** `src/posts/2026-10-20-getting-started-with-vertical-slice-architecture-dotnet.md`
 - **Pitch:** Vertical Slice Architecture asks what a single request actually needs and puts all of it in one folder, so adding a feature means adding a slice rather than touching four existing layers. Its failure mode is teams reading "organize by feature" as "duplicate everything."
 - **Angle:** Builds a complete slice - command, handler, endpoint, validator - under `Features/<Area>/<Feature>/` with MediatR and FastEndpoints, where assembly scanning means new slices register nothing manually. Makes the case that a MediatR pipeline behavior is where validation, logging, and transaction handling belong, since re-implementing cross-cutting concerns slightly differently per slice is what stops many independent slices from feeling like one coherent application. Argues against extracting shared abstractions early and against reflexively hiding `DbContext` behind a repository in every slice, then positions the pattern relative to a Modular Monolith as a different altitude rather than a competing choice.
 - **Tags:** `dotnet`, `architecture`, `developer-productivity`, `tooling`
 
 ### Getting Started with Modular Monolith Architecture in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-10-27
 - **Source:** `docs/article-ideas/getting-started-with-modular-monolith-dotnet.md`
+- **File:** `src/posts/2026-10-27-getting-started-with-modular-monolith-dotnet.md`
 - **Pitch:** A Modular Monolith is deceptively easy to describe and genuinely hard to keep honest - nothing forces modules to respect each other's boundaries except deliberate enforcement, and the moment enforcement lapses it's a monolith with extra folders.
 - **Angle:** Structures each module as an implementation project plus a `Contracts` project, where modules reference only each other's contracts and implementations are marked `internal` so a cross-module reach is a compile error rather than a code review note. Gives each module its own `DbContext` and self-registering DI extension so the host stays thin, and backs the whole arrangement with architecture tests that fail CI on a boundary violation. Covers the two decisions that actually determine whether the pattern holds - separate schemas vs. separate databases, and in-process events vs. direct contract calls - and argues a Modular Monolith is a complete architecture rather than an unfinished Microservices migration.
 - **Tags:** `dotnet`, `architecture`, `microservices`, `platform-engineering`, `ci-cd`
 
 ### Getting Started with Microservices Architecture in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-03
 - **Source:** `docs/article-ideas/getting-started-with-microservices-dotnet.md`
+- **File:** `src/posts/2026-11-03-getting-started-with-microservices-dotnet.md`
 - **Pitch:** Microservices solve an organizational problem most projects don't have yet: independent teams needing to deploy and scale without blocking each other. .NET Aspire has made the local development side dramatically less painful, but it hasn't changed that trade-off.
 - **Angle:** Scaffolds a multi-service solution with Aspire and describes the whole topology in AppHost - a Postgres container per service, `WithReference` for service discovery instead of hardcoded URLs, and one `dotnet run` that brings everything up with a dashboard showing logs and traces across services. Covers ServiceDefaults as the place shared OpenTelemetry, health checks, and resilience configuration live without coupling services to each other's business logic. Is explicit that AppHost is a development tool that never gets deployed, and that Aspire removes friction from building and running services locally without removing contract versioning, partial failure handling, or distributed data consistency - which are the actual cost of the pattern.
 - **Tags:** `dotnet`, `architecture`, `microservices`, `observability`, `devops`
