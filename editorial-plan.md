@@ -1538,9 +1538,75 @@ Six posts on where .NET developers actually write and debug C# in 2028, picking 
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+---
 
-No series remain unscheduled - every series drafted into `docs/article-ideas/` has been scheduled and drafted as of the .NET IDEs & Editors track above. New entries get added here as future series are drafted.
+## 📅 November-December 2026 - AI Agents in Practice
+
+Eight posts on building, deploying, and operating AI agents in production. Foundation for the Azure/AWS/GCP AI tracks that follow.
+
+### AI Agents: From Toy Demos to Production (Part 1 - When to Build an Agent vs. a Simple LLM Call)
+- **Status:** `draft`
+- **Scheduled:** 2026-11-06
+- **File:** `src/posts/2026-11-06-ai-agents-production-part-1-when-to-build.md`
+- **Pitch:** Not every problem needs an agent - agents add complexity (tool calling, planning loops, error handling). This post builds mental models for when agents actually win.
+- **Angle:** Contrasts simple LLM chains (prompt + response) against agents (plan + tool use + reflection). Shows cost and latency implications of planning loops vs. direct prompts. Covers five real scenarios: customer support (good for agents), personalization (simpler), code generation (hybrid), research (agents shine), and data extraction (probably not). Includes decision tree you can use with your team.
+- **Tags:** `ai-agents`, `llm`, `system-design`, `production-ai`
+
+### Building Reliable Agent Loops: Tool Calling, Retries, and Failure Handling at Scale
+- **Status:** `draft`
+- **Scheduled:** 2026-11-13
+- **File:** `src/posts/2026-11-13-agent-loops-reliability-tool-calling.md`
+- **Pitch:** Agent loops (observe → act → reflect) fail in production when tool calls error out, LLMs hallucinate function arguments, or loops run forever. This post shows production-grade patterns.
+- **Angle:** Covers tool calling contracts (function schemas, parameter validation), retry strategies (exponential backoff for transient failures vs. fast-fail for logic errors), and loop termination (token budgets, step limits, semantic stopping conditions). Implements a real example: an agent that queries a database, interprets results, and adapts its strategy. Includes observability: what to log at each step, how to debug "why did the agent choose that tool?".
+- **Tags:** `ai-agents`, `llm`, `reliability`, `observability`
+
+### Memory in AI Agents: Conversation History, Retrieval, and Context Window Trade-offs
+- **Status:** `draft`
+- **Scheduled:** 2026-11-20
+- **File:** `src/posts/2026-11-20-ai-agent-memory-context-retrieval.md`
+- **Pitch:** Agents forget everything between requests unless you give them memory - but naive approaches (storing everything) blow your context window budget and increase latency and cost.
+- **Angle:** Compares memory approaches: short-term (conversation history), long-term (vector database with semantic search), and hybrid (recent history + relevant summaries). Shows the token cost of each approach. Builds a real example: a support agent that remembers customer history across sessions, but only brings relevant facts into each prompt. Covers edge cases: how long to keep short-term history, when to summarize, how to handle conflicting memories.
+- **Tags:** `ai-agents`, `llm`, `memory`, `rag`, `retrieval`
+
+### Multi-Agent Coordination: When One Agent Isn't Enough
+- **Status:** `draft`
+- **Scheduled:** 2026-11-27
+- **File:** `src/posts/2026-11-27-multi-agent-coordination-patterns.md`
+- **Pitch:** Single agents solve point problems; multi-agent systems handle complexity (specialized agents, parallel work, debate-style decisions). But coordination gets hard fast.
+- **Angle:** Covers orchestration patterns: sequential (agent A → agent B → agent C), hierarchical (manager agent delegates to workers), and consensus (multiple agents vote/debate). Builds a real example: a system where one agent researches options, another evaluates cost, another checks compliance - then a manager synthesizes recommendations. Covers failure modes: agents contradicting each other, deadlock, and runaway loops. Includes observability for multi-agent traces.
+- **Tags:** `ai-agents`, `multi-agent`, `orchestration`, `llm`
+
+### Evaluating Agent Outputs: When You Can't Trust the LLM's Self-Assessment
+- **Status:** `draft`
+- **Scheduled:** 2026-12-04
+- **File:** `src/posts/2026-12-04-evaluating-agent-outputs-grading-llm-work.md`
+- **Pitch:** Agents complete tasks, but "did it actually work?" is hard to check without human review. This post shows how to automate quality gates for agent outputs.
+- **Angle:** Covers multiple evaluation approaches: deterministic checks (does the output match schema?), LLM grading (ask another model to evaluate), and hybrid (LLM grade + human spot-check). Shows how to build datasets for measuring agent quality over time (RAGAS, custom metrics). Practical: integrating evaluations into CI/CD so you catch regressions when you update prompts or models.
+- **Tags:** `ai-agents`, `evaluation`, `quality-assurance`, `llm`
+
+### Prompt Engineering for Agents: Instruction Design That Survives Model Updates
+- **Status:** `draft`
+- **Scheduled:** 2026-12-11
+- **File:** `src/posts/2026-12-11-prompt-engineering-agents-system-design.md`
+- **Pitch:** Agents are more sensitive to prompt quality than simple LLM calls because errors compound across steps. This post shows how to write agent prompts that are robust and maintainable.
+- **Angle:** Covers prompt components: role/persona (establishes tone), constraints (what the agent can't do), tools description (precise function specs), and reasoning format (Chain-of-Thought for planning). Shows versioning strategies (date your prompts, A/B test before deploy), testing patterns (golden dataset of inputs/expected outputs), and debugging (what to log when agents fail). Includes the "why did this prompt suddenly break?" troubleshooting guide when models get updated.
+- **Tags:** `ai-agents`, `prompt-engineering`, `system-design`, `llm`
+
+### Streaming Agent Outputs: Real-Time Feedback Without Hallucinating Progress
+- **Status:** `draft`
+- **Scheduled:** 2026-12-18
+- **File:** `src/posts/2026-12-18-streaming-agents-real-time-output.md`
+- **Pitch:** Users hate waiting for agents to think - streaming agent thoughts/actions gives feedback, but you have to be careful not to stream hallucinations as truth.
+- **Angle:** Shows how to stream token-by-token output while an agent runs tools (research progress, queries executed). Covers the UI challenge: showing "agent is thinking" vs. "agent took action" vs. "agent found result". Implements a React component that displays agent steps in real-time. Addresses the gotcha: when an agent corrects itself mid-stream, how to handle user confusion.
+- **Tags:** `ai-agents`, `streaming`, `ux`, `real-time`, `llm`
+
+### Agent Cost Analysis: Why Your Support Bot Costs $0.50/Conversation (And How to Fix It)
+- **Status:** `draft`
+- **Scheduled:** 2026-12-25
+- **File:** `src/posts/2026-12-25-agent-cost-analysis-optimization.md`
+- **Pitch:** Agents planning, reflecting, and retrying can ring up token bills fast - this post shows where costs come from and how to profile and optimize.
+- **Angle:** Breaks down agent costs: LLM calls (prompt + completion tokens per step), tool calls (API latency = higher token cost if you're charged per-request), retrieval (embedding calls + vector store queries), and overhead (retries, failed loops). Builds a cost profiler that attributes every token to a step. Shows concrete optimizations: caching tool results, batch embedding, early termination. Includes a template for "max cost per conversation" guardrails that prevent runaway agents.
+- **Tags:** `ai-agents`, `cost-optimization`, `llm`, `performance`
 
 ---
 
@@ -1929,6 +1995,224 @@ Five posts to close the year with reflection and forward-looking content.
 - **Pitch:** The year is ending - time to think about what's next. This post makes predictions on where the field is headed and what bets worth making.
 - **Angle:** Opinionated but grounded: (1) agentic systems will hit production at scale, (2) multi-cloud will continue but with clearer trade-offs understood, (3) FinOps will be table stakes (every org tracks cost per team), (4) platform engineering consolidates around Backstage + cloud service catalogs, (5) security shifts to runtime anomaly detection (shift right). Includes things worth learning in early 2028 (specific agents for your domain, cost modeling for your workload, new evaluation methods as they emerge).
 - **Tags:** `editorial`, `predictions`, `devops`, `platform-engineering`, `ai-agents`
+
+---
+
+## 📅 January-February 2028 - Production AI at Scale
+
+Eight posts on deploying agentic systems to production, governance, safety, and long-term operational patterns.
+
+### Evaluating LLMs for Production: Speed, Cost, and Capability Trade-offs in January 2028
+- **Status:** `idea`
+- **Scheduled:** 2028-01-06
+- **File:** `src/posts/2028-01-06-evaluating-llms-production-january-2028.md`
+- **Pitch:** The LLM landscape shifted dramatically in 2027 - smaller models got faster, prices dropped, and specialized models emerged. This post helps you pick the right model for production in 2028.
+- **Angle:** Compares major models (GPT-4 Turbo, Claude 3, Gemini, open-source options) on latency (p50, p99), cost per token, context window, and capability for specific tasks (classification, reasoning, code generation). Shows how to run benchmarks on your actual workload instead of trusting marketing benchmarks. Covers the trade-off: using smaller, cheaper models locally vs. paying for high-capability APIs. Includes a template for "which model should we use for this task?" decision-making.
+- **Tags:** `llm`, `model-selection`, `production-ai`, `cost-optimization`
+
+### LLMOps: Versioning, Testing, and Deploying Prompts as First-Class Artifacts
+- **Status:** `idea`
+- **Scheduled:** 2028-01-13
+- **File:** `src/posts/2028-01-13-llmops-versioning-testing-prompts.md`
+- **Pitch:** Prompts change constantly - you need version control, testing, and rollback capabilities like you have for code. This post shows the tools and practices emerging for LLMOps.
+- **Angle:** Covers prompt versioning (git + YAML structure), evaluation frameworks (golden datasets to catch regressions), A/B testing (running two versions in parallel to compare outputs), and safe rollbacks (when a new prompt degrades quality, roll back in 60 seconds). Tools: Promptfoo, LangSmith, Braintrust. Shows how to integrate prompt testing into CI/CD so you catch regressions before production.
+- **Tags:** `llmops`, `prompt-engineering`, `mlops`, `testing`, `ci-cd`
+
+### Observability for AI Systems: Tracing Agent Steps, Evaluating Quality, and Debugging Production Issues
+- **Status:** `idea`
+- **Scheduled:** 2028-01-20
+- **File:** `src/posts/2028-01-20-observability-ai-systems-tracing-evaluation.md`
+- **Pitch:** Traditional logging doesn't work for agents - you need to trace every tool call, LLM invocation, and decision. This post shows how to build observability for AI systems that actually catches real problems.
+- **Angle:** Covers instrumentation (Langfuse, OpenLLMetry for tracing), custom metrics (token counts, model latency, tool success rates), and debugging patterns (what to log when an agent fails). Shows how to build dashboards that alert on degradation (agent success rate drops 10%, average latency increases). Practical: starting with span traces, adding metrics, graduating to evaluations.
+- **Tags:** `observability`, `ai-agents`, `monitoring`, `llmops`, `devops`
+
+### AI Safety in Production: Guardrails, Content Filtering, and Preventing Misuse
+- **Status:** `idea`
+- **Scheduled:** 2028-01-27
+- **File:** `src/posts/2028-01-27-ai-safety-production-guardrails-filtering.md`
+- **Pitch:** Before shipping AI to users, you need safety measures - guardrails, output validation, and abuse detection. This post covers the patterns and tools.
+- **Angle:** Covers multiple layers of safety: (1) input validation (detecting and blocking prompt injection attacks), (2) output filtering (detecting harmful responses before showing users), (3) rate limiting (preventing abuse/cost explosion), (4) user feedback loops (flagging bad outputs). Tools: LLM Guard, Guardrails AI, semantic validators. Shows how to build a safety layer that catches 90% of issues without blocking legitimate use cases.
+- **Tags:** `ai-safety`, `security`, `content-filtering`, `production-ai`
+
+### AI Cost Optimization: Caching, Batching, and Intelligent Model Selection
+- **Status:** `idea`
+- **Scheduled:** 2028-02-03
+- **File:** `src/posts/2028-02-03-ai-cost-optimization-caching-batching.md`
+- **Pitch:** Running AI systems at scale gets expensive fast - this post shows cost optimization strategies that actually work without sacrificing quality.
+- **Angle:** Covers caching strategies (semantic caching for similar queries, prompt caching for repeated context), batching (request batching for lower per-token cost), intelligent routing (smaller models for simple tasks, bigger models only when needed), and usage monitoring (setting cost alerts). Shows real examples: support chatbot that went from $0.50 to $0.08 per query through optimization. Includes profiling tools and ROI calculations.
+- **Tags:** `cost-optimization`, `ai-systems`, `llm`, `production-ai`, `devops`
+
+### Fine-Tuning vs. In-Context Learning: When Custom Models Actually Make Sense
+- **Status:** `idea`
+- **Scheduled:** 2028-02-10
+- **File:** `src/posts/2028-02-10-fine-tuning-vs-in-context-learning.md`
+- **Pitch:** The debate rages: should you fine-tune a model for your domain or use few-shot examples? This post settles it with real data.
+- **Angle:** Compares the two approaches on accuracy, cost, latency, and maintenance burden. Fine-tuning wins when you have lots of labeled data (1k+ examples) and need to optimize for specific tasks; in-context learning is faster to iterate and works with fewer examples. Shows how to decide based on your constraints. Covers practical fine-tuning (QLoRA for cheap fine-tuning, how to build training datasets, evaluation). Honest about the "fine-tuning was the bottleneck" failure modes.
+- **Tags:** `llm`, `fine-tuning`, `machine-learning`, `cost-optimization`
+
+### Open-Source vs. Proprietary Models: The 2028 Landscape and Choosing Your Infrastructure
+- **Status:** `idea`
+- **Scheduled:** 2028-02-17
+- **File:** `src/posts/2028-02-17-open-source-vs-proprietary-models-2028.md`
+- **Pitch:** Open-source models got dramatically better in 2027 - this post compares the state of the art and helps you choose between self-hosting, API providers, and hybrid approaches.
+- **Angle:** Covers the current leaders (Llama 3+, Mistral, DeepSeek) and their trade-offs. Self-hosting wins when you need: data privacy, cost at massive scale, or latency guarantees; APIs win when you need: minimal ops overhead, access to frontier models, automatic scaling. Shows cost calculations for different scenarios (small startup vs. enterprise). Addresses the hidden costs: fine-tuning, setup, ongoing maintenance. Includes a decision matrix.
+- **Tags:** `llm`, `open-source`, `infrastructure`, `cost-optimization`, `ai-systems`
+
+### Agentic Governance: Managing AI Teams, Tools, and Guardrails at Enterprise Scale
+- **Status:** `idea`
+- **Scheduled:** 2028-02-24
+- **File:** `src/posts/2028-02-24-agentic-governance-enterprise-teams.md`
+- **Pitch:** As AI systems proliferate, you need governance - approved models, cost controls, audit trails, and safety standards. This post covers what enterprise governance for AI actually looks like.
+- **Angle:** Covers: (1) model governance (approved models list, versioning policy), (2) cost controls (per-team budgets, usage limits), (3) safety standards (what safety measures are required by default), (4) audit logging (compliance for regulated industries), (5) knowledge sharing (how to prevent duplicate AI projects across teams). Shows how to enforce these through platform engineering (self-service infrastructure + guardrails). Practical templates for your org.
+- **Tags:** `governance`, `compliance`, `ai-systems`, `enterprise`, `platform-engineering`
+
+---
+
+## 📅 March-May 2028 - Personal and Edge AI
+
+Nine posts on running AI locally - Ollama, quantized models, on-device inference, and the return of offline-first computing.
+
+### Running LLMs Locally: Ollama, Llama.cpp, and When to Abandon the Cloud
+- **Status:** `idea`
+- **Scheduled:** 2028-03-02
+- **File:** `src/posts/2028-03-02-running-llms-locally-ollama-llamacpp.md`
+- **Pitch:** Your laptop can run a capable LLM now - Ollama makes it trivial. This post shows how to set it up and when local models make sense.
+- **Angle:** Walks through installing and running Ollama with Llama 2/3, measuring inference speed and memory usage on Mac/Linux/Windows. Compares to cloud APIs on latency and cost for different workload types. Covers the advantages (no API costs, complete data privacy, offline-first) and trade-offs (slower, limited to your hardware). Shows practical workflows: local for development/testing, cloud for production. Includes performance tuning (quantization levels, hardware selection).
+- **Tags:** `llm`, `edge-ai`, `local-ai`, `ollama`, `privacy`
+
+### Quantization Deep Dive: Trading Accuracy for Speed (And Why It Works)
+- **Status:** `idea`
+- **Scheduled:** 2028-03-09
+- **File:** `src/posts/2028-03-09-quantization-deep-dive-accuracy-speed.md`
+- **Pitch:** Quantization shrinks models from 70B parameters to something your laptop can run - this post explains how it works and shows you when to use which quantization levels.
+- **Angle:** Covers the theory (reducing precision from float32 to int8), the tools (GGML, bitsandbytes, AWQ), and the practice (building a benchmark for your task with different quantization levels). Shows real examples: Llama 3 70B quantized to 4-bit is faster and only slightly less accurate for most tasks. Includes cost/benefit analysis: when does quantization help vs. hurt? When should you pick a smaller model instead?
+- **Tags:** `quantization`, `llm`, `edge-ai`, `performance`, `optimization`
+
+### Fine-Tuning Open Models Locally: Building Custom LLMs on Your Hardware
+- **Status:** `idea`
+- **Scheduled:** 2028-03-16
+- **File:** `src/posts/2028-03-16-fine-tuning-open-models-locally.md`
+- **Pitch:** You can now fine-tune models on consumer hardware using QLoRA - this post shows how to build a custom model for your domain.
+- **Angle:** Walks through the full pipeline: (1) preparing a dataset (1k-10k examples), (2) setting up training (QLoRA for efficiency), (3) evaluating quality, (4) deploying locally. Real example: fine-tuning a model on your company's internal documentation so it can answer support questions accurately. Covers the time/cost tradeoffs and when it's worth the effort vs. using RAG. Practical scripts and tools.
+- **Tags:** `fine-tuning`, `llm`, `edge-ai`, `machine-learning`
+
+### Retrieval-Augmented Generation (RAG) Offline: Building Knowledge Bases That Work Without the Cloud
+- **Status:** `idea`
+- **Scheduled:** 2028-03-23
+- **File:** `src/posts/2028-03-23-rag-offline-local-knowledge-bases.md`
+- **Pitch:** RAG (grounding LLMs with your data) is most powerful locally - this post shows how to build offline-first RAG systems.
+- **Angle:** Covers the full pipeline: (1) embedding generation (local models with Ollama + Nomic embeddings), (2) vector database (Chroma, Milvus for single-machine use), (3) retrieval (BM25 + semantic search hybrid), (4) prompting (how to structure context for local models). Real example: a personal assistant that knows everything about your files, email, and documents without sending anything to the cloud. Performance tuning for different hardware.
+- **Tags:** `rag`, `edge-ai`, `privacy`, `local-ai`, `search`
+
+### Building AI-Powered CLI Tools: Bring Your Models Into Your Workflow
+- **Status:** `idea`
+- **Scheduled:** 2028-03-30
+- **File:** `src/posts/2028-03-30-building-ai-powered-cli-tools.md`
+- **Pitch:** AI doesn't have to live in web apps - this post shows how to build command-line tools that use local LLMs to augment your workflow.
+- **Angle:** Builds several practical tools: (1) code review assistant (pipe code through an LLM), (2) commit message generator, (3) documentation writer from source code, (4) error message decoder. Tools: LangChain CLI, Ollama API, direct subprocess calls. Shows how to make tools fast (run locally, cache results), and keep them focused (do one thing well). Practical scripts you can fork and customize.
+- **Tags:** `cli-tools`, `ai-automation`, `developer-productivity`, `edge-ai`
+
+### Multi-Model Inference: Using Different Models for Different Tasks on the Same Machine
+- **Status:** `idea`
+- **Scheduled:** 2028-04-06
+- **File:** `src/posts/2028-04-06-multi-model-inference-local.md`
+- **Pitch:** You can run multiple models on one machine - small fast model for simple tasks, large capable model for hard reasoning. This post shows the patterns.
+- **Angle:** Covers model selection strategies (routing based on task complexity, input length, or user tier), GPU/CPU sharing, and memory management. Real example: a system that routes simple requests (classification, extraction) to a small model, complex requests (reasoning, generation) to a large model. Addresses the gotcha: model loading/unloading overhead. Includes benchmarking and profiling tools.
+- **Tags:** `llm`, `inference`, `edge-ai`, `performance`, `multi-model`
+
+### Privacy-First AI: Building Systems Where Your Data Never Leaves Your Device
+- **Status:** `idea`
+- **Scheduled:** 2028-04-13
+- **File:** `src/posts/2028-04-13-privacy-first-ai-local-only.md`
+- **Pitch:** For regulated industries (healthcare, finance) and privacy-conscious users, local-only AI is table-stakes. This post shows how to build it.
+- **Angle:** Covers the architecture decisions (local inference, encrypted storage, audit logging), the trade-offs (slower, limited to available hardware), and the compliance benefits (GDPR, HIPAA, PCI-DSS). Real example: a healthcare chatbot that processes patient data entirely locally. Tools and frameworks for building privacy-first systems. When to use local vs. cloud (hybrid approaches).
+- **Tags:** `privacy`, `compliance`, `edge-ai`, `security`, `healthcare`
+
+### From Notebooks to Production: Deploying Edge AI Applications
+- **Status:** `idea`
+- **Scheduled:** 2028-04-20
+- **File:** `src/posts/2028-04-20-deploying-edge-ai-applications.md`
+- **Pitch:** You've built a local AI tool - now how do you ship it to users' laptops? This post covers packaging, distribution, and maintenance.
+- **Angle:** Covers: (1) packaging (Docker, Nix, native installers), (2) dependency management (bundling models, handling updates), (3) auto-updating (how to push new models without breaking installs), (4) metrics (understanding user behavior without seeing their data). Shows practical patterns for Electron apps, Docker containers, and native applications. Addresses the challenge: shipping the model with the app (huge file sizes) vs. downloading on first run.
+- **Tags:** `deployment`, `edge-ai`, `devops`, `packaging`, `distribution`
+
+### Combining Local and Cloud AI: Hybrid Architectures for Cost and Capability
+- **Status:** `idea`
+- **Scheduled:** 2028-04-27
+- **File:** `src/posts/2028-04-27-hybrid-ai-local-and-cloud.md`
+- **Pitch:** Local AI doesn't have to mean "all local" - hybrid approaches give you privacy where it matters and capability where you need it.
+- **Angle:** Covers hybrid patterns: (1) local-first with cloud fallback (process locally, use cloud for complex reasoning), (2) edge inference with cloud training (keep data local, update models in the cloud), (3) asymmetric (sensitive operations local, everything else cloud). Real example: a research tool that processes papers locally but uses cloud API for complex synthesis. Cost/privacy/capability trade-offs for each pattern.
+- **Tags:** `hybrid-architecture`, `edge-ai`, `cloud`, `cost-optimization`, `privacy`
+
+---
+
+## 📅 June-August 2028 - Capstone & Forward Look
+
+Nine posts wrapping up the year's threads and previewing what's next.
+
+### Reflecting on Two Years of Agentic Development: What Actually Shipped, What Disappeared, What's Next
+- **Status:** `idea`
+- **Scheduled:** 2028-06-07
+- **File:** `src/posts/2028-06-07-agentic-development-two-year-retrospective.md`
+- **Pitch:** Two years into mainstream agentic AI (2026-2028), patterns are clear. This post reflects on what worked, what didn't, and where the field is headed in 2029+.
+- **Angle:** Structured look at: (1) what shipped (agentic products at scale, successful agent use cases), (2) what disappeared (hype cycles that didn't materialize), (3) what crystallized (best practices for prompt engineering, evaluation, safety). Personal, opinionated, grounded in shipped work. Covers emerging consensus on hard problems: hallucination detection, cost models, safety. Predictions for 2028-2029: model specialization, efficiency, reasoning on local hardware.
+- **Tags:** `ai-agents`, `year-in-review`, `retrospective`, `editorial`
+
+### The State of Local AI: Personal Computing Returns (But Different)
+- **Status:** `idea`
+- **Scheduled:** 2028-06-14
+- **File:** `src/posts/2028-06-14-state-of-local-ai-personal-computing.md`
+- **Pitch:** Local AI went from novelty to practical in 2027-2028. This post reflects on the shift back toward edge-first computing and what it means.
+- **Angle:** Covers the technology shift (faster quantization, smaller capable models), the market shift (privacy concerns driving adoption), and the cultural shift (developers realizing cloud isn't always better). Real examples of things that are now better local (development, prototyping, document analysis) vs. still better in cloud (massive scale, fine-tuning, frontier models). Predictions on hardware (Apple's Neural Engine, specialized AI chips) and what that means for developers.
+- **Tags:** `edge-ai`, `local-ai`, `personal-computing`, `privacy`, `hardware`
+
+### Platform Engineering and AI: Self-Service Model Deployment Without Chaos
+- **Status:** `idea`
+- **Scheduled:** 2028-06-21
+- **File:** `src/posts/2028-06-21-platform-engineering-ai-self-service.md`
+- **Pitch:** AI is becoming like databases or queues - platform teams need to provide self-service infrastructure for models and agents.
+- **Angle:** Covers what a platform for AI looks like: (1) model marketplace (approved models, easy deployment), (2) evaluation infrastructure (teams can test models on their data), (3) cost transparency (attribution to teams), (4) safety guardrails (baseline requirements for every deployment). Practical patterns: internal model catalogs, wrapper services for common model use cases. Addresses the challenge: not every team needs every model; how do you avoid chaos?
+- **Tags:** `platform-engineering`, `ai-systems`, `internal-developer-platform`, `devops`
+
+### Multi-Cloud AI: Building Systems That Aren't Locked Into One Provider
+- **Status:** `idea`
+- **Scheduled:** 2028-06-28
+- **File:** `src/posts/2028-06-28-multi-cloud-ai-avoiding-lock-in.md`
+- **Pitch:** Azure AI, AWS Bedrock, GCP Vertex AI all have different capabilities and pricing - smart teams use all three for different workloads.
+- **Angle:** Covers: (1) selecting models/services per cloud (when Azure wins, when AWS wins, when GCP wins), (2) abstraction layers (OpenAI API compatibility, vLLM proxy), (3) cost optimization (routing workloads to cheapest cloud), (4) compliance (storing data in specific regions). Shows real examples: development on Azure, production on AWS for cost, GCP for analytics. Addresses multi-cloud complexity: more control vs. more ops burden.
+- **Tags:** `multi-cloud`, `ai-systems`, `cost-optimization`, `architecture`
+
+### Building Developer Tools With AI: Starting, Shipping, Sustaining
+- **Status:** `idea`
+- **Scheduled:** 2028-07-05
+- **File:** `src/posts/2028-07-05-developer-tools-with-ai-shipping.md`
+- **Pitch:** AI is a powerful material for developer tools - this post reflects on what works, what doesn't, and how to build tools that developers actually want.
+- **Angle:** Covers the lifecycle: (1) ideas that sound great on paper but annoy developers (AI that second-guesses you constantly), (2) ideas that ship quietly but delight (AI that helps when asked, gets out of the way otherwise), (3) measurement (how do you know if developers like your AI feature?). Real examples from Claude Code, GitHub Copilot evolution, and smaller tools. Includes the failure modes: AI that's "always on" drives developers away. Future: AI assistants that learn your project, codebase, and style.
+- **Tags:** `developer-tools`, `ai-ux`, `product-design`, `ai-systems`
+
+### The Economics of AI Startups: Unit Economics, Margins, and When to Go Local
+- **Status:** `idea`
+- **Scheduled:** 2028-07-12
+- **File:** `src/posts/2028-07-12-economics-ai-startups-unit-economics.md`
+- **Pitch:** AI startup unit economics are brutal - high inference costs can make a business unsustainable. This post shows what works.
+- **Angle:** Covers: (1) cost structures (API costs, hosting, data), (2) pricing models (per-token too aggressive; per-user or subscription more sustainable), (3) margin math (how many customers do you need to break even?), (4) optimization (when does fine-tuning help margins? Local inference?). Case studies: winners and failures. Predicts which business models survive: high-margin applications (compliance, security), vertical-specific tools (healthcare, legal), B2B infrastructure.
+- **Tags:** `startup`, `business`, `ai-systems`, `economics`, `cost-optimization`
+
+### Safety, Compliance, and AI: Building For Regulated Industries Without Getting Sued
+- **Status:** `idea`
+- **Scheduled:** 2028-07-19
+- **File:** `src/posts/2028-07-19-ai-safety-compliance-regulated-industries.md`
+- **Pitch:** Healthcare, finance, and legal are adopting AI but carrying massive liability. This post covers the risk-management approach that works.
+- **Angle:** Covers: (1) liability models (who's responsible when the AI is wrong?), (2) audit trails (compliance requirements), (3) human-in-the-loop (when AI makes suggestions, humans decide), (4) evaluation and monitoring (catching regressions before they hurt patients/money). Practical frameworks from healthcare (FDA considerations) and finance (fair lending requirements). The uncomfortable truth: most AI in regulated industries today lives behind human review because the liability is too high to automate.
+- **Tags:** `compliance`, `safety`, `healthcare`, `finance`, `risk-management`
+
+### What's Next: Predictions for 2029 and Beyond
+- **Status:** `idea`
+- **Scheduled:** 2028-07-26
+- **File:** `src/posts/2028-07-26-predictions-2029-and-beyond.md`
+- **Pitch:** The field is moving fast - this post makes predictions on models, infrastructure, adoption, and what matters to learn now.
+- **Angle:** Covers: (1) model trends (specialization, efficiency, multimodal), (2) infrastructure (continued commoditization, edge gains, open-source parity), (3) adoption (consolidation around proven patterns, enterprise maturity), (4) challenges (hallucination, safety, energy). Bets worth making: learning LLMOps, safety patterns, specialized domains (your industry-specific knowledge + AI). Personal view on what to watch: which startups, which research papers, which skills will matter most.
+- **Tags:** `predictions`, `editorial`, `ai-systems`, `strategy`
 
 ---
 
