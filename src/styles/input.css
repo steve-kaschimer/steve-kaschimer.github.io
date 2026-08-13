@@ -391,162 +391,174 @@
   }
 }
 
-@utility attr-name {
-  .dark .prose pre code .token.token {
-    color: #79c0ff;
-  }
+@layer components {
+  .attr-name {
+    .dark .prose pre code .token.token {
+      color: #79c0ff;
+    }
 
-  .prose pre code .token.token {
-    color: #0550ae;
+    .prose pre code .token.token {
+      color: #0550ae;
+    }
   }
 }
 
-@utility atrule {
-  .dark .prose pre code .token.token {
-    color: #7ee787;
-  }
-  .prose pre code .token.token {
-    color: #0550ae;
-  }
-}
-
-@utility boolean {
-  .dark .prose pre code .token.token {
-    color: #ff7b72;
-  }
-  .prose pre code .token.token {
-    color: #cf2256;
+@layer components {
+  .atrule {
+    .dark .prose pre code .token.token {
+      color: #7ee787;
+    }
+    .prose pre code .token.token {
+      color: #0550ae;
+    }
   }
 }
 
-@utility class-name {
-  .dark .prose pre code .token.token {
-    color: #ffa657;
+@layer components {
+  .boolean {
+    .dark .prose pre code .token.token {
+      color: #ff7b72;
+    }
+    .prose pre code .token.token {
+      color: #cf2256;
+    }
   }
-  .prose pre code .token.token {
-    color: #953800;
+
+  .class-name {
+    .dark .prose pre code .token.token {
+      color: #ffa657;
+    }
+    .prose pre code .token.token {
+      color: #953800;
+    }
+  }
+
+  .comment {
+    .dark .prose pre code .token.token {
+      color: #9198a1;
+    }
+    .prose pre code .token.token {
+      color: #59636e;
+    }
+  }
+
+  .function {
+    .dark .prose pre code .token.token {
+      color: #d2a8ff;
+    }
+    .prose pre code .token.token {
+      color: #8250df;
+    }
   }
 }
 
-@utility comment {
-  .dark .prose pre code .token.token {
-    color: #9198a1;
+@layer components {
+  .keyword {
+    .dark .prose pre code .token.token {
+      color: #ff7b72;
+    }
+    .prose pre code .token.token {
+      color: #cf222e;
+    }
   }
-  .prose pre code .token.token {
-    color: #59636e;
+
+  .null {
+    .dark .prose pre code .token.token {
+      color: #79c0ff;
+    }
+    .prose pre code .token.token {
+      color: #0550ae;
+    }
+  }
+
+  .number {
+    .dark .prose pre code .token.token {
+      color: #79c0ff;
+    }
+    .prose pre code .token.token {
+      color: #0550ae;
+    }
+  }
+
+  .operator {
+    .dark .prose pre code .token.token {
+      color: #ff7b72;
+    }
+    .prose pre code .token.token {
+      color: #cf222e;
+    }
   }
 }
 
-@utility function {
-  .dark .prose pre code .token.token {
-    color: #d2a8ff;
+@layer components {
+  .property {
+    .dark .prose pre code .token.token {
+      color: #79c0ff;
+    }
+    .prose pre code .token.token {
+      color: #0550ae;
+    }
   }
-  .prose pre code .token.token {
-    color: #8250df;
+
+  .punctuation {
+    .dark .prose pre code .token.token {
+      color: #f0f6fc;
+    }
+    .prose pre code .token.token {
+      color: #1f2328;
+    }
+  }
+
+  .string {
+    .dark .prose pre code .token.token {
+      color: #a5d6ff;
+    }
+    .prose pre code .token.token {
+      color: #0a3069;
+    }
+  }
+
+  .tag {
+    .dark .prose pre code .token.token {
+      color: #7ee787;
+    }
+    .prose pre code .token.token {
+      color: #116329;
+    }
+  }
+
+  .variable {
+    .dark .prose pre code .token.token {
+      color: #ffa657;
+    }
+    .prose pre code .token.token {
+      color: #953800;
+    }
   }
 }
 
-@utility keyword {
-  .dark .prose pre code .token.token {
-    color: #ff7b72;
-  }
-  .prose pre code .token.token {
-    color: #cf222e;
-  }
-}
-
-@utility null {
-  .dark .prose pre code .token.token {
-    color: #79c0ff;
-  }
-  .prose pre code .token.token {
-    color: #0550ae;
-  }
-}
-
-@utility number {
-  .dark .prose pre code .token.token {
-    color: #79c0ff;
-  }
-  .prose pre code .token.token {
-    color: #0550ae;
+@layer components {
+  .line-numbers {
+    /* Line numbers. dark:text-gray-300, not -400: -400 on dark:bg-gray-700 is
+       3.96:1, below the 4.5:1 WCAG AA minimum (aria-hidden doesn't exempt
+       visually-rendered text from contrast requirements for low-vision users). */
+    @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-4 pr-3 pl-3 select-none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-size: 0.875rem; /* 14px - match code */
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+      'Courier New', monospace;
+    text-align: right;
+    user-select: none;
+    padding-bottom: 1rem !important;
+    border-radius: 0 0 0 0.5rem;
   }
 }
 
-@utility operator {
-  .dark .prose pre code .token.token {
-    color: #ff7b72;
-  }
-  .prose pre code .token.token {
-    color: #cf222e;
-  }
-}
-
-@utility property {
-  .dark .prose pre code .token.token {
-    color: #79c0ff;
-  }
-  .prose pre code .token.token {
-    color: #0550ae;
-  }
-}
-
-@utility punctuation {
-  .dark .prose pre code .token.token {
-    color: #f0f6fc;
-  }
-  .prose pre code .token.token {
-    color: #1f2328;
-  }
-}
-
-@utility string {
-  .dark .prose pre code .token.token {
-    color: #a5d6ff;
-  }
-  .prose pre code .token.token {
-    color: #0a3069;
-  }
-}
-
-@utility tag {
-  .dark .prose pre code .token.token {
-    color: #7ee787;
-  }
-  .prose pre code .token.token {
-    color: #116329;
-  }
-}
-
-@utility variable {
-  .dark .prose pre code .token.token {
-    color: #ffa657;
-  }
-  .prose pre code .token.token {
-    color: #953800;
-  }
-}
-
-@utility line-numbers {
-  /* Line numbers. dark:text-gray-300, not -400: -400 on dark:bg-gray-700 is
-     3.96:1, below the 4.5:1 WCAG AA minimum (aria-hidden doesn't exempt
-     visually-rendered text from contrast requirements for low-vision users). */
-  @apply bg-gray-300 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-4 pr-3 pl-3 select-none;
-  display: flex;
-  flex-direction: column;
-  line-height: 1.5;
-  font-size: 0.875rem; /* 14px - match code */
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
-  text-align: right;
-  user-select: none;
-  padding-bottom: 1rem !important;
-  border-radius: 0 0 0 0.5rem;
-}
-
-@utility prose-lg {
-  .prose p {
+@layer components {
+  .prose-lg .prose p {
     @apply mb-4 mt-0;
   }
 }
