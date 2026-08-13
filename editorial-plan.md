@@ -1058,17 +1058,69 @@ Six posts on how a .NET service caches data, picking up the Tuesday cadence dire
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Message Brokers (September-October 2027)
 
-Eight six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Caching Solutions series ends on 2027-09-07, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET service moves messages between other services, picking up the Tuesday cadence directly from the Caching Solutions track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one broker.
 
-### .NET Message Brokers (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-message-brokers-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then RabbitMQ, Kafka, Azure Service Bus, Amazon SQS, NATS
+### The Top 5 Message Brokers for .NET Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-09-14
+- **Source:** `docs/article-ideas/top-5-dotnet-message-brokers-compared.md`
+- **File:** `src/posts/2027-09-14-top-5-dotnet-message-brokers-compared.md`
 - **Pitch:** Broker comparisons get framed as "which one is fastest" when the actual differentiator is shape - routing discrete messages between services, streaming an ordered replayable log, or just decoupling two parts of a system without standing up new infrastructure.
 - **Angle:** Compares the five on model, message replay, hosting, and .NET client experience, then argues that picking on throughput benchmarks alone reliably produces the wrong answer. Makes a practical point most comparisons skip entirely: .NET teams rarely talk to these brokers directly, so the abstraction sitting in between - MassTransit, NServiceBus, or Rebus - often matters as much as the broker choice itself. The managed options (Service Bus, SQS) are evaluated on cloud coupling rather than feature count.
 - **Tags:** `dotnet`, `messaging`, `architecture`, `microservices`, `devops`
+
+### Getting Started with RabbitMQ in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-09-21
+- **Source:** `docs/article-ideas/getting-started-with-rabbitmq.md`
+- **File:** `src/posts/2027-09-21-getting-started-with-rabbitmq.md`
+- **Pitch:** Working directly against RabbitMQ's raw AMQP client in .NET means hand-managing connections, channels, serialization, retry, and error queues yourself - all boilerplate the overwhelming majority of real .NET RabbitMQ integrations avoid by going through MassTransit instead.
+- **Angle:** Covers MassTransit's `IConsumer<T>` and `ConfigureEndpoints` auto-topology as the default rather than a nice-to-have, `Publish` vs. `Send` as a coupling decision rather than an API preference, and tuning `PrefetchCount`/`ConcurrentMessageLimit` per consumer workload. Frames MassTransit as the practical argument for RabbitMQ over a raw-client comparison, since it's also what makes switching brokers later a configuration change.
+- **Tags:** `dotnet`, `messaging`, `architecture`, `developer-productivity`
+
+### Getting Started with Kafka in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-09-28
+- **Source:** `docs/article-ideas/getting-started-with-kafka.md`
+- **File:** `src/posts/2027-09-28-getting-started-with-kafka.md`
+- **Pitch:** Kafka's .NET story is deliberately more hands-on than RabbitMQ's - Confluent.Kafka is a thinner wrapper around partitions, consumer groups, and offsets than MassTransit gives you over RabbitMQ, because Kafka is a fundamentally different thing than a traditional broker.
+- **Angle:** Covers `Acks.All` plus `EnableIdempotence` as the default worth defaulting to, partition-key selection as the actual lever for ordering and parallelism, and manual offset commits after successful processing rather than risky auto-commit. Treats Kafka's log-based retention (independent of consumption) as the core conceptual shift from every queue-based broker in the series, and is explicit about when Kafka is overkill for a workload that's really just a queue.
+- **Tags:** `dotnet`, `messaging`, `architecture`, `performance`, `microservices`
+
+### Getting Started with Azure Service Bus in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-10-05
+- **Source:** `docs/article-ideas/getting-started-with-azure-service-bus.md`
+- **File:** `src/posts/2027-10-05-getting-started-with-azure-service-bus.md`
+- **Pitch:** Azure Service Bus's reputation as the best .NET developer experience among message brokers isn't marketing - the `Azure.Messaging.ServiceBus` SDK feels designed by people who write ASP.NET Core applications, not adapted from a cross-language client.
+- **Angle:** Covers queues (point-to-point) versus topics/subscriptions (pub/sub) as a deliberate architectural choice, `MessageId`-based duplicate detection as low-effort idempotency protection, and explicit message completion instead of relying on `AutoCompleteMessages`. Draws the abandon-vs-dead-letter distinction clearly, and flags real Azure lock-in and usage-based cost scaling as the honest trade-offs against the smoothest SDK in the comparison.
+- **Tags:** `dotnet`, `messaging`, `cloud`, `architecture`, `devops`
+
+### Getting Started with Amazon SQS in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-10-12
+- **Source:** `docs/article-ideas/getting-started-with-amazon-sqs.md`
+- **File:** `src/posts/2027-10-12-getting-started-with-amazon-sqs.md`
+- **Pitch:** SQS's simplicity is genuinely refreshing after RabbitMQ's exchange model or Kafka's partition mechanics - a queue, messages go in, messages come out, AWS handles the rest - but it still asks for a few binary decisions made explicitly rather than by default.
+- **Angle:** Covers standard versus FIFO queues, long polling as the default with essentially no downside, and deletion (not "acknowledgment") as SQS's genuinely different completion model governed by visibility timeout. Positions FIFO's `MessageGroupId` as the SQS analog to a Kafka partition key, and is direct that pairing with SNS is what fills the pub/sub gap SQS alone doesn't cover.
+- **Tags:** `dotnet`, `messaging`, `cloud`, `architecture`, `devops`
+
+### Getting Started with NATS in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-10-19
+- **Source:** `docs/article-ideas/getting-started-with-nats.md`
+- **File:** `src/posts/2027-10-19-getting-started-with-nats.md`
+- **Pitch:** NATS's core pitch is that most messaging doesn't need to be as heavy as it usually is - subject-based pub/sub, a tiny operational footprint, and genuinely low latency, without RabbitMQ's exchange configuration or Kafka's partition mechanics.
+- **Angle:** Covers core NATS's fire-and-forget model (and the real, deliberate trade-off that a message is simply gone if nobody's subscribed) against JetStream's durability and explicit acknowledgment once persistence actually matters. Treats subject hierarchies and wildcards as NATS's answer to RabbitMQ's topic routing, and is upfront that the smaller .NET ecosystem is a real factor to weigh, not just a footnote.
+- **Tags:** `dotnet`, `messaging`, `architecture`, `performance`, `microservices`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Seven six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Message Brokers series ends on 2027-10-19, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Background Job Libraries (6 posts)
 - **Status:** `idea`
