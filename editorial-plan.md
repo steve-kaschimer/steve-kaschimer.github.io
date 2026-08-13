@@ -1478,17 +1478,69 @@ Six posts on how .NET applications handle authentication and identity, picking u
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET IDEs & Editors (July-August 2028)
 
-One six-post series remains unscheduled, drawn from the drafts in `docs/article-ideas/`. It continues the Tuesday cadence once the Auth & Identity for .NET series ends on 2028-06-27. It's deliberately undated - that horizon is too far out to put honest dates against - so the series gets one entry rather than six speculative ones, expanded into individual dated posts when it moves onto the calendar.
+Six posts on where .NET developers actually write and debug C# in 2028, picking up the Tuesday cadence directly from the Auth & Identity for .NET track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one editor. This is the final scheduled series drawn from the current `docs/article-ideas/` backlog - the Backlog section below is now empty.
 
-### .NET IDEs & Editors (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-ides-editors-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then Visual Studio, JetBrains Rider, VS Code, Cursor, Neovim
+### The Top 5 .NET IDEs & Editors Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2028-07-04
+- **Source:** `docs/article-ideas/top-5-dotnet-ides-editors-compared.md`
+- **File:** `src/posts/2028-07-04-top-5-dotnet-ides-editors-compared.md`
 - **Pitch:** "Visual Studio on Windows" stopped being the automatic answer. Rider has a real claim to being better for day-to-day C# work, VS Code became genuinely solid once the C# Dev Kit shipped, and in mid-2026 JetBrains extended full C# tooling - debugging included - to Cursor and other VS Code-compatible editors.
 - **Angle:** Compares the five on platform support, cost, C# intelligence, and debugging, with Neovim included specifically for the terminal-first crowd rather than as a novelty entry. States the licensing detail that drives most of the current landscape upfront: Microsoft's C# Dev Kit is licensed for genuine VS Code only and does not run on Cursor or other forks, which is exactly the gap JetBrains moved into. Deliberately scoped to the core development experience and cross-references the AI Coding Agents track rather than re-litigating agent capability.
 - **Tags:** `dotnet`, `tooling`, `developer-productivity`, `ai-coding-tools`
+
+### Getting Started with Visual Studio for .NET Development
+- **Status:** `draft`
+- **Scheduled:** 2028-07-11
+- **Source:** `docs/article-ideas/getting-started-with-visual-studio.md`
+- **File:** `src/posts/2028-07-11-getting-started-with-visual-studio.md`
+- **Pitch:** The install wizard makes the first decision that matters most, and it's easy to get wrong: which workloads to install. Checking every box "just in case" turns a reasonable install into a multi-hour, disk-hungry mess.
+- **Angle:** Covers deliberate workload selection over installing everything available, tuning background analysis scope and Solution Explorer tracking for large-solution responsiveness, committing `.editorconfig` from day one as the highest-leverage team-consistency setting, and conditional breakpoints over littering code with temporary print statements. Direct that Community edition is genuinely free for individuals, open-source projects, and teams of up to five - not just a trial - and that Visual Studio for Mac is fully discontinued with no path forward on macOS.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`
+
+### Getting Started with JetBrains Rider for .NET Development
+- **Status:** `draft`
+- **Scheduled:** 2028-07-18
+- **Source:** `docs/article-ideas/getting-started-with-rider.md`
+- **File:** `src/posts/2028-07-18-getting-started-with-rider.md`
+- **Pitch:** The reputation for being faster and smarter than Visual Studio for day-to-day C# work isn't marketing copy - it comes directly from ReSharper's static analysis engine running natively inside the IDE rather than as an add-on.
+- **Angle:** Covers Solution-Wide Analysis as continuous background checking across the entire solution rather than just open files, ReSharper-native refactoring and navigation as the clearest day-to-day strength, shared `.editorconfig` conventions that let Rider and Visual Studio coexist on the same team without friction, and the built-in database tools shared with DataGrip. Direct that it's a genuinely first-class cross-platform experience, not a Windows product ported elsewhere - the strongest full .NET IDE choice on macOS now that Visual Studio for Mac is gone.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`
+
+### Getting Started with VS Code for .NET Development
+- **Status:** `draft`
+- **Scheduled:** 2028-07-25
+- **Source:** `docs/article-ideas/getting-started-with-vscode-dotnet.md`
+- **File:** `src/posts/2028-07-25-getting-started-with-vscode-dotnet.md`
+- **Pitch:** The C# story used to require a fair amount of manual extension-hunting to get something resembling IntelliSense and a working debugger. That's not the situation anymore - the C# Dev Kit bundles the pieces that matter into one coherent extension.
+- **Angle:** Covers opening the folder containing a `.sln`/`.csproj` (not loose files) as the fix for the most common "IntelliSense isn't working" complaint, committing `.vscode/settings.json` and `.editorconfig` for team-wide consistency, the built-in Test Explorer and F5 debugging workflow, and the extension's genuine first-party Microsoft investment rather than community-maintained status. States plainly that the C# Dev Kit's license restricts it to genuine VS Code and does not run on Cursor or other forks - the detail that drives most of this track's Cursor post.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`
+
+### Getting Started with C# Development in Cursor
+- **Status:** `draft`
+- **Scheduled:** 2028-08-01
+- **Source:** `docs/article-ideas/getting-started-with-cursor-dotnet.md`
+- **File:** `src/posts/2028-08-01-getting-started-with-cursor-dotnet.md`
+- **Pitch:** Cursor's C# story had a real, well-known gap until mid-2026: the C# Dev Kit refuses to run on VS Code forks, leaving Cursor users doing .NET work with a degraded experience - until JetBrains extended ReSharper's full engine, debugging included, directly into Cursor as of their 2026.2 release.
+- **Angle:** Covers installing ReSharper's extension from Cursor's marketplace, the same `.editorconfig`-respecting conventions that keep formatting consistent across a mixed-editor team, debugging as specifically the capability that was missing before 2026.2, and a practical pattern for combining Cursor's Agent mode for larger changes with ReSharper's inline inspections to verify agent-generated code the same way hand-written code gets checked. Honest about the combined licensing cost - a ReSharper license plus any Cursor Pro tier - and cross-references this series' separate Cursor AI-agent setup guide rather than repeating it.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`, `ai-coding-tools`
+
+### Getting Started with Neovim for .NET Development
+- **Status:** `draft`
+- **Scheduled:** 2028-08-08
+- **Source:** `docs/article-ideas/getting-started-with-neovim-dotnet.md`
+- **File:** `src/posts/2028-08-08-getting-started-with-neovim-dotnet.md`
+- **Pitch:** Every other editor in this track gives you IntelliSense and debugging the moment you install it. Neovim gives you neither - you assemble both yourself, from a language server, a completion plugin, and a debug adapter, each configured explicitly.
+- **Angle:** Covers `csharp-ls` (or OmniSharp) via `nvim-lspconfig` for core IDE-like features, `nvim-dap` paired with `netcoredbg` as the most setup-intensive piece with no out-of-the-box equivalent, `nvim-dap-ui` as the non-optional upgrade over bare `nvim-dap` commands for a usable debugging panel, and building configuration incrementally rather than trying to replicate every IDE feature before writing real code. Honest throughout that this requires meaningfully more upfront investment than any other option in the track, worth it specifically for developers who value full control and a terminal-first workflow.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+No series remain unscheduled - every series drafted into `docs/article-ideas/` has been scheduled and drafted as of the .NET IDEs & Editors track above. New entries get added here as future series are drafted.
 
 ---
 
