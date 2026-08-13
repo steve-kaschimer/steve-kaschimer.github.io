@@ -1418,17 +1418,69 @@ Six posts on how a .NET application actually reaches production, picking up the 
 
 ---
 
+## 📅 Tuesday Track - Auth & Identity for .NET (May-June 2028)
+
+Six posts on how .NET applications handle authentication and identity, picking up the Tuesday cadence directly from the .NET Deployment Options track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one auth/identity solution.
+
+### The Top 5 Auth & Identity Solutions for .NET Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2028-05-23
+- **Source:** `docs/article-ideas/top-5-auth-identity-solutions-dotnet-compared.md`
+- **File:** `src/posts/2028-05-23-top-5-auth-identity-solutions-dotnet-compared.md`
+- **Pitch:** Duende IdentityServer - the direct successor to the free, widely-loved IdentityServer4 - now requires a commercial license for production use above a revenue threshold, the same commercial-shift pattern the mapping and mocking tracks both hit.
+- **Angle:** Compares the five across three genuinely different categories - an embedded user-management library, self-hosted protocol servers you operate yourself, and fully managed identity platforms you configure rather than run - framing the decision as how much of the identity stack you want to own, not a feature checklist. Names OpenIddict as the free, .NET-native alternative that rose directly out of Duende's licensing change, and closes on the common pattern of pairing ASP.NET Core Identity with a protocol framework rather than treating the five as strictly mutually exclusive.
+- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `architecture`
+
+### Getting Started with ASP.NET Core Identity
+- **Status:** `draft`
+- **Scheduled:** 2028-05-30
+- **Source:** `docs/article-ideas/getting-started-with-aspnet-core-identity.md`
+- **File:** `src/posts/2028-05-30-getting-started-with-aspnet-core-identity.md`
+- **Pitch:** Scaffolding gets a working login page in minutes, which is exactly why it's easy to stop there and miss the configuration that actually matters: password and lockout policies tuned to real risk tolerance, email confirmation wired to a real sender, and knowing when Identity alone has been outgrown.
+- **Angle:** Covers tuning password/lockout policy away from generic scaffolded defaults, replacing the default `IEmailSender` stub (which silently does nothing) with a real provider, adding `AddRoles<IdentityRole>()` for role-based authorization, and claims-based policies for anything more granular than a fixed role list. Direct that the moment SSO, external API tokens, or third-party federation are needed, that's the signal to pair Identity with a protocol framework rather than stretch it further.
+- **Tags:** `dotnet`, `security`, `identity`, `aspnet-core`
+
+### Getting Started with Microsoft Entra External ID for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-06-06
+- **Source:** `docs/article-ideas/getting-started-with-entra-external-id.md`
+- **File:** `src/posts/2028-06-06-getting-started-with-entra-external-id.md`
+- **Pitch:** The newest name in this track's comparison - Microsoft's current, officially recommended replacement for Azure AD B2C - which means double-checking any setup step against Microsoft's own docs before production, since this is an actively evolving product rather than a long-settled one.
+- **Angle:** Covers tenant and app registration, `Microsoft.Identity.Web` as the same first-party library that's underpinned Azure AD and Azure AD B2C integration for years, admin-center-configured user flows for sign-up/sign-in behavior, and the still-maturing pattern for unifying consumer and B2B sign-in in one application. Honest that this is genuinely newer than Azure AD B2C with a smaller body of battle-tested guidance, and points to Microsoft's official migration path for existing B2C applications.
+- **Tags:** `dotnet`, `security`, `identity`, `azure`, `oidc`
+
+### Getting Started with Duende IdentityServer
+- **Status:** `draft`
+- **Scheduled:** 2028-06-13
+- **Source:** `docs/article-ideas/getting-started-with-duende-identityserver.md`
+- **File:** `src/posts/2028-06-13-getting-started-with-duende-identityserver.md`
+- **Pitch:** The first real decision happens before writing any code: is the organization actually under the community edition's revenue threshold, or does it need a commercial license - worth resolving explicitly rather than building an identity provider around an unconfirmed licensing assumption.
+- **Angle:** Covers clients and scopes as the foundational configuration vocabulary, pairing with ASP.NET Core Identity for the actual user store (Duende supplies no UI or user management of its own), deliberate token lifetime configuration, and the real, often-underestimated engineering cost of building login, registration, consent, and password-reset flows Duende doesn't ship turnkey. Recommends seriously evaluating OpenIddict or Keycloak before committing to a paid license unless there's a specific technical requirement only Duende meets.
+- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `architecture`
+
+### Getting Started with Keycloak for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-06-20
+- **Source:** `docs/article-ideas/getting-started-with-keycloak-dotnet.md`
+- **File:** `src/posts/2028-06-20-getting-started-with-keycloak-dotnet.md`
+- **Pitch:** Free and standards-compliant enough that the .NET side is genuinely simple - the same generic `Microsoft.AspNetCore.Authentication.OpenIdConnect` middleware works with no Keycloak-specific SDK - while the real work lives in realms, clients, and operating a Java-based service as infrastructure regardless of how cleanly .NET talks to it.
+- **Angle:** Covers realms as Keycloak's top-level isolation boundary, standard OIDC middleware pointed at a realm-specific issuer URL, the `realm_access.roles` claim nesting that's a common source of silently-never-matching authorization policies, and never running `start-dev` mode in production. Frames Keycloak as the community's clear recommendation over a paid Duende license for cost-constrained teams with real infrastructure capacity, at the cost of operating a Java-based service.
+- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `devops`
+
+### Getting Started with Auth0 for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-06-27
+- **Source:** `docs/article-ideas/getting-started-with-auth0-dotnet.md`
+- **File:** `src/posts/2028-06-27-getting-started-with-auth0-dotnet.md`
+- **Pitch:** The value proposition shows up in the first ten minutes - register an application, install one SDK package, working login without hand-writing an OAuth flow or standing up infrastructure - but the setup work that actually matters happens after that quick win.
+- **Angle:** Covers the `Auth0.AspNetCore.Authentication` SDK for web apps versus JWT Bearer authentication for APIs as two distinct integration patterns, `Audience` mismatches as the most common "token is valid but access is denied" cause, namespaced custom claims via Auth0 Actions since roles aren't included in tokens by default, and clearing both the local and Auth0 session on logout. Closes on monitoring usage-based pricing against tier boundaries as user base grows, rather than being surprised by cost later.
+- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `tooling`
+
+---
+
 ## 📅 Backlog - Unscheduled Series
 
-Two six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Deployment Options series ends on 2028-05-16, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
-
-### Auth & Identity for .NET (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-auth-identity-solutions-dotnet-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then ASP.NET Core Identity, Microsoft Entra External ID, Duende IdentityServer, Keycloak, Auth0
-- **Pitch:** Duende IdentityServer - the direct successor to the free, widely-loved IdentityServer4 - now requires a commercial license for production use above a revenue threshold. That single change reshaped how .NET teams think about self-hosted identity, and this series runs into the same commercial-shift pattern the mapping and mocking series both hit.
-- **Angle:** Compares the five across three genuinely different categories: an embedded user-management library, self-hosted protocol servers you operate yourself, and fully managed identity platforms you configure rather than run. The decision isn't a feature checklist, it's how much of the identity stack you want to own - including uptime, scaling, and security patching, which is where self-hosting costs are usually underestimated. Names OpenIddict as the free, .NET-native alternative that rose directly out of Duende's licensing change, even though it isn't one of the five deep dives.
-- **Tags:** `dotnet`, `security`, `identity`, `oidc`, `architecture`
+One six-post series remains unscheduled, drawn from the drafts in `docs/article-ideas/`. It continues the Tuesday cadence once the Auth & Identity for .NET series ends on 2028-06-27. It's deliberately undated - that horizon is too far out to put honest dates against - so the series gets one entry rather than six speculative ones, expanded into individual dated posts when it moves onto the calendar.
 
 ### .NET IDEs & Editors (6 posts)
 - **Status:** `idea`
