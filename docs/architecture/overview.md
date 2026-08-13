@@ -30,7 +30,7 @@ Primary execution entrypoints are npm scripts in `package.json` (`dev`, `build`,
 ## Integrations and Platform Surfaces
 
 - **GitHub Pages**: the only deployment target. `actions/deploy-pages`, not a `gh-pages` branch.
-- **GitHub Actions**: `build-check.yml`, `deploy.yml` (both real, active); `squad-*.yml` (separate, likely-dormant automation - see `docs/product/overview.md`).
+- **GitHub Actions**: `build-check.yml`, `deploy.yml` (both real, active)
 - **External CDNs loaded at runtime**: Google Fonts (`fonts.googleapis.com`), Prism.js + language components (`cdnjs.cloudflare.com`), Microsoft Clarity, Google Analytics (`gtag.js`). **Observed operational note**: in this Claude Code sandbox specifically, both `cdnjs.cloudflare.com` and `api.openai.com` have been hit with hard `403` proxy-policy denials during this session (confirmed via `curl` and via an attempted MCP image-generation server) - this is a sandbox network-policy characteristic, not a defect in the site. `scripts/a11y-check.js` works around exactly this by blocking all non-localhost requests during its scan.
 - **Azure AI Foundry / Azure AI Search / GitHub Packages / GitHub Rulesets, etc.**: these are *subjects of blog posts*, not integrations this repo actually has - the code examples in `src/posts/*.md` are illustrative content, not executed by anything in this repository.
 

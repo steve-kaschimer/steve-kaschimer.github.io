@@ -11,7 +11,6 @@ The site's outcome is straightforward: give one author (Steve Kaschimer) a fast,
 - **Readers**: consume posts via the homepage grid (progressively loaded, tag-filterable), direct post URLs, or the Atom feed at `/feed/`. No accounts, no comments, no server-side personalization.
 - **Steve Kaschimer (author/maintainer)**: writes and reviews content, generates hero images externally via ChatGPT (this repo's Claude Code sessions cannot call `api.openai.com` directly - see `docs/decisions/`), reviews and merges PRs.
 - **Claude Code sessions** (this session included): draft posts against the editorial calendar, maintain the build/template/CSS layer, run accessibility and SEO passes, and open PRs. Session-specific instructions live in `CLAUDE.md`.
-- **The "Squad" framework** (`.squad/`, `.github/workflows/squad-*.yml`): a dormant multi-agent editorial-automation framework (named personas - Trenton for content, Mr. Robot for Eleventy/build, Darlene for CI, Romero for deployment, Elliot for architecture, Ralph for status monitoring). Its scheduled heartbeat is commented out (`squad-heartbeat.yml`), and its decision log (`.squad/decisions.md`) has one entry from 2026-03-11 with nothing since - **assumption**: not in active use, but its labels (`squad:trenton`, `type:feature`, etc.) are still applied to the editorial-calendar GitHub Issues, so `taskstoissues`-style tooling should keep using them.
 
 ## Implementation-Relevant Rules
 
@@ -22,8 +21,8 @@ The site's outcome is straightforward: give one author (Steve Kaschimer) a fast,
 
 ## Observed Evidence
 
-- `.eleventy.js` (posts collection date filtering), `CLAUDE.md` (hero image / accessibility workflow rules), `editorial-plan.md` (publishing cadence and per-post status tracking), `.squad/` + `.github/workflows/squad-*.yml` (dormant automation framework), `scripts/a11y-check.js` (the only automated check in the repo).
+- `.eleventy.js` (posts collection date filtering), `CLAUDE.md` (hero image / accessibility workflow rules), `editorial-plan.md` (publishing cadence and per-post status tracking), `scripts/a11y-check.js` (the only automated check in the repo).
 
 ## Assumptions and Open Questions
 
-See `docs/context/gaps.md` for the full list - notably the Squad framework's real-world usage status and a `package.json` engines/`​.nvmrc` version mismatch are inferred from evidence, not confirmed with the maintainer.
+See `docs/context/gaps.md` for the full list.

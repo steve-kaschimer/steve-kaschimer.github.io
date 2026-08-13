@@ -95,7 +95,7 @@ Verify claims against the actual repo state (grep the code, check the workflow f
 
 ## Development Workflow (Agent-Based)
 
-Work is orchestrated through **Claude Code agents** defined in `.claude/agents/`. This replaces the previous squad framework with a pure agent-based pipeline.
+Work is orchestrated through **Claude Code agents** defined in `.claude/agents/`.
 
 **Main workflow:**
 1. **Planner** reads the requirement (GitHub Issue, editorial calendar entry, or explicit instruction)

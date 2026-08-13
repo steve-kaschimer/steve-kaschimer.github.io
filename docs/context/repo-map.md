@@ -32,7 +32,6 @@
 | `src/_data/site.json` | Global template data - site title/description/URL/author contact. |
 | `src/styles/input.css` | Tailwind v4 CSS-native config (`@theme`, `@utility`, `@variant`) - there is no `tailwind.config.js`. |
 | `src/images/posts/` | Hero image asset convention: `<slug>-hero.png` source + `.webp` + `-400w`/`-600w`/`-800w` variants at quality 95. |
-| `.squad/` | Dormant multi-agent automation framework - see `docs/product/overview.md` before assuming it's active. |
 | `docs/architecture/adr/`, `docs/architecture/database-schema-example.md` | Untouched sample scaffolds. This repo has no database and no decision yet at ADR scale - leave these as marked samples, don't treat as real content. |
 
 ## Notes

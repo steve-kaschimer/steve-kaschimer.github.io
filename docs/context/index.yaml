@@ -6,8 +6,8 @@ entries:
   - id: product-overview
     category: product
     path: docs/product/overview.md
-    summary: Static Eleventy/Tailwind blog on GitHub Pages, single author, no backend. Covers user/actor roles (reader, maintainer, Claude Code sessions, dormant Squad framework) and implementation-relevant rules (date-gated visibility, manual hero-image handoff, mandatory a11y-check).
-    source_paths: [".eleventy.js", "CLAUDE.md", "editorial-plan.md", ".squad/"]
+    summary: Static Eleventy/Tailwind blog on GitHub Pages, single author, no backend. Covers user/actor roles (reader, maintainer, Claude Code sessions) and implementation-relevant rules (date-gated visibility, manual hero-image handoff, mandatory a11y-check).
+    source_paths: [".eleventy.js", "CLAUDE.md", "editorial-plan.md"]
     confidence: high
     last_verified: 2026-07-12
     status: bootstrapped
@@ -22,8 +22,8 @@ entries:
   - id: product-glossary
     category: product
     path: docs/product/glossary.md
-    summary: Repo-specific terms - hero image handoff, Ruleset vs. classic branch protection, zero-baseline permissions, the Squad framework, editorial calendar conventions.
-    source_paths: ["CLAUDE.md", "src/posts/2026-05-08-github-branch-protection-rules-vs-rulesets.md", ".squad/"]
+    summary: Repo-specific terms - hero image handoff, Ruleset vs. classic branch protection, zero-baseline permissions, editorial calendar conventions.
+    source_paths: ["CLAUDE.md", "src/posts/"]
     confidence: medium
     last_verified: 2026-07-12
     status: bootstrapped

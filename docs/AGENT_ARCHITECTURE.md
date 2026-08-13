@@ -1,21 +1,5 @@
 # Agent Architecture - steve-kaschimer.github.io
 
-## Squad Foundation (.squad/agents/)
-
-The project is guided by 7 specialized agents (squad members):
-
-| Agent | Role | Charter |
-|-------|------|---------|
-| **Elliot** | Lead | Architecture, security, triage, technical decisions |
-| **Trenton** | Content Engineer | Blog posts, editorial strategy, technical writing |
-| **Mr. Robot** | Eleventy Dev | Build, templates, Tailwind, site structure |
-| **Darlene** | DevSecOps | GitHub Actions, CI/CD, secrets, dependency auditing |
-| **Romero** | DevOps | Deployment, GitHub Pages, releases |
-| **Ralph** | Work Monitor | Backlog hygiene, status checks, stall detection |
-| **Scribe** | Session Logger | Decision logging, context preservation |
-
-See `.squad/agents/*/charter.md` for complete definitions.
-
 ---
 
 ## Claude Code Implementation Agents (.claude/agents/)
@@ -327,7 +311,5 @@ Scribe, document the decisions from this session:
 ## References
 
 - `.claude/agents/*.md` - Agent definitions
-- `.squad/WORKFLOW.md` - Squad workflow guide
-- `.squad/team.md` - Squad member charters
 - `CLAUDE.md` - Project configuration
 - `editorial-plan.md` - Content calendar and work queue
