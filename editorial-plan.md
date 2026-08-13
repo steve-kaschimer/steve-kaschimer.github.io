@@ -703,49 +703,55 @@ Six posts on .NET logging, continuing the Tuesday cadence. A comparison post anc
 Six posts on .NET testing frameworks, resuming the Tuesday cadence in January - 2026-12-22 and 2026-12-29 are intentionally skipped for the holidays. A comparison post anchors the track and each of the five follow-ups sets one framework up from scratch.
 
 ### The Top 5 .NET Testing Frameworks Compared: Which One Should You Choose?
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-01-05
 - **Source:** `docs/article-ideas/top-5-dotnet-testing-frameworks-compared.md`
+- **File:** `src/posts/2027-01-05-top-5-dotnet-testing-frameworks-compared.md`
 - **Pitch:** "Which .NET testing framework" used to mean picking between three mature options with mostly stylistic differences. Microsoft.Testing.Platform and TUnit's source-generated, reflection-free architecture have made it a genuinely open question again.
 - **Angle:** Compares xUnit, NUnit, MSTest, TUnit, and Expecto across origin, test discovery mechanism, Native AOT support, parallelism, and maturity. The architectural split is the actual story: the three incumbents discover tests via reflection at run time, TUnit does it at compile time via source generators, which is why it supports Native AOT in a way the others structurally can't without a rewrite. Expecto is included deliberately as F#'s own answer rather than a competing C# option. Closes on the migration question - churn for marginal ergonomic gains is rarely worth it, a concrete pain point like CI run time or AOT compatibility is.
 - **Tags:** `dotnet`, `testing`, `performance`, `tooling`, `developer-productivity`
 
 ### Getting Started with xUnit in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-01-12
 - **Source:** `docs/article-ideas/getting-started-with-xunit.md`
+- **File:** `src/posts/2027-01-12-getting-started-with-xunit.md`
 - **Pitch:** xUnit's minimal-ceremony design is the whole point, and also the thing that confuses people arriving from NUnit - there's no `[SetUp]` because the constructor does that job, and no `[TearDown]` because `IDisposable` already does.
 - **Angle:** Covers constructor/`IDisposable` setup and teardown, the fact that a fresh test class instance is created per test (which is why shared state needs an explicit `IClassFixture<T>` rather than happening by accident), `IAsyncLifetime` for genuinely async setup, and `[Theory]` with `[InlineData]` vs. `[MemberData]`. Treats default class-level parallelism as a feature rather than an obstacle: intermittent failures that only appear when tests run together are a shared-state design problem to fix, not a reason to disable parallelization and hide it.
 - **Tags:** `dotnet`, `testing`, `ci-cd`, `developer-productivity`
 
 ### Getting Started with NUnit in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-01-19
 - **Source:** `docs/article-ideas/getting-started-with-nunit.md`
+- **File:** `src/posts/2027-01-19-getting-started-with-nunit.md`
 - **Pitch:** NUnit front-loads more concepts than xUnit - `[TestFixture]`, `[SetUp]`, `[TearDown]`, `[OneTimeSetUp]` - and each one buys something specific. The part worth getting right early is knowing which setup attribute runs when.
 - **Angle:** Walks the full setup/teardown hierarchy and maps each level onto its xUnit equivalent, then covers what NUnit actually offers over the alternatives: constraint-based assertions that compose with `.And`/`.Or`, `[TestCase]` vs. `[TestCaseSource]` for fixed vs. computed data, and `[Category]` for splitting fast unit tests from slow integration tests inside one project. The two failure modes it names directly are reaching for `[OneTimeSetUp]` on state that should be per-test isolated, and mixing classic `Assert.AreEqual` with constraint-based `Assert.That` across the same codebase.
 - **Tags:** `dotnet`, `testing`, `developer-productivity`, `tooling`
 
 ### Getting Started with MSTest in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-01-26
 - **Source:** `docs/article-ideas/getting-started-with-mstest.md`
+- **File:** `src/posts/2027-01-26-getting-started-with-mstest.md`
 - **Pitch:** MSTest's reputation as "the Visual Studio one" undersells where it's actually landed - the feature gap with xUnit and NUnit has narrowed considerably, and the decision that matters now is which test execution platform you're building against.
 - **Angle:** Covers `[TestInitialize]`/`[TestCleanup]` and `[ClassInitialize]`/`[ClassCleanup]`, including the static-method requirement that produces a compile error for anyone arriving from xUnit or NUnit's instance-based lifecycles. Covers `[DataRow]`/`[DynamicData]`, `TestContext` for run-time metadata, and an assertion style closer to xUnit's direct form than NUnit's fluent one. The genuinely useful part is the VSTest vs. Microsoft.Testing.Platform decision, which affects CI behavior in ways the project file doesn't make obvious.
 - **Tags:** `dotnet`, `testing`, `tooling`, `devops`
 
 ### Getting Started with TUnit in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-02-02
 - **Source:** `docs/article-ideas/getting-started-with-tunit.md`
+- **File:** `src/posts/2027-02-02-getting-started-with-tunit.md`
 - **Pitch:** TUnit's important characteristic isn't its syntax, it's when test discovery happens - compile time via source generators rather than run time via reflection. That's a different architecture, not a faster implementation of the same idea.
 - **Angle:** Covers the template install and why the project needs `<OutputType>Exe</OutputType>` (TUnit generates a standalone test executable rather than a library an external runner reflects over), `[Before(Test)]`/`[After(Test)]` plus the broader hook scopes, async fluent assertions, reference-counted fixture sharing via `[ClassDataSource<T>]`, and matrix tests for genuine combinatorial coverage. Honest about the trade: pre-1.0 in places, a much smaller community, and a real migration project rather than a find-and-replace - so the strongest case is greenfield adoption or a suite with measured performance pain.
 - **Tags:** `dotnet`, `testing`, `performance`, `ci-cd`, `tooling`
 
 ### Getting Started with Expecto in .NET (F#)
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-02-09
 - **Source:** `docs/article-ideas/getting-started-with-expecto.md`
+- **File:** `src/posts/2027-02-09-getting-started-with-expecto.md`
 - **Pitch:** Expecto asks a different question than the other four: what does a test look like if it's just an ordinary F# value? The adjustment isn't syntax, it's the mental model - a test suite is data you build up, not a class the framework introspects.
 - **Angle:** Covers `testList`/`testCase` composition with the test project's own entry point acting as the runner, setup and teardown as higher-order functions wrapping the test body rather than framework attribute hooks, and list comprehensions standing in for `[TestCase]`/`[InlineData]`. Covers FsCheck property-based testing as a first-class built-in rather than an add-on, which is Expecto's most distinctive capability and the one most commonly underused. Explicit throughout that this is the F# answer, not a competing option for C# projects.
 - **Tags:** `dotnet`, `testing`, `developer-productivity`, `tooling`
