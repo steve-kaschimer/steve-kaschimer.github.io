@@ -643,49 +643,55 @@ Six posts on how to organize a .NET codebase, picking up the Tuesday cadence dir
 Six posts on .NET logging, continuing the Tuesday cadence. A comparison post anchors the track and each of the five follow-ups is a complete ASP.NET Core setup for one framework.
 
 ### The Top 5 .NET Logging Frameworks Compared: Which One Should You Choose?
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-10
 - **Source:** `docs/article-ideas/top-5-dotnet-logging-frameworks-compared.md`
+- **File:** `src/posts/2026-11-10-top-5-dotnet-logging-frameworks-compared.md`
 - **Pitch:** Picking a .NET logging framework sounds like a five-minute decision, but these five don't solve the same problem - one is built in, one is structured-logging-first, one optimizes for routing flexibility, one is inherited from a decade ago, and one trades ecosystem breadth for near-zero allocation.
 - **Angle:** Compares Microsoft.Extensions.Logging, Serilog, NLog, log4net, and ZLogger across setup effort, configuration style, structured logging support, performance, and sink ecosystem, then gives each a strengths/weaknesses/choose-this-when breakdown. The framing that matters most: Microsoft.Extensions.Logging isn't really a competitor to the other four, it's the `ILogger<T>` abstraction they all implement. Closes on why that makes the decision unusually reversible - swapping providers touches `Program.cs` and configuration, not the application code that calls the logger.
 - **Tags:** `dotnet`, `logging`, `observability`, `performance`, `tooling`
 
 ### Getting Started with Microsoft.Extensions.Logging in ASP.NET Core
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-17
 - **Source:** `docs/article-ideas/getting-started-with-microsoft-extensions-logging-in-aspnet-core.md`
+- **File:** `src/posts/2026-11-17-getting-started-with-microsoft-extensions-logging-in-aspnet-core.md`
 - **Pitch:** There's no package to install and no obvious getting-started moment, which is exactly what trips people up - most developers never learn how the log level hierarchy resolves or why their `appsettings.json` overrides aren't taking effect the way they expect.
 - **Angle:** Covers what `WebApplication.CreateBuilder` already registers, the prefix-based most-specific-match category resolution that makes `Microsoft.AspNetCore` overrides work (and explains why they sometimes don't), and the two configuration paths with the precedence order between them - code-based `AddFilter` calls layer on top of JSON, which accounts for most of the surprises. Shows the startup pattern for both ASP.NET Core and Worker Services, `BeginScope` with `IncludeScopes`, and why no `try/catch/finally` flush is needed here when NLog and log4net both require one. Ends on the real limitation: Console and Debug persist nothing, so this is the foundation the other four build on rather than a production logging story.
 - **Tags:** `dotnet`, `logging`, `observability`, `developer-productivity`
 
 ### Getting Started with Serilog in ASP.NET Core
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-11-24
 - **Source:** `docs/article-ideas/getting-started-with-serilog-in-aspnet-core.md`
+- **File:** `src/posts/2026-11-24-getting-started-with-serilog-in-aspnet-core.md`
 - **Pitch:** Serilog's fluent, code-first configuration throws a curveball at anyone used to XML or JSON logging config: there's no single file to point at, and the two-stage bootstrap-logger initialization isn't obvious from the docs alone.
 - **Angle:** Covers both configuration styles - the fluent `LoggerConfiguration` API and `Serilog.Settings.Configuration` for JSON-driven setup - plus enrichers, `MinimumLevel.Override` for framework noise, and rolling file output. Spends real time on the bootstrap logger pattern and the services-aware `UseSerilog` overload that replaces it, since configuring sinks only in the bootstrap logger is the mistake that leaves an app stuck on a minimal console pipeline for its entire lifetime. Makes the structured logging argument concrete rather than abstract: message templates keep `{OrderId}` queryable in Seq or Elasticsearch, and string interpolation throws that capability away entirely.
 - **Tags:** `dotnet`, `logging`, `observability`, `tooling`
 
 ### Getting Started with NLog in ASP.NET Core
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-01
 - **Source:** `docs/article-ideas/getting-started-with-nlog-in-aspnet-core.md`
+- **File:** `src/posts/2026-12-01-getting-started-with-nlog-in-aspnet-core.md`
 - **Pitch:** NLog setup is straightforward once you've done it once, but the first pass raises three questions at the same time: XML or JSON, how buffered entries get flushed, and why the official guidance wraps `Program.cs` in a `try/catch/finally`.
 - **Angle:** Ships a complete `nlog.config` with an `AsyncWrapper`-wrapped file target plus the equivalent JSON section, and explains the two attributes that matter most - `autoReload` for raising verbosity in production without a restart, and `throwConfigExceptions` because NLog's default silent-failure mode produces an app that runs normally and logs nothing. Covers `UseNLog()` vs. `AddNLog()` for web hosts and Worker Services, `LogManager.Shutdown()` in `finally`, and silencing `Microsoft.*` with `final="true"` before the catch-all rule. Points at `internal-nlog.txt` as the first place to look when logs aren't appearing.
 - **Tags:** `dotnet`, `logging`, `devops`, `tooling`
 
 ### Getting Started with ZLogger in ASP.NET Core
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-08
 - **Source:** `docs/article-ideas/getting-started-with-zlogger-in-aspnet-core.md`
+- **File:** `src/posts/2026-12-08-getting-started-with-zlogger-in-aspnet-core.md`
 - **Pitch:** ZLogger looks like any other `Microsoft.Extensions.Logging` provider right up until the log calls, where it asks for native C# string interpolation instead of message templates in exchange for allocation-free, directly-UTF8-encoded output.
 - **Angle:** Covers the single-package install, `AddZLoggerConsole`/`AddZLoggerRollingFile` registration, and the fact that ZLogger respects the standard `Logging:LogLevel` section - so switching from the built-in providers changes only the provider registration, not the level configuration. Explains what the source generator actually does: it intercepts the interpolated string handler at compile time, so `$"Order {orderId}"` still captures `orderId` as a named structured property rather than flattening it into text. Honest about the constraints - C# 11 and .NET 8 for the full benefit, a much narrower sink ecosystem than Serilog, and that mixing `ZLogInformation` with plain `LogInformation` silently drops calls off the fast path that justified choosing it.
 - **Tags:** `dotnet`, `logging`, `performance`, `observability`
 
 ### Getting Started with log4net in ASP.NET Core
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-12-15
 - **Source:** `docs/article-ideas/getting-started-with-log4net-in-aspnet-core.md`
+- **File:** `src/posts/2026-12-15-getting-started-with-log4net-in-aspnet-core.md`
 - **Pitch:** log4net predates `Microsoft.Extensions.Logging` by well over a decade, and its defining property today is that it fails silently on configuration errors - an app that runs normally, logs nothing, and gives you no error pointing at the cause.
 - **Angle:** Covers the two-package install (`log4net` plus the `Microsoft.Extensions.Logging` bridge, so you inject `ILogger<T>` rather than log4net's native `ILog`), a `RollingFileAppender` configuration with date-based rolling and explicit `Microsoft`/`System.Net.Http` level overrides, and the `CopyToOutputDirectory` setting that is the single most common cause of "nothing is logging." Covers `LogManager.Flush()` in a `finally` block, why there's no native JSON configuration schema, and the per-environment config file approach that stands in for one. Lands on the honest recommendation from the comparison post: keep it where it already works, don't start new services on it.
 - **Tags:** `dotnet`, `logging`, `tooling`, `developer-productivity`
