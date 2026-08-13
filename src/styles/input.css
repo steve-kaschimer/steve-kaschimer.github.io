@@ -76,63 +76,6 @@
   }
 }
 
-@utility dark {
-  & .callout-box {
-    @apply bg-primary-900/30 border-primary-500;
-  }
-
-  /* GitHub Dark syntax highlighting (for dark mode) */
-  & .prose pre {
-    background: #0d1117;
-  }
-
-  & .prose pre code .token.attr-name {
-    color: #79c0ff;
-  }
-  & .prose pre code .token.atrule {
-    color: #7ee787;
-  }
-  & .prose pre code .token.boolean {
-    color: #ff7b72;
-  }
-  & .prose pre code .token.class-name {
-    color: #ffa657;
-  }
-  & .prose pre code .token.comment {
-    color: #9198a1;
-  }
-  & .prose pre code .token.function {
-    color: #d2a8ff;
-  }
-  & .prose pre code .token.keyword {
-    color: #ff7b72;
-  }
-  & .prose pre code .token.null {
-    color: #79c0ff;
-  }
-  & .prose pre code .token.number {
-    color: #79c0ff;
-  }
-  & .prose pre code .token.operator {
-    color: #ff7b72;
-  }
-  & .prose pre code .token.property {
-    color: #79c0ff;
-  }
-  & .prose pre code .token.punctuation {
-    color: #f0f6fc;
-  }
-  & .prose pre code .token.string {
-    color: #a5d6ff;
-  }
-  & .prose pre code .token.tag {
-    color: #7ee787;
-  }
-  & .prose pre code .token.variable {
-    color: #ffa657;
-  }
-}
-
 @utility card {
   /* Card styles */
   @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
