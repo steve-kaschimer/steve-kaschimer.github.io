@@ -878,17 +878,69 @@ Six posts on how a .NET service talks to the outside world, picking up the Tuesd
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Validation Approaches (May-June 2027)
 
-Eleven six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET API Styles series ends on 2027-05-04, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET service validates incoming data, picking up the Tuesday cadence directly from the API Styles track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one validation approach.
 
-### .NET Validation Approaches (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-validation-approaches-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then FluentValidation, DataAnnotations, custom validation, native Minimal API validation (.NET 10+), MiniValidation
+### The Top 5 .NET Validation Approaches Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-05-11
+- **Source:** `docs/article-ideas/top-5-dotnet-validation-approaches-compared.md`
+- **File:** `src/posts/2027-05-11-top-5-dotnet-validation-approaches-compared.md`
 - **Pitch:** .NET 10 shipped first-party validation for Minimal APIs using the same DataAnnotations attributes MVC has relied on for over a decade. That closes the exact gap that pushed teams toward FluentValidation or MiniValidation in the first place, and it changes the calculus for a large share of new projects.
 - **Angle:** Compares the five on style, where each fits natively, performance, and how well each handles conditional and cross-property rules. Leads with a genuinely counterintuitive benchmark result - FluentValidation is the most popular option and routinely the slowest, sometimes by a factor of two - without pretending performance is the whole decision. Resolves on complexity rather than popularity: attributes for straightforward rules, FluentValidation only where conditional and cross-property logic actually earns its ceremony, and hand-written checks for business rules that need database lookups or span entities.
 - **Tags:** `dotnet`, `validation`, `security`, `performance`, `developer-productivity`
+
+### Getting Started with FluentValidation in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-05-18
+- **Source:** `docs/article-ideas/getting-started-with-fluentvalidation.md`
+- **File:** `src/posts/2027-05-18-getting-started-with-fluentvalidation.md`
+- **Pitch:** FluentValidation's rules read like sentences and handle conditional logic naturally, but it's consistently one of the slowest validation options in independent benchmarks. Both facts should shape where in an application it actually gets used.
+- **Angle:** Covers validator classes and DI registration via assembly scanning, MVC auto-validation versus the endpoint-filter pattern Minimal APIs need instead, and `.When()`/`RuleForEach` as the concrete mechanisms that justify its ceremony. Argues against reaching for it uniformly - reserve it for genuinely complex conditional or cross-property rules, and let DataAnnotations or native Minimal API validation cover the simpler models in the same codebase.
+- **Tags:** `dotnet`, `validation`, `developer-productivity`, `tooling`
+
+### Getting Started with DataAnnotations in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-05-25
+- **Source:** `docs/article-ideas/getting-started-with-dataannotations.md`
+- **File:** `src/posts/2027-05-25-getting-started-with-dataannotations.md`
+- **Pitch:** DataAnnotations' biggest advantage is that they're already there - no package, no configuration, automatic validation in MVC since ASP.NET Core's earliest versions. The part worth understanding is exactly where that automatic convenience ends.
+- **Angle:** Covers `[ApiController]`'s automatic model validation, `IValidatableObject` as the built-in answer to conditional and cross-property rules, `Validator.TryValidateObject` for validation outside MVC's pipeline, and custom `ValidationAttribute` classes for reusable rules. Draws the line where `IValidatableObject` starts getting unwieldy enough that FluentValidation would express the same logic more readably.
+- **Tags:** `dotnet`, `validation`, `developer-productivity`, `tooling`
+
+### Getting Started with Custom Validation in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-06-01
+- **Source:** `docs/article-ideas/getting-started-with-custom-validation.md`
+- **File:** `src/posts/2027-06-01-getting-started-with-custom-validation.md`
+- **Pitch:** Every validation library in this series eventually admits some rules just don't fit its model - a check spanning three related entities in a database, or logic specific enough that a declarative abstraction would be more convoluted than the code itself.
+- **Angle:** Distinguishes guard clauses (fail-fast, for internal invariants) from a result-collecting `ValidationResult` pattern (for user-facing input validation), then builds a validator class with injected dependencies for the one scenario no attribute-based library handles cleanly - rules requiring a database lookup or another service call. Names inconsistency, not capability, as custom validation's real risk without a library enforcing structure.
+- **Tags:** `dotnet`, `validation`, `architecture`, `developer-productivity`
+
+### Getting Started with Native Minimal API Validation in .NET 10
+- **Status:** `draft`
+- **Scheduled:** 2027-06-08
+- **Source:** `docs/article-ideas/getting-started-with-native-minimal-api-validation.md`
+- **File:** `src/posts/2027-06-08-getting-started-with-native-minimal-api-validation.md`
+- **Pitch:** Minimal APIs went four major versions without a first-party answer to a question MVC solved on day one. .NET 10's `AddValidation()` closes that gap directly, using the same DataAnnotations attributes MVC has used for over a decade.
+- **Angle:** Covers the two-line `AddValidation()` setup, automatic validation of nested objects and collections with no extra configuration, and `IValidatableObject` continuing to work for conditional rules through the same automatic pass. Clear that this is a delivery mechanism, not new expressiveness - it doesn't extend what DataAnnotations and `IValidatableObject` already cover, so FluentValidation remains the answer once a rule outgrows that ceiling.
+- **Tags:** `dotnet`, `validation`, `developer-productivity`, `tooling`
+
+### Getting Started with MiniValidation in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-06-15
+- **Source:** `docs/article-ideas/getting-started-with-minivalidation.md`
+- **File:** `src/posts/2027-06-15-getting-started-with-minivalidation.md`
+- **Pitch:** MiniValidation's pitch is one sentence: the same DataAnnotations attributes you already know, running through a validator optimized specifically to be fast, with none of FluentValidation's ceremony.
+- **Angle:** Covers the single-line `MiniValidator.TryValidate` call, the endpoint-filter pattern for consistency across multiple routes, and `TryValidateAsync` with a service provider for `IValidatableObject` rules needing DI. Positions it honestly against .NET 10's native validation - its clearest remaining niche is pre-.NET 10 projects and non-Minimal-API application types like console apps, not a reason to add a dependency where native validation already covers the need.
+- **Tags:** `dotnet`, `validation`, `performance`, `developer-productivity`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Ten six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Validation Approaches series ends on 2027-06-15, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Mapping Libraries (6 posts)
 - **Status:** `idea`
