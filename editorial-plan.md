@@ -1238,17 +1238,69 @@ Six posts on how a .NET test isolates a system under test from its dependencies,
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Architecture Quality Tools (January-February 2028)
 
-Five six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Mocking Libraries series ends on 2028-01-11, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET team keeps architecture decisions from silently drifting, picking up the Tuesday cadence directly from the Mocking Libraries track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one enforcement tool.
 
-### .NET Architecture Quality Tools (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-architecture-quality-tools-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then SonarQube, NetArchTest, ArchUnitNET, NDepend, Roslyn Analyzers
+### The Top 5 .NET Architecture & Quality Enforcement Tools Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2028-01-18
+- **Source:** `docs/article-ideas/top-5-dotnet-architecture-quality-tools-compared.md`
+- **File:** `src/posts/2028-01-18-top-5-dotnet-architecture-quality-tools-compared.md`
 - **Pitch:** A team agrees the domain layer shouldn't reference infrastructure, everyone nods, and eighteen months later a deadline-pressured change adds exactly that reference. Code review might catch it. These tools make it a build failure instead of a hope.
 - **Angle:** Splits the five into two categories that routinely get conflated - architecture-testing libraries where rules are ordinary unit tests (NetArchTest, ArchUnitNET) versus broad static analysis platforms where architectural rules are one capability among many (SonarQube, NDepend, Roslyn Analyzers). Reframes the question from "which is best" to "which layer of enforcement am I adding," since feedback speed differs by orders of magnitude between compiler-integrated analysis, a test run, and a CI batch job. Pairs directly with the Clean Architecture post's claim that a dependency rule isn't real until something enforces it.
 - **Tags:** `dotnet`, `architecture`, `code-quality`, `testing`, `ci-cd`
+
+### Getting Started with SonarQube in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-01-25
+- **Source:** `docs/article-ideas/getting-started-with-sonarqube.md`
+- **File:** `src/posts/2028-01-25-getting-started-with-sonarqube.md`
+- **Pitch:** SonarQube's setup story is different from every other tool in this series in one important way: it's not a NuGet package you add and forget, it's a platform your CI pipeline talks to on every analysis run - which is exactly why it can do things a test-scoped library can't.
+- **Angle:** Covers the scanner's `begin`/`end` MSBuild wrapping, wiring up real coverage reports (a misconfigured 0% is worse than no metric at all), and configuring a quality gate focused on new-code conditions rather than demanding an existing codebase retroactively meet a high bar. Flags full Git history (`fetch-depth: 0`) as the easy-to-miss CI setting that silently degrades new-code analysis, and positions SonarQube as complementary to Roslyn Analyzers, not competing with them.
+- **Tags:** `dotnet`, `architecture`, `code-quality`, `ci-cd`
+
+### Getting Started with NetArchTest in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-02-01
+- **Source:** `docs/article-ideas/getting-started-with-netarchtest.md`
+- **File:** `src/posts/2028-02-01-getting-started-with-netarchtest.md`
+- **Pitch:** NetArchTest's entire value proposition is that architecture rules stop being something written in a design doc nobody rereads and start being something your build actually checks - and the setup is genuinely small enough to do on day one.
+- **Angle:** Covers the fluent `Types.InAssembly(...).Should()...` API for dependency-direction and naming rules, a dedicated architecture-test project referencing every layer under test, and including `FailingTypeNames` in every assertion so a failure is immediately actionable. Direct that rules should reflect real, agreed-upon decisions rather than speculative ones, and that a rule nobody can satisfy anymore deserves a conversation, not a silent deletion.
+- **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
+
+### Getting Started with ArchUnitNET in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-02-08
+- **Source:** `docs/article-ideas/getting-started-with-archunitnet.md`
+- **File:** `src/posts/2028-02-08-getting-started-with-archunitnet.md`
+- **Pitch:** ArchUnitNET's fluent API reads a lot like NetArchTest's - the real differences show up once you're modeling something more elaborate than "layer A shouldn't depend on layer B."
+- **Angle:** Covers `ArchLoader` for building the architecture model once per test class, named layers as a genuine readability and reuse win over repeated namespace strings, and slice rules for detecting cyclic dependencies between modules - a capability NetArchTest doesn't have natively. Frames the choice against NetArchTest as mostly stylistic for simple layered systems, and a real advantage specifically for Modular Monolith-style module-boundary checks.
+- **Tags:** `dotnet`, `architecture`, `testing`, `developer-productivity`
+
+### Getting Started with NDepend in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-02-15
+- **Source:** `docs/article-ideas/getting-started-with-ndepend.md`
+- **File:** `src/posts/2028-02-15-getting-started-with-ndepend.md`
+- **Pitch:** NDepend's reputation as the "Swiss Army knife" for .NET code quality comes down to CQLinq - a LINQ-based query language for interrogating your codebase's structure directly, so anything expressible in LINQ is a question you can ask about your code.
+- **Angle:** Covers writing CQLinq rules for both complexity metrics and dependency-direction checks, dependency graph and matrix visualization for spotting structural problems reading code doesn't surface, and quality gates driven by NDepend's own metrics for CI integration. Honest about the per-seat commercial licensing as the real differentiator from every other tool in this series, and that its value scales with codebase size and organizational complexity rather than being a default upgrade.
+- **Tags:** `dotnet`, `architecture`, `code-quality`, `tooling`
+
+### Getting Started with Roslyn Analyzers in .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-02-22
+- **Source:** `docs/article-ideas/getting-started-with-roslyn-analyzers.md`
+- **File:** `src/posts/2028-02-22-getting-started-with-roslyn-analyzers.md`
+- **Pitch:** Roslyn Analyzers have the fastest feedback loop of any tool in this series for a simple reason: they run inside the same compiler that turns code into IL, so a violation shows up before you've even saved the file.
+- **Angle:** Covers installing an existing package (Roslynator, Meziantou.Analyzer) versus authoring a fully custom analyzer against the syntax tree/semantic model APIs, `.editorconfig` severity overrides committed to source control as what makes enforcement team-wide rather than per-developer, and treating warnings as errors in CI specifically while keeping local iteration fast. Flags `OutputItemType="Analyzer"` as the single most common reason a correctly written custom analyzer silently does nothing.
+- **Tags:** `dotnet`, `architecture`, `code-quality`, `developer-productivity`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Four six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Architecture Quality Tools series ends on 2028-02-22, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### CI/CD Platforms for .NET (6 posts)
 - **Status:** `idea`
