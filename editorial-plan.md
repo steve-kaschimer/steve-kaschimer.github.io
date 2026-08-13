@@ -1298,17 +1298,69 @@ Six posts on how a .NET team keeps architecture decisions from silently drifting
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - CI/CD Platforms for .NET (February-April 2028)
 
-Four six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Architecture Quality Tools series ends on 2028-02-22, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on where a .NET team actually runs its builds and deployments, picking up the Tuesday cadence directly from the Architecture Quality Tools track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one CI/CD platform.
 
-### CI/CD Platforms for .NET (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-cicd-platforms-dotnet-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then GitHub Actions, Azure DevOps, GitLab CI, Jenkins, TeamCity
+### The Top 5 CI/CD Platforms for .NET Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2028-02-29
+- **Source:** `docs/article-ideas/top-5-cicd-platforms-dotnet-compared.md`
+- **File:** `src/posts/2028-02-29-top-5-cicd-platforms-dotnet-compared.md`
 - **Pitch:** GitHub Actions leads organizational adoption at roughly a third of teams, with Jenkins and GitLab CI behind it. But adoption share answers "what do most teams use," not "what should this team use" - and for .NET specifically the answer depends mostly on where the code already lives and how much governance the organization actually needs.
 - **Angle:** Compares the five on hosting model, repo coupling, .NET-specific fit, governance, and cost model. The research is consistent that there's no universal winner, so the comparison resolves on repo host and control appetite rather than a feature matrix. Gives Azure DevOps an honest hearing as frequently the cheapest option for Windows-heavy workloads and the strongest out-of-the-box governance story, which is easy to miss when GitHub Actions is the unexamined default.
 - **Tags:** `dotnet`, `ci-cd`, `devops`, `platform-engineering`, `tooling`
+
+### Getting Started with GitHub Actions for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-03-07
+- **Source:** `docs/article-ideas/getting-started-with-github-actions-dotnet.md`
+- **File:** `src/posts/2028-03-07-getting-started-with-github-actions-dotnet.md`
+- **Pitch:** A working GitHub Actions build-and-test workflow takes about ten lines, which is exactly why the real setup work lives elsewhere - caching NuGet correctly, pinning actions to a commit SHA, and using OIDC instead of long-lived cloud credentials.
+- **Angle:** Covers `setup-dotnet`'s built-in caching keyed to lock files, matrix builds across OS/version combinations, SHA-pinning third-party actions against supply-chain risk, and OIDC-based Azure login as the default over static service-principal secrets. Separates CI triggers from CD triggers explicitly and covers GitHub Environments with required reviewers as the enforced human gate before production.
+- **Tags:** `dotnet`, `ci-cd`, `devops`, `tooling`
+
+### Getting Started with Azure DevOps for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-03-14
+- **Source:** `docs/article-ideas/getting-started-with-azure-devops-dotnet.md`
+- **File:** `src/posts/2028-03-14-getting-started-with-azure-devops-dotnet.md`
+- **Pitch:** Azure Pipelines' YAML feels familiar if you know GitHub Actions - steps, stages, triggers - but the vocabulary is genuinely different underneath, and the payoff is real specifically where Azure is the deployment target.
+- **Angle:** Covers the `Cache@2` task as the explicit equivalent of `setup-dotnet`'s caching, multi-stage pipelines with `dependsOn` for build/deploy separation, workload identity federation as Azure DevOps' answer to OIDC, and native deployment tasks (`AzureWebApp@1`) over raw CLI scripting. Direct that Azure DevOps works against GitHub-hosted repos too, and is frequently the cheapest option specifically for Windows-heavy build workloads.
+- **Tags:** `dotnet`, `ci-cd`, `cloud`, `devops`, `tooling`
+
+### Getting Started with GitLab CI for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-03-21
+- **Source:** `docs/article-ideas/getting-started-with-gitlab-ci-dotnet.md`
+- **File:** `src/posts/2028-03-21-getting-started-with-gitlab-ci-dotnet.md`
+- **Pitch:** GitLab CI's single-file, single-platform philosophy means your `.gitlab-ci.yml` sits inside the same product that hosts the repo, runs security scans, and tracks issues - which changes the setup calculus from just build/test/deploy.
+- **Angle:** Covers `stages`/`rules` as GitLab's job-scoping vocabulary, cache keys tied to lock file contents, and including the built-in Dependency-Scanning and Container-Scanning templates as the platform's clearest differentiator over stitching a third-party scanner onto GitHub Actions or Azure DevOps. Frames adopting GitLab CI as a broader platform commitment, not a narrow CI/CD-only decision.
+- **Tags:** `dotnet`, `ci-cd`, `devops`, `security`, `tooling`
+
+### Getting Started with Jenkins for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-03-28
+- **Source:** `docs/article-ideas/getting-started-with-jenkins-dotnet.md`
+- **File:** `src/posts/2028-03-28-getting-started-with-jenkins-dotnet.md`
+- **Pitch:** Jenkins asks more of you before your first pipeline even runs than any other platform in this series - provisioning the server, installing plugins, configuring agents - work every cloud-hosted alternative hands you for free the moment you push a YAML file.
+- **Angle:** Covers Declarative Pipeline syntax in a Jenkinsfile, Docker agents as the fix for "works on my Jenkins host but nowhere else," the Credentials plugin over hardcoded secrets, and `input` steps as Jenkins' built-in manual approval gate. Honest throughout that the real cost isn't the free software, it's the ongoing infrastructure and maintenance burden - estimated $800-2,500/month for a 20-person team - and that this needs existing operational capacity to be worth it.
+- **Tags:** `dotnet`, `ci-cd`, `devops`, `platform-engineering`, `tooling`
+
+### Getting Started with TeamCity for .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-04-04
+- **Source:** `docs/article-ideas/getting-started-with-teamcity-dotnet.md`
+- **File:** `src/posts/2028-04-04-getting-started-with-teamcity-dotnet.md`
+- **Pitch:** TeamCity's build configuration UI is a genuinely good way to learn the concepts, but the moment there's more than one project, Kotlin DSL - version-controlled, code-based pipeline definitions - is the real setup decision that determines whether configuration is reviewable or a black box.
+- **Angle:** Covers migrating from UI-configured builds to Kotlin DSL (with TeamCity's own DSL-generation as a starting point), snapshot dependencies for genuine multi-project build chains that parallelize independent builds and gate on prerequisites, and omitted VCS triggers as TeamCity's manual-approval mechanism for deployment configurations. Direct that its build-chain sophistication earns its keep specifically for complex, multi-project .NET solutions, not a single simple project.
+- **Tags:** `dotnet`, `ci-cd`, `devops`, `tooling`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Three six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the CI/CD Platforms for .NET series ends on 2028-04-04, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Deployment Options (6 posts)
 - **Status:** `idea`
