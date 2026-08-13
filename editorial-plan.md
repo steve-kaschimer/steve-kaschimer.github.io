@@ -818,17 +818,69 @@ Six posts on .NET data access, closing out the Tuesday cadence. A comparison pos
 
 ---
 
+## 📅 Tuesday Track - .NET API Styles (March-May 2027)
+
+Six posts on how a .NET service talks to the outside world, picking up the Tuesday cadence directly from the ORMs track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one API style.
+
+### The Top 5 .NET API Styles Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-03-30
+- **Source:** `docs/article-ideas/top-5-dotnet-api-styles-compared.md`
+- **File:** `src/posts/2027-03-30-top-5-dotnet-api-styles-compared.md`
+- **Pitch:** "REST API" has quietly stopped being the only answer to how a service talks to the outside world. Minimal APIs and Controllers are two flavors of the same idea, while gRPC, GraphQL, and SignalR each exist because REST is the wrong shape for a specific problem.
+- **Angle:** Argues this isn't a ranking, it's a match between protocol and problem - fixed response shapes over HTTP, binary RPC between services you control, client-specified queries, or server-initiated push. Makes Minimal APIs the default for new projects (Microsoft's own recommendation) while keeping Controllers as a real answer for large APIs with a mature filter and binding ecosystem. Closes on the point that most production systems combine several of these rather than picking one, so the useful question is per-endpoint, not per-system.
+- **Tags:** `dotnet`, `api-design`, `architecture`, `performance`, `developer-productivity`
+
+### Getting Started with Minimal APIs in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-04-06
+- **Source:** `docs/article-ideas/getting-started-with-minimal-apis.md`
+- **File:** `src/posts/2027-04-06-getting-started-with-minimal-apis.md`
+- **Pitch:** Minimal APIs make the first ten minutes genuinely trivial. The part that doesn't show up in a quickstart is what happens once forty of those route calls are sitting in Program.cs without a deliberate organizational strategy.
+- **Angle:** Covers route groups and per-feature extension methods as the antidote to a sprawling Program.cs, OpenAPI documentation set up from day one rather than retrofitted, and validation wired through an endpoint filter instead of ad hoc per-handler checks. Argues against re-implementing Controllers' full ceremony on top of Minimal APIs - if that's what a project needs, Controllers is probably the better fit outright.
+- **Tags:** `dotnet`, `api-design`, `developer-productivity`, `tooling`
+
+### Getting Started with Controllers (MVC) in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-04-13
+- **Source:** `docs/article-ideas/getting-started-with-controllers-mvc.md`
+- **File:** `src/posts/2027-04-13-getting-started-with-controllers-mvc.md`
+- **Pitch:** More than a decade of accumulated Controllers conventions are exactly why large APIs still reach for the pattern even with Minimal APIs now the recommended default. The tricky part is knowing which conventions still earn their keep.
+- **Angle:** Covers the `--use-controllers` flag current templates now require, what `[ApiController]` actually does (automatic model validation, binding source inference, problem-details error responses - not just a marker attribute), FluentValidation auto-validation as an alternative to DataAnnotations, and filters as Controllers' clearest structural advantage over Minimal API endpoint filters. Draws a clean line between middleware and filters, since conflating the two is a common source of confusion.
+- **Tags:** `dotnet`, `api-design`, `developer-productivity`, `tooling`
+
+### Getting Started with GraphQL (Hot Chocolate) in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-04-20
+- **Source:** `docs/article-ideas/getting-started-with-graphql-hotchocolate.md`
+- **File:** `src/posts/2027-04-20-getting-started-with-graphql-hotchocolate.md`
+- **Pitch:** GraphQL's promise - clients ask for exactly the fields they need, nested across related entities - is also exactly what makes a naive first implementation slow. The N+1 query problem is the trap, and DataLoaders are the fix.
+- **Angle:** Covers Hot Chocolate's code-first schema with `[UseProjection]`/`[UseFiltering]`/`[UseSorting]` translating client queries directly into efficient EF Core queries, then builds a DataLoader step by step to show exactly what problem it solves - one batched query instead of one per related entity. Treats query depth and complexity limits as a day-one requirement, not a hardening pass, since GraphQL's flexibility is also an unbounded cost model until it's constrained.
+- **Tags:** `dotnet`, `api-design`, `graphql`, `performance`, `architecture`
+
+### Getting Started with SignalR in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-04-27
+- **Source:** `docs/article-ideas/getting-started-with-signalr.md`
+- **File:** `src/posts/2027-04-27-getting-started-with-signalr.md`
+- **Pitch:** SignalR's basic setup is genuinely simple. The part that catches people off guard is everything that happens the moment a second server instance joins the deployment and a backplane isn't there yet.
+- **Angle:** Builds a Hub with group management, then makes the more common real-world case - pushing updates from application services via `IHubContext<T>` rather than waiting on client-initiated Hub methods - the default pattern rather than an aside. Covers the Redis backplane as a one-line fix for a bug that otherwise has no error message, just clients silently missing updates depending on which instance they're connected to. Explicit throughout that SignalR complements a REST/GraphQL/gRPC API rather than replacing one.
+- **Tags:** `dotnet`, `api-design`, `real-time`, `architecture`, `devops`
+
+### Getting Started with gRPC in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-05-04
+- **Source:** `docs/article-ideas/getting-started-with-grpc-dotnet.md`
+- **File:** `src/posts/2027-05-04-getting-started-with-grpc-dotnet.md`
+- **Pitch:** gRPC asks you to design the contract in a .proto file before writing any C# at all. That inversion is where its compile-time safety across services comes from, and it's also where most of the initial friction sits coming from REST's "just write a handler" habit.
+- **Angle:** Covers the proto-first workflow, why Kestrel needs HTTP/2 (and TLS, even locally, since there's no clear-text protocol negotiation for a dual-protocol endpoint), unary calls versus server/client/bidirectional streaming, and sharing a single .proto file via a common project reference so contract drift becomes a build error instead of a runtime surprise. Scopes gRPC explicitly to internal service-to-service communication, not public or browser-facing APIs, since that's the one decision most first attempts get wrong.
+- **Tags:** `dotnet`, `api-design`, `grpc`, `performance`, `microservices`
+
+---
+
 ## 📅 Backlog - Unscheduled Series
 
-Twelve six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the ORM series ends on 2027-03-23, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
-
-### .NET API Styles (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-api-styles-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then Minimal APIs, Controllers (MVC), GraphQL (Hot Chocolate), SignalR, gRPC
-- **Pitch:** "REST API" has quietly stopped being the only answer to how a service talks to the outside world. Minimal APIs and Controllers are two flavors of the same idea, while gRPC, GraphQL, and SignalR each exist because REST is the wrong shape for a specific problem.
-- **Angle:** The comparison argues this isn't a ranking, it's a match between protocol and problem - fixed response shapes over HTTP, binary RPC between services you control, client-specified queries, or server-initiated push. It makes Minimal APIs the default for new projects (Microsoft's own recommendation) while keeping Controllers as a real answer for large APIs with a mature filter and binding ecosystem. The closing argument is that most production systems combine several of these rather than picking one, so the useful question is per-endpoint, not per-system.
-- **Tags:** `dotnet`, `api-design`, `architecture`, `performance`, `developer-productivity`
+Eleven six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET API Styles series ends on 2027-05-04, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Validation Approaches (6 posts)
 - **Status:** `idea`
