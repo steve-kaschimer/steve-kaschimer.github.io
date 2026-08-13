@@ -763,49 +763,55 @@ Six posts on .NET testing frameworks, resuming the Tuesday cadence in January - 
 Six posts on .NET data access, closing out the Tuesday cadence. A comparison post anchors the track and each of the five follow-ups is a complete setup for one ORM.
 
 ### The Top 5 .NET ORMs Compared: Which One Should You Choose?
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-02-16
 - **Source:** `docs/article-ideas/top-5-dotnet-orms-compared.md`
+- **File:** `src/posts/2027-02-16-top-5-dotnet-orms-compared.md`
 - **Pitch:** Every .NET data access decision collapses into one question: how much should the ORM do for you, versus how much SQL do you want to write yourself? EF Core and Dapper are the two ends of that axis, and the other three aren't simply worse versions of either.
 - **Angle:** Compares EF Core, Dapper, NHibernate, Linq2Db, and RepoDb across category, query style, change tracking, migrations, performance, and maintainer, then gives each a strengths/weaknesses/choose-this-when breakdown. The recurring argument is that "pick one" is often the wrong framing - EF Core for the domain and migrations with Dapper on specific read paths is a widely supported pattern, not a compromise. Pushes back hard on choosing by benchmark: for most applications the bottleneck is the query, the network, or business logic, not the mapping layer's marginal overhead.
 - **Tags:** `dotnet`, `orm`, `database`, `performance`, `architecture`
 
 ### Getting Started with EF Core in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-02-23
 - **Source:** `docs/article-ideas/getting-started-with-ef-core.md`
+- **File:** `src/posts/2027-02-23-getting-started-with-ef-core.md`
 - **Pitch:** EF Core is the right default, but the gap between a tutorial's `dotnet ef migrations add` and a setup that stays maintainable is bigger than it looks. Three things trip up most first real projects: change tracking you're paying for on read-only queries, migrations that can't find your `DbContext`, and repository layers added out of habit.
 - **Angle:** Covers the provider and design-time packages - including why `Microsoft.EntityFrameworkCore.Design` belongs in the startup project, the single most common cause of broken migrations in a multi-project solution - plus `DbContext` and relationship configuration, the `--project`/`--startup-project` split, and `IDesignTimeDbContextFactory<T>` as the fallback when the tooling can't instantiate your context. Makes `AsNoTracking()` the default habit for reads, since that one habit accounts for most of the performance gap people attribute to EF Core being slow. Argues against a reflexive repository/unit-of-work layer on top of something that already implements unit of work, and treats reaching for Dapper on specific paths as normal rather than an admission the choice was wrong.
 - **Tags:** `dotnet`, `orm`, `database`, `performance`, `developer-productivity`
 
 ### Getting Started with Dapper in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-03-02
 - **Source:** `docs/article-ideas/getting-started-with-dapper.md`
+- **File:** `src/posts/2027-03-02-getting-started-with-dapper.md`
 - **Pitch:** You write the SQL, Dapper maps the results onto your objects, and almost nothing happens in between. What trips people up isn't Dapper's fault so much as the gaps it deliberately doesn't fill - connection lifecycle, migrations, and mapping conventions all become your responsibility.
 - **Angle:** Sets up a DI-registered connection factory where every call site creates and disposes its own connection and ADO.NET pooling does the actual reuse, then covers `QuerySingleOrDefaultAsync`, multi-mapping with `splitOn` for joined queries, and batched writes. Treats parameterization as the one non-negotiable rule - it's the difference between a parameterized query and a SQL injection vulnerability, not a style preference. Names the schema gap directly and pairs Dapper with DbUp or Fluent Migrator rather than pretending migrations are optional, and warns against building a generic repository that slowly reimplements a mini-ORM.
 - **Tags:** `dotnet`, `orm`, `database`, `performance`, `security`
 
 ### Getting Started with NHibernate in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-03-09
 - **Source:** `docs/article-ideas/getting-started-with-nhibernate.md`
+- **File:** `src/posts/2027-03-09-getting-started-with-nhibernate.md`
 - **Pitch:** NHibernate's maturity is real - caching, mapping flexibility, and loading control are all battle-tested after a decade in large enterprise systems - but there's genuine configuration depth to learn before any of it pays off, and skipping straight to "just make it work" produces a setup that fights you.
 - **Angle:** Uses Fluent NHibernate rather than hand-written `.hbm.xml`, covers why entity members must be `virtual` (proxy generation for lazy loading - a non-virtual property compiles fine and silently breaks), and the two lifetimes that matter: `ISessionFactory` as an expensive singleton and `ISession` scoped per unit of work. Covers session-scoped change tracking, the LINQ provider vs. HQL as entry points, `SchemaExport` for local development against a real migration tool for production, and second-level caching as a deliberate per-entity decision rather than a global default. Doesn't pretend this is a greenfield recommendation - it's a guide for extending a codebase already built on it.
 - **Tags:** `dotnet`, `orm`, `database`, `architecture`, `tooling`
 
 ### Getting Started with Linq2Db in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-03-16
 - **Source:** `docs/article-ideas/getting-started-with-linq2db.md`
+- **File:** `src/posts/2027-03-16-getting-started-with-linq2db.md`
 - **Pitch:** Linq2Db gives you EF Core's most-loved feature - strongly-typed, composable LINQ queries - without the change tracking, identity map, or unit-of-work machinery that comes bundled whether you want it or not.
 - **Angle:** Covers attribute-based entity mapping, a `DataConnection` subclass exposing `ITable<T>` properties, and DI registration where scoping is about connection lifetime rather than preserving tracked entity state. The core adjustment is updates: `Where(...).Set(...).UpdateAsync()` maps to a single `UPDATE` statement with no fetch first, and falling into an EF Core-style fetch-mutate-save habit is the most common first mistake. Same migration gap as Dapper and RepoDb, handled the same way with DbUp or Fluent Migrator, and honest that the real cost is a much smaller community, ecosystem, and hiring pool rather than any technical shortfall.
 - **Tags:** `dotnet`, `orm`, `database`, `performance`, `tooling`
 
 ### Getting Started with RepoDb in .NET
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2027-03-23
 - **Source:** `docs/article-ideas/getting-started-with-repodb.md`
+- **File:** `src/posts/2027-03-23-getting-started-with-repodb.md`
 - **Pitch:** RepoDb exists for one specific complaint: Dapper is fast but leaves you writing the same CRUD SQL over and over, while EF Core writes it for you at a real abstraction cost. It sits deliberately in between.
 - **Angle:** Covers the core plus provider extension packages and the `SqlServerBootstrap.Initialize()` call that's easy to skip and produces confusing runtime errors that look unrelated to the actual missing step. Uses the same connection-factory pattern as Dapper, then contrasts generated CRUD (`InsertAsync`, expression-based `QueryAsync`) against `ExecuteQueryAsync` for anything complex, plus `InsertAllAsync`/`MergeAllAsync` bulk methods that beat row-by-row loops. Names the actual failure mode: treating RepoDb exactly like Dapper and hand-writing SQL for everything, which works fine but discards the only reason to pick it over Dapper in the first place.
 - **Tags:** `dotnet`, `orm`, `database`, `performance`, `developer-productivity`
