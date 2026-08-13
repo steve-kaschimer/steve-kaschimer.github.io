@@ -998,17 +998,69 @@ Six posts on how a .NET service converts one type into another, picking up the T
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Caching Solutions (August-September 2027)
 
-Nine six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Mapping Libraries series ends on 2027-07-27, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET service caches data, picking up the Tuesday cadence directly from the Mapping Libraries track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one caching option.
 
-### .NET Caching Solutions (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-caching-solutions-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then IMemoryCache, Redis, Garnet, Memcached, NCache
+### The Top 5 Caching Solutions for .NET Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-08-03
+- **Source:** `docs/article-ideas/top-5-dotnet-caching-solutions-compared.md`
+- **File:** `src/posts/2027-08-03-top-5-dotnet-caching-solutions-compared.md`
 - **Pitch:** Caching decisions collapse into "just use Redis" one step too early. The first fork is whether you need a distributed cache at all, since `IMemoryCache` solves a real and common subset of the problem with zero infrastructure and nanosecond-scale reads.
 - **Angle:** Compares the five on scope, latency, data structures, persistence, and how .NET-native each one actually is. The core argument is that in-process and distributed caching are different problems with different right answers, and only once you're running multiple instances do the four distributed options genuinely compete with each other. Redis stays the honest default for the same reason EF Core is the default ORM, while Garnet (Microsoft Research, written in C#, RESP-compatible) and NCache are framed as options worth evaluating rather than defaulting past.
 - **Tags:** `dotnet`, `caching`, `performance`, `architecture`, `devops`
+
+### Getting Started with IMemoryCache in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-08-10
+- **Source:** `docs/article-ideas/getting-started-with-imemorycache.md`
+- **File:** `src/posts/2027-08-10-getting-started-with-imemorycache.md`
+- **Pitch:** `IMemoryCache` is the easiest caching decision in .NET to get right and, paradoxically, one of the easiest to misuse - not because the API is complicated, but because it's so simple to add that people reach for it in places a distributed cache actually belongs.
+- **Angle:** Covers size limits and per-entry `Size`, the `GetOrCreateAsync` pattern that avoids manual check-then-set bugs, and explicit invalidation on write. Makes the case for .NET 9's `HybridCache` as the better default over raw `IMemoryCache` even for single-server apps, given its cache-stampede protection and clean upgrade path to a distributed L2 tier with zero call-site changes.
+- **Tags:** `dotnet`, `caching`, `performance`, `developer-productivity`
+
+### Getting Started with Redis in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-08-17
+- **Source:** `docs/article-ideas/getting-started-with-redis-dotnet.md`
+- **File:** `src/posts/2027-08-17-getting-started-with-redis-dotnet.md`
+- **Pitch:** Most of the friction people hit adopting Redis in .NET isn't Redis's fault - it's the boilerplate that used to be necessary around `IDistributedCache`: manual serialization, hand-written cache-aside logic, no stampede protection. `HybridCache` closes that gap directly.
+- **Angle:** Covers the recommended `HybridCache`-with-Redis-as-L2 path against the classic manual `IDistributedCache` approach, sharing one `IConnectionMultiplexer` as a singleton across the whole application, and tag-based invalidation for clearing related entries at once. Flags Redis's shifting licensing terms and Valkey as the BSD-licensed fork worth knowing about rather than treating the decision as settled.
+- **Tags:** `dotnet`, `caching`, `performance`, `architecture`, `devops`
+
+### Getting Started with Garnet in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-08-24
+- **Source:** `docs/article-ideas/getting-started-with-garnet.md`
+- **File:** `src/posts/2027-08-24-getting-started-with-garnet.md`
+- **Pitch:** Garnet's pitch is unusually direct: same RESP protocol as Redis, so existing client code mostly just works, but built in C# by Microsoft Research with a modern, epoch-based GC design aimed at strong multi-core performance.
+- **Angle:** Covers connecting with the exact same `StackExchange.Redis`/`HybridCache` setup used for Redis itself, and treats "RESP-compatible" as "very likely to work" rather than "guaranteed identical" - testing an application's actual command usage (sorted sets, pub/sub, specific modules) against a real Garnet instance before trusting it as a drop-in replacement. Honest that low switching cost is a reason to actually evaluate it thoroughly, not a reason to skip evaluation.
+- **Tags:** `dotnet`, `caching`, `performance`, `tooling`
+
+### Getting Started with Memcached in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-08-31
+- **Source:** `docs/article-ideas/getting-started-with-memcached.md`
+- **File:** `src/posts/2027-08-31-getting-started-with-memcached.md`
+- **Pitch:** Memcached's setup story is the shortest in the whole series, and that's not an accident - no data structure configuration, no persistence tuning, no replication topology to choose between. A fast, multi-threaded key-value store and nothing else.
+- **Angle:** Covers the community-standard `EnyimMemcachedCore` client, client-side consistent hashing across multiple nodes (a meaningfully different model from Redis Cluster's server-side approach), and the hard key/value size limits Memcached enforces by default. Scopes it honestly to genuinely simple key-value workloads at high throughput - session stores, page fragments - and flags total lack of persistence as disqualifying the moment that matters.
+- **Tags:** `dotnet`, `caching`, `performance`, `tooling`
+
+### Getting Started with NCache in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-09-07
+- **Source:** `docs/article-ideas/getting-started-with-ncache.md`
+- **File:** `src/posts/2027-09-07-getting-started-with-ncache.md`
+- **Pitch:** NCache's whole pitch is being the distributed cache built for .NET rather than adapted to it, and that shows up most clearly in the setup itself - ASP.NET Core session state and EF Core query caching are first-class, purpose-built integrations rather than something assembled on top of a generic `IDistributedCache`.
+- **Angle:** Covers provisioning named caches ahead of time (a real difference from Redis's implicit connect-and-go model), native .NET object caching with no manual serialization step, and the purpose-built ASP.NET Core session and EF Core `FromCache()` integrations that are NCache's clearest differentiators. Flags which capabilities (advanced replication, write-behind caching) require Enterprise licensing before a design assumes them.
+- **Tags:** `dotnet`, `caching`, `architecture`, `developer-productivity`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Eight six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Caching Solutions series ends on 2027-09-07, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Message Brokers (6 posts)
 - **Status:** `idea`
