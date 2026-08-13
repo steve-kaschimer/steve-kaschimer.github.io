@@ -1118,17 +1118,69 @@ Six posts on how a .NET service moves messages between other services, picking u
 
 ---
 
-## 📅 Backlog - Unscheduled Series
+## 📅 Tuesday Track - .NET Background Job Libraries (October-November 2027)
 
-Seven six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Message Brokers series ends on 2027-10-19, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
+Six posts on how a .NET service runs work outside the request/response cycle, picking up the Tuesday cadence directly from the Message Brokers track. A comparison post anchors the track and each of the five follow-ups is a complete setup for one background job tool.
 
-### .NET Background Job Libraries (6 posts)
-- **Status:** `idea`
-- **Source:** `docs/article-ideas/top-5-dotnet-background-job-libraries-compared.md` + 5 getting-started drafts
-- **Series:** Top 5 comparison, then Hangfire, Quartz.NET, Coravel, Wolverine, Azure Functions timer triggers
+### The Top 5 Background Job Libraries for .NET Compared: Which One Should You Choose?
+- **Status:** `draft`
+- **Scheduled:** 2027-10-26
+- **Source:** `docs/article-ideas/top-5-dotnet-background-job-libraries-compared.md`
+- **File:** `src/posts/2027-10-26-top-5-dotnet-background-job-libraries-compared.md`
 - **Pitch:** A `BackgroundService` with a `PeriodicTimer` is genuinely enough for one job. It stops scaling around the third - no persistence, no retry policy, no job history, no cron expressions, no coordination across instances, and an unhandled exception silently kills the loop for the rest of the process's lifetime.
 - **Angle:** Compares the five on persistence, dashboard, clustering, and setup effort, starting from what .NET already gives you for free so the comparison begins at the point a library is actually justified. These aren't all solving the same problem - two are schedulers, Wolverine is a messaging framework that happens to include scheduling, and Azure Functions is a managed runtime rather than a library - so matching the tool to the system matters more than ranking them. Hangfire is the default for most teams; Quartz.NET earns its extra configuration only when the scheduling rules are genuinely complex.
 - **Tags:** `dotnet`, `tooling`, `architecture`, `devops`, `developer-productivity`
+
+### Getting Started with Hangfire in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-11-02
+- **Source:** `docs/article-ideas/getting-started-with-hangfire.md`
+- **File:** `src/posts/2027-11-02-getting-started-with-hangfire.md`
+- **Pitch:** Hangfire's install-to-first-job time is genuinely a few minutes, and that speed is exactly why it's easy to skip the two decisions that determine whether it stays cheap to run: which storage backend, and how much you rely on the polling interval defaults.
+- **Angle:** Covers `AddHangfireServer()` as the easy-to-forget half of setup (jobs enqueue but never run without it), securing the dashboard before any non-local deployment, and `RecurringJob.AddOrUpdate` with a stable ID as the idempotent registration pattern that survives redeploys. Flags that storage load scales with polling frequency, not job volume - a real cost consideration for a small number of infrequent jobs.
+- **Tags:** `dotnet`, `tooling`, `architecture`, `developer-productivity`
+
+### Getting Started with Quartz.NET in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-11-09
+- **Source:** `docs/article-ideas/getting-started-with-quartznet.md`
+- **File:** `src/posts/2027-11-09-getting-started-with-quartznet.md`
+- **Pitch:** Quartz.NET's reputation for complexity is earned, but it's complexity in service of a specific thing: scheduling rules that are genuinely hard to express correctly, like a job that must run at 9am in the customer's local time zone, skip holidays, and never overlap.
+- **Angle:** Covers the job/trigger/scheduler separation as the core vocabulary that makes everything else click, `UseClustering()` for coordinating execution across instances without duplicate runs, and calendar exclusions for rules Hangfire's simpler model can't express. Direct that its configuration overhead is only worth paying when the scheduling need is genuinely hard, not for "run this every night."
+- **Tags:** `dotnet`, `tooling`, `architecture`, `developer-productivity`
+
+### Getting Started with Coravel in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-11-16
+- **Source:** `docs/article-ideas/getting-started-with-coravel.md`
+- **File:** `src/posts/2027-11-16-getting-started-with-coravel.md`
+- **Pitch:** Coravel's whole value proposition is that it doesn't ask you for anything - no database, no storage configuration, no dashboard to secure. Add a package, write a fluent scheduling expression, and you're done.
+- **Angle:** Covers the fluent `.Schedule().DailyAtHour()` API, `PreventOverlapping` as cheap insurance for any job whose duration is uncertain relative to its interval, and the explicit trade-off of zero persistence and zero multi-instance coordination. Frames Coravel as a deliberately different tool from Hangfire rather than a smaller version of it, with clear signals for when to graduate away from it.
+- **Tags:** `dotnet`, `tooling`, `developer-productivity`
+
+### Getting Started with Wolverine in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-11-23
+- **Source:** `docs/article-ideas/getting-started-with-wolverine.md`
+- **File:** `src/posts/2027-11-23-getting-started-with-wolverine.md`
+- **Pitch:** Wolverine is the one entry in this series where "getting started with background jobs" and "getting started with the whole library" are almost the same document - scheduling is one feature of a much broader messaging framework, not the framework's reason for existing.
+- **Angle:** Covers convention-based handlers with no interfaces required (source-generated dispatch instead of MediatR-style reflection), the durable outbox that atomically coordinates database writes with message publishing, and `Schedule.CronJob` versus `bus.ScheduleAsync` as the recurring-versus-one-time scheduling split. Upfront that adopting Wolverine purely for scheduling means taking on a full messaging framework's scope for one feature - the wrong trade unless the rest of its capabilities are also wanted.
+- **Tags:** `dotnet`, `messaging`, `architecture`, `performance`
+
+### Getting Started with Azure Functions Timer Triggers in .NET
+- **Status:** `draft`
+- **Scheduled:** 2027-11-30
+- **Source:** `docs/article-ideas/getting-started-with-azure-functions-timer-triggers.md`
+- **File:** `src/posts/2027-11-30-getting-started-with-azure-functions-timer-triggers.md`
+- **Pitch:** Azure Functions timer triggers solve a problem the other four tools in this series structurally can't: what happens when your job needs to run even if your main application isn't. An in-process scheduler is only as reliable as the app hosting it.
+- **Angle:** Covers scaffolding on the isolated worker model (the only path worth building on, since in-process support ends November 2026), Azure's 6-field NCronTab format that trips people up expecting standard 5-field cron, and designing for idempotency since serverless retries mean more-than-once execution is a real possibility, not an edge case. Honest that real Azure lock-in is the trade for structural independence from any single app's uptime.
+- **Tags:** `dotnet`, `cloud`, `architecture`, `devops`
+
+---
+
+## 📅 Backlog - Unscheduled Series
+
+Six six-post series remain unscheduled, drawn from the drafts in `docs/article-ideas/`. They continue the Tuesday cadence once the .NET Background Job Libraries series ends on 2027-11-30, and they're listed here in priority order. They're deliberately undated - that horizon is too far out to put honest dates against - so each series gets one entry rather than six speculative ones, and entries are expanded into individual dated posts when a series moves onto the calendar.
 
 ### .NET Mocking Libraries (6 posts)
 - **Status:** `idea`
