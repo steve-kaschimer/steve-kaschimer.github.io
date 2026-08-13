@@ -583,9 +583,10 @@ Six posts on AI coding agents, running Tuesdays alongside the Friday DevOps trac
 Six posts on how to organize a .NET codebase, picking up the Tuesday cadence directly from the AI coding agents track. A comparison post anchors the track and each of the five follow-ups sets one pattern up end to end.
 
 ### The Top 5 .NET Architecture Patterns Compared: Which One Should You Choose?
-- **Status:** `idea`
+- **Status:** `draft`
 - **Scheduled:** 2026-09-29
 - **Source:** `docs/article-ideas/top-5-dotnet-architecture-patterns-compared.md`
+- **File:** `src/posts/2026-09-29-top-5-dotnet-architecture-patterns-compared.md`
 - **Pitch:** Layered, Clean, Vertical Slice, Modular Monolith, and Microservices aren't five points on a scale from bad to good - they're different trades between structure, speed, and organizational scale. This is the orientation piece for a team that has to pick one and defend the choice.
 - **Angle:** Opens with a comparison table across organizing principle, deployment unit, learning curve, change isolation, and operational overhead, then gives each pattern a strengths/weaknesses/choose-this-when breakdown. The load-bearing argument is that several of these compose rather than compete - Vertical Slice or Clean Architecture inside a module of a Modular Monolith is a common and underrated landing spot. Closes on the point that a Modular Monolith is usually the honest predecessor to Microservices rather than its opposite, and that module boundaries only hold when enforcement is structural rather than cultural.
 - **Tags:** `dotnet`, `architecture`, `microservices`, `platform-engineering`, `developer-productivity`
