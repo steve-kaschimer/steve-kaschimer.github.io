@@ -2,7 +2,7 @@
 
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark &:where(.dark, .dark *);
+@variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
@@ -26,7 +26,7 @@
      minimum. Dark mode's primary-400 already passes (8.28:1 on gray-900). */
   --tw-prose-links: var(--color-primary-700);
 
-  .dark & {
+  @variant dark {
     --tw-prose-links: var(--color-primary-400);
   }
 }
@@ -49,104 +49,92 @@
   }
 }
 
-@utility btn {
-  /* Button styles */
-  @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
-}
+@layer components {
+  .btn {
+    /* Button styles */
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
 
-@utility btn-primary {
-  /* primary-700, not -600: white-on-primary-600 is 4.1:1, below the 4.5:1 WCAG AA text-contrast minimum */
-  @apply bg-primary-700 hover:bg-primary-800 text-white;
-}
+  .btn-primary {
+    /* primary-700, not -600: white-on-primary-600 is 4.1:1, below the 4.5:1 WCAG AA text-contrast minimum */
+    @apply bg-primary-700 hover:bg-primary-800 text-white;
+  }
 
-@utility callout-box {
-  /* Callout box for highlighting important sections */
-  @apply text-sm bg-primary-50 border-4 border-primary-600 p-6 my-6 rounded-xl;
+  .callout-box {
+    /* Callout box for highlighting important sections */
+    @apply text-sm bg-primary-50 border-4 border-primary-600 p-6 my-6 rounded-xl;
+  }
 
-  & > *:first-child {
+  .callout-box > *:first-child {
     margin-top: 0;
   }
 
-  & > *:last-child {
+  .callout-box > *:last-child {
     margin-bottom: 0;
   }
 
-  .dark & {
+  .dark .callout-box {
     @apply bg-primary-900/30 border-primary-500;
   }
-}
 
-@utility card {
-  /* Card styles */
-  @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
-}
+  .card {
+    /* Card styles */
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
+  }
 
-@utility table-wrapper {
-  /* Horizontal scroll for wide tables (see table_open/table_close rule in
-     .eleventy.js). overflow-x-auto keeps this working in both light and
-     dark mode since it's purely a layout property, not a color. No margin
-     here - the wrapped <table> keeps its own @tailwindcss/typography margin,
-     and this div forms a new block formatting context so that margin still
-     renders correctly without doubling up. */
-  @apply overflow-x-auto;
-}
+  .table-wrapper {
+    /* Horizontal scroll for wide tables (see table_open/table_close rule in
+       .eleventy.js). overflow-x-auto keeps this working in both light and
+       dark mode since it's purely a layout property, not a color. No margin
+       here - the wrapped <table> keeps its own @tailwindcss/typography margin,
+       and this div forms a new block formatting context so that margin still
+       renders correctly without doubling up. */
+    @apply overflow-x-auto;
+  }
 
-@utility code-block-wrapper {
-  /* Code block wrapper with copy button */
-  @apply relative my-6;
-  max-width: max-content;
-  display: flex;
-  flex-direction: column;
+  .code-block-wrapper {
+    /* Code block wrapper with copy button */
+    @apply relative my-6;
+    max-width: max-content;
+    display: flex;
+    flex-direction: column;
+  }
 
-  & .code-content {
+  .code-block-wrapper .code-content {
     display: flex;
   }
 
-  & pre {
+  .code-block-wrapper pre {
     @apply w-full mx-0 mt-0 flex-1;
     padding-left: 1rem;
     border-radius: 0 0 0.5rem 0 !important;
   }
-}
 
-@utility code-content {
-  .code-block-wrapper & {
-    display: flex;
-  }
-}
-
-@utility code-header {
-  @apply flex items-center justify-between px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-t-lg;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-@utility code-language-label {
-  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
-}
-
-@utility copy-code-button {
-  /* Copy code button. primary-700, not -600/-500: white text needs >=4.5:1
-     (WCAG AA); -600 is 4.1:1 and -500 is 2.77:1, both fail. -700 is 5.93:1. */
-  @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 rounded-sm transition-colors duration-200;
-
-  & .copy-icon {
-    @apply shrink-0;
+  .code-header {
+    @apply flex items-center justify-between px-4 py-2 bg-gray-300 dark:bg-gray-700 rounded-t-lg;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  &.copied {
+  .code-language-label {
+    @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+  }
+
+  .copy-code-button {
+    /* Copy code button. primary-700, not -600/-500: white text needs >=4.5:1
+       (WCAG AA); -600 is 4.1:1 and -500 is 2.77:1, both fail. -700 is 5.93:1. */
+    @apply flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 rounded-sm transition-colors duration-200;
+  }
+
+  .copy-code-button .copy-icon {
+    @apply flex-shrink-0;
+  }
+
+  .copy-code-button.copied {
     @apply bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600;
   }
-}
 
-@utility copy-icon {
-  .copy-code-button & {
-    @apply shrink-0;
-  }
-}
-
-@utility copied {
-  &.copy-code-button {
-    @apply bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600;
+  .copy-icon {
+    @apply flex-shrink-0;
   }
 }
 
