@@ -1,0 +1,284 @@
+---
+category: Base Patterns
+csharp: 14
+description: Understand Registry as a globally available lookup for
+  shared services, and why ASP.NET Core dependency injection is usually
+  the better modern default.
+dotnet: 10
+fowler_url: "https://martinfowler.com/eaaCatalog/registry.html"
+order: 51
+pattern: Registry
+series: Patterns of Enterprise Application Architecture in Modern .NET
+slug: registry
+status: draft
+title: Registry in Modern .NET
+---
+
+# Registry in Modern .NET
+
+Registry provides a well-known object that other parts of an application
+can use to find shared services or objects.
+
+In older enterprise applications, registries were a common way to make
+infrastructure available globally.
+
+Modern .NET has a better default for most of those cases: dependency
+injection.
+
+Understanding Registry is still useful because service locators, static
+application contexts, and global provider lookups are all variations of
+the same idea.
+
+## The Core Idea
+
+A simple registry might look like:
+
+``` csharp
+public static class ApplicationRegistry
+{
+    public static IClock Clock { get; set; } = null!;
+    public static IPaymentGateway Payments { get; set; } = null!;
+}
+```
+
+Application code can then write:
+
+``` csharp
+var now = ApplicationRegistry.Clock.UtcNow;
+```
+
+The caller does not receive the dependency explicitly. It discovers it
+through a globally known location.
+
+## Why It Is Attractive
+
+Registry can make APIs look simple:
+
+``` csharp
+public void Submit()
+{
+    var now = ApplicationRegistry.Clock.UtcNow;
+}
+```
+
+No constructor parameter is needed.
+
+It also centralizes the creation or lookup of shared infrastructure.
+
+The cost is hidden dependency.
+
+## Hidden Dependencies
+
+Consider:
+
+``` csharp
+public sealed class SubmitOrder
+{
+    public async Task ExecuteAsync(Order order)
+    {
+        var gateway =
+            ApplicationRegistry.Payments;
+
+        await gateway.AuthorizeAsync(...);
+    }
+}
+```
+
+Nothing in the constructor tells us that `SubmitOrder` needs a payment
+gateway.
+
+That makes the class harder to understand, test, and reuse.
+
+## Dependency Injection Makes Dependencies Visible
+
+Prefer:
+
+``` csharp
+public sealed class SubmitOrder(
+    IPaymentGateway payments,
+    TimeProvider timeProvider)
+{
+}
+```
+
+Now the dependency is part of the type's contract.
+
+ASP.NET Core's container handles composition:
+
+``` csharp
+builder.Services.AddScoped<
+    IPaymentGateway,
+    VendorPaymentGateway>();
+```
+
+The application gets centralized configuration without global lookup.
+
+## Service Locator
+
+This is a Registry-like approach:
+
+``` csharp
+public sealed class SubmitOrder(
+    IServiceProvider services)
+{
+    public Task ExecuteAsync(...)
+    {
+        var payments =
+            services.GetRequiredService<IPaymentGateway>();
+
+        // ...
+    }
+}
+```
+
+The dependency is still hidden.
+
+`IServiceProvider` has legitimate uses in infrastructure and framework
+integration, but injecting it everywhere turns DI into Service Locator.
+
+Prefer requesting the actual dependency.
+
+## Scoped Services Make Global Registries Dangerous
+
+ASP.NET Core services have lifetimes:
+
+``` text
+Singleton
+Scoped
+Transient
+```
+
+A static registry has no natural request scope.
+
+Putting a scoped `DbContext` into a static global location can create
+severe lifetime and concurrency problems.
+
+DI containers exist partly to manage these object lifecycles correctly.
+
+## When Registry Can Still Be Useful
+
+Some global lookup concepts remain reasonable.
+
+For example, an immutable catalog of strategies:
+
+``` csharp
+public sealed class CurrencyRegistry
+{
+    private readonly IReadOnlyDictionary<string, Currency>
+        _currencies;
+
+    public Currency Get(string code)
+        => _currencies[code];
+}
+```
+
+This is not necessarily a global static object. It is a registry in the
+broader lookup sense and can itself be injected normally.
+
+## Named Strategy Registry
+
+A registry can map keys to implementations:
+
+``` csharp
+public sealed class ExporterRegistry(
+    IEnumerable<IReportExporter> exporters)
+{
+    private readonly Dictionary<string, IReportExporter>
+        _byFormat =
+        exporters.ToDictionary(
+            x => x.Format,
+            StringComparer.OrdinalIgnoreCase);
+
+    public IReportExporter Get(string format)
+        => _byFormat.TryGetValue(format, out var exporter)
+            ? exporter
+            : throw new UnsupportedFormatException(format);
+}
+```
+
+The registry pattern can be useful without becoming a global service
+locator.
+
+## Keyed Services
+
+Modern .NET dependency injection also supports keyed registrations,
+which can cover some cases historically implemented with custom
+registries.
+
+The important distinction is whether consumers receive dependencies
+through composition or discover arbitrary services globally.
+
+## Static State and Tests
+
+Global mutable registries can make tests interfere with each other:
+
+``` text
+Test A changes Registry.Clock
+Test B runs in parallel
+Test B unexpectedly sees Test A's clock
+```
+
+That leads to order-dependent and flaky tests.
+
+Constructor injection naturally gives each test control over its own
+dependencies.
+
+## Ambient Context
+
+Some values genuinely behave like ambient context:
+
+-   current request,
+-   tracing activity,
+-   execution context.
+
+Frameworks sometimes expose these through context accessors or
+async-local storage.
+
+Use such mechanisms narrowly. Ambient context is still hidden state and
+should not become a general dependency mechanism.
+
+## Registry and Plugins
+
+A registry is often valuable for discovered plugins:
+
+``` text
+"pdf"  -> PdfExporter
+"csv"  -> CsvExporter
+"xlsx" -> ExcelExporter
+```
+
+The lookup itself is meaningful domain or application behavior.
+
+The registry can be constructed once by DI and injected into consumers.
+
+## When to Use It
+
+Registry is useful when the lookup is itself meaningful:
+
+-   strategy catalogs,
+-   plugin catalogs,
+-   metadata registries,
+-   immutable type/code lookups.
+
+## When to Prefer DI
+
+For ordinary services such as repositories, gateways, clocks, loggers,
+and application services, explicit dependency injection is usually
+clearer.
+
+## Related Patterns
+
+-   Separated Interface
+-   Gateway
+-   Layer Supertype
+
+## Summary
+
+Registry provides a known place to find shared objects.
+
+Modern .NET dependency injection removes the need for global registries
+in most service-composition scenarios while preserving centralized
+configuration and lifecycle management.
+
+Use Registry when lookup is part of the problem you are modeling---not
+merely as a shortcut for passing dependencies explicitly.
