@@ -1538,6 +1538,505 @@ Six posts on where .NET developers actually write and debug C# in 2028, picking 
 
 ---
 
+## 📅 Sunday Track - Patterns of Enterprise Application Architecture in Modern .NET (Volume 1) (August 2028-August 2029)
+
+Fifty-five posts translating Martin Fowler's *Patterns of Enterprise Application Architecture* catalog into modern .NET 10 and C# 14 - four introductory articles followed by all 51 catalog patterns in Fowler's canonical order, covering domain logic, data source, object-relational, web presentation, distribution, offline concurrency, session state, and base patterns. Runs weekly on Sundays as a standing series alongside the Tuesday .NET tracks. This is volume 1 of 3; volumes 2 and 3 will extend the series once drafted into `docs/article-ideas/`.
+
+### What Are Enterprise Application Architecture Patterns?
+- **Status:** `draft`
+- **Scheduled:** 2028-08-13
+- **Source:** `docs/article-ideas/01-what-are-enterprise-application-architecture-patterns.md`
+- **File:** `src/posts/2028-08-13-what-are-enterprise-application-architecture-patterns.md`
+- **Pitch:** Martin Fowler's *Patterns of Enterprise Application Architecture* catalog gave developers a shared vocabulary for organizing business rules, data, and presentation - and most of it holds up two decades later. This opens a series translating that catalog into modern .NET 10 and C# 14, starting with why patterns are tools for a specific problem, not architecture to apply by default.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/01-what-are-enterprise-application-architecture-patterns.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Layers, Boundaries, and Separation of Concerns in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-08-20
+- **Source:** `docs/article-ideas/02-layers-boundaries-separation-of-concerns.md`
+- **File:** `src/posts/2028-08-20-layers-boundaries-separation-of-concerns.md`
+- **Pitch:** A web endpoint starts with a few lines of code, then someone adds validation, pricing, authorization, and notifications - and it quietly becomes a miniature application. A look at what a layer actually is, why dependency direction matters more than folder names, and the practical test for a good boundary: does it localize a kind of change?
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/02-layers-boundaries-separation-of-concerns.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Transaction Script, Domain Model, and Service Layer
+- **Status:** `draft`
+- **Scheduled:** 2028-08-27
+- **Source:** `docs/article-ideas/03-transaction-script-domain-model-service-layer.md`
+- **File:** `src/posts/2028-08-27-transaction-script-domain-model-service-layer.md`
+- **Pitch:** Where should business logic actually live? A practical comparison of three of Fowler's most consequential answers - procedures organized around operations, a rich object model that owns its own rules, and a coordinating boundary layer - and why modern applications frequently combine all three rather than picking one.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/03-transaction-script-domain-model-service-layer.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-logic`
+
+### Data Access Patterns and the Object-Relational Impedance Mismatch
+- **Status:** `draft`
+- **Scheduled:** 2028-09-03
+- **Source:** `docs/article-ideas/04-data-access-patterns-object-relational-mismatch.md`
+- **File:** `src/posts/2028-09-03-data-access-patterns-object-relational-mismatch.md`
+- **Pitch:** Objects and relational tables represent information differently, and that gap - the object-relational impedance mismatch - is what an entire family of Fowler patterns exists to bridge. An introduction to that gap, and to how much of it Entity Framework Core already closes without most developers noticing.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/04-data-access-patterns-object-relational-mismatch.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Transaction Script in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-09-10
+- **Source:** `docs/article-ideas/05-transaction-script.md`
+- **File:** `src/posts/2028-09-10-transaction-script.md`
+- **Pitch:** Transaction Script organizes business logic around the application's transactions, with one procedure handling each operation - explicit, easy to locate, and often the right choice for CRUD-heavy systems. A look at when it works well, and the warning sign - duplicated business knowledge - that means a domain object may need to take over.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/05-transaction-script.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-logic`
+
+### Domain Model in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-09-17
+- **Source:** `docs/article-ideas/06-domain-model.md`
+- **File:** `src/posts/2028-09-17-domain-model.md`
+- **Pitch:** A Domain Model organizes business logic around objects representing concepts in the problem domain - the order itself owns the rules governing whether it can be submitted, not a service acting on it from outside. Covers building behavior-rich models with modern C# records and value objects, and the honest trade-off against an anemic, data-only alternative.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/06-domain-model.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-logic`
+
+### Table Module in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-09-24
+- **Source:** `docs/article-ideas/07-table-module.md`
+- **File:** `src/posts/2028-09-24-table-module.md`
+- **Pitch:** Table Module organizes domain logic into one module responsible for all rows in a table or view, rather than one object instance per entity - a less commonly named pattern today, but one LINQ makes natural for set-oriented behavior. Covers where it still fits cleanly against both Transaction Script and Domain Model.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/07-table-module.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-logic`
+
+### Service Layer in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-10-01
+- **Source:** `docs/article-ideas/08-service-layer.md`
+- **File:** `src/posts/2028-10-01-service-layer.md`
+- **Pitch:** Service Layer defines an application's boundary and answers a specific architectural question: what can this application do? Covers keeping the service as coordination rather than a procedural dumping ground, and the useful default - application services orchestrate, domain objects decide.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/08-service-layer.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-logic`
+
+### Table Data Gateway in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-10-08
+- **Source:** `docs/article-ideas/09-table-data-gateway.md`
+- **File:** `src/posts/2028-10-08-table-data-gateway.md`
+- **Pitch:** Table Data Gateway places the SQL for a table behind a single object, giving persistence logic one clear home instead of letting database knowledge spread through controllers and jobs. Covers pairing it with Transaction Script, and why it's more compelling when SQL is intentionally explicit than as a thin wrapper around what DbSet already provides.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/09-table-data-gateway.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Row Data Gateway in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-10-15
+- **Source:** `docs/article-ideas/10-row-data-gateway.md`
+- **File:** `src/posts/2028-10-15-row-data-gateway.md`
+- **Pitch:** If Table Data Gateway says one gateway handles the Orders table, Row Data Gateway says this object is the gateway for order row 42 - one instance per record. Covers the distinction from Active Record (behavior vs. pure persistence) and why the pattern is less common now that tracked EF Core entities provide much of the same ergonomic benefit.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/10-row-data-gateway.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Active Record in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-10-22
+- **Source:** `docs/article-ideas/11-active-record.md`
+- **File:** `src/posts/2028-10-22-active-record.md`
+- **Pitch:** Active Record combines a data record, persistence operations, and domain behavior in the same object - `customer.ChangeEmail(...)` then `customer.SaveAsync()` - reducing indirection for domains that closely match their relational schema. Covers why typical EF Core code is conceptually closer to Data Mapper than true Active Record, and when the combined responsibility becomes awkward as a domain grows.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/11-active-record.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Data Mapper in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-10-29
+- **Source:** `docs/article-ideas/12-data-mapper.md`
+- **File:** `src/posts/2028-10-29-data-mapper.md`
+- **Pitch:** Data Mapper separates the in-memory object model from the database entirely - domain objects don't need to know which tables contain their data or when an INSERT happens. One of the most important patterns in the whole catalog for modern .NET, because EF Core implements so much of it directly.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/12-data-mapper.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Unit of Work in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-11-05
+- **Source:** `docs/article-ideas/13-unit-of-work.md`
+- **File:** `src/posts/2028-11-05-unit-of-work.md`
+- **Pitch:** Unit of Work keeps track of objects affected by a business transaction and coordinates the resulting database changes - a definition that maps remarkably well onto how most .NET developers already use DbContext. Covers when a custom IUnitOfWork abstraction earns its keep versus when it just renames SaveChangesAsync.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/13-unit-of-work.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Identity Map in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-11-12
+- **Source:** `docs/article-ideas/14-identity-map.md`
+- **File:** `src/posts/2028-11-12-identity-map.md`
+- **Pitch:** Identity Map ensures a particular database identity maps to exactly one in-memory object within a business transaction - a small implementation detail that's actually important for both correctness and performance. Covers how EF Core's tracked DbContext already provides this, and why a second identity map on top of it is usually one too many.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/14-identity-map.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Lazy Load in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-11-19
+- **Source:** `docs/article-ideas/15-lazy-load.md`
+- **File:** `src/posts/2028-11-19-lazy-load.md`
+- **Pitch:** Lazy Load delays retrieving related data until it's actually needed - solving real waste, while also being one of the easiest ways to accidentally create severe database performance problems. Covers the classic N+1 query problem, and why explicit loading or projection is often the more predictable choice for modern APIs.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/15-lazy-load.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Identity Field in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-11-26
+- **Source:** `docs/article-ideas/16-identity-field.md`
+- **File:** `src/posts/2028-11-26-identity-field.md`
+- **Pitch:** Identity Field stores a database identifier in an object so the persistence layer can maintain the connection between an in-memory entity and its row - foundational, and made genuinely safer in modern C# through strongly typed IDs that stop an OrderId from being passed where a CustomerId belongs.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/16-identity-field.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Inheritance Mappers in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-12-03
+- **Source:** `docs/article-ideas/17-inheritance-mappers.md`
+- **File:** `src/posts/2028-12-03-inheritance-mappers.md`
+- **Pitch:** Inheritance Mappers coordinate persistence for an object hierarchy when different classes need different mapping behavior - the layer above table-per-hierarchy, table-per-type, and table-per-concrete-type that decides which mapper handles which class. Covers why EF Core makes this mostly invisible, and why understanding it still matters for reasoning about the generated SQL.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/17-inheritance-mappers.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Foreign Key Mapping in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-12-10
+- **Source:** `docs/article-ideas/18-foreign-key-mapping.md`
+- **File:** `src/posts/2028-12-10-foreign-key-mapping.md`
+- **Pitch:** Objects express relationships with references - order.Customer - while relational databases express them with keys - Orders.CustomerId. Foreign Key Mapping bridges those two representations, and this covers the real design decisions: required vs. optional relationships, whether both a navigation and an explicit ID should exist, and respecting aggregate boundaries.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/18-foreign-key-mapping.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Association Table Mapping in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-12-17
+- **Source:** `docs/article-ideas/19-association-table-mapping.md`
+- **File:** `src/posts/2028-12-17-association-table-mapping.md`
+- **Pitch:** A many-to-many relationship is easy to express with objects - post.Tags - but a relational database needs another table to represent it. Covers EF Core's skip navigations for simple joins, and the important modeling question: once an association gains its own data, like a role and an assignment date, it usually deserves to become a domain concept in its own right.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/19-association-table-mapping.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Dependent Mapping in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-12-24
+- **Source:** `docs/article-ideas/20-dependent-mapping.md`
+- **File:** `src/posts/2028-12-24-dependent-mapping.md`
+- **Pitch:** Dependent Mapping lets the mapper for a parent object also handle persistence for child objects that have no independent lifecycle - Fowler's classic example is an album and its tracks. Covers EF Core owned types, and recognizing the aggregate-boundary warning sign of giving a truly dependent child its own standalone repository.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/20-dependent-mapping.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Embedded Value in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2028-12-31
+- **Source:** `docs/article-ideas/21-embedded-value.md`
+- **File:** `src/posts/2028-12-31-embedded-value.md`
+- **Pitch:** Embedded Value maps a small object into columns in another object's table rather than giving it its own table - especially useful for value objects like Money or Address. Covers EF Core owned mappings, and why this beats flattening the domain model just because persistence found it convenient.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/21-embedded-value.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Serialized LOB in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-01-07
+- **Source:** `docs/article-ideas/22-serialized-lob.md`
+- **File:** `src/posts/2029-01-07-serialized-lob.md`
+- **Pitch:** Serialized LOB persists a graph of objects by serializing it into a single large database value - in a modern .NET application, usually JSON. Covers System.Text.Json value converters, the central trade-off against queryability, and why long-lived serialized data needs a real schema-evolution strategy even though the database enforces none.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/22-serialized-lob.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Single Table Inheritance in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-01-14
+- **Source:** `docs/article-ideas/23-single-table-inheritance.md`
+- **File:** `src/posts/2029-01-14-single-table-inheritance.md`
+- **Pitch:** Single Table Inheritance stores an entire object hierarchy in one database table - EF Core's default table-per-hierarchy (TPH) strategy. Covers the central structural trade-off: query simplicity and strong polymorphic queries, paid for with nullable columns that don't apply to every row.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/23-single-table-inheritance.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Class Table Inheritance in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-01-21
+- **Source:** `docs/article-ideas/24-class-table-inheritance.md`
+- **File:** `src/posts/2029-01-21-class-table-inheritance.md`
+- **Pitch:** Class Table Inheritance represents an inheritance hierarchy with one relational table per class - EF Core's table-per-type (TPT) - so the schema mirrors the object model closely. Covers why that conceptual neatness is paid for in joins, and current EF Core guidance that TPT often performs worse than the TPH default.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/24-class-table-inheritance.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Concrete Table Inheritance in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-01-28
+- **Source:** `docs/article-ideas/25-concrete-table-inheritance.md`
+- **File:** `src/posts/2029-01-28-concrete-table-inheritance.md`
+- **Pitch:** Concrete Table Inheritance creates a table for each concrete class and repeats inherited fields in each one - EF Core's table-per-concrete-type (TPC). Covers why leaf-type queries become simple while base-type queries and referential integrity become genuinely harder, and the key-generation subtlety that comes with it.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/25-concrete-table-inheritance.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Metadata Mapping in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-02-04
+- **Source:** `docs/article-ideas/26-metadata-mapping.md`
+- **File:** `src/posts/2029-02-04-metadata-mapping.md`
+- **Pitch:** Metadata Mapping moves mapping rules out of hand-written persistence code and into data that describes the mapping itself - conventions, attributes, and EF Core's Fluent API are all forms of it. Covers why this is what lets an ORM support large schemas without a custom mapper class for every type, and the danger of over-generalizing it into a second programming language.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/26-metadata-mapping.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Query Object in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-02-11
+- **Source:** `docs/article-ideas/27-query-object.md`
+- **File:** `src/posts/2029-02-11-query-object.md`
+- **Pitch:** Query Object represents a database query as an object, giving repeated business-relevant selection logic - overdue invoices, orders ready to ship - a name and a reusable home instead of scattering it through services. Covers parameterized queries, the overlap with the Specification pattern, and the danger of building a generic query DSL that just reimplements LINQ badly.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/27-query-object.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Repository in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-02-18
+- **Source:** `docs/article-ideas/28-repository.md`
+- **File:** `src/posts/2029-02-18-repository.md`
+- **Pitch:** Repository mediates between the domain model and the data-mapping layer with an interface that feels like a collection of domain objects - and it's also one of the most frequently overused patterns in modern .NET. The real question isn't whether repositories are good, it's whether one gives your application a domain-oriented persistence boundary that EF Core doesn't already provide.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/28-repository.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `orm`
+
+### Model View Controller in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-02-25
+- **Source:** `docs/article-ideas/29-model-view-controller.md`
+- **File:** `src/posts/2029-02-25-model-view-controller.md`
+- **Pitch:** Model View Controller splits user-interface interaction into three roles - few patterns are as widely known, or as inconsistently interpreted. Revisits the pattern through ASP.NET Core MVC, Razor views, and Minimal APIs, and the real meaning of a thin controller: not near-empty, just free of accumulated business rules.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/29-model-view-controller.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Page Controller in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-03-04
+- **Source:** `docs/article-ideas/30-page-controller.md`
+- **File:** `src/posts/2029-03-04-page-controller.md`
+- **Pitch:** Page Controller assigns a controller object to a specific page or action - MVC actions, Razor Page models, and Minimal API handlers are all modern expressions of the same idea. Covers what belongs in one versus the fat-controller failure mode, and how the pattern pairs naturally with Front Controller's shared pipeline.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/30-page-controller.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Front Controller in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-03-11
+- **Source:** `docs/article-ideas/31-front-controller.md`
+- **File:** `src/posts/2029-03-11-front-controller.md`
+- **Pitch:** Front Controller channels web requests through a common handler before dispatching to request-specific behavior - a pattern ASP.NET Core's middleware and routing pipeline makes feel almost invisible. Covers centralizing authentication, exception handling, and correlation, without letting the shared pipeline grow into a hidden application service of its own.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/31-front-controller.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Template View in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-03-18
+- **Source:** `docs/article-ideas/32-template-view.md`
+- **File:** `src/posts/2029-03-18-template-view.md`
+- **Pitch:** Template View renders dynamic output by starting with presentation markup and embedding markers that get replaced with data at runtime - Razor is the obvious modern example. Covers strongly typed view models, layouts, partials, and the discipline of keeping business rules out of the template even though Razor technically allows it.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/32-template-view.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Transform View in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-03-25
+- **Source:** `docs/article-ideas/33-transform-view.md`
+- **File:** `src/posts/2029-03-25-transform-view.md`
+- **Pitch:** Transform View treats rendering as a transformation - structured data goes in, a complete representation comes out - which is exactly what happens every time a modern API serializes a DTO into JSON. Covers why this is the natural fit for machine-oriented output, and when handcrafted HTML is still better served by Template View instead.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/33-transform-view.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Two Step View in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-04-01
+- **Source:** `docs/article-ideas/34-two-step-view.md`
+- **File:** `src/posts/2029-04-01-two-step-view.md`
+- **Pitch:** Two Step View renders a response in two stages - domain data becomes a logical page model first, and only then gets rendered into final output - useful when many pages share a strong common structure. Covers design-system-heavy applications and dashboards, and why an ordinary Razor layout is often enough without the extra stage.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/34-two-step-view.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Application Controller in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-04-08
+- **Source:** `docs/article-ideas/35-application-controller.md`
+- **File:** `src/posts/2029-04-08-application-controller.md`
+- **Pitch:** Page Controller answers what should happen for this request; Application Controller answers where the application should go next. Covers centralizing multi-step workflow navigation - onboarding, checkout, account recovery - so redirect logic doesn't get scattered and duplicated across every handler along the way.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/35-application-controller.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Remote Facade in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-04-15
+- **Source:** `docs/article-ideas/36-remote-facade.md`
+- **File:** `src/posts/2029-04-15-remote-facade.md`
+- **Pitch:** A method call inside one process is cheap; a network call is not. Remote Facade provides a coarse-grained interface over fine-grained application objects for exactly that reason, and this covers designing operations sized for the network rather than exposing a chatty, RPC-style mirror of the domain model.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/36-remote-facade.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+
+### Data Transfer Object in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-04-22
+- **Source:** `docs/article-ideas/37-data-transfer-object.md`
+- **File:** `src/posts/2029-04-22-data-transfer-object.md`
+- **Pitch:** Data Transfer Object packages data for transfer between processes - simple in concept, but process boundaries change the economics of object interaction entirely. Covers request and response DTOs, why they protect both the domain and the client from each other, and treating serialization contract details as part of the design, not an afterthought.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/37-data-transfer-object.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+
+### Optimistic Offline Lock in Modern .NET and EF Core
+- **Status:** `draft`
+- **Scheduled:** 2029-04-29
+- **Source:** `docs/article-ideas/38-optimistic-offline-lock.md`
+- **File:** `src/posts/2029-04-29-optimistic-offline-lock.md`
+- **Pitch:** Optimistic Offline Lock lets multiple business transactions work with the same data and detects a conflict only when one tries to commit stale changes - a strong default for web applications where a user may load an edit page and submit changes minutes later. Covers EF Core concurrency tokens, rowversion columns, and deciding what should actually happen when a conflict is detected.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/38-optimistic-offline-lock.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `ef-core`
+
+### Pessimistic Offline Lock in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-05-06
+- **Source:** `docs/article-ideas/39-pessimistic-offline-lock.md`
+- **File:** `src/posts/2029-05-06-pessimistic-offline-lock.md`
+- **Pitch:** Pessimistic Offline Lock prevents conflicting business transactions by requiring a logical lock before work begins - not a database row lock held for milliseconds, but an application-level lease that can survive across multiple requests and fifteen minutes of a user reviewing documents. Covers atomic acquisition, lease expiration, and the distributed-systems problems - the ABA problem included - that come with it.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/39-pessimistic-offline-lock.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+
+### Coarse-Grained Lock in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-05-13
+- **Source:** `docs/article-ideas/40-coarse-grained-lock.md`
+- **File:** `src/posts/2029-05-13-coarse-grained-lock.md`
+- **Pitch:** Coarse-Grained Lock protects a set of related objects with one lock, rather than independently locking every object that participates in a consistency boundary - a customer and its several addresses, locked as one. Covers aggregate versioning as the natural implementation, and the real trade-off: simpler consistency in exchange for less fine-grained concurrency.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/40-coarse-grained-lock.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+
+### Implicit Lock in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-05-20
+- **Source:** `docs/article-ideas/41-implicit-lock.md`
+- **File:** `src/posts/2029-05-20-implicit-lock.md`
+- **Pitch:** A locking strategy is only reliable if every relevant operation follows it - Implicit Lock moves that enforcement into framework or infrastructure code so developers can't accidentally forget it. Covers EF Core's automatic concurrency-token checking as the clearest modern example, and why implicit behavior still needs to stay explicit in diagnostics and documentation.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/41-implicit-lock.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+
+### Client Session State in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-05-27
+- **Source:** `docs/article-ideas/42-client-session-state.md`
+- **File:** `src/posts/2029-05-27-client-session-state.md`
+- **Pitch:** HTTP is stateless, so something has to carry state between requests - Client Session State puts that job on the client, through cookies, query strings, hidden fields, and protected tokens. Covers ASP.NET Core Data Protection for round-tripping values through an untrusted client, and the one rule that governs everything else: never trust client state as authoritative.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/42-client-session-state.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Server Session State in Modern ASP.NET Core
+- **Status:** `draft`
+- **Scheduled:** 2029-06-03
+- **Source:** `docs/article-ideas/43-server-session-state.md`
+- **File:** `src/posts/2029-06-03-server-session-state.md`
+- **Pitch:** Server Session State keeps session-specific data on the application side while the client carries only enough to identify the session - HttpContext.Session is the direct modern example. Covers why scale-out changes the design entirely, and the temptation, worth resisting, to store a live domain aggregate in session rather than just an identifier.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/43-server-session-state.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `aspnet-core`
+
+### Database Session State in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-06-10
+- **Source:** `docs/article-ideas/44-database-session-state.md`
+- **File:** `src/posts/2029-06-10-database-session-state.md`
+- **Pitch:** Database Session State stores conversational session data in a database - a specialized form of server-side session that makes it available to every application instance without sticky routing. Covers EF Core persistence for typed session records, cleanup jobs for expired rows, and the important boundary: session state supports a conversation, it shouldn't quietly become the system of record.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/44-database-session-state.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Gateway in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-06-17
+- **Source:** `docs/article-ideas/45-gateway.md`
+- **File:** `src/posts/2029-06-17-gateway.md`
+- **Pitch:** Gateway encapsulates access to an external system behind an object that presents a useful application-facing interface, so vendor terminology and transport details don't leak into application logic. Covers typed HttpClient integrations, translating vendor failures into application-relevant exceptions, and the difference between a real boundary and a wrapper that just renames SDK methods.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/45-gateway.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Service Stub in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-06-24
+- **Source:** `docs/article-ideas/46-service-stub.md`
+- **File:** `src/posts/2029-06-24-service-stub.md`
+- **Pitch:** External services are often slow, unreliable, rate-limited, or hard to force into edge cases - Service Stub replaces them with a controllable implementation so tests get deterministic behavior instead. Covers hand-written stubs, HttpMessageHandler-level fakes, and the essential caveat: a stub proves your code, not that the real service still matches your assumptions.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/46-service-stub.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `testing`
+
+### Record Set in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-07-01
+- **Source:** `docs/article-ideas/47-record-set.md`
+- **File:** `src/posts/2029-07-01-record-set.md`
+- **Pitch:** Record Set is an in-memory representation of tabular data - rows and columns that closely resemble a relational result, rather than a graph of domain objects. Still genuinely useful for reporting, imports, exports, and dynamic administrative tooling, covering DataTable, typed read-model projections, and when a strongly typed object is the better fit instead.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/47-record-set.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `data-access`
+
+### Mapper in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-07-08
+- **Source:** `docs/article-ideas/48-mapper.md`
+- **File:** `src/posts/2029-07-08-mapper.md`
+- **Pitch:** Mapper moves data between two objects or subsystems that should remain independent - the important word is independent, since mapping is an architectural boundary, not just copying properties. Covers explicit mapping and extension methods, when a mapping library actually helps versus hides a meaningful semantic decision, and where mapping code should live.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/48-mapper.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Layer Supertype in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-07-15
+- **Source:** `docs/article-ideas/49-layer-supertype.md`
+- **File:** `src/posts/2029-07-15-layer-supertype.md`
+- **Pitch:** Layer Supertype is a common superclass for every type in a layer, giving it one place for behavior every member genuinely shares - useful in modern .NET, but inheritance deserves more care here than older enterprise frameworks often gave it. Covers the fragile-base-class problem, and modern C# interfaces with default members as a more flexible alternative to a growing base class.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/49-layer-supertype.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Separated Interface in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-07-22
+- **Source:** `docs/article-ideas/50-separated-interface.md`
+- **File:** `src/posts/2029-07-22-separated-interface.md`
+- **Pitch:** Separated Interface places an interface in a different package from its implementation - a simple move that can reverse the direction of a dependency entirely, and one of the ideas underneath most modern .NET architectures built around dependency inversion. Covers assembly structure, who should own the abstraction, and why an interface next to its only implementation doesn't actually invert anything.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/50-separated-interface.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Registry in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-07-29
+- **Source:** `docs/article-ideas/51-registry.md`
+- **File:** `src/posts/2029-07-29-registry.md`
+- **Pitch:** Registry provides a well-known object other parts of an application use to find shared services - common in older enterprise applications, where modern .NET has a better default for most cases: dependency injection. Covers why hidden dependencies make classes harder to test and reuse, and the narrower cases - strategy catalogs, plugin lookups - where a registry still earns its place.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/51-registry.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Value Object in Modern C#
+- **Status:** `draft`
+- **Scheduled:** 2029-08-05
+- **Source:** `docs/article-ideas/52-value-object.md`
+- **File:** `src/posts/2029-08-05-value-object.md`
+- **Pitch:** A Value Object is defined by its value rather than an identity - two coordinates with the same latitude and longitude represent the same value. Modern C# records and readonly record structs make this pattern genuinely expressive, covering strongly typed IDs, immutability, and why not every string needs a wrapper.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/52-value-object.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Money in Modern C# and .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-08-12
+- **Source:** `docs/article-ideas/53-money.md`
+- **File:** `src/posts/2029-08-12-money.md`
+- **Pitch:** A bare decimal for money answers 'how much' but not 'what currency' - Money makes that missing semantic explicit and defines safe rules for arithmetic, rounding, and allocation. Covers why currency mismatches should fail immediately, splitting an amount without losing pennies, and giving monetary precision explicit database scale rather than leaving it accidental.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/53-money.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Special Case in Modern C#
+- **Status:** `draft`
+- **Scheduled:** 2029-08-19
+- **Source:** `docs/article-ideas/54-special-case.md`
+- **File:** `src/posts/2029-08-19-special-case.md`
+- **Pitch:** Special Case creates an object that represents an exceptional or unusual situation so callers can treat it like an ordinary object - instead of an `if (customer is null)` check scattered everywhere, a GuestCustomer that simply has zero-discount behavior. Covers Null Object as the most common form, modern discriminated-union-style result types, and why the pattern shouldn't be used to quietly hide real operational failures.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/54-special-case.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Plugin in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-08-26
+- **Source:** `docs/article-ideas/55-plugin.md`
+- **File:** `src/posts/2029-08-26-plugin.md`
+- **Pitch:** Plugin links implementations to an application at configuration or runtime rather than hard-coding them into the core - the application defines a stable contract, and independent components implement it. Covers the simplest form via ordinary dependency injection through to AssemblyLoadContext-based discovery, and why in-process loading is never a substitute for a real security boundary.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/55-plugin.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it, and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `extensibility`
+
 ---
 
 ## 📅 November-December 2026 - AI Agents in Practice
