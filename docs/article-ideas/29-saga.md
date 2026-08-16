@@ -1,0 +1,427 @@
+---
+title: "Saga: Coordinating a Business Transaction Across Services"
+slug: "saga"
+description: "Coordinate long-running business workflows across independently committed services using choreography or orchestration, explicit state, idempotency, timeouts, and compensating actions."
+series: "Modern Application Architecture Patterns in .NET"
+volume: 2
+category: "Distributed Workflows & API Boundaries"
+order: 29
+dotnet: "10"
+csharp: "14"
+status: "draft"
+---
+
+# Saga: Coordinating a Business Transaction Across Services
+
+A local database transaction gives us a wonderfully simple promise:
+
+```text
+BEGIN
+change A
+change B
+change C
+COMMIT
+```
+
+Either everything commits or nothing does.
+
+Then we split the operation across services.
+
+```text
+Ordering
+Payment
+Inventory
+Shipping
+```
+
+There is no longer one ordinary ACID transaction covering the whole workflow.
+
+A Saga coordinates the sequence of **local transactions** that together implement the business process.
+
+## The Problem
+
+Imagine placing an order requires:
+
+1. creating the order;
+2. reserving inventory;
+3. authorizing payment;
+4. scheduling fulfillment.
+
+```text
+Order
+  |
+  v
+Inventory
+  |
+  v
+Payment
+  |
+  v
+Fulfillment
+```
+
+Any step can fail after earlier steps have already committed.
+
+That is the central problem.
+
+## A Saga Is Not a Distributed Database Transaction
+
+A Saga does not pretend all services commit atomically.
+
+Instead:
+
+```text
+T1 -> T2 -> T3 -> T4
+```
+
+and failures may trigger compensating actions:
+
+```text
+T1 -> T2 -> T3 fails
+          |
+          v
+       C2 -> C1
+```
+
+Each transaction is local.
+
+The overall workflow is coordinated.
+
+## Choreography
+
+With choreography, services react to events.
+
+```text
+OrderPlaced
+    |
+    v
+Inventory reserves
+    |
+InventoryReserved
+    |
+    v
+Payment authorizes
+    |
+PaymentAuthorized
+    |
+    v
+Fulfillment schedules
+```
+
+There is no central workflow controller.
+
+### Advantages
+
+- loose coupling;
+- services react independently;
+- no central orchestrator dependency.
+
+### Costs
+
+- workflow becomes distributed across handlers;
+- understanding the complete process is harder;
+- event chains can become spaghetti;
+- timeout and failure coordination becomes awkward.
+
+Choreography works well for smaller, naturally event-driven workflows.
+
+## Orchestration
+
+With orchestration, a Saga coordinator owns workflow state.
+
+```text
+           Order Saga
+          /    |     \
+         v     v      v
+    Inventory Payment Fulfillment
+```
+
+The orchestrator sends commands and reacts to replies/events.
+
+```text
+ReserveInventory
+       |
+InventoryReserved
+       |
+AuthorizePayment
+       |
+PaymentAuthorized
+       |
+ScheduleFulfillment
+```
+
+The workflow becomes explicit.
+
+## Saga State
+
+A durable orchestrator needs state.
+
+```csharp
+public sealed class PlaceOrderSaga
+{
+    public Guid SagaId { get; init; }
+    public Guid OrderId { get; init; }
+
+    public SagaStatus Status { get; private set; }
+
+    public bool InventoryReserved { get; private set; }
+    public bool PaymentAuthorized { get; private set; }
+}
+```
+
+That state must survive process restarts.
+
+An in-memory state machine is not sufficient for an important long-running workflow.
+
+## State Machine
+
+Think explicitly:
+
+```text
+Started
+   |
+ReserveInventory
+   |
+InventoryReserved
+   |
+AuthorizePayment
+   |
+PaymentAuthorized
+   |
+ScheduleFulfillment
+   |
+Completed
+```
+
+Failure paths matter just as much:
+
+```text
+PaymentDeclined
+   |
+ReleaseInventory
+   |
+Cancelled
+```
+
+A state machine makes legal transitions visible.
+
+## Compensation
+
+Compensation is not database rollback.
+
+If inventory was reserved:
+
+```text
+ReleaseInventory
+```
+
+may compensate.
+
+If payment was captured:
+
+```text
+RefundPayment
+```
+
+may compensate.
+
+But the world moved forward.
+
+There may be fees, notifications, or irreversible external effects.
+
+Compensation is a **new business action** that attempts to restore an acceptable business state.
+
+## Idempotency
+
+Every Saga command and event can be delivered more than once.
+
+Therefore:
+
+```text
+ReserveInventory
+AuthorizePayment
+ReleaseInventory
+RefundPayment
+```
+
+must be idempotent or carry stable operation identity.
+
+A duplicate compensation can be just as dangerous as a duplicate forward action.
+
+## Timeouts
+
+What happens if Payment never replies?
+
+A Saga needs time semantics:
+
+```text
+AuthorizePayment
+      |
+wait 5 minutes
+      |
+timeout
+      |
+ReleaseInventory
+```
+
+Timeout is itself a workflow event.
+
+Persist scheduled timeout state durably rather than relying on an in-process `Task.Delay` for critical workflows.
+
+## Correlation
+
+Every message needs enough identity to find its Saga instance.
+
+```csharp
+public sealed record PaymentAuthorized(
+    Guid MessageId,
+    Guid SagaId,
+    Guid OrderId,
+    Guid PaymentId);
+```
+
+Correlation ID and Saga ID are related concepts, but the Saga ID identifies the workflow instance.
+
+## Outbox + Saga
+
+When the orchestrator updates its state and sends the next command:
+
+```text
+Update Saga state
+Publish command
+```
+
+we have another dual-write problem.
+
+Use Transactional Outbox:
+
+```text
+BEGIN
+update saga
+insert outbox message
+COMMIT
+```
+
+Reliable workflow coordination is pattern composition.
+
+## Inbox + Saga
+
+Replies can duplicate.
+
+Use Inbox/idempotent handling:
+
+```text
+BEGIN
+insert inbox marker
+update saga
+insert next outbox message
+COMMIT
+```
+
+This gives each Saga step a strong local consistency boundary.
+
+## Concurrency
+
+Two events for the same Saga may arrive simultaneously.
+
+Use optimistic concurrency or another serialization strategy.
+
+```text
+Saga version 7
+event A -> version 8
+event B expected 7 -> conflict
+```
+
+Retry B against the new state.
+
+## Observability
+
+A Saga should be inspectable.
+
+Operators should be able to answer:
+
+```text
+Where is Order 42?
+What step is waiting?
+What failed?
+What compensation ran?
+What message IDs were involved?
+How long has it been stuck?
+```
+
+Track workflow duration, failure rate, compensation rate, timeout count, and stuck Saga age.
+
+## Choreography vs. Orchestration
+
+A practical heuristic:
+
+Use choreography when:
+
+- reactions are few;
+- ownership is obvious;
+- no one needs a global workflow view.
+
+Use orchestration when:
+
+- many steps exist;
+- ordering matters;
+- compensations matter;
+- timeouts matter;
+- operators need workflow visibility.
+
+## Testing
+
+Saga tests should read like workflow specifications:
+
+```text
+Given inventory was reserved
+When payment is declined
+Then release inventory
+And mark order cancelled
+```
+
+Also test:
+
+- duplicate replies;
+- out-of-order messages;
+- timeouts;
+- compensation failure;
+- orchestrator restart;
+- optimistic concurrency conflicts.
+
+## When It Helps
+
+Use a Saga when:
+
+- one business process spans transactional boundaries;
+- each participant commits independently;
+- partial failure must be handled explicitly;
+- eventual consistency is acceptable.
+
+## When It Hurts
+
+Do not use Saga to coordinate operations that belong in one local transaction.
+
+A premature service split can turn:
+
+```text
+one transaction
+```
+
+into:
+
+```text
+Saga + broker + outbox + inbox + compensation + monitoring
+```
+
+That is an architectural tax.
+
+## Summary
+
+Saga coordinates a business transaction that no longer fits inside one ACID boundary.
+
+It does not restore global atomicity.
+
+It replaces atomic rollback with explicit workflow state, durable messages, idempotency, timeouts, and compensation.
+
+That is a much more honest model of distributed business processes.
