@@ -8,6 +8,7 @@ module.exports = function(eleventyConfig) {
   // Copy static files
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/js");
+  eleventyConfig.addPassthroughCopy("src/downloads");
 
   // Wrap tables in a horizontally-scrollable, keyboard-focusable div (WCAG
   // 2.1.1) - same rationale as the <pre> tabindex handling in code-copy.js.

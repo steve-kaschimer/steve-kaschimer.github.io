@@ -68,6 +68,20 @@ layout: base.njk
     {{ content | safe }}
   </div>
 
+  <!-- Companion Source Code -->
+  {% if companion_download %}
+  <div class="callout-box mt-8">
+    <h2 class="text-xl font-display font-bold mt-0 mb-2">Companion Source Code</h2>
+    <p class="mb-4">This article is part of the <a href="/posts/2030-08-11-architecture-lab-introduction/">Northstar Architecture Lab</a>, a runnable companion .NET application built alongside this series.</p>
+    <a href="{{ companion_download }}" class="btn btn-primary inline-flex items-center gap-2 no-underline">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+      </svg>
+      Download {{ companion_download_label }}
+    </a>
+  </div>
+  {% endif %}
+
   <!-- Back to Home -->
   <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
     <a href="/" class="inline-flex items-center text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-500">
