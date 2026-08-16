@@ -2039,6 +2039,453 @@ Fifty-five posts translating Martin Fowler's *Patterns of Enterprise Application
 
 ---
 
+## 📅 Sunday Track - Modern Application Architecture Patterns in .NET (Volume 2) (September 2029-August 2030)
+
+Forty-nine posts continuing the Modern Application Architecture Patterns in .NET series past Volume I's Fowler-catalog foundation - dependency injection, Clean/Hexagonal/Vertical Slice architecture, Domain-Driven Design building blocks, CQRS, messaging and event-driven patterns, distributed workflow coordination, resilience patterns, and architecture-at-scale concerns such as feature flags, health checks, rate limiting, and leader election. Runs weekly on Sundays immediately following Volume I as a standing series alongside the Tuesday .NET tracks. This is volume 2 of 3; volume 3 will extend the series once drafted into `docs/article-ideas/`. Note: articles 3 and 49 both cover "The Architecture Complexity Ladder" (the series' opening framework and its closing retrospective) - the source drafts share the same `architecture-complexity-ladder` slug, so article 49's destination file and URL use `architecture-complexity-ladder-revisited` to avoid colliding with article 3's published post.
+
+### Modern .NET Architecture: What Changed After PoEAA?
+- **Status:** `draft`
+- **Scheduled:** 2029-09-02
+- **Source:** `docs/article-ideas/01-modern-dotnet-architecture-after-poeaa.md`
+- **File:** `src/posts/2029-09-02-modern-dotnet-architecture-after-poeaa.md`
+- **Pitch:** Volume II begins where Patterns of Enterprise Application Architecture leaves off: the network, cloud, messaging, DDD, CQRS, resilience, and feature-oriented architecture changed the problems we routinely solve.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/01-modern-dotnet-architecture-after-poeaa.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Patterns, Principles, Styles, and Practices: Know What You're Choosing
+- **Status:** `draft`
+- **Scheduled:** 2029-09-09
+- **Source:** `docs/article-ideas/02-patterns-principles-styles-practices.md`
+- **File:** `src/posts/2029-09-09-patterns-principles-styles-practices.md`
+- **Pitch:** Separate architectural styles, design patterns, principles, practices, and technologies so architecture discussions become about decisions rather than labels.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/02-patterns-principles-styles-practices.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### The Architecture Complexity Ladder
+- **Status:** `draft`
+- **Scheduled:** 2029-09-16
+- **Source:** `docs/article-ideas/03-architecture-complexity-ladder.md`
+- **File:** `src/posts/2029-09-16-architecture-complexity-ladder.md`
+- **Pitch:** Learn when a .NET application has earned additional architecture, from straightforward CRUD through domain modeling, CQRS, messaging, and distributed workflows.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/03-architecture-complexity-ladder.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Modular Monolith or Microservices? Start With the Boundary
+- **Status:** `draft`
+- **Scheduled:** 2029-09-23
+- **Source:** `docs/article-ideas/04-modular-monolith-or-microservices.md`
+- **File:** `src/posts/2029-09-23-modular-monolith-or-microservices.md`
+- **Pitch:** Choose deployment boundaries after identifying business boundaries, and understand why a modular monolith is often the strongest starting point for a modern .NET system.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/04-modular-monolith-or-microservices.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+
+### Don't Start With Patterns: Start With Problems
+- **Status:** `draft`
+- **Scheduled:** 2029-09-30
+- **Source:** `docs/article-ideas/05-start-with-problems-not-patterns.md`
+- **File:** `src/posts/2029-09-30-start-with-problems-not-patterns.md`
+- **Pitch:** Use forces, failure modes, and explicit trade-offs to decide whether a pattern belongs in a .NET architecture instead of applying patterns by reputation.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/05-start-with-problems-not-patterns.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Dependency Injection Beyond AddScoped
+- **Status:** `draft`
+- **Scheduled:** 2029-10-07
+- **Source:** `docs/article-ideas/06-dependency-injection.md`
+- **File:** `src/posts/2029-10-07-dependency-injection.md`
+- **Pitch:** Use dependency injection as an architectural composition technique in modern .NET, with explicit dependencies, correct lifetimes, keyed services, factories, decorators, and a disciplined composition root.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/06-dependency-injection.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Clean Architecture in Modern .NET Without the Ceremony
+- **Status:** `draft`
+- **Scheduled:** 2029-10-14
+- **Source:** `docs/article-ideas/07-clean-architecture.md`
+- **File:** `src/posts/2029-10-14-clean-architecture.md`
+- **Pitch:** Apply Clean Architecture's dependency rule in .NET without blindly copying layers, interfaces, repositories, and project templates that the application does not need.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/07-clean-architecture.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Hexagonal Architecture and Ports & Adapters in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-10-21
+- **Source:** `docs/article-ideas/08-hexagonal-architecture-ports-adapters.md`
+- **File:** `src/posts/2029-10-21-hexagonal-architecture-ports-adapters.md`
+- **Pitch:** Design a .NET application around use-case ports and replaceable adapters so HTTP, databases, brokers, and external APIs remain outside the application core.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/08-hexagonal-architecture-ports-adapters.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Vertical Slice Architecture in Modern .NET
+- **Status:** `draft`
+- **Scheduled:** 2029-10-28
+- **Source:** `docs/article-ideas/09-vertical-slice-architecture.md`
+- **File:** `src/posts/2029-10-28-vertical-slice-architecture.md`
+- **Pitch:** Organize modern .NET applications around features and use cases instead of technical layers, while keeping shared domain and infrastructure boundaries deliberate.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/09-vertical-slice-architecture.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Mediator in Modern .NET: Useful Boundary or Expensive Method Call?
+- **Status:** `draft`
+- **Scheduled:** 2029-11-04
+- **Source:** `docs/article-ideas/10-mediator.md`
+- **File:** `src/posts/2029-11-04-mediator.md`
+- **Pitch:** Use mediator-style dispatch deliberately for command/query pipelines and cross-cutting behaviors, and recognize when direct method calls are the simpler .NET design.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/10-mediator.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Entity in Domain-Driven Design
+- **Status:** `draft`
+- **Scheduled:** 2029-11-11
+- **Source:** `docs/article-ideas/11-entity-ddd.md`
+- **File:** `src/posts/2029-11-11-entity-ddd.md`
+- **Pitch:** Model domain concepts whose identity and continuity matter more than their current attribute values, while protecting invariants with ordinary modern C#.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/11-entity-ddd.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Aggregate and Aggregate Root: The Consistency Boundary
+- **Status:** `draft`
+- **Scheduled:** 2029-11-18
+- **Source:** `docs/article-ideas/12-aggregate-aggregate-root.md`
+- **File:** `src/posts/2029-11-18-aggregate-aggregate-root.md`
+- **Pitch:** Design DDD aggregates around transactional consistency and business invariants instead of object graphs or database relationships.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/12-aggregate-aggregate-root.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Domain Service: Behavior That Doesn't Belong to an Entity
+- **Status:** `draft`
+- **Scheduled:** 2029-11-25
+- **Source:** `docs/article-ideas/13-domain-service.md`
+- **File:** `src/posts/2029-11-25-domain-service.md`
+- **Pitch:** Model domain operations that require domain knowledge but do not naturally belong to one entity or value object, without turning services into an anemic-domain dumping ground.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/13-domain-service.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Domain Events: Making Business Consequences Explicit
+- **Status:** `draft`
+- **Scheduled:** 2029-12-02
+- **Source:** `docs/article-ideas/14-domain-events.md`
+- **File:** `src/posts/2029-12-02-domain-events.md`
+- **Pitch:** Model meaningful facts that have already happened inside a bounded context, defer their dispatch safely, and distinguish domain events from durable integration messages.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/14-domain-events.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Specification: Giving Business Predicates a Name
+- **Status:** `draft`
+- **Scheduled:** 2029-12-09
+- **Source:** `docs/article-ideas/15-specification.md`
+- **File:** `src/posts/2029-12-09-specification.md`
+- **Pitch:** Encapsulate reusable business predicates and composable selection rules without turning every LINQ expression into an abstraction or coupling the domain to persistence mechanics.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/15-specification.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Anti-Corruption Layer: Protecting Your Domain From Someone Else's Model
+- **Status:** `draft`
+- **Scheduled:** 2029-12-16
+- **Source:** `docs/article-ideas/16-anti-corruption-layer.md`
+- **File:** `src/posts/2029-12-16-anti-corruption-layer.md`
+- **Pitch:** Protect a modern .NET domain from legacy systems, vendor APIs, and foreign bounded contexts by translating protocols, data, errors, and semantics at an explicit boundary.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/16-anti-corruption-layer.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+
+### Command: Modeling an Intent to Change the System
+- **Status:** `draft`
+- **Scheduled:** 2029-12-23
+- **Source:** `docs/article-ideas/17-command.md`
+- **File:** `src/posts/2029-12-23-command.md`
+- **Pitch:** Model application requests as explicit business intentions, distinguish commands from events and CRUD updates, and design command handling around validation, invariants, transactions, and idempotency.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/17-command.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `cqrs`
+
+### Query: Designing Reads for What the Caller Actually Needs
+- **Status:** `draft`
+- **Scheduled:** 2029-12-30
+- **Source:** `docs/article-ideas/18-query.md`
+- **File:** `src/posts/2029-12-30-query.md`
+- **Pitch:** Design read operations independently from write-side domain models, project directly into caller-oriented DTOs, and optimize query paths without weakening domain invariants.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/18-query.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `cqrs`
+
+### CQRS: Separate Reads and Writes Before You Separate Databases
+- **Status:** `draft`
+- **Scheduled:** 2030-01-06
+- **Source:** `docs/article-ideas/19-cqrs.md`
+- **File:** `src/posts/2030-01-06-cqrs.md`
+- **Pitch:** Apply Command Query Responsibility Segregation incrementally in .NET, beginning with separate application models and progressing to independent stores only when scaling, consistency, or query needs justify the cost.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/19-cqrs.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `cqrs`
+
+### Result Pattern: Making Expected Failure Explicit
+- **Status:** `draft`
+- **Scheduled:** 2030-01-13
+- **Source:** `docs/article-ideas/20-result-pattern.md`
+- **File:** `src/posts/2030-01-13-result-pattern.md`
+- **Pitch:** Represent expected application outcomes explicitly in modern C#, distinguish business failure from exceptional failure, and map results cleanly to HTTP without replacing exceptions indiscriminately.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/20-result-pattern.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Idempotency: Making Retries Safe
+- **Status:** `draft`
+- **Scheduled:** 2030-01-20
+- **Source:** `docs/article-ideas/21-idempotency.md`
+- **File:** `src/posts/2030-01-20-idempotency.md`
+- **Pitch:** Design HTTP commands and distributed operations so repeated delivery of the same logical request does not repeat harmful effects, using stable operation identity, atomic persistence, replayed responses, and careful expiration.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/21-idempotency.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+
+### Publish/Subscribe: Decoupling Producers From Reactions
+- **Status:** `draft`
+- **Scheduled:** 2030-01-27
+- **Source:** `docs/article-ideas/22-publish-subscribe.md`
+- **File:** `src/posts/2030-01-27-publish-subscribe.md`
+- **Pitch:** Use publish/subscribe to decouple producers from multiple independent consumers, and understand delivery, ordering, durability, and contract-versioning implications in modern .NET systems.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/22-publish-subscribe.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+
+### Competing Consumers: Scaling Work Horizontally
+- **Status:** `draft`
+- **Scheduled:** 2030-02-03
+- **Source:** `docs/article-ideas/23-competing-consumers.md`
+- **File:** `src/posts/2030-02-03-competing-consumers.md`
+- **Pitch:** Process queued work with multiple independent workers, while handling at-least-once delivery, ordering constraints, poison messages, concurrency, and partitioning in modern .NET.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/23-competing-consumers.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+
+### Transactional Outbox: Making Database Changes and Events Reliable
+- **Status:** `draft`
+- **Scheduled:** 2030-02-10
+- **Source:** `docs/article-ideas/24-transactional-outbox.md`
+- **File:** `src/posts/2030-02-10-transactional-outbox.md`
+- **Pitch:** Persist integration messages in the same local transaction as business state, then publish them asynchronously with at-least-once delivery and observable retry semantics.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/24-transactional-outbox.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+
+### Inbox and Idempotent Consumer: Making Duplicate Messages Harmless
+- **Status:** `draft`
+- **Scheduled:** 2030-02-17
+- **Source:** `docs/article-ideas/25-inbox-idempotent-consumer.md`
+- **File:** `src/posts/2030-02-17-inbox-idempotent-consumer.md`
+- **Pitch:** Detect and safely ignore duplicate message deliveries by persisting consumed message identity with business effects in one local transaction.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/25-inbox-idempotent-consumer.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+
+### Dead Letter Queue: What To Do With Messages That Never Succeed
+- **Status:** `draft`
+- **Scheduled:** 2030-02-24
+- **Source:** `docs/article-ideas/26-dead-letter-queue.md`
+- **File:** `src/posts/2030-02-24-dead-letter-queue.md`
+- **Pitch:** Quarantine permanently failing messages after bounded retries, preserve diagnostics and replayability, and avoid turning dead-letter queues into invisible data graveyards.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/26-dead-letter-queue.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+
+### Queue-Based Load Leveling: Absorbing Bursts Without Crushing Dependencies
+- **Status:** `draft`
+- **Scheduled:** 2030-03-03
+- **Source:** `docs/article-ideas/27-queue-based-load-leveling.md`
+- **File:** `src/posts/2030-03-03-queue-based-load-leveling.md`
+- **Pitch:** Use a queue as a buffer between bursty producers and capacity-limited consumers so work is smoothed over time and downstream systems remain stable.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/27-queue-based-load-leveling.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+
+### Event Sourcing: Persisting Facts Instead of Current State
+- **Status:** `draft`
+- **Scheduled:** 2030-03-10
+- **Source:** `docs/article-ideas/28-event-sourcing.md`
+- **File:** `src/posts/2030-03-10-event-sourcing.md`
+- **Pitch:** Persist domain changes as an append-only stream of events, rebuild state through replay, and understand projections, snapshots, schema evolution, concurrency, and why most systems should not adopt Event Sourcing casually.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/28-event-sourcing.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `event-sourcing`
+
+### Saga: Coordinating a Business Transaction Across Services
+- **Status:** `draft`
+- **Scheduled:** 2030-03-17
+- **Source:** `docs/article-ideas/29-saga.md`
+- **File:** `src/posts/2030-03-17-saga.md`
+- **Pitch:** Coordinate long-running business workflows across independently committed services using choreography or orchestration, explicit state, idempotency, timeouts, and compensating actions.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/29-saga.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+
+### Compensating Transaction: Undoing Business Effects Without Rewinding Time
+- **Status:** `draft`
+- **Scheduled:** 2030-03-24
+- **Source:** `docs/article-ideas/30-compensating-transaction.md`
+- **File:** `src/posts/2030-03-24-compensating-transaction.md`
+- **Pitch:** Design semantic undo operations for distributed workflows where committed steps cannot be atomically rolled back, including irreversible effects, compensation ordering, idempotency, and manual recovery.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/30-compensating-transaction.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+
+### Backend for Frontend: APIs Shaped Around Client Needs
+- **Status:** `draft`
+- **Scheduled:** 2030-03-31
+- **Source:** `docs/article-ideas/31-backend-for-frontend.md`
+- **File:** `src/posts/2030-03-31-backend-for-frontend.md`
+- **Pitch:** Give materially different client experiences their own backend boundary for aggregation, orchestration, security, and client-specific contracts without duplicating core business logic.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/31-backend-for-frontend.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `api-design`
+
+### API Gateway: A Deliberate Edge for Distributed APIs
+- **Status:** `draft`
+- **Scheduled:** 2030-04-07
+- **Source:** `docs/article-ideas/32-api-gateway.md`
+- **File:** `src/posts/2030-04-07-api-gateway.md`
+- **Pitch:** Use an API Gateway as a shared edge for routing, authentication, rate limiting, policy, and selective aggregation while avoiding a centralized business-logic bottleneck.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/32-api-gateway.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `api-design`
+
+### Retry: Recovering From Transient Failure Without Making Things Worse
+- **Status:** `draft`
+- **Scheduled:** 2030-04-14
+- **Source:** `docs/article-ideas/33-retry.md`
+- **File:** `src/posts/2030-04-14-retry.md`
+- **Pitch:** Use bounded retries for genuinely transient failures, with backoff, jitter, idempotency, retry budgets, cancellation, and careful placement in modern .NET applications.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/33-retry.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+
+### Circuit Breaker: Stop Calling a Dependency That Is Already Failing
+- **Status:** `draft`
+- **Scheduled:** 2030-04-21
+- **Source:** `docs/article-ideas/34-circuit-breaker.md`
+- **File:** `src/posts/2030-04-21-circuit-breaker.md`
+- **Pitch:** Fail fast when a dependency is persistently unhealthy, allowing recovery while preventing cascading latency, retry storms, and resource exhaustion.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/34-circuit-breaker.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+
+### Bulkhead: Preventing One Failure From Consuming Everything
+- **Status:** `draft`
+- **Scheduled:** 2030-04-28
+- **Source:** `docs/article-ideas/35-bulkhead.md`
+- **File:** `src/posts/2030-04-28-bulkhead.md`
+- **Pitch:** Partition concurrency and resources so overload or failure in one dependency or workload cannot exhaust the entire application.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/35-bulkhead.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+
+### Cache-Aside: Faster Reads Without Pretending Caches Are Simple
+- **Status:** `draft`
+- **Scheduled:** 2030-05-05
+- **Source:** `docs/article-ideas/36-cache-aside.md`
+- **File:** `src/posts/2030-05-05-cache-aside.md`
+- **Pitch:** Load frequently read data into a cache on demand while explicitly handling misses, invalidation, staleness, stampedes, expiration, and multi-instance behavior.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/36-cache-aside.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `caching`
+
+### Modular Monolith: Strong Boundaries Without a Distributed System
+- **Status:** `draft`
+- **Scheduled:** 2030-05-12
+- **Source:** `docs/article-ideas/37-modular-monolith.md`
+- **File:** `src/posts/2030-05-12-modular-monolith.md`
+- **Pitch:** A modular monolith keeps one deployable application while dividing it into explicit business modules with controlled dependencies.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/37-modular-monolith.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+
+### Strangler Fig: Modernizing Systems Without the Big-Bang Rewrite
+- **Status:** `draft`
+- **Scheduled:** 2030-05-19
+- **Source:** `docs/article-ideas/38-strangler-fig.md`
+- **File:** `src/posts/2030-05-19-strangler-fig.md`
+- **Pitch:** The Strangler Fig pattern replaces an existing system incrementally.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/38-strangler-fig.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+
+### Feature Flags: Separating Deployment From Release
+- **Status:** `draft`
+- **Scheduled:** 2030-05-26
+- **Source:** `docs/article-ideas/39-feature-flags.md`
+- **File:** `src/posts/2030-05-26-feature-flags.md`
+- **Pitch:** A feature flag lets deployed code exist without making the behavior available to everyone.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/39-feature-flags.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+### Health Checks: Liveness, Readiness, and Knowing What 'Healthy' Means
+- **Status:** `draft`
+- **Scheduled:** 2030-06-02
+- **Source:** `docs/article-ideas/40-health-checks.md`
+- **File:** `src/posts/2030-06-02-health-checks.md`
+- **Pitch:** A health endpoint answers an operational question about a running application.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/40-health-checks.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `observability`
+
+### Rate Limiting: Protecting Capacity and Fairness at the Boundary
+- **Status:** `draft`
+- **Scheduled:** 2030-06-09
+- **Source:** `docs/article-ideas/41-rate-limiting.md`
+- **File:** `src/posts/2030-06-09-rate-limiting.md`
+- **Pitch:** Rate limiting controls how much work a caller may introduce over time.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/41-rate-limiting.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+
+### Timeouts and Deadline Propagation: Giving Distributed Work a Time Budget
+- **Status:** `draft`
+- **Scheduled:** 2030-06-16
+- **Source:** `docs/article-ideas/42-timeouts-deadlines.md`
+- **File:** `src/posts/2030-06-16-timeouts-deadlines.md`
+- **Pitch:** Every remote call can wait forever unless something decides otherwise.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/42-timeouts-deadlines.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+
+### Optimistic Concurrency: Detecting Conflicting Changes Without Holding Locks
+- **Status:** `draft`
+- **Scheduled:** 2030-06-23
+- **Source:** `docs/article-ideas/43-optimistic-concurrency.md`
+- **File:** `src/posts/2030-06-23-optimistic-concurrency.md`
+- **Pitch:** Optimistic concurrency assumes conflicts are uncommon enough that work can proceed without holding a long-lived lock.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/43-optimistic-concurrency.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+
+### Distributed Lock and Lease: Coordinating Exclusive Work Across Processes
+- **Status:** `draft`
+- **Scheduled:** 2030-06-30
+- **Source:** `docs/article-ideas/44-distributed-lock-lease.md`
+- **File:** `src/posts/2030-06-30-distributed-lock-lease.md`
+- **Pitch:** Sometimes multiple processes must coordinate so that only one performs a piece of work at a time.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/44-distributed-lock-lease.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+
+### Leader Election: Choosing One Active Coordinator
+- **Status:** `draft`
+- **Scheduled:** 2030-07-07
+- **Source:** `docs/article-ideas/45-leader-election.md`
+- **File:** `src/posts/2030-07-07-leader-election.md`
+- **Pitch:** Some workloads need many application instances for availability but exactly one active coordinator for a particular responsibility.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/45-leader-election.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+
+### Observability Context Propagation: Following One Operation Across the System
+- **Status:** `draft`
+- **Scheduled:** 2030-07-14
+- **Source:** `docs/article-ideas/46-observability-context-propagation.md`
+- **File:** `src/posts/2030-07-14-observability-context-propagation.md`
+- **Pitch:** A distributed operation may cross:
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/46-observability-context-propagation.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `observability`
+
+### Consumer-Driven Contract Testing: Catching Integration Breakage Before Deployment
+- **Status:** `draft`
+- **Scheduled:** 2030-07-21
+- **Source:** `docs/article-ideas/47-consumer-driven-contract-testing.md`
+- **File:** `src/posts/2030-07-21-consumer-driven-contract-testing.md`
+- **Pitch:** Independent deployment creates a dangerous possibility:
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/47-consumer-driven-contract-testing.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `testing`
+
+### Sidecar: Moving Cross-Cutting Runtime Capabilities Beside the Application
+- **Status:** `draft`
+- **Scheduled:** 2030-07-28
+- **Source:** `docs/article-ideas/48-sidecar.md`
+- **File:** `src/posts/2030-07-28-sidecar.md`
+- **Pitch:** A Sidecar runs a supporting process beside an application instance.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/48-sidecar.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+
+### The Architecture Complexity Ladder: Knowing When Not to Use a Pattern
+- **Status:** `draft`
+- **Scheduled:** 2030-08-04
+- **Source:** `docs/article-ideas/49-architecture-complexity-ladder.md`
+- **File:** `src/posts/2030-08-04-architecture-complexity-ladder-revisited.md`
+- **Pitch:** We have spent two volumes learning patterns.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/49-architecture-complexity-ladder.md` - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body where present (articles 37 onward in this volume do not open with a duplicate H1), and source em-dash formatting artifacts (literal `---` mid-sentence, which this site's markdown pipeline doesn't convert to a typographic dash) fixed to the house ` - ` convention. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+---
+
 ## 📅 November-December 2026 - AI Agents in Practice
 
 Eight posts on building, deploying, and operating AI agents in production. Foundation for the Azure/AWS/GCP AI tracks that follow.
