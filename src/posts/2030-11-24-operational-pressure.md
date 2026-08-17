@@ -13,73 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "observability"]
 title: "Lab 15: Correct but Unhealthy"
 ---
 
-Northstar can now survive duplicate delivery and broker interruptions without corrupting business state.
-
-Then Payment becomes slow.
-
-Nothing is technically inconsistent.
-
-The customer still waits.
-
-Operations still have a problem.
+Northstar can now survive duplicate delivery and broker interruptions without corrupting business state. Then Payment gets slow. Nothing is technically inconsistent - the data is fine - but the customer is still waiting, and operations still has a real problem on its hands.
 
 ## Correctness vs. Health
 
-Distributed systems need both.
-
-```text
-Correctness:
-Did we lose or duplicate business effects?
-
-Health:
-How long is the workflow taking?
-Is progress being made?
-Are dependencies failing?
-Are retries amplifying load?
-```
+Distributed systems need both, and they're genuinely different questions. Correctness asks whether we lost or duplicated any business effects. Health asks how long the workflow is taking, whether it's making progress, whether dependencies are failing, and whether retries are quietly amplifying the load.
 
 ## A Saga Deadline
 
-The Saga now records:
-
-```text
-DeadlineAt
-```
-
-A monitor marks workflows that exceed it as:
-
-```text
-TimedOut
-```
-
-That gives operators a durable answer to:
-
-> Which workflows are stuck?
+The Saga now records a `DeadlineAt`, and a monitor marks any workflow that runs past it as `TimedOut`. That gives operators a durable answer to a question they couldn't ask before: which workflows are actually stuck?
 
 ## Controlled Dependency Failure
 
-The Payment worker can now simulate:
-
-```text
-latency
-outage
-decline
-```
-
-Those are three different conditions.
-
-They should not all receive the same resilience policy.
+The Payment worker can now simulate latency, an outage, or a decline on demand - three genuinely different conditions that shouldn't all be handled by the same resilience policy.
 
 ## Next
 
-v17 adds:
-
-- bounded Retry with jitter;
-- Circuit Breaker;
-- timeout budgets;
-- dead-letter topology;
-- OpenTelemetry traces and metrics.
-
-The key lesson is that these are not "cloud features."
-
-They are responses to observable failure modes.
+The next stage adds bounded Retry with jitter, a Circuit Breaker, timeout budgets, dead-letter topology, and OpenTelemetry traces and metrics. None of that is a "cloud feature" bolted on for its own sake - each one is a direct response to a failure mode we can now actually observe.

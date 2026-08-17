@@ -13,85 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 7: When a Domain Event Needs a Delivery Guarantee"
 ---
 
-v7 gave us a useful local fact:
-
-```text
-OrderPlaced
-```
-
-Now Fulfillment becomes a separate operational concern.
-
-The requirement changes from:
-
-> run some code after order placement
-
-to:
-
-> Fulfillment must eventually hear about every placed order.
-
-Those are not the same guarantee.
+The previous stage gave us a useful local fact - `OrderPlaced` - and now Fulfillment becomes its own operational concern. The requirement quietly shifts from "run some code after order placement" to "Fulfillment must eventually hear about every placed order," and those two things are not the same guarantee at all.
 
 ## Domain Event vs. Integration Event
 
-The domain event remains internal:
-
-```text
-OrderPlaced
-```
-
-A handler translates it into a distributed contract:
-
-```text
-OrderPlacedIntegrationEvent
-```
-
-That keeps the internal domain model separate from the external contract.
+The domain event, `OrderPlaced`, stays internal. A handler translates it into a distributed contract - `OrderPlacedIntegrationEvent` - which keeps the internal domain model from leaking into the external one.
 
 ## The Naive Implementation
 
-This stage publishes after commit:
-
-```text
-COMMIT Order
-    |
-publish message
-```
-
-Under normal conditions, it works.
-
-That is why the bug is dangerous.
+This stage publishes right after commit: save the Order, then publish the message. Under normal conditions it works fine, which is exactly why the bug hiding inside it is dangerous.
 
 ## Break It
 
-Configure publishing to fail.
-
-Now:
-
-```text
-Order committed ✓
-Integration event published ✗
-```
-
-No amount of retry inside the current request can prove recovery after a process crash.
-
-The system has crossed a boundary where two independent durable systems must be coordinated.
+Configure publishing to fail and watch what happens: the order commits, but the integration event never goes out. No amount of retrying inside the current request can prove recovery after the process crashes - we've crossed into territory where two independent durable systems need to be coordinated, and a single in-request retry loop can't do that.
 
 ## The Pattern We Have Earned
 
-Transactional Outbox.
-
-The next stage will change the sequence to:
-
-```text
-BEGIN
-  save Order
-  save OutboxMessage
-COMMIT
-
-later:
-  publish OutboxMessage
-```
-
-The broker will no longer be part of the order transaction.
-
-That is the key design move.
+Transactional Outbox. The next stage changes the sequence so the Order row and an OutboxMessage row save together in one transaction, and publishing happens later, out of band. The broker stops being part of the order transaction at all - that's the key move.

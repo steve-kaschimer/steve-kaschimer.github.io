@@ -13,84 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "caching"]
 title: "Lab 19: When the Read Side Becomes Expensive"
 ---
 
-Northstar's operations dashboard is useful.
-
-It is also increasingly expensive.
-
-Every refresh asks the database for:
-
-```text
-total Saga count
-active Saga count
-timed-out count
-compensated count
-average checkout amount
-20 slowest workflows
-```
-
-The query is legitimate.
-
-The pressure comes from repetition.
+Northstar's operations dashboard is genuinely useful, and it's also getting expensive. Every refresh asks the database for the total Saga count, the active count, the timed-out count, the compensated count, the average checkout amount, and the twenty slowest workflows. The query itself is legitimate - the pressure comes purely from how often it runs.
 
 ## Reproduce It
 
-Run:
-
-```powershell
-./scripts/hammer-dashboard.ps1 -Count 200
-```
-
-The same dashboard is recomputed over and over.
-
-The data changes much less frequently than it is requested.
+Run `./scripts/hammer-dashboard.ps1 -Count 200` and watch the same dashboard get recomputed over and over. The underlying data changes far less often than the dashboard gets requested.
 
 ## The Question
 
-Must every request see the exact current value?
-
-For an operational dashboard, perhaps a few seconds of staleness is acceptable.
-
-If so, we can trade:
-
-```text
-freshness
-```
-
-for:
-
-```text
-lower database load
-lower latency
-```
-
-That trade earns caching.
+Does every single request actually need the exact current value? For an operational dashboard, a few seconds of staleness is probably fine, and if that's true, we can trade some freshness for lower database load and lower latency. That trade is what earns us a cache.
 
 ## What We Will Not Do
 
-We will not cache:
-
-```text
-payment authorization
-inventory reservation
-Saga state transitions
-```
-
-Those are correctness-sensitive write concerns.
-
-The cache belongs on the read side where stale data is explicitly acceptable.
+Payment authorization, inventory reservation, and Saga state transitions stay uncached - those are correctness-sensitive write concerns, not places where stale data is acceptable. Caching belongs on the read side, and only where staleness is a decision we've made on purpose.
 
 ## Next
 
-v21 introduces Cache-Aside around the dashboard.
-
-But we will also deliberately address:
-
-```text
-TTL
-staleness
-cache miss stampede
-invalidation
-cache failure
-```
-
-because those are the real architecture of caching.
+The next stage wraps the dashboard in Cache-Aside, and deliberately deals with TTL, staleness, cache-miss stampedes, invalidation, and cache failure along the way - because those five things are the real architecture of caching, not the lookup itself.

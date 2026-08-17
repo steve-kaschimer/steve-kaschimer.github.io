@@ -13,11 +13,7 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 9: At-Least-Once Delivery Means Duplicate Effects Are Your Problem"
 ---
 
-Transactional Outbox solved message loss.
-
-It did not solve duplicate delivery.
-
-That is expected.
+Transactional Outbox solved message loss. It never promised to solve duplicate delivery, and it shouldn't have.
 
 ## Reproduce It
 
@@ -33,50 +29,12 @@ Send the same integration event twice:
 }
 ```
 
-to:
-
-```text
-POST /lab/fulfillment/deliver
-```
-
-twice.
-
-Then query:
-
-```text
-GET /lab/fulfillment/work
-```
-
-You will see two work records with the same source event identity.
+to `POST /lab/fulfillment/deliver`, then check `GET /lab/fulfillment/work`. You'll find two work records carrying the same source event identity.
 
 ## The Important Shift
 
-The publisher can no longer guarantee:
-
-```text
-you will receive this exactly once
-```
-
-The consumer must guarantee:
-
-```text
-receiving it again is harmless
-```
+The publisher can no longer promise you'll receive this exactly once. From here on, that guarantee has to move to the consumer: receiving it again has to be harmless.
 
 ## Next
 
-We will add an Inbox.
-
-The consumer will persist:
-
-```text
-MessageId processed
-```
-
-in the same transaction as:
-
-```text
-FulfillmentWork created
-```
-
-That atomicity is the whole point.
+We'll add an Inbox, so the consumer persists "MessageId processed" in the same transaction that creates the `FulfillmentWork` record. That shared transaction, and the atomicity it buys, is the whole point.

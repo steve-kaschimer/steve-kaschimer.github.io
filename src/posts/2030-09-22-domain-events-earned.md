@@ -13,97 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 6: Domain Events Separate Facts From Reactions"
 ---
 
-v6 showed a natural growth pattern:
-
-```text
-PlaceOrder
-  |
-  + confirmation
-  + loyalty
-  + fulfillment
-  + analytics
-```
-
-The command had become the registry of everybody who cared about order placement.
+The previous stage showed a familiar growth pattern: `PlaceOrder` sprouting a confirmation, then loyalty, then fulfillment, then analytics, until the command had quietly become the registry of everybody who cared that an order was placed.
 
 ## The Refactor
 
-The Order aggregate now records:
-
-```text
-OrderPlaced
-```
-
-That is a domain fact.
-
-It does not know:
-
-```text
-email
-loyalty implementation
-analytics
-fulfillment implementation
-```
-
-Application handlers react independently.
+The Order aggregate now just records the fact - `OrderPlaced` - without knowing anything about email, loyalty, analytics, or fulfillment implementations. Application handlers pick up that fact and react independently.
 
 ## What Improved
 
-Adding another in-process reaction no longer requires editing `PlaceOrder`.
-
-The business occurrence is now explicit and testable.
-
-The aggregate says:
-
-```text
-this happened
-```
-
-The application decides:
-
-```text
-who cares
-```
+Adding another in-process reaction no longer means editing `PlaceOrder`, and the business occurrence itself is now explicit and testable on its own. The aggregate's job is to say this happened; the application's job is to decide who cares.
 
 ## What Did Not Improve
 
-Durability.
-
-This stage dispatches after the database commit.
-
-That means this failure is possible:
-
-```text
-Order commit succeeds
-Process crashes
-Domain-event handler never runs
-```
-
-This is not a bug in Domain Events.
-
-It is the boundary of the pattern.
+Durability. This stage still dispatches after the database commit, which leaves a real gap: the order commit can succeed, the process can crash a moment later, and the domain-event handler never runs. That's not a bug in Domain Events - it's simply where the pattern's guarantees stop.
 
 ## The Next Big Step
 
-Some reactions are merely local application behavior.
-
-Others eventually become external commitments:
-
-```text
-Fulfillment service must know
-Analytics pipeline must know
-```
-
-Once that requirement becomes durable and cross-process, in-memory dispatch is not enough.
-
-That pressure will earn:
-
-```text
-Integration Event
-Message Broker
-Transactional Outbox
-```
-
-But not yet.
-
-First, we needed to separate the fact from the reactions.
+Some of these reactions are purely local application behavior. Others - a fulfillment service that must know, an analytics pipeline that must know - are really external commitments in disguise. Once a reaction needs to survive a crash and cross a process boundary, in-memory dispatch stops being enough, and that's the pressure that eventually earns Integration Events, a message broker, and a Transactional Outbox. Not yet, though. First we needed to pull the fact apart from the reactions to it.

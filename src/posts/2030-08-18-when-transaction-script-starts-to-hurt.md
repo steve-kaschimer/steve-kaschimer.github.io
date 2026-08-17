@@ -13,26 +13,11 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Lab 1: When Transaction Script Starts to Hurt"
 ---
 
-Northstar v1 used a straightforward transaction script.
-
-That was the right design.
-
-Now the business has changed.
+Northstar v1 used a straightforward transaction script, and that was the right call at the time. But the business has moved on, and the script is starting to show it.
 
 ## New Rules
 
-Northstar now requires:
-
-- product-specific purchase limits;
-- discontinued-product checks;
-- VIP discounts;
-- approval for orders above $1,000;
-- status-dependent cancellation;
-- status-dependent modification.
-
-None of these rules are individually complicated.
-
-The problem is that they belong to the same business concepts and begin appearing in different use cases.
+Northstar now needs product-specific purchase limits, discontinued-product checks, VIP discounts, approval for orders above $1,000, and status-dependent rules for both cancellation and modification. None of that is individually complicated. What makes it painful is that these rules all belong to the same handful of business concepts, and they keep turning up in different use cases.
 
 ## Inspect `PlaceOrder`
 
@@ -49,39 +34,21 @@ persistence
 HTTP results
 ```
 
-That is a lot of reasons to change.
+That's a lot of reasons for one method to change.
 
 ## Inspect `CancelOrder`
 
-Cancellation contains status-transition rules:
+Cancellation has its own status-transition rule buried inside it:
 
 ```csharp
 if (order.Status == "Shipped")
 ```
 
-The `Order` object itself does not know that a shipped order cannot be cancelled.
-
-Any other use case can accidentally bypass that rule.
+The `Order` object itself has no idea a shipped order can't be cancelled - the rule only exists here, in this one handler. Any other use case that touches an order can walk right past it.
 
 ## Inspect `ChangeOrderQuantity`
 
-This experiment is deliberately incomplete.
-
-The handler can change quantity, but recalculating pricing now exposes an ownership problem.
-
-Where should these rules live?
-
-```text
-subtotal
-VIP discount
-approval threshold
-status transition
-quantity limit
-```
-
-Putting them all in every transaction script will duplicate behavior.
-
-Creating a giant `OrderService` merely moves the duplication into another procedural class.
+This experiment is deliberately left half-finished. The handler can change quantity, but recalculating the price along with it exposes a real ownership question: where should subtotal, VIP discount, approval threshold, status transition, and quantity limit actually live? Put them all in every transaction script and you get duplicated behavior. Wrap them in one giant `OrderService` instead, and you've just moved the duplication into a different procedural class.
 
 ## Run the Tests
 
@@ -89,67 +56,22 @@ Creating a giant `OrderService` merely moves the duplication into another proced
 dotnet test
 ```
 
-The current tests mostly verify state.
-
-Notice how awkward it is to test real business behavior without going through the scripts.
-
-That is another signal.
+The current tests mostly check state after the fact. Try writing one that actually verifies business behavior without going through a script, and notice how awkward it gets - that's a second signal pointing the same direction as the first.
 
 ## The Architectural Pressure
 
-We now need somewhere that can say:
+What we're missing is one place that can say: an Order owns its own lifecycle, decides for itself whether it can be cancelled, and decides for itself whether its items can change. Money and pricing shouldn't be anonymous decimals passed around by convention. The application use case should coordinate that behavior, not contain it.
 
-```text
-An Order owns its lifecycle.
-
-An Order decides whether it can be cancelled.
-
-An Order decides whether items can change.
-
-Money and pricing should not be anonymous decimals.
-
-The application use case should coordinate,
-not contain the business itself.
-```
-
-Those statements point toward a Domain Model.
+That's a description of a Domain Model, whether we call it one yet or not.
 
 ## What We Will Change Next
 
-The next stage will introduce:
-
-```text
-Order aggregate
-OrderStatus
-Money
-OrderItem behavior
-Pricing policy
-domain-oriented methods
-```
-
-Then the application script becomes orchestration again.
+The next stage introduces an `Order` aggregate, `OrderStatus`, `Money`, behavior on `OrderItem`, a pricing policy, and other domain-oriented methods - after which the application script goes back to doing what it should have been doing all along: orchestration, not decision-making.
 
 ## What We Will Not Add Yet
 
-We still do not need:
-
-```text
-message broker
-CQRS infrastructure
-microservices
-distributed cache
-Saga
-Outbox
-```
-
-The new problem is domain complexity.
-
-We will solve that problem locally.
+No message broker, no CQRS infrastructure, no microservices, no distributed cache, no Saga, no Outbox. The problem in front of us is domain complexity, and it can be solved without leaving the process.
 
 ## The Lesson
 
-Transaction Script did not become a bad pattern.
-
-The forces changed.
-
-That distinction is the point of the lab.
+Transaction Script didn't become a bad pattern. The forces around it changed - and noticing that distinction, rather than blaming the pattern, is the whole point of this lab.

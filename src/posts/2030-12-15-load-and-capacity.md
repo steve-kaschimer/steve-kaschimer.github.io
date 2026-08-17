@@ -13,79 +13,28 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Lab 18: Load Is an Architectural Force"
 ---
 
-A correct system can still fail because it accepts more work than its dependencies can process.
-
-Northstar now treats capacity explicitly.
+A perfectly correct system can still fail simply because it accepts more work than its dependencies can process. Northstar now treats capacity as something to design for explicitly, not something to hope infrastructure sizing quietly handles.
 
 ## Queue-Based Load Leveling
 
-RabbitMQ is the buffer.
-
-The producer and consumer no longer need identical instantaneous throughput.
-
-That buys stability at the cost of queueing latency.
+RabbitMQ is the buffer here. The producer and consumer no longer need to match each other's instantaneous throughput - that mismatch just becomes queueing latency instead of a cascading failure, which is a trade worth making.
 
 ## Competing Consumers
 
-Multiple worker instances can drain the same queue in parallel.
-
-This increases throughput until another bottleneck becomes dominant.
-
-That is why "add workers" is not an infinite scaling strategy.
+Multiple worker instances can drain the same queue in parallel, which raises throughput right up until some other bottleneck takes over. That's why "just add more workers" isn't a scaling strategy on its own - it only works until it doesn't.
 
 ## Bulkhead
 
-Payment concurrency is bounded.
-
-A slow Payment dependency can consume only its allocated permits and queue.
-
-It cannot create unbounded in-flight work.
+Payment concurrency is bounded now, so a slow Payment dependency can only consume its own allocated permits and queue. It can't spiral into unbounded in-flight work and drag everything else down with it.
 
 ## Rate Limiting
 
-The API rejects excess admission before the system accepts work it cannot responsibly handle.
-
-The result is explicit backpressure:
-
-```text
-429
-```
-
-rather than hidden overload.
+The API rejects excess admission before the system ever accepts work it can't responsibly handle. That turns overload into an explicit `429` instead of letting it hide inside growing latency until something breaks.
 
 ## The Combined Model
 
-```text
-Client
-  |
-Rate Limit
-  |
-Ordering
-  |
-Queue
-  |
-Competing Consumers
-  |
-Bulkhead
-  |
-Payment dependency
-```
-
-Each control acts at a different boundary.
+A request now moves from the client through rate limiting, into Ordering, onto a queue, out through competing consumers, and through a bulkhead before it ever touches the Payment dependency - each control doing its job at its own boundary rather than one mechanism trying to cover everything.
 
 ## Lesson
 
-Capacity is not just an infrastructure sizing problem.
-
-It is part of application behavior.
-
-A production architecture must decide:
-
-```text
-what work to admit
-what work to buffer
-what work to parallelize
-what work to reject
-```
-
-Those decisions are architecture.
+Capacity isn't just an infrastructure sizing problem you solve once and forget. It's part of application behavior, and a production architecture has to decide, deliberately, what work to admit, what to buffer, what to parallelize, and what to simply reject. Those are architectural decisions, not ops afterthoughts.

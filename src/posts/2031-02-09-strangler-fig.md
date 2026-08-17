@@ -13,95 +13,28 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 26: Strangler Fig Moves One Capability at a Time"
 ---
 
-v26 gave us a routing point.
-
-v27 uses it.
+The previous stage gave us a routing point. This one puts it to work.
 
 ## The Route
 
-The client still calls:
-
-```text
-GET /shipping/{orderId}
-```
-
-But the router can choose:
-
-```text
-Legacy Shipping
-or
-New Fulfillment
-```
-
-without changing the client contract.
+The client still calls `GET /shipping/{orderId}` exactly as before. The router, though, can now send that request to Legacy Shipping or to the new Fulfillment module without the client contract changing at all.
 
 ## Anti-Corruption Layer
 
-When traffic goes to Legacy, the application does **not** return:
-
-```text
-STATUS_CD = 4
-SHIP_REF
-```
-
-directly.
-
-The ACL translates it into Northstar's language:
-
-```text
-FulfillmentStatus.Shipped
-ShipmentReference
-```
-
-That matters because migration should improve the model rather than copy legacy semantics into new code.
+When traffic goes to Legacy, the application doesn't hand back `STATUS_CD = 4` and a raw `SHIP_REF` directly - an Anti-Corruption Layer translates it into Northstar's own language first, as `FulfillmentStatus.Shipped` and a proper `ShipmentReference`. That translation matters, because a migration should improve the model it's replacing, not just copy the legacy semantics into new code with a fresh coat of paint.
 
 ## Progressive Migration
 
-Start with:
-
-```text
-UseNewFulfillment = false
-```
-
-Then enable the new path in a controlled environment.
-
-The same routing concept can later become:
-
-```text
-specific tenant
-specific customer cohort
-specific endpoint
-percentage rollout
-```
+Start with `UseNewFulfillment = false`, then enable the new path somewhere controlled. The same routing concept can later narrow down to a specific tenant, a specific customer cohort, a specific endpoint, or a straightforward percentage rollout - whatever the risk tolerance calls for.
 
 ## Rollback
 
-If the new implementation misbehaves:
-
-```text
-route back to Legacy
-```
-
-That is the safety advantage.
-
-The migration is reversible while data semantics still permit it.
+If the new implementation misbehaves, routing back to Legacy is just a flag flip. That's the real safety advantage here: the migration stays reversible for as long as the data semantics on both sides still allow it.
 
 ## Retirement Is Part of the Pattern
 
-A Strangler project is not complete when the new system exists.
-
-It is complete when:
-
-```text
-old route removed
-legacy implementation retired
-temporary translation removed
-```
-
-Otherwise Northstar ends up operating both forever.
+A Strangler project isn't finished the moment the new system exists and works. It's finished once the old route is removed, the legacy implementation is retired, and the temporary translation layer comes out - otherwise Northstar just ends up running both systems forever, which defeats the entire point.
 
 ## The Lesson
 
-Strangler Fig is not a rewrite technique.
-
-It is a risk-management strategy for replacing behavior incrementally behind a stable boundary.
+Strangler Fig was never a rewrite technique. It's a risk-management strategy for replacing behavior incrementally, behind a boundary stable enough that clients never notice the ground shifting underneath them.

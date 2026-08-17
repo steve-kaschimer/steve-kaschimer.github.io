@@ -13,133 +13,28 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 14: Reliability Repeats at Every Transaction Boundary"
 ---
 
-v14 made the Saga asynchronous.
-
-It also exposed a familiar hole inside Inventory and Payments:
-
-```text
-Inbox + business effect commit
-then
-publish reply
-```
-
-If a worker crashed after commit but before publish, the Saga could wait forever for a reply that would never arrive.
-
-We have seen this bug before.
+Making the Saga asynchronous also exposed a familiar hole inside Inventory and Payments: each one committed its Inbox marker and business effect, then published its reply as a separate step. If a worker crashed after that commit but before the publish, the Saga would wait forever for a reply that was never coming. We've seen this exact bug before.
 
 ## The Fix
 
-Each participant now commits three things together:
-
-```text
-BEGIN
-
-Inbox marker
-Business effect
-Reply Outbox
-
-COMMIT
-```
-
-The worker then acknowledges the incoming message only after that local transaction succeeds.
-
-A separate Outbox dispatcher publishes the reply.
+Each participant now commits three things together in one transaction: the Inbox marker, the business effect, and a reply Outbox row. Only after that transaction succeeds does the worker acknowledge the incoming message, and a separate Outbox dispatcher takes care of actually publishing the reply.
 
 ## Inventory
 
-For `ReserveInventory`:
-
-```text
-Inbox(ReserveInventory.MessageId)
-InventoryReservation
-Outbox(InventoryReserved)
-```
-
-all commit together.
-
-For compensation:
-
-```text
-Inbox(ReleaseInventory.MessageId)
-Reservation = Released
-Outbox(InventoryReleased)
-```
-
-all commit together.
+For `ReserveInventory`, the Inbox marker, the `InventoryReservation`, and the `InventoryReserved` Outbox row all commit together. For the compensating path, the Inbox marker for `ReleaseInventory`, the reservation flipping to `Released`, and the `InventoryReleased` Outbox row commit together the same way.
 
 ## Payments
 
-For `AuthorizePayment`:
-
-```text
-Inbox(AuthorizePayment.MessageId)
-PaymentAttempt
-Outbox(PaymentAuthorized | PaymentDeclined)
-```
-
-all commit together.
+For `AuthorizePayment`, the Inbox marker, the payment attempt, and the Outbox row for either `PaymentAuthorized` or `PaymentDeclined` all commit together too.
 
 ## Why This Matters
 
-Distributed reliability is recursive.
-
-Every service owns one local transaction boundary.
-
-At that boundary, the same rule applies:
-
-> If local state and an outgoing message must agree, persist the outgoing message locally before publishing it.
+Distributed reliability turns out to be recursive. Every service owns exactly one local transaction boundary, and at that boundary the same rule always applies: if local state and an outgoing message need to agree, persist the outgoing message locally before you ever try to publish it.
 
 ## What We Have Now
 
-Northstar's Saga path is now:
-
-```text
-Ordering:
-Saga + Outbox
-        |
-RabbitMQ
-        |
-Inventory:
-Inbox + Reservation + Reply Outbox
-        |
-RabbitMQ
-        |
-Ordering:
-Inbox + Saga + Next Outbox
-        |
-RabbitMQ
-        |
-Payments:
-Inbox + Payment + Reply Outbox
-        |
-RabbitMQ
-        |
-Ordering:
-Inbox + Saga
-```
-
-The system does not have one global transaction.
-
-It has a chain of reliable local transactions.
+Northstar's Saga path now runs Ordering's Saga and Outbox through RabbitMQ into Inventory's Inbox, reservation, and reply Outbox, back through RabbitMQ into Ordering's Inbox, Saga, and next Outbox, out again to Payments' Inbox, payment, and reply Outbox, and finally back to Ordering's Inbox and Saga. There's no single global transaction anywhere in that chain - just a sequence of reliable local ones, each doing its part.
 
 ## Next Pressure
 
-Now that correctness is respectable, we can turn to **time** and **failure duration**.
-
-What if Payment is not declining—it is simply unavailable?
-
-What if a message waits too long?
-
-What if a remote dependency is transiently unhealthy?
-
-That will earn:
-
-```text
-timeouts
-retry
-circuit breaker
-dead-letter handling
-observability
-```
-
-The next phase is operational resilience rather than transactional correctness.
+Now that correctness is in reasonably good shape, the next question is about time and failure duration. What happens when Payment isn't declining, but simply unavailable? What if a message sits too long? What if a remote dependency is only transiently unhealthy? Those questions earn timeouts, retry, a circuit breaker, dead-letter handling, and observability - the next phase is about operational resilience, not transactional correctness.

@@ -13,131 +13,28 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 10: Inbox Makes Duplicate Delivery Harmless"
 ---
 
-v10 delivered one `OrderPlacedIntegrationEvent` twice.
-
-Fulfillment created two work items.
-
-That is exactly what at-least-once delivery allows unless the consumer protects itself.
+The previous stage delivered one `OrderPlacedIntegrationEvent` twice, and Fulfillment created two work items in response - exactly what at-least-once delivery allows unless the consumer protects itself.
 
 ## The Inbox
 
-v11 records:
-
-```text
-MessageId
-Handler
-ProcessedAt
-```
-
-with a unique key.
-
-The handler commits:
-
-```text
-Inbox marker
-+
-Fulfillment work
-```
-
-together.
+This stage records `MessageId`, `Handler`, and `ProcessedAt` under a unique key, and the handler commits the Inbox marker together with the Fulfillment work in the same transaction.
 
 ## Why the Transaction Matters
 
-This would be unsafe:
-
-```text
-create fulfillment work
-COMMIT
-
-record inbox
-COMMIT
-```
-
-A crash between commits could repeat the business effect.
-
-Likewise:
-
-```text
-record inbox
-COMMIT
-
-create fulfillment work
-```
-
-could permanently suppress work that never happened.
-
-The marker and the effect are one local consistency boundary.
+Committing the fulfillment work first and the inbox marker second would be unsafe - a crash between the two commits could repeat the business effect. Doing it the other way around is just as bad: it could permanently suppress work that never actually happened. The marker and the effect need to live inside one local consistency boundary, not two.
 
 ## Why the Unique Constraint Matters
 
-Two duplicates can arrive simultaneously.
-
-Both can observe:
-
-```text
-not processed yet
-```
-
-The database must decide which one wins.
-
-Application-level `if` checks are not enough.
+Two duplicates can arrive at almost the same instant, and both can observe "not processed yet" before either has committed anything. Something has to decide which one wins, and an application-level `if` check isn't fast enough to be that referee - only the database's unique constraint can settle it.
 
 ## Try It
 
-Post the same event twice.
-
-Then inspect:
-
-```text
-/lab/fulfillment/inbox
-/lab/fulfillment/work
-```
-
-You should see:
-
-```text
-one Inbox row
-one FulfillmentWork row
-```
+Post the same event twice, then check `/lab/fulfillment/inbox` and `/lab/fulfillment/work`. You should find exactly one Inbox row and exactly one FulfillmentWork row, no matter how many times the event arrives.
 
 ## Pattern Composition
 
-Northstar now has:
-
-```text
-Ordering transaction
-  |
-Outbox
-  |
-at-least-once publish
-  |
-Fulfillment
-  |
-Inbox
-  |
-business effect
-```
-
-Outbox protects the producer.
-
-Inbox protects the consumer.
-
-Together they form a reliable local-to-local bridge without pretending the distributed system is globally atomic.
+Northstar's reliable path now runs Ordering's transaction into an Outbox, out through an at-least-once publish, into Fulfillment's Inbox, and only then into the business effect. Outbox protects the producer; Inbox protects the consumer. Together they form a reliable local-to-local bridge - not a globally atomic distributed system, just two honest local transactions doing their part.
 
 ## Next
 
-Now we can make the workflow genuinely distributed.
-
-Placing an order will require:
-
-```text
-reserve inventory
-authorize payment
-schedule fulfillment
-```
-
-Each participant owns its own transaction.
-
-Some steps can fail after earlier steps have committed.
-
-That is the pressure Saga exists to solve.
+With that bridge in place, we can make the workflow genuinely distributed. Placing an order is about to require reserving inventory, authorizing payment, and scheduling fulfillment, each owned by its own participant with its own transaction - and once any of those steps can fail after an earlier one has already committed, that's the pressure Saga exists to solve.
