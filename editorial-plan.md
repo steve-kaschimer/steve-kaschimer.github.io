@@ -2486,6 +2486,311 @@ Forty-nine posts continuing the Modern Application Architecture Patterns in .NET
 
 ---
 
+## 📅 Sunday Track - Modern Application Architecture Patterns in .NET (Volume 3) (August 2030-March 2031)
+
+Thirty posts continuing the Modern Application Architecture Patterns in .NET series as a single runnable narrative: the Northstar Architecture Lab, a small ASP.NET Core + EF Core + SQLite commerce application that evolves stage by stage from a plain transaction script through Domain Model, CQRS, Domain Events, Transactional Outbox, Inbox/Idempotent Consumer, an asynchronous Saga over RabbitMQ, resilience and observability, load/capacity controls, Cache-Aside, Optimistic Concurrency, progressive delivery, a deliberate step back down to a Modular Monolith, a Strangler Fig migration, Consumer-Driven Contract Testing, a Sidecar, and a closing retrospective on the Architecture Complexity Ladder. Each article ships with a real, runnable companion download built from the source codebase's own natural solution boundaries (six archives total: the evolving baseline app for articles 1-13, the distributed lab for articles 14-24, and one archive each for the modular monolith, modernization, contract testing, and sidecar stages) - see the new `companion_download` front matter and the "Companion Source Code" section `post.njk` now renders when it's set. Runs weekly on Sundays immediately following Volume II as a standing series alongside the Tuesday .NET tracks. This is volume 3 of 3, closing out the series; the source package's own docs still label these articles `volume: 2` in their frontmatter (an earlier working title carried over from before Volume II shipped) - the site publishes them as Volume III per the intended publication order. Article 0's opening line similarly referenced "Volume II" in prose and was corrected to "Volume III" for the same reason. The finale article also folds in the lab's three closing exercises (`finale/exercises/01-choose-the-next-step.md` through `03-design-your-own-northstar.md`) as its own "Exercises" section rather than publishing them as separate posts.
+
+### Architecture Lab: Northstar Commerce
+- **Status:** `draft`
+- **Scheduled:** 2030-08-11
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/00-architecture-lab-introduction.md`)
+- **File:** `src/posts/2030-08-11-architecture-lab-introduction.md`
+- **Pitch:** Introducing the Northstar Architecture Lab: a small ASP.NET Core + EF Core + SQLite commerce app that earns every pattern in this series the same way a real system would - one concrete pressure at a time.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/00-architecture-lab-introduction.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 1: When Transaction Script Starts to Hurt
+- **Status:** `draft`
+- **Scheduled:** 2030-08-18
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/01-when-transaction-script-starts-to-hurt.md`)
+- **File:** `src/posts/2030-08-18-when-transaction-script-starts-to-hurt.md`
+- **Pitch:** Northstar's transaction scripts start duplicating business rules across PlaceOrder, CancelOrder, and ChangeOrderQuantity - the first real pressure toward a richer domain model.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/01-when-transaction-script-starts-to-hurt.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 2: The Domain Model Earns Its Keep
+- **Status:** `draft`
+- **Scheduled:** 2030-08-25
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/02-domain-model-earned.md`)
+- **File:** `src/posts/2030-08-25-domain-model-earned.md`
+- **Pitch:** The Order becomes an Aggregate Root, Money becomes a real value, and pricing gets a name - Northstar's Domain Model arrives only once the transaction scripts can no longer coherently own the rules.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/02-domain-model-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 3: When the Write Model Becomes the Wrong Read Model
+- **Status:** `draft`
+- **Scheduled:** 2030-09-01
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/03-read-model-pressure.md`)
+- **File:** `src/posts/2030-09-01-read-model-pressure.md`
+- **Pitch:** An approval dashboard and an operations list expose the cost of reading through a rich aggregate: correct, but increasingly the wrong shape for questions the domain model was never built to answer.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/03-read-model-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `cqrs`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 4: CQRS Without the Circus
+- **Status:** `draft`
+- **Scheduled:** 2030-09-08
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/04-cqrs-without-the-circus.md`)
+- **File:** `src/posts/2030-09-08-cqrs-without-the-circus.md`
+- **Pitch:** Northstar gets CQRS with no second database, no broker, and no event sourcing - just dedicated query handlers projecting directly from the same store the domain model already writes to.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/04-cqrs-without-the-circus.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `cqrs`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 5: When One Successful Command Creates Too Many Reactions
+- **Status:** `draft`
+- **Scheduled:** 2030-09-15
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/05-reaction-pressure.md`)
+- **File:** `src/posts/2030-09-15-reaction-pressure.md`
+- **Pitch:** Confirmation email, loyalty points, fulfillment work, and analytics all pile into PlaceOrder - the command has quietly become the registry of everyone who cares that an order was placed.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/05-reaction-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 6: Domain Events Separate Facts From Reactions
+- **Status:** `draft`
+- **Scheduled:** 2030-09-22
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/06-domain-events-earned.md`)
+- **File:** `src/posts/2030-09-22-domain-events-earned.md`
+- **Pitch:** The Order aggregate now simply records that OrderPlaced happened; application handlers react independently, and PlaceOrder stops being a registry of everyone who cares.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/06-domain-events-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `domain-driven-design`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 7: When a Domain Event Needs a Delivery Guarantee
+- **Status:** `draft`
+- **Scheduled:** 2030-09-29
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/07-integration-event-pressure.md`)
+- **File:** `src/posts/2030-09-29-integration-event-pressure.md`
+- **Pitch:** Fulfillment needs to hear about every placed order reliably, not just conveniently - and a naive publish-after-commit step reveals exactly why an in-process domain event isn't a delivery guarantee.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/07-integration-event-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 8: Transactional Outbox Makes the Integration Event Durable
+- **Status:** `draft`
+- **Scheduled:** 2030-10-06
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/08-transactional-outbox-earned.md`)
+- **File:** `src/posts/2030-10-06-transactional-outbox-earned.md`
+- **Pitch:** The Order row and the Outbox row now commit together in one local transaction, and a separate dispatcher owns the remote publish - Northstar trades a hole in the workflow for an honest at-least-once guarantee.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/08-transactional-outbox-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 9: At-Least-Once Delivery Means Duplicate Effects Are Your Problem
+- **Status:** `draft`
+- **Scheduled:** 2030-10-13
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/09-duplicate-delivery-pressure.md`)
+- **File:** `src/posts/2030-10-13-duplicate-delivery-pressure.md`
+- **Pitch:** Sending the same integration event twice produces two Fulfillment work records - proof that once delivery is at-least-once, the consumer, not the publisher, owns the duplicate-effect problem.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/09-duplicate-delivery-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 10: Inbox Makes Duplicate Delivery Harmless
+- **Status:** `draft`
+- **Scheduled:** 2030-10-20
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/10-inbox-idempotent-consumer-earned.md`)
+- **File:** `src/posts/2030-10-20-inbox-idempotent-consumer-earned.md`
+- **Pitch:** An Inbox marker and the resulting Fulfillment work now commit together under one unique key - the same duplicate delivery that created two work items before now produces exactly one.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/10-inbox-idempotent-consumer-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 11: When One Business Operation Stops Being One Transaction
+- **Status:** `draft`
+- **Scheduled:** 2030-10-27
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/11-distributed-workflow-pressure.md`)
+- **File:** `src/posts/2030-10-27-distributed-workflow-pressure.md`
+- **Pitch:** Checkout now spans Order, Inventory, and Payment as three independently committed responsibilities - when Payment declines after Inventory has already reserved stock, there is no local transaction left to roll back.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/11-distributed-workflow-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 12: Saga Makes Distributed Workflow State Explicit
+- **Status:** `draft`
+- **Scheduled:** 2030-11-03
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/12-saga-earned.md`)
+- **File:** `src/posts/2030-11-03-saga-earned.md`
+- **Pitch:** A durable CheckoutSaga now remembers exactly where a workflow stands and treats a Payment decline as a business action - releasing inventory - rather than a rollback that no longer exists.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`docs/12-saga-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-baseline.zip` (built from the source package's own root `src`/`tests` folders) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `distributed-systems`
+- **Companion download:** `src/downloads/northstar-baseline.zip`
+
+### Lab 13: The Saga Crosses the Network
+- **Status:** `draft`
+- **Scheduled:** 2030-11-10
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/13-async-saga-rabbitmq.md`)
+- **File:** `src/posts/2030-11-10-async-saga-rabbitmq.md`
+- **Pitch:** The same Saga state machine crosses RabbitMQ: Ordering now emits commands and waits for facts, and stopping a worker mid-checkout proves the workflow survives outages a synchronous coordinator never could.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/13-async-saga-rabbitmq.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 14: Reliability Repeats at Every Transaction Boundary
+- **Status:** `draft`
+- **Scheduled:** 2030-11-17
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/14-reliable-saga-participants.md`)
+- **File:** `src/posts/2030-11-17-reliable-saga-participants.md`
+- **Pitch:** Inventory and Payments each get their own Inbox, business effect, and reply Outbox committed together - the same reliability rule Ordering learned earlier turns out to repeat at every local transaction boundary.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/14-reliable-saga-participants.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `reliability`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 15: Correct but Unhealthy
+- **Status:** `draft`
+- **Scheduled:** 2030-11-24
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/15-operational-pressure.md`)
+- **File:** `src/posts/2030-11-24-operational-pressure.md`
+- **Pitch:** Northstar can now survive duplicate delivery and broker interruptions without corrupting state - and then Payment gets slow, proving that correctness and health are not the same question.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/15-operational-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `observability`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 16: Resilience Is Observable Policy
+- **Status:** `draft`
+- **Scheduled:** 2030-12-01
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/16-resilience-observability.md`)
+- **File:** `src/posts/2030-12-01-resilience-observability.md`
+- **Pitch:** Bounded retry with jitter, timeouts, a circuit breaker, and OpenTelemetry traces turn Northstar's resilience from folklore into an observable, testable policy - stop Payment, watch the circuit open, then watch it recover.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/16-resilience-observability.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 17: Dead Lettering Stops Poison Work From Owning the Queue
+- **Status:** `draft`
+- **Scheduled:** 2030-12-08
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/17-dead-letter-recovery.md`)
+- **File:** `src/posts/2030-12-08-dead-letter-recovery.md`
+- **Pitch:** Each queue now gets a dead-letter exchange so a permanently failing message stops competing with healthy work - quarantined, not lost, and safe to replay because the consumer is already idempotent.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/17-dead-letter-recovery.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `messaging`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 18: Load Is an Architectural Force
+- **Status:** `draft`
+- **Scheduled:** 2030-12-15
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/18-load-and-capacity.md`)
+- **File:** `src/posts/2030-12-15-load-and-capacity.md`
+- **Pitch:** Queue-based load leveling, competing consumers, a bounded Payment bulkhead, and rate limiting turn capacity from an infrastructure sizing afterthought into an explicit part of Northstar's application behavior.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/18-load-and-capacity.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `resilience`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 19: When the Read Side Becomes Expensive
+- **Status:** `draft`
+- **Scheduled:** 2030-12-22
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/19-read-performance-pressure.md`)
+- **File:** `src/posts/2030-12-22-read-performance-pressure.md`
+- **Pitch:** Running hammer-dashboard.ps1 200 times reveals the real problem: the operations dashboard's data changes far less often than it's requested, which is exactly the trade caching exists to make.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/19-read-performance-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `caching`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 20: Cache-Aside Is a Consistency Trade
+- **Status:** `draft`
+- **Scheduled:** 2030-12-29
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/20-cache-aside-earned.md`)
+- **File:** `src/posts/2030-12-29-cache-aside-earned.md`
+- **Pitch:** A five-second TTL, request-coalescing against cache-stampede, and an explicit invalidation endpoint make Northstar's Cache-Aside an honest, bounded staleness trade rather than a vague promise of speed.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/20-cache-aside-earned.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `caching`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 21: Optimistic Concurrency Protects Intent
+- **Status:** `draft`
+- **Scheduled:** 2031-01-05
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/21-optimistic-concurrency.md`)
+- **File:** `src/posts/2031-01-05-optimistic-concurrency.md`
+- **Pitch:** CheckoutSaga now carries a version, and an operator action built against a stale version is refused rather than silently overwriting newer state - detection at commit, not a lock held for the length of a decision.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/21-optimistic-concurrency.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `concurrency`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 22: Safe Change Needs Runtime Controls
+- **Status:** `draft`
+- **Scheduled:** 2031-01-12
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/22-progressive-delivery-health.md`)
+- **File:** `src/posts/2031-01-12-progressive-delivery-health.md`
+- **Pitch:** A disabled feature flag separates deploying the new checkout flow from releasing it, while distinct liveness and readiness endpoints stop Northstar from conflating three very different operational questions.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/22-progressive-delivery-health.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `observability`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 23: Did These Boundaries Need to Be Services?
+- **Status:** `draft`
+- **Scheduled:** 2031-01-19
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/23-modular-monolith-pressure.md`)
+- **File:** `src/posts/2031-01-19-modular-monolith-pressure.md`
+- **Pitch:** Before changing any code, Northstar asks a harder question of Inventory, Payments, and Fulfillment: which of these boundaries need independent deployment badly enough to keep paying for distributed failure?
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`distributed/docs/23-modular-monolith-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-distributed.zip` (built from the source package's own `distributed` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+- **Companion download:** `src/downloads/northstar-distributed.zip`
+
+### Lab 24: Moving Down the Complexity Ladder
+- **Status:** `draft`
+- **Scheduled:** 2031-01-26
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modular-monolith/docs/24-modular-monolith.md`)
+- **File:** `src/posts/2031-01-26-modular-monolith.md`
+- **Pitch:** Northstar collapses Ordering, Inventory, and Fulfillment back into one deployable host while keeping their module contracts intact - removing the broker, the Inbox, and the Outbox without erasing the boundary.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modular-monolith/docs/24-modular-monolith.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-modular-monolith.zip` (built from the source package's own `modular-monolith` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+- **Companion download:** `src/downloads/northstar-modular-monolith.zip`
+
+### Lab 25: Modernization Is a Migration Problem
+- **Status:** `draft`
+- **Scheduled:** 2031-02-02
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modernization/docs/25-strangler-pressure.md`)
+- **File:** `src/posts/2031-02-02-strangler-pressure.md`
+- **Pitch:** A legacy Shipping capability full of unknown client dependencies gets a routing boundary in front of it - at first sending 100% of traffic to Legacy, but planting the seed a Strangler Fig migration needs.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modernization/docs/25-strangler-pressure.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-modernization.zip` (built from the source package's own `modernization` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+- **Companion download:** `src/downloads/northstar-modernization.zip`
+
+### Lab 26: Strangler Fig Moves One Capability at a Time
+- **Status:** `draft`
+- **Scheduled:** 2031-02-09
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modernization/docs/26-strangler-fig.md`)
+- **File:** `src/posts/2031-02-09-strangler-fig.md`
+- **Pitch:** The routing boundary starts sending shipping status to a new Fulfillment module behind an Anti-Corruption Layer, translating legacy status codes into Northstar's own language while keeping the old path one toggle away.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`modernization/docs/26-strangler-fig.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-modernization.zip` (built from the source package's own `modernization` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+- **Companion download:** `src/downloads/northstar-modernization.zip`
+
+### Lab 27: Contract Tests Catch Boundary Breakage Early
+- **Status:** `draft`
+- **Scheduled:** 2031-02-16
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`contracts/docs/27-contract-testing.md`)
+- **File:** `src/posts/2031-02-16-contract-testing.md`
+- **Pitch:** A consumer-driven contract now records exactly what the Shipping/Fulfillment consumer depends on - nothing about internal legacy fields or provider implementation - so independent deploys stop meeting each other for the first time in production.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`contracts/docs/27-contract-testing.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-contracts.zip` (built from the source package's own `contracts` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `testing`
+- **Companion download:** `src/downloads/northstar-contracts.zip`
+
+### Lab 28: Sidecar Moves Runtime Capability Beside the App
+- **Status:** `draft`
+- **Scheduled:** 2031-02-23
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`sidecar/docs/28-sidecar.md`)
+- **File:** `src/posts/2031-02-23-sidecar.md`
+- **Pitch:** A small telemetry/proxy sidecar runs beside Northstar rather than inside it - and stopping the sidecar on purpose proves the app degrades gracefully instead of treating optional infrastructure as a hard dependency.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`sidecar/docs/28-sidecar.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. `companion_download`/`companion_download_label` front matter added, pointing at `src/downloads/northstar-sidecar.zip` (built from the source package's own `sidecar` solution folder, docs excluded) so `post.njk` renders a "Companion Source Code" download section. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `microservices`
+- **Companion download:** `src/downloads/northstar-sidecar.zip`
+
+### Lab 29: The Architecture Complexity Ladder
+- **Status:** `draft`
+- **Scheduled:** 2031-03-02
+- **Source:** `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`finale/docs/29-architecture-complexity-ladder.md`)
+- **File:** `src/posts/2031-03-02-architecture-complexity-ladder-lab-retrospective.md`
+- **Pitch:** Northstar's full stage map, its complexity budget, and the closing lesson of the lab: the best architecture is not the one with the most patterns, but the least complicated one that responsibly handles the forces the system actually faces.
+- **Angle:** Adapted from the fully-drafted source at `docs/article-ideas/northstar-architecture-lab-v30-complexity-ladder-finale.zip` (`finale/docs/29-architecture-complexity-ladder.md`) - frontmatter converted to house style (author/date/image/image_alt/image_prompt/layout/site_title/summary/tags/title), duplicate H1 title stripped from the body since the hero already renders it. No companion download - this is the closing retrospective with no code of its own; the lab's three closing exercises are folded into the post body instead. Pattern content, C# examples, and structure are otherwise unchanged from the original draft.
+- **Tags:** `dotnet`, `architecture`, `design-patterns`, `software-design`
+
+---
+
 ## 📅 November-December 2026 - AI Agents in Practice
 
 Eight posts on building, deploying, and operating AI agents in production. Foundation for the Azure/AWS/GCP AI tracks that follow.
