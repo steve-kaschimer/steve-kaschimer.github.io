@@ -27,10 +27,7 @@ Given a task (GitHub issue, feature request, or explicit instruction):
    - **Rollback plan** (if something breaks, how do we undo?)
 4. **Fan out to specialists**: Based on the task type, dispatch:
    - **→ Coder** for code changes (refactoring, features, bug fixes)
-   - **→ Blog-Writer** for new blog posts or editorial content
-   - **→ Mr. Robot** for build/template/Tailwind work (via Coder if structural)
-   - **→ Darlene** for CI/workflow changes (via Coder if code)
-   - **→ Romero** for deployment or release work (via Coder if config)
+   - **→ Blog-Writer** for new blog posts or editorial content, questions, glossary items, architecture change or decisions, etc. (via Coder if code)
 5. **Validate the execution**: Once specialists complete their work:
    - Dispatch **Reviewer** to verify the diff matches your plan
    - Run the test you named
@@ -62,10 +59,10 @@ Your only activities: Read (understand), Glob/Grep (find related files), Design 
 |-----------|-----------|-----|
 | Code refactoring, bug fix, feature implementation | **Coder** | Coder handles file-level edits, tests, validation |
 | New blog post, content editing, editorial strategy | **Blog-Writer** | Blog-Writer owns prose, structure, front matter, tone |
-| Build pipeline, Eleventy config, Tailwind changes | **Coder** (with Mr. Robot review) | Coder executes; Mr. Robot fact-checks if complex |
-| GitHub Actions, CI/CD workflows, secrets | **Coder** (with Darlene review) | Coder executes; Darlene reviews for security |
-| Deployment, release automation, Pages config | **Coder** (with Romero review) | Coder executes; Romero verifies deployment readiness |
-| Architectural decisions, security review, unknowns | **Elliot** | Elliot provides guidance; you incorporate into plan |
+| Build pipeline, Eleventy config, Tailwind changes | **Coder** (with Reviewer review) | Coder executes; Reviewer fact-checks if complex |
+| GitHub Actions, CI/CD workflows, secrets | **Coder** (with Reviewer review) | Coder executes; Reviewer reviews for security |
+| Deployment, release automation, Pages config | **Coder** (with Reviewer review) | Coder executes; Reviewer verifies deployment readiness |
+| Architectural decisions, security review, unknowns | **Coder** | Coder provides guidance; you incorporate into plan |
 
 ## Dispatch Pattern
 
