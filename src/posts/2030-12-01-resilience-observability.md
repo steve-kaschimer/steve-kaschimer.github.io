@@ -13,141 +13,36 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Lab 16: Resilience Is Observable Policy"
 ---
 
-Northstar is transactionally reliable.
-
-Now it must remain useful when dependencies are slow or unavailable.
+Northstar is transactionally reliable now. The next question is whether it stays useful when a dependency turns slow or simply disappears.
 
 ## Retry
 
-The Payment worker uses a bounded resilience pipeline:
-
-```text
-attempt
-backoff + jitter
-attempt
-backoff + jitter
-attempt
-give up
-```
-
-Retry is only for the simulated transient dependency failure.
-
-A Payment decline is still a business result and is **not retried**.
+The Payment worker runs a bounded resilience pipeline: attempt, back off with jitter, attempt again, back off again, attempt once more, then give up. That retry only applies to the simulated transient dependency failure - a Payment decline is a business result, not a glitch, and it's never retried.
 
 ## Timeout
 
-Each dependency attempt has a bounded wait.
-
-This prevents a slow dependency from holding workflow progress indefinitely.
-
-The Saga has its own broader deadline.
-
-Those are different time boundaries:
-
-```text
-attempt timeout
-<
-Saga deadline
-```
+Every dependency attempt has a bounded wait, so a slow dependency can't hold workflow progress hostage indefinitely. The Saga carries its own broader deadline on top of that, and the two boundaries stay deliberately different sizes - each attempt's timeout is smaller than the Saga's overall deadline, not the other way around.
 
 ## Circuit Breaker
 
-Repeated failures eventually open the circuit.
-
-Then Payment stops calling the unhealthy dependency temporarily and fails fast.
-
-This protects both the worker and the dependency from a retry storm.
+Enough repeated failures eventually open the circuit, and once it's open, Payment stops calling the unhealthy dependency and fails fast instead. That protects both the worker and the struggling dependency from turning into a retry storm.
 
 ## Dead Letter
 
-RabbitMQ supports dead-letter exchanges for rejected, expired, or otherwise dead-lettered messages.
-
-In a production deployment, poison commands should be routed to a DLQ after bounded attempts instead of being requeued forever.
-
-The teaching consumer currently requeues on handler failure so you can observe redelivery.
-
-The next hardening step is to attach a retry/dead-letter topology and operational replay workflow.
+RabbitMQ supports dead-letter exchanges for messages that get rejected, expire, or otherwise can't be processed. In production, poison commands should land in a DLQ after a bounded number of attempts rather than being requeued forever - though the teaching consumer here still requeues on handler failure, on purpose, so you can watch redelivery happen. Attaching a real retry/dead-letter topology and an operational replay workflow is the next hardening step.
 
 ## OpenTelemetry
 
-The messaging library now creates:
-
-```text
-Producer Activity
-Consumer Activity
-published counter
-consumed counter
-failed counter
-```
-
-OpenTelemetry collects those standard .NET `ActivitySource` and `Meter` signals.
-
-This makes a workflow visible across:
-
-```text
-Ordering
-RabbitMQ
-Inventory
-Ordering
-RabbitMQ
-Payments
-Ordering
-```
+The messaging library now creates a Producer Activity, a Consumer Activity, and published/consumed/failed counters, and OpenTelemetry collects all of that through standard .NET `ActivitySource` and `Meter` signals. That's what makes a single workflow visible as it bounces from Ordering through RabbitMQ to Inventory, back to Ordering, out through RabbitMQ to Payments, and back to Ordering one more time.
 
 ## Why Observability Comes Now
 
-Tracing was useful earlier.
-
-It becomes essential once asynchronous workflows span several processes.
-
-Without it, a stuck Saga is a pile of unrelated log entries.
-
-With trace/message/Saga identity, operators can reconstruct the causal path.
+Tracing was useful even earlier in the lab, but it becomes essential the moment an asynchronous workflow spans several processes. Without it, a stuck Saga is just a pile of unrelated log entries scattered across services. With trace, message, and Saga identity tying them together, an operator can actually reconstruct what happened.
 
 ## Break It
 
-### Slow Payment
-
-```text
-NORTHSTAR_PAYMENT_DELAY_MS=10000
-```
-
-Watch attempt timeouts and the Saga deadline.
-
-### Failing Payment
-
-```text
-NORTHSTAR_PAYMENT_FAIL=true
-```
-
-Watch:
-
-```text
-retry
-retry
-retry
-circuit opens
-```
-
-### Recover Payment
-
-Remove the failure flag.
-
-After the break interval, the circuit permits probe traffic and can close.
+Set `NORTHSTAR_PAYMENT_DELAY_MS=10000` and watch the attempt timeouts fire, followed eventually by the Saga deadline. Set `NORTHSTAR_PAYMENT_FAIL=true` instead and watch retry, retry, retry, then the circuit open. Remove the flag, wait out the break interval, and watch the circuit let probe traffic through again until it closes.
 
 ## The Lesson
 
-Resilience patterns are not decorations around `HttpClient`.
-
-They encode explicit policy:
-
-```text
-How long will we wait?
-What is transient?
-How many extra attempts can we afford?
-When should we stop calling?
-What happens to work that never succeeds?
-How will an operator see any of this?
-```
-
-The policy must be observable or it cannot be operated safely.
+Resilience patterns aren't decorations wrapped around `HttpClient`. They encode real policy: how long we'll wait, what counts as transient, how many extra attempts we can afford, when we should stop calling altogether, what happens to work that never succeeds, and how an operator sees any of it happening. If that policy isn't observable, it can't be operated safely - full stop.

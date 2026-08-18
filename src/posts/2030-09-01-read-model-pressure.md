@@ -13,201 +13,36 @@ tags: ["dotnet", "architecture", "design-patterns", "cqrs"]
 title: "Lab 3: When the Write Model Becomes the Wrong Read Model"
 ---
 
-Northstar's Order aggregate is doing its job.
-
-It protects:
-
-```text
-quantity rules
-pricing
-discounts
-status transitions
-approval rules
-cancellation
-```
-
-Then the product team asks for an approval dashboard.
-
-The operations team asks for a paginated order list.
-
-Customers ask for order history.
-
-Nothing about those requests requires domain behavior.
+Northstar's Order aggregate is doing exactly its job, protecting quantity rules, pricing, discounts, status transitions, approval rules, and cancellation. Then the product team asks for an approval dashboard, operations asks for a paginated order list, and customers ask for order history - and none of those requests actually need any domain behavior at all.
 
 ## The First Implementation
 
-In this stage, we intentionally reuse the aggregate read path.
-
-Open:
-
-```text
-ReadPressureEndpoints.cs
-```
-
-The approval dashboard does this:
-
-```text
-load Orders
-include Items
-materialize aggregates
-filter
-sort
-project
-```
-
-Correct?
-
-Yes.
-
-Efficient and well-shaped for the problem?
-
-Increasingly no.
+At this stage we deliberately reuse the aggregate's own read path. Open `ReadPressureEndpoints.cs` and you'll see the approval dashboard loading Orders, including Items, materializing full aggregates, then filtering, sorting, and projecting them down. Correct? Yes. Well-shaped for the problem? Less and less.
 
 ## The Read Requirement
 
-The approval dashboard needs only:
-
-```text
-OrderId
-CustomerEmail
-Total
-Units
-CreatedAt
-```
-
-It does not need:
-
-```text
-Cancel()
-Place()
-ChangeQuantity()
-PricingPolicy
-```
-
-Those capabilities are valuable on the write side.
-
-They are irrelevant to this read.
+All the approval dashboard actually needs is `OrderId`, `CustomerEmail`, `Total`, `Units`, and `CreatedAt`. It has no use for `Cancel()`, `Place()`, `ChangeQuantity()`, or `PricingPolicy` - those are valuable capabilities, just not to this particular read.
 
 ## The Operations List Is Worse
 
-The operations endpoint:
-
-```text
-loads every order
-loads every item
-filters in memory
-sorts in memory
-paginates in memory
-```
-
-Again, this is intentionally poor.
-
-The database is much better at:
-
-```text
-WHERE
-ORDER BY
-COUNT
-SKIP / TAKE
-projection
-```
-
-We are fighting the tool because the architecture says:
-
-> read through the domain model.
-
-That is the wrong constraint.
+The operations endpoint loads every order, loads every item, then filters, sorts, and paginates all of it in memory - intentionally badly, to make the point. A database is much better at `WHERE`, `ORDER BY`, `COUNT`, `SKIP`/`TAKE`, and projection than our application code is. We're fighting the tool because the architecture insists on reading through the domain model, and that's simply the wrong constraint for this job.
 
 ## The Pressure
 
-Our system now wants two different shapes.
-
-### Write model
-
-```text
-Order Aggregate
-  behavior
-  invariants
-  consistency
-```
-
-### Read model
-
-```text
-OrderListItem
-PendingApprovalItem
-CustomerOrderHistoryItem
-```
-
-These models have different reasons to change.
+The system now wants two different shapes: a write model built around the Order aggregate's behavior, invariants, and consistency, and a read model built around `OrderListItem`, `PendingApprovalItem`, and `CustomerOrderHistoryItem`. Those two shapes have different reasons to change, and forcing one to serve both is what's been causing the friction.
 
 ## What We Will Do Next
 
-The next stage will introduce dedicated query handlers.
-
-The database will project directly:
-
-```csharp
-.Select(x => new PendingApprovalOrder(...))
-```
-
-No aggregate rehydration.
-
-No domain behavior.
-
-No unnecessary item graph.
-
-At first, commands and queries will still share the same database.
-
-That is enough.
+The next stage introduces dedicated query handlers that project straight from the database - `.Select(x => new PendingApprovalOrder(...))` - with no aggregate rehydration, no domain behavior, no unnecessary item graph. Commands and queries still share the same database for now, and that's enough.
 
 ## Is That CQRS?
 
-Yes—at the simplest useful level.
-
-CQRS begins when we intentionally separate:
-
-```text
-write responsibility
-from
-read responsibility
-```
-
-It does not require:
-
-```text
-two databases
-Kafka
-event sourcing
-projection workers
-```
-
-Those are later options if new forces justify them.
+Yes, at the simplest useful level. CQRS begins the moment you intentionally separate write responsibility from read responsibility - it doesn't require two databases, Kafka, event sourcing, or projection workers. Those are later options, worth reaching for only if new forces actually justify them.
 
 ## What We Still Will Not Add
 
-We do not need:
-
-```text
-message broker
-outbox
-read replica
-eventual consistency
-microservices
-```
-
-The current problem is simply that reads and writes want different models.
-
-We will solve exactly that problem.
+No message broker, no outbox, no read replica, no eventual consistency, no microservices. The problem in front of us is simply that reads and writes want different models, and that's the only problem we're solving right now.
 
 ## The Lesson
 
-A rich Domain Model did not become a mistake.
-
-It is still the right tool for writes.
-
-The mistake would be requiring every read to pay for write-side behavior it does not need.
-
-Different responsibilities are beginning to pull apart.
-
-That is the pressure CQRS exists to relieve.
+A rich Domain Model didn't become a mistake here - it's still the right tool for writes. The mistake would be making every read pay for write-side behavior it doesn't need. Reads and writes are starting to pull apart, and that pull is exactly the pressure CQRS exists to relieve.

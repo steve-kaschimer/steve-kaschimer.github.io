@@ -13,124 +13,24 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 23: Did These Boundaries Need to Be Services?"
 ---
 
-Northstar now contains:
-
-```text
-Ordering.Api
-Inventory.Worker
-Payments.Worker
-RabbitMQ
-Outbox
-Inbox
-Saga
-Retry
-Circuit Breaker
-Dead Letter Queue
-OpenTelemetry
-```
-
-All of those patterns solved real problems.
-
-Now we ask a different question:
-
-> Which of those problems came from the business, and which came from deployment topology?
+Northstar now runs `Ordering.Api`, `Inventory.Worker`, and `Payments.Worker` on top of RabbitMQ, an Outbox, an Inbox, a Saga, Retry, a Circuit Breaker, a Dead Letter Queue, and OpenTelemetry. Every one of those patterns solved a real problem. The question worth asking now is a different one: which of those problems actually came from the business, and which came from the deployment topology we happened to choose?
 
 ## The Inventory Boundary
 
-Inventory currently needs:
-
-```text
-independent message consumer
-its own SQLite database
-Inbox
-Outbox
-broker topology
-process lifecycle
-```
-
-Why?
-
-Because we chose an independent process.
-
-But suppose:
-
-- the same team owns Ordering and Inventory;
-- Inventory does not need independent scaling;
-- Inventory does not need independent deployment;
-- the business requires immediate consistency more often than fault isolation.
-
-Then the service boundary may be costing more than it buys.
+Inventory currently needs its own independent message consumer, its own SQLite database, an Inbox, an Outbox, broker topology, and its own process lifecycle. Why? Because we chose to run it as an independent process - that's the only reason. But if the same team owns both Ordering and Inventory, if Inventory doesn't need independent scaling or independent deployment, and if the business cares more about immediate consistency than fault isolation, then that service boundary may be costing more than it's actually buying.
 
 ## The Experiment
 
-v24 is a decision lab.
-
-Do not change code yet.
-
-Write down the forces for each boundary:
-
-```text
-Ordering
-Inventory
-Payments
-Fulfillment
-```
-
-For each, answer:
-
-1. Does it need independent deployment?
-2. Does it need independent scaling?
-3. Does it need a different availability boundary?
-4. Does a separate team own it?
-5. Does it require a different technology/runtime?
-6. Are eventual consistency and messaging worth the trade?
+This stage is a decision lab, not a coding exercise - no code changes yet. Write down the forces acting on Ordering, Inventory, Payments, and Fulfillment, and for each one answer six questions: does it need independent deployment, does it need independent scaling, does it need a different availability boundary, does a separate team own it, does it require a different technology or runtime, and is eventual consistency plus messaging actually worth the trade here?
 
 ## A Likely Answer
 
-Payment may remain external/distributed because it wraps a third-party or separately governed capability.
-
-Inventory may not.
-
-Fulfillment may not.
-
-That means the next architecture could be:
-
-```text
-Northstar.Host
-  |
-  +-- Ordering Module
-  +-- Inventory Module
-  +-- Fulfillment Module
-
-External:
-  Payment
-```
-
-This is not "going backward."
-
-It is aligning deployment boundaries with actual forces.
+Payment probably stays external and distributed, since it wraps a third-party capability governed by someone else entirely. Inventory and Fulfillment probably don't need that at all, which points toward a shape like `Northstar.Host` hosting Ordering, Inventory, and Fulfillment as modules, with only Payment left outside as an external dependency. That's not going backward - it's aligning the deployment boundaries with the forces that are actually there.
 
 ## What We Preserve
 
-We do **not** erase boundaries.
-
-The modular monolith still needs:
-
-```text
-module contracts
-data ownership
-dependency rules
-module-specific application/domain code
-```
-
-The goal is:
-
-```text
-fewer distributed failure modes
-without
-returning to a big ball of mud
-```
+Nothing about this erases the boundaries themselves. The modular monolith still needs module contracts, clear data ownership, dependency rules, and module-specific application and domain code. The goal is fewer distributed failure modes, not a slide back into one undifferentiated ball of mud.
 
 ## Next
 
-v25 will build that shape explicitly.
+The next stage builds that shape explicitly.

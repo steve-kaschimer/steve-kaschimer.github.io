@@ -13,159 +13,36 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 13: The Saga Crosses the Network"
 ---
 
-The previous Saga was intentionally in-process.
-
-That allowed us to understand the business workflow before introducing transport complexity.
-
-Now the same state machine crosses RabbitMQ.
+The previous Saga was deliberately kept in-process, which let us understand the business workflow before adding any transport complexity on top of it. Now the same state machine crosses RabbitMQ.
 
 ## What Changed
 
-Ordering no longer invokes:
-
-```text
-InventoryService.Reserve()
-PaymentService.Authorize()
-```
-
-Instead it emits commands:
-
-```text
-ReserveInventory
-AuthorizePayment
-ReleaseInventory
-```
-
-Participants reply with facts:
-
-```text
-InventoryReserved
-PaymentAuthorized
-PaymentDeclined
-InventoryReleased
-```
+Ordering no longer calls `InventoryService.Reserve()` or `PaymentService.Authorize()` directly. Instead it emits commands - `ReserveInventory`, `AuthorizePayment`, `ReleaseInventory` - and participants reply with facts: `InventoryReserved`, `PaymentAuthorized`, `PaymentDeclined`, `InventoryReleased`.
 
 ## What Did Not Change
 
-The Saga still asks the same business questions:
-
-```text
-What step completed?
-What step comes next?
-If Payment fails, what compensates Inventory?
-When is the workflow complete?
-```
-
-Transport changed.
-
-Workflow semantics did not.
+The Saga is still asking the same business questions it always asked: what step completed, what comes next, what compensates Inventory if Payment fails, and when the workflow is actually done. The transport changed. The workflow semantics didn't.
 
 ## Pattern Composition
 
-This stage is where the earlier labs converge.
-
-```text
-Ordering
-  |
-Saga state + Outbox
-  |
-RabbitMQ
-  |
-Inventory / Payment
-  |
-Inbox
-  |
-local business effect
-  |
-reply message
-```
-
-The Saga is not replacing Outbox or Inbox.
-
-It relies on the same local-consistency ideas.
+This is where the earlier labs converge. Ordering's Saga state and Outbox feed into RabbitMQ, which reaches Inventory and Payment, each guarded by its own Inbox before it commits a local business effect and sends a reply. The Saga isn't replacing Outbox or Inbox here - it's leaning on the exact same local-consistency ideas they already gave us.
 
 ## Manual Acknowledgements
 
-Consumers acknowledge messages only after processing.
-
-If a worker dies before acknowledgement, RabbitMQ can redeliver the message.
-
-That is why each worker has an Inbox.
-
-The redelivery is expected.
-
-The duplicate business effect is not.
+Consumers only acknowledge a message after they've processed it, which means a worker that dies before acknowledging leaves RabbitMQ free to redeliver that message. That's why every worker has an Inbox: the redelivery itself is expected and fine, and it's only the duplicate business effect that would be a problem.
 
 ## Break It: Worker Down
 
-Stop Inventory.
-
-Start a checkout.
-
-Ordering has already accepted the workflow.
-
-The command waits in the queue.
-
-Restart Inventory.
-
-The Saga continues.
-
-This is a fundamentally different availability model from the earlier synchronous coordinator.
+Stop Inventory, then start a checkout. Ordering has already accepted the workflow, so the command just waits in the queue. Restart Inventory and the Saga picks up right where it left off - a fundamentally different availability story than the synchronous coordinator we started with.
 
 ## Break It: Payment Decline
 
-Configure Payment to decline.
-
-The Saga receives:
-
-```text
-PaymentDeclined
-```
-
-It does not roll back history.
-
-It emits:
-
-```text
-ReleaseInventory
-```
-
-After:
-
-```text
-InventoryReleased
-```
-
-the Saga becomes:
-
-```text
-Compensated
-```
+Configure Payment to decline. The Saga receives `PaymentDeclined`, and it doesn't try to roll back history - it emits `ReleaseInventory` instead, and once `InventoryReleased` comes back, the Saga settles into `Compensated`.
 
 ## What Is Still Imperfect
 
-The Inventory and Payment workers currently persist their Inbox/business effect before publishing the reply directly.
-
-That creates a smaller version of the same dual-write problem we already learned.
-
-A fully hardened implementation would give **each participant its own Outbox**, so:
-
-```text
-Inbox
-Business effect
-Reply Outbox
-```
-
-commit together.
-
-That is the next refinement—not a new pattern, but applying the pattern composition consistently at every transactional boundary.
+Right now the Inventory and Payment workers persist their Inbox record and business effect, then publish the reply as a separate step - a smaller version of the same dual-write problem we already learned about. A fully hardened implementation would give each participant its own Outbox, so the Inbox marker, the business effect, and the reply Outbox row all commit together. That's a refinement, not a new pattern - it's just applying the same composition consistently at every transactional boundary instead of stopping partway.
 
 ## Lesson
 
-Distributed architecture is recursive.
-
-The reliability rule we learned in Ordering applies again inside every participant.
-
-Patterns do not disappear when we cross a service boundary.
-
-They repeat at each local consistency boundary.
+Distributed architecture is recursive. The reliability rule we learned inside Ordering shows up again inside every participant, because patterns don't disappear when you cross a service boundary - they repeat, once per local consistency boundary, for as long as those boundaries exist.

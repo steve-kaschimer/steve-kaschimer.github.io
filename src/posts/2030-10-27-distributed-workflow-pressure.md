@@ -13,57 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "distributed-systems"]
 title: "Lab 11: When One Business Operation Stops Being One Transaction"
 ---
 
-Checkout now spans three independently committed responsibilities:
-
-```text
-Order
-Inventory
-Payment
-```
-
-The coordinator calls them in sequence.
-
-Under normal conditions, everything works.
+Checkout now spans three independently committed responsibilities - Order, Inventory, and Payment - with a coordinator calling them in sequence. Under normal conditions it all just works.
 
 ## Break It
 
-Configure Payment to decline.
-
-The resulting state is:
-
-```text
-Order exists
-InventoryReservation = Reserved
-PaymentAuthorization = Declined
-```
-
-The HTTP request failed from the customer's perspective.
-
-But some business effects already happened.
+Configure Payment to decline, and the resulting state is a mess: the Order exists, the inventory reservation is `Reserved`, and the payment authorization is `Declined`. The HTTP request failed from the customer's point of view, but some of the business effects already happened anyway.
 
 ## Why Rollback No Longer Works
 
-The inventory reservation committed in a separate operation.
-
-There is no local transaction that can rewind it automatically.
-
-The workflow itself now needs state and recovery behavior.
+The inventory reservation committed as a separate operation, in a separate transaction, and there's no local transaction left that can automatically rewind it. The workflow itself now has to carry its own state and its own recovery behavior - nothing underneath it is going to do that job for free.
 
 ## The Question
 
-What should happen after Payment declines?
-
-The business answer is:
-
-```text
-Release Inventory
-Cancel Checkout
-```
-
-That is a compensating action.
+What should happen once Payment declines? The business answer is to release the inventory and cancel the checkout - which is a compensating action, not a rollback. The reservation already happened; we're not pretending it didn't.
 
 ## Next
 
-v13 introduces a Saga state machine.
-
-The workflow becomes a durable concept rather than a sequence hidden inside one coordinator method.
+The next stage introduces a Saga state machine, so the workflow becomes a durable concept in its own right instead of a sequence of calls hidden inside one coordinator method.

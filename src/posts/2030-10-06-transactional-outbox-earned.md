@@ -13,76 +13,24 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 8: Transactional Outbox Makes the Integration Event Durable"
 ---
 
-v8 deliberately performed:
-
-```text
-save Order
-publish Integration Event
-```
-
-That contained a hole.
-
-If the first operation succeeded and the second never did, Ordering and Fulfillment disagreed about reality.
+The previous stage deliberately did the naive thing: save the Order, then publish the Integration Event. That left a hole - if the first step succeeded and the second never did, Ordering and Fulfillment quietly disagreed about reality.
 
 ## The New Transaction
 
-v9 changes the write path:
-
-```text
-BEGIN
-
-Order row
-Outbox row
-
-COMMIT
-```
-
-Both durable facts now succeed or fail together.
+This stage changes the write path so the Order row and an Outbox row commit together in one transaction. Both durable facts now succeed or fail as a pair.
 
 ## Why the Broker Is Not in the Transaction
 
-The application does not attempt a distributed transaction across SQLite and a broker.
-
-Instead, it stores the intent to publish locally.
-
-A background dispatcher owns the remote operation.
+The application isn't attempting a distributed transaction across SQLite and a broker - that's not what's happening here. It's storing the intent to publish locally, and leaving the actual remote operation to a background dispatcher.
 
 ## Break It
 
-Make publishing fail.
-
-The dispatcher records the failure.
-
-The Outbox row remains pending.
-
-Restore publishing.
-
-The dispatcher tries again.
-
-The message survives the outage because the database already owns it.
+Make publishing fail. The dispatcher records the failure and the Outbox row just sits there, pending. Restore publishing, and the dispatcher tries again - the message survives the outage because the database already owned it the whole time.
 
 ## We Did Not Achieve Exactly Once
 
-Imagine:
-
-```text
-publish succeeds
-process crashes
-PublishedAt not saved
-```
-
-The dispatcher will publish again.
-
-So the guarantee is:
-
-```text
-at least once
-```
-
-That is why the next pressure belongs on the receiving side.
+Picture the publish succeeding right before the process crashes, before `PublishedAt` gets saved. The dispatcher will publish it again. So the real guarantee here is at-least-once, not exactly-once - which is exactly why the next pressure lands on the receiving side.
 
 ## Next
 
-We will create a Fulfillment consumer and deliberately deliver the same message twice.
-
-Then Inbox / Idempotent Consumer will earn its place.
+We'll build a Fulfillment consumer and deliberately deliver the same message twice, and that's where Inbox / Idempotent Consumer earns its place.

@@ -13,74 +13,20 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 5: When One Successful Command Creates Too Many Reactions"
 ---
 
-Northstar's `PlaceOrder` command now succeeds.
-
-Then the business asks for consequences:
-
-```text
-confirmation
-loyalty
-fulfillment
-analytics
-```
-
-So we call them.
-
-That is not bad engineering.
-
-It is the simplest implementation.
+Northstar's `PlaceOrder` command works. Now the business wants consequences - a confirmation, loyalty points, fulfillment work, an analytics update - so we just call them from inside the handler. That's not bad engineering. It's the simplest thing that could possibly work.
 
 ## The New Shape
 
-`PlaceOrder` now coordinates:
-
-```text
-domain behavior
-persistence
-confirmation
-loyalty
-fulfillment
-analytics
-```
-
-The handler is becoming a list of reactions.
+`PlaceOrder` now coordinates domain behavior, persistence, confirmation, loyalty, fulfillment, and analytics all in one place. The handler is quietly turning into a list of reactions.
 
 ## The Hidden Coupling
 
-If Analytics is removed, `PlaceOrder` changes.
-
-If Loyalty adds a new dependency, `PlaceOrder` changes.
-
-If Fulfillment becomes asynchronous, `PlaceOrder` changes.
-
-The command knows too much about who cares that the order was placed.
+Remove Analytics and `PlaceOrder` changes. Give Loyalty a new dependency and `PlaceOrder` changes. Make Fulfillment asynchronous and `PlaceOrder` changes again. The command has ended up knowing far more than it should about who cares that an order was placed.
 
 ## The Question
 
-The domain knows this fact:
-
-```text
-OrderPlaced
-```
-
-Why should the aggregate or command know every consumer of that fact?
+The domain already knows the fact that matters here: `OrderPlaced`. There's no real reason the aggregate, or the command sitting on top of it, needs to know every consumer of that fact.
 
 ## Next
 
-The next stage introduces a Domain Event:
-
-```text
-OrderPlaced
-```
-
-The aggregate records the fact.
-
-Handlers react.
-
-The application dispatches those reactions around the Unit of Work boundary.
-
-We will still remain in-process.
-
-No broker yet.
-
-That distinction matters.
+The next stage introduces a Domain Event - the aggregate simply records that `OrderPlaced` happened, handlers react to it, and the application dispatches those reactions around the Unit of Work boundary. Everything stays in-process for now, with no broker in sight, and that distinction is going to matter quite a bit in a few stages.

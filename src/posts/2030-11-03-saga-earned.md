@@ -13,76 +13,24 @@ tags: ["dotnet", "architecture", "design-patterns", "distributed-systems"]
 title: "Lab 12: Saga Makes Distributed Workflow State Explicit"
 ---
 
-v12 proved the problem:
-
-```text
-Inventory reserved
-Payment declined
-```
-
-There is no global rollback.
-
-v13 introduces a durable workflow object:
-
-```text
-CheckoutSaga
-```
+The previous stage proved the problem out in the open: inventory reserved, payment declined, and no global rollback anywhere to be found. This stage introduces a durable workflow object, `CheckoutSaga`, to actually own that gap.
 
 ## The Saga Remembers Progress
 
-The workflow records:
-
-```text
-InventoryReservationId
-PaymentAuthorizationId
-Status
-StartedAt
-CompletedAt
-```
-
-That gives the system a durable answer to:
-
-> Where is this checkout right now?
+The workflow records `InventoryReservationId`, `PaymentAuthorizationId`, `Status`, `StartedAt`, and `CompletedAt`, which gives the system a durable answer to a question it couldn't answer before: where is this checkout right now?
 
 ## Compensation Is a Business Action
 
-When Payment declines:
-
-```text
-ReleaseInventory
-```
-
-is not a rollback.
-
-It is a new operation that compensates for the earlier reservation.
-
-The world moved forward.
+When Payment declines, releasing the inventory isn't a rollback - it's a new operation that compensates for the earlier reservation. The world already moved forward; compensation is how we respond to that, not how we pretend it didn't happen.
 
 ## Why This Matters Operationally
 
-An operator can now inspect the Saga and see:
-
-```text
-Started
-InventoryReserved
-PaymentDeclined
-Compensated
-```
-
-The recovery path is part of the model rather than hidden in logs.
+An operator can now inspect a Saga and see it move through `Started`, `InventoryReserved`, `PaymentDeclined`, `Compensated` - the recovery path lives in the model itself instead of scattered across logs someone has to piece back together.
 
 ## What Is Still Simplified
 
-The coordinator still calls Inventory and Payment in-process.
-
-That is intentional.
-
-We wanted to learn the workflow semantics before adding broker mechanics.
-
-The next evolution can distribute those Saga commands and replies using the messaging infrastructure we already built.
+The coordinator still calls Inventory and Payment in-process, and that's deliberate - we wanted to understand the workflow's semantics before layering broker mechanics on top of it. Distributing those Saga commands and replies over the messaging infrastructure we already built is the next evolution, not this one.
 
 ## Lesson
 
-Saga was not introduced because the application had multiple services.
-
-It was introduced because one business transaction crossed independent commit boundaries and partial success required explicit recovery.
+Saga wasn't introduced because the application suddenly had multiple services. It was introduced because one business transaction crossed independent commit boundaries, and partial success needed an explicit way to recover.

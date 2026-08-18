@@ -13,17 +13,15 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Architecture Lab: Northstar Commerce"
 ---
 
-Northstar Commerce is the evolving companion application for Volume III.
+Northstar Commerce is the evolving companion application for Volume III - a small commerce app we'll deliberately under-build, then grow only when something forces our hand.
 
-The baseline is deliberately simple:
+The baseline is about as plain as ASP.NET Core, EF Core, and SQLite get:
 
 ```text
 ASP.NET Core -> EF Core -> SQLite
 ```
 
-We will not pre-install future architecture.
-
-Each new pattern must answer a concrete problem introduced by a requirement, scale constraint, or failure scenario.
+No future architecture gets pre-installed. Every pattern that shows up later in this lab has to answer a concrete problem - a new requirement, a scale constraint, a failure we actually hit - not a habit.
 
 ## Lab Rule
 
@@ -31,12 +29,6 @@ Each new pattern must answer a concrete problem introduced by a requirement, sca
 
 ## Baseline Experiment
 
-Read `Features/Orders/PlaceOrder.cs`.
+Open `Features/Orders/PlaceOrder.cs`. Right now the use case owns everything: validation, product lookup, business decisions, calculation, persistence, and the HTTP response. That's fine for how simple the rules are today.
 
-The use case currently owns validation, product lookup, business decisions, calculation, persistence, and response creation.
-
-That is acceptable while the rules are simple.
-
-The next experiment will deliberately increase business complexity until the limitations become visible.
-
-Then we will evolve the model.
+The next experiment pushes on that simplicity until it stops holding up, and we evolve the model in response.

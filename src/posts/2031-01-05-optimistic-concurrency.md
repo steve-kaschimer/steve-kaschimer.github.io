@@ -13,68 +13,24 @@ tags: ["dotnet", "architecture", "design-patterns", "concurrency"]
 title: "Lab 21: Optimistic Concurrency Protects Intent"
 ---
 
-Northstar now has long-lived workflow state.
-
-That creates a new risk:
-
-```text
-Operator reads Saga version 7
-Workflow advances to version 8
-Operator submits an action based on version 7
-```
-
-Without concurrency protection, the stale action may overwrite newer state.
+Northstar's workflow state is now long-lived, and that creates a new risk on its own: an operator reads Saga version 7, the workflow itself advances to version 8, and only then does the operator submit an action built against the version they originally read. Without concurrency protection, that stale action can silently overwrite state that's already moved on.
 
 ## The Version
 
-`CheckoutSaga` now carries:
-
-```text
-Version
-```
-
-Every meaningful transition increments it.
-
-EF Core treats the version as a concurrency token.
+`CheckoutSaga` now carries a `Version`, incremented on every meaningful transition, and EF Core treats it as a concurrency token.
 
 ## Expected Version
 
-The operator endpoint accepts:
-
-```json
-{
-  "expectedVersion": 7
-}
-```
-
-If the Saga is now version 8:
-
-```text
-409 Conflict
-```
-
-The application refuses to pretend the stale decision is still valid.
+The operator endpoint accepts an `expectedVersion` in the request body. If the Saga has already moved to version 8 by the time that request arrives, it comes back as a `409 Conflict` instead of quietly succeeding - the application refuses to pretend a stale decision is still valid.
 
 ## Two Layers of Protection
 
-The handler first compares the expected version.
-
-EF Core then still protects the database commit in case another writer changes the row between read and save.
-
-That second layer matters.
+The handler checks the expected version first, but EF Core still protects the actual database commit in case some other writer changes the row between the read and the save. That second layer isn't redundant - it's the one that actually closes the race.
 
 ## Why Not Lock the Saga?
 
-The interaction may include humans or slow external work.
-
-Holding a database lock for that duration would be fragile and expensive.
-
-Optimistic concurrency lets work proceed independently and detects conflict at commit.
+Because the interaction here can involve a human thinking, or slow external work happening, and holding a database lock for that entire stretch would be both fragile and expensive. Optimistic concurrency lets work proceed independently and only checks for conflict at the moment of commit, which is exactly when it matters.
 
 ## The Lesson
 
-Concurrency control is not about "who wins."
-
-It is about whether the system may safely apply an action against state that has changed since the caller observed it.
-
-That is a business decision, not merely a database feature.
+Concurrency control was never really about who wins a race. It's about whether the system can safely apply an action against state that's already changed since the caller last looked at it - and that's a business decision dressed up as a database feature, not the other way around.

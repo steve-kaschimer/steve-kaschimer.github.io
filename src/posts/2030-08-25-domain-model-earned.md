@@ -13,19 +13,11 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 2: The Domain Model Earns Its Keep"
 ---
 
-Northstar v2 exposed a problem:
-
-business rules had no clear owner.
-
-`PlaceOrder`, `CancelOrder`, and `ChangeOrderQuantity` all knew pieces of Order behavior.
-
-The fix is not "more services."
-
-The fix is to model the business concept.
+Northstar v2 exposed the problem plainly: business rules had no clear owner. `PlaceOrder`, `CancelOrder`, and `ChangeOrderQuantity` each knew a piece of Order behavior, and none of them owned the whole thing. The fix isn't "more services" - it's modeling the business concept itself.
 
 ## What Changed
 
-The Order is now an Aggregate Root.
+The Order is now an Aggregate Root:
 
 ```text
 Order
@@ -36,9 +28,7 @@ Order
 └── Total
 ```
 
-External code can no longer mutate important state directly.
-
-Instead:
+External code can no longer reach in and mutate important state directly. It has to ask:
 
 ```csharp
 order.AddItem(...);
@@ -49,81 +39,24 @@ order.Cancel();
 
 ## Money Became a Value
 
-The previous model passed anonymous `decimal` values around.
-
-Now:
-
-```csharp
-Money
-```
-
-gives monetary state a domain type.
-
-This version keeps currency intentionally simple; later labs can enrich it if a requirement appears.
+The previous model passed anonymous `decimal` values around wherever money needed representing. `Money` gives that state a real domain type instead - deliberately simple for now, since currency handling can get richer once an actual requirement asks for it.
 
 ## Pricing Got a Name
 
-VIP discount logic moved into:
-
-```text
-PricingPolicy
-```
-
-The application no longer needs to know the calculation rule.
+The VIP discount logic moved into `PricingPolicy`, so the application no longer needs to know the calculation rule at all - it just asks for a price.
 
 ## The Application Became Boring Again
 
-That is a success.
-
-`PlaceOrder` now:
-
-```text
-load products
-create Order
-ask Order to add items
-ask Order to place itself
-save
-```
-
-The business model does the business work.
+That's a good sign. `PlaceOrder` now just loads products, creates an Order, asks it to add items, asks it to place itself, and saves. The business model does the business work; the application script coordinates.
 
 ## What Did Not Change
 
-We still have:
-
-```text
-one application
-one database
-EF Core
-synchronous HTTP
-```
-
-Domain complexity did not justify distributed architecture.
+Still one application, one database, EF Core, synchronous HTTP. Domain complexity is a real pressure, but it never asked for a distributed architecture, so we didn't reach for one.
 
 ## New Pressure
 
-The write model is getting richer.
-
-Soon the UI will ask for things like:
-
-```text
-order list
-customer name
-status
-total
-shipment state
-approval queue
-dashboard summaries
-```
-
-Loading rich aggregates to answer every read will start to feel wrong.
-
-That pressure will lead us toward dedicated Queries and then CQRS.
+The write model keeps getting richer, and soon the UI is going to want an order list, a customer name, status, total, shipment state, an approval queue, dashboard summaries - the kind of thing a rich aggregate answers badly. Loading a full `Order` to satisfy a read like that will start to feel wrong, and that discomfort is what eventually pulls us toward dedicated queries and CQRS.
 
 ## Lesson
 
-We did not introduce a Domain Model because DDD is fashionable.
-
-We introduced it because the transaction scripts stopped being a coherent home for shared business rules.
-
-The pattern was earned.
+We didn't introduce a Domain Model because DDD is fashionable. We introduced it because the transaction scripts had stopped being a coherent home for shared business rules. The pattern was earned, not assumed.

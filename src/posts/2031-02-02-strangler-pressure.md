@@ -13,57 +13,16 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 25: Modernization Is a Migration Problem"
 ---
 
-Northstar now has a legacy Shipping capability.
-
-It is ugly in ways that feel familiar:
-
-```text
-STATUS_CD
-ACCOUNT_NO
-SHIP_REF
-LAST_ERR
-```
-
-The temptation is:
-
-> Rewrite it.
-
-That is not yet an architecture.
+Northstar now has a legacy Shipping capability, ugly in ways that feel painfully familiar: `STATUS_CD`, `ACCOUNT_NO`, `SHIP_REF`, `LAST_ERR`. The obvious temptation is to just rewrite it. That's not an architecture, though - it's a wish.
 
 ## The Real Problem
 
-The old implementation contains unknown knowledge.
-
-Its clients depend on behavior we may not fully understand.
-
-A replacement must coexist with the current system while confidence grows.
+The old implementation carries knowledge nobody's fully written down, and its clients depend on behavior we don't completely understand yet. A replacement has to coexist with the current system while our confidence in it actually grows, not replace it in one leap of faith.
 
 ## The First Move
 
-Put a routing boundary in front of the capability.
-
-At first:
-
-```text
-100% -> Legacy
-```
-
-Nothing changes behaviorally.
-
-But now there is an interception point.
-
-That is the seed of Strangler Fig.
+Put a routing boundary in front of the capability. At first, 100% of traffic still goes to Legacy, and nothing changes behaviorally at all - but there's now an interception point that didn't exist before, and that's the seed a Strangler Fig migration actually needs.
 
 ## Next
 
-Move one narrow capability:
-
-```text
-shipping status
-```
-
-to the new Fulfillment module.
-
-Keep the rest legacy.
-
-That makes the migration reversible.
+Move one narrow capability - shipping status - over to the new Fulfillment module, and leave everything else on the legacy path. Keeping the migration that small is exactly what makes it reversible.
