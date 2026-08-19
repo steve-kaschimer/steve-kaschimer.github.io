@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 26: Strangler Fig Moves One Capability at a Time"
 ---
 
+
+
 The previous stage gave us a routing point. This one puts it to work.
 
 ## The Route
@@ -38,3 +40,6 @@ A Strangler project isn't finished the moment the new system exists and works. I
 ## The Lesson
 
 Strangler Fig was never a rewrite technique. It's a risk-management strategy for replacing behavior incrementally, behind a boundary stable enough that clients never notice the ground shifting underneath them.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

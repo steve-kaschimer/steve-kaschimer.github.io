@@ -11,6 +11,8 @@ tags: ["secret-scanning", "github-advanced-security", "devsecops", "security"]
 title: "GitHub Secret Scanning Custom Patterns: Finding Business-Specific Credentials Before They Ship"
 ---
 
+
+
 GitHub's secret scanning ships with partner patterns for roughly 200 third-party token formats - AWS access keys, Stripe secrets, npm tokens, Slack webhooks, and so on. If a developer commits one of those, GitHub catches it, usually within minutes, often before the commit even finishes pushing if push protection is on. It is one of the highest-value security features you get for free with GitHub Advanced Security, and most teams that have it enabled stop there.
 
 Stopping there misses the credentials most likely to actually leak from your codebase. Partner patterns cover formats that a third-party vendor registered with GitHub. They do not cover the API key your internal auth service issues, the connection string for your Postgres instance, or the JWT your service mesh mints with your organization's issuer claim. Those formats are yours. Nobody registered them with GitHub, because nobody outside your organization could. If one of them ends up in a commit, the built-in scanner has nothing to match against, and it sails through silently.

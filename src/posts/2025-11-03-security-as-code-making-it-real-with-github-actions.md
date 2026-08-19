@@ -11,6 +11,8 @@ tags: ["github-actions", "devsecops", "ci-cd"]
 title: "Security as Code with GitHub Actions: Automating DevSecOps"
 ---
 
+
+
 Security as Code is more than a buzzword. It’s a practical approach to embedding security into the development lifecycle. Instead of treating security as a separate process, we codify policies, checks, and controls so they run automatically alongside builds and deployments. For DevSecOps professionals, this is the foundation of scalable, repeatable security.
 
 GitHub Actions makes this vision achievable. By leveraging workflows, you can integrate security checks into CI/CD pipelines without slowing down delivery. In this post, we’ll explore what Security as Code means, why it matters, and how to implement it using GitHub Actions.
@@ -107,8 +109,10 @@ Security as Code isn’t optional. It’s **essential** for modern software deli
 
 Start small, iterate, and share your workflows. The sooner you embed security into your pipelines, the stronger your software supply chain becomes.
 
+
+
 ---
 
-Need help? Ask me!
+Questions about this? I can help.
 
 [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

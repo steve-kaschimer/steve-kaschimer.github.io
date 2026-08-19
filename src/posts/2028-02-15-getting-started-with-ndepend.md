@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "code-quality", "tooling"]
 title: "Getting Started with NDepend in .NET"
 ---
 
+
+
 NDepend's reputation as the "Swiss Army knife" for .NET code quality comes down to one specific capability the rest of this comparison series doesn't have: CQLinq, a LINQ-based query language for interrogating your codebase's structure directly. Instead of learning a bespoke fluent API like NetArchTest's or configuring rules through a web UI like SonarQube's, you write actual LINQ queries against your code - which means anything you can express in LINQ, you can ask about your codebase, without waiting for the tool to have a purpose-built feature for that specific question.
 
 This guide covers installing and running NDepend, bootstrapping a baseline analysis and your first CQLinq rules, the core patterns for dependency visualization and trend tracking, and the best practices for getting real value out of a tool with genuine depth rather than just running a default report once and forgetting about it. By the end you'll have NDepend integrated into your workflow with rules that reflect your team's actual priorities.
@@ -140,3 +142,10 @@ Yes - NDepend can import Roslyn analyzer diagnostics, letting it serve as a unif
 ### What's the most common mistake when adopting NDepend?
 
 Running the default analysis once, treating it as a one-time report rather than an ongoing part of the workflow, and missing the trend-tracking value that comes from consistent, repeated analysis over time. The second common mistake is never learning CQLinq beyond the built-in rules, effectively using an expensive, deeply capable tool as if it were a much simpler one.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

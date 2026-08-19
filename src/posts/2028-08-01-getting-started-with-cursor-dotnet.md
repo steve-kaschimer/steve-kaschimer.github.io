@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity", "ai-coding-tools"]
 title: "Getting Started with C# Development in Cursor"
 ---
 
+
+
 Cursor already got a full getting-started treatment elsewhere in this series, focused on its AI-agent workflow - rules, MCP, Background Agents. This guide covers different ground: the actual C# development experience, which had a real, well-known gap until mid-2026. Microsoft's C# Dev Kit is licensed specifically for genuine Visual Studio Code and refuses to run on Cursor or other compatible forks, which meant Cursor users doing .NET work were stuck with a degraded experience - until JetBrains extended ReSharper's full engine, debugging included, directly into Cursor as of their 2026.2 release.
 
 This guide covers installing and configuring ReSharper's extension for Cursor, bootstrapping a .NET project so both the C# tooling and Cursor's AI-agent capabilities work well together, the core debugging and refactoring workflow now available, and the best practices for combining genuinely capable C# tooling with agent-assisted development in one editor. By the end you'll have closed the gap that used to make Cursor a compromise for serious .NET work.

@@ -11,6 +11,8 @@ tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-product
 title: "Getting Started with Kiro: Setup, Environment, and Best Practices"
 ---
 
+
+
 Kiro asks you to do something most AI coding tools don't: stop and write down what you actually want before any code gets generated. That's the entire premise of spec-driven development, and it's also why a rushed Kiro setup feels slower than just prompting a normal agent - the value only shows up once steering, specs, and hooks are actually in place, not during the first five minutes of exploring the UI.
 
 This guide covers installing Kiro, bootstrapping a project through steering documents and your first spec, the hooks system that automates the routine work around a feature, and the best practices that make spec-driven development worth its upfront cost instead of just overhead. By the end you'll have a workflow suited to production feature work, not quick prototyping.
@@ -175,3 +177,10 @@ The agent continues generating code, but against outdated conventions or an outd
 ### What's the most common mistake in a first Kiro setup?
 
 Skipping straight to implementation without generating steering or writing a spec first, which produces the same undifferentiated experience as any other AI coding tool and misses the entire reason to choose Kiro. The second most common mistake is applying full spec-driven rigor to quick prototyping work where a Vibe session would serve better.
+
+
+---
+
+Questions about this? I can help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

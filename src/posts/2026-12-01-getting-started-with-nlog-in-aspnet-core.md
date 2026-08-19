@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "devops", "tooling"]
 title: "Getting Started with NLog in ASP.NET Core"
 ---
 
+
+
 Setting up **NLog in ASP.NET Core** is straightforward once you've done it once, but the first pass usually raises a few questions: do you configure it in XML or JSON, how do you make sure buffered log entries flush before the process exits, and why does the official guidance wrap `Program.cs` in a `try/catch/finally`? None of these are complicated on their own, but hitting all of them at once in an unfamiliar library slows people down.
 
 This guide walks through a complete NLog setup for .NET 8: installing the right package, both configuration styles, the startup/shutdown pattern for ASP.NET Core apps and Worker Services, and how to use `ILogger<T>` once it's wired up. By the end you'll have a configuration you can drop into any project as a starting point.
@@ -290,3 +292,10 @@ It's NLog's self-diagnostics log - configuration parse errors, target write fail
 ### How do I configure NLog differently for Development vs Production?
 
 Override the `NLog` section in `appsettings.Development.json`, or edit `nlog.config` directly at runtime - `autoReload="true"` picks up XML changes without a restart in any environment.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

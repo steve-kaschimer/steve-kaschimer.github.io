@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "architecture", "performance", "microservices"]
 title: "Getting Started with Kafka in .NET"
 ---
 
+
+
 Kafka's .NET story is deliberately more hands-on than RabbitMQ's - Confluent.Kafka is a capable, well-maintained client, but it's a thinner wrapper around Kafka's actual concepts (partitions, consumer groups, offsets, delivery semantics) than MassTransit gives you over RabbitMQ. That's not a gap in the tooling; it's a reflection of Kafka being a fundamentally different thing than a traditional message broker. Getting comfortable with partitions and consumer groups before writing much code will save you from a class of subtle bugs that only show up under real concurrent consumption.
 
 This guide covers installing the Kafka .NET client, bootstrapping producers and consumers with the configuration that actually matters, the core patterns for partitioning and consumer groups, and the best practices for using Kafka's log-based model correctly rather than treating it like a queue with extra steps. By the end you'll understand not just how to produce and consume messages, but why Kafka's guarantees work the way they do.
@@ -175,3 +177,10 @@ Often, yes, if your actual need is general-purpose messaging between services ra
 ### What's the most common mistake in a first Kafka setup?
 
 Using Kafka for a workload that's really just a queue, taking on partitioning and consumer group complexity without needing replay or high throughput. The second most common is leaving auto-commit enabled without understanding the data-loss risk it introduces if a consumer crashes mid-processing.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

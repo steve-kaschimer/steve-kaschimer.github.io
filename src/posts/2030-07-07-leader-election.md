@@ -11,113 +11,91 @@ tags: ["dotnet", "architecture", "design-patterns", "distributed-systems"]
 title: "Leader Election: Choosing One Active Coordinator"
 ---
 
-Some workloads need many application instances for availability but exactly one active coordinator for a particular responsibility.
 
-Leader Election chooses that coordinator.
+
+Most distributed systems run multiple instances for availability. But some tasks can't run in parallel. A periodic reconciliation shouldn't hit all instances at once. A singleton scheduler shouldn't emit duplicate tasks. A partition rebalancer shouldn't have multiple instances reassigning the same data.
+
+Leader Election solves this. One instance coordinates. The rest stand by. When the leader crashes, another takes over automatically. Like appointing a captain. You need one to make the final call. When they're gone, someone else steps up.
 
 ```text
 Instance A  <- leader
-Instance B
-Instance C
+Instance B  <- backup
+Instance C  <- backup
 ```
 
-If A disappears, another instance takes over.
+## How It Works: The Lease Model
 
-## Example Workloads
+The standard approach uses renewable leases. A process tries to acquire leadership for a fixed duration (say, 10 seconds). If successful, it becomes leader, does work, and renews the lease before expiry. If the leader crashes, the lease expires. Another instance notices and acquires it.
 
 ```text
-periodic reconciliation
-singleton scheduler
-partition assignment
-coordination loop
+try acquire lease
+    ↓
+success (now leader)
+    ↓
+do leader work
+    ↓
+renew lease before expiry
+    ↓
+repeat
 ```
 
-Do not use leader election for ordinary horizontally scalable request handling.
+Simple. No complex consensus algorithms. Just time-based expiry. That simplicity is also the problem.
 
-## Lease-Based Election
+## The Risk: Split Brain
 
-A common model uses a renewable lease.
+Leadership is temporary. Any process can lose it at any moment. The worst failure is *split brain*. Two instances both think they're leader.
 
-```text
-try acquire leadership
-   |
-success
-   |
-perform leader work
-   |
-renew lease
-```
+This happens when:
+- A network partition isolates the leader from the lease system
+- The leader pauses (garbage collection, scheduler hiccup) and misses a renewal
+- Clock skew makes lease expiry disagree across servers
 
-Followers periodically attempt acquisition.
-
-## Leadership Is Temporary
-
-A process must assume leadership can be lost at any time.
+Both leaders run simultaneously. Both corrupt state. Money transfers twice. Records delete from multiple places. Partitions reassign by both leaders at once.
 
 ```csharp
-while (leadership.IsHeld &&
-       !cancellationToken.IsCancellationRequested)
+while (leadership.IsHeld && !cancellationToken.IsCancellationRequested)
 {
-    await RunCoordinationCycleAsync(
-        cancellationToken);
+    await RunCoordinationCycleAsync(cancellationToken);
+    
+    if (!leadership.IsHeld)
+        break;
 }
 ```
 
-Long-running work should react promptly to loss.
+For critical work, combine leader election with downstream idempotency or fencing to prevent stale leaders from making changes after losing the lease.
 
-## Split Brain
+## When You Actually Need It
 
-The dangerous state is:
+Don't use leader election just because you have multiple instances. If work can run in parallel, or if operations are idempotent, you don't need a leader. Scale horizontally.
 
-```text
-A thinks it is leader
-B thinks it is leader
-```
+Queues work differently. Push items into a queue, let instances claim work. No election needed.
 
-Lease expiry, network partitions, or paused processes can cause stale leadership.
+Use leader election when:
+- Exactly one instance must coordinate a responsibility
+- Automatic failover matters
+- The coordination cost is justified
 
-For work with destructive side effects, combine leadership with fencing or downstream idempotency.
+## Prefer Platform Solutions
 
-## Do You Need a Leader?
+Before coding leader election, check what your platform provides. Managed schedulers have singleton jobs. Kubernetes has built-in election. Cloud databases have lease primitives. SQL Server Agent schedules on one instance. Azure Service Bus and SQS distribute work natively.
 
-If every scheduled job can safely run multiple times, idempotency may eliminate the need for election.
+Platform solutions beat custom consensus algorithms in application code.
 
-That is often simpler.
+## Observability Matters
 
-Likewise, a queue can distribute work without a global leader.
+Track these if you implement leader election:
 
-## Platform Capabilities
+- Current leader and when they acquired it
+- Leadership change frequency (churn = instability)
+- Lease renewal failures
+- Periods with no leader
+- Duplicate coordinators detected
 
-Managed schedulers, orchestrators, and databases may already provide singleton execution or lease primitives.
+Frequent changes mean lease duration is too short, renewal is failing, or infrastructure is unstable.
 
-Prefer a proven platform mechanism over inventing a consensus algorithm in application code.
+## The Takeaway
 
-## Observability
+Leader Election gives singleton execution over redundant processes. Leadership is always temporary. Design from the start to lose it instantly: clean exit on lease expiry, no shared state across transitions, prepare for split brain on a Friday at 6 PM. That's when you'll need it to work.
+---
 
-Track:
-
-```text
-current leader
-leadership changes
-lease renewal failures
-time without leader
-duplicate coordinator detection
-```
-
-Frequent churn may indicate infrastructure instability.
-
-## When It Helps
-
-Use Leader Election when one active coordinator is genuinely required and automatic failover matters.
-
-## When It Hurts
-
-It adds coordination and split-brain risk to work that may have been safely parallelizable or idempotent.
-
-## Summary
-
-Leader Election provides singleton behavior over a redundant set of processes.
-
-The leader is never permanent.
-
-Design every leader to lose leadership safely.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

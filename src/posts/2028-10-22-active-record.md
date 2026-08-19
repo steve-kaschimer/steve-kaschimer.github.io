@@ -11,11 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "data-access"]
 title: "Active Record in Modern .NET"
 ---
 
-Active Record combines a data record, persistence operations, and domain
-behavior in the same object.
 
-The resulting programming model is appealing:
 
+Active Record combines a data record, persistence operations, and domain behavior in the same object. The resulting programming model is appealing:
 ``` csharp
 var customer = await Customer.FindAsync(id, cancellationToken);
 customer.ChangeEmail(newEmail);
@@ -46,22 +44,15 @@ public sealed class Subscription
 }
 ```
 
-The object understands both the business operation and its own
-persistence.
+The object understands both the business operation and its own persistence.
 
 ## Why Active Record Is Attractive
 
-For domains that closely match their relational schema, Active Record
-reduces indirection. Developers do not have to jump between an entity,
-mapper, repository, and unit of work for a simple operation.
-
-That simplicity can be a major productivity advantage.
+For domains that closely match their relational schema, Active Record reduces indirection. Developers do not have to jump between an entity, mapper, repository, and unit of work for a simple operation. That simplicity can be a major productivity advantage.
 
 ## Active Record vs. Row Data Gateway
 
-Row Data Gateway emphasizes persistence operations. Active Record adds
-meaningful domain behavior.
-
+Row Data Gateway emphasizes persistence operations. Active Record adds meaningful domain behavior.
 ``` csharp
 // Row Data Gateway
 await row.UpdateStatusAsync("Cancelled", ct);
@@ -73,33 +64,22 @@ await subscription.SaveAsync(ct);
 
 ## Active Record vs. Domain Model
 
-Active Record works best when objects map fairly directly to records.
-Rich Domain Models may contain aggregates, value objects, object graphs,
-and concepts that do not map one-to-one to tables.
-
-As that gap grows, having domain objects own persistence becomes
-awkward. Data Mapper addresses that problem.
+Active Record works best when objects map fairly directly to records. Rich Domain Models may contain aggregates, value objects, object graphs, and concepts that do not map one-to-one to tables. As that gap grows, having domain objects own persistence becomes awkward. Data Mapper addresses that problem.
 
 ## Is EF Core Active Record?
 
-Usually, no.
-
-Typical EF Core code looks like:
-
+Usually, no. Typical EF Core code looks like:
 ``` csharp
 var order = await db.Orders.FindAsync([id], cancellationToken);
 order!.Submit();
 await db.SaveChangesAsync(cancellationToken);
 ```
 
-The entity does not save itself. Persistence is coordinated externally,
-which is conceptually closer to Data Mapper.
+The entity does not save itself. Persistence is coordinated externally, which is conceptually closer to Data Mapper.
 
 ## Testing
 
-Business behavior can remain easy to unit test when state-changing
-methods do not automatically write to the database:
-
+Business behavior can remain easy to unit test when state-changing methods do not automatically write to the database:
 ``` csharp
 [Fact]
 public void Cancelling_changes_status()
@@ -119,7 +99,6 @@ Persistence behavior still deserves integration tests.
 ## When to Use It
 
 Active Record fits well when:
-
 -   the domain is simple,
 -   objects closely resemble database rows,
 -   CRUD is common,
@@ -128,15 +107,11 @@ Active Record fits well when:
 
 ## When Not to Use It
 
-Consider Data Mapper when domain objects differ significantly from
-tables, aggregates span multiple structures, persistence complicates
-domain behavior, or the model needs to remain independent of a database.
+Consider Data Mapper when domain objects differ significantly from tables, aggregates span multiple structures, persistence complicates domain behavior, or the model needs to remain independent of a database.
 
 ## Trade-offs
 
-Active Record's strength and weakness are the same: it combines
-responsibilities. That makes simple applications simpler, but can make
-complex domains harder to evolve.
+Active Record's strength and weakness are the same: it combines responsibilities. That makes simple applications simpler, but can make complex domains harder to evolve.
 
 ## Related Patterns
 
@@ -147,7 +122,4 @@ complex domains harder to evolve.
 
 ## Summary
 
-Active Record is a legitimate architectural choice. When domain concepts
-and database records align closely, combining behavior and persistence
-can produce remarkably clear code. The question is whether that
-alignment remains an advantage as the system grows.
+Active Record is a legitimate architectural choice. When domain concepts and database records align closely, combining behavior and persistence can produce remarkably clear code. The question is whether that alignment remains an advantage as the system grows.

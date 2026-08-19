@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "performance", "security"]
 title: "Getting Started with Dapper in .NET"
 ---
 
+
+
 Dapper's entire pitch fits in one sentence: you write the SQL, Dapper maps the results onto your objects, and almost nothing happens in between. That simplicity is exactly why it's fast, and exactly why the things that trip people up aren't Dapper's fault so much as gaps it deliberately doesn't fill - connection management, migrations, and mapping conventions all become your responsibility rather than the library's.
 
 This guide covers installing Dapper, bootstrapping connection handling and query patterns that scale past a single "hello world" query, the core workflow for reads, writes, and multi-mapping, and the best practices that keep a Dapper-based data layer maintainable once it's more than a handful of queries. By the end you'll have a lightweight, fast data access layer with the rough edges Dapper leaves exposed already sanded down.
@@ -184,3 +186,10 @@ For complex raw SQL and large result sets, yes, meaningfully. For simple, well-i
 ### Should I write a generic repository wrapper around Dapper?
 
 It's optional and somewhat a matter of team preference. A thin repository per feature or entity keeps SQL organized and testable, but resist making it so generic that it starts re-implementing a mini-ORM - if you find yourself building change tracking or a query builder on top of Dapper, that's usually a sign you actually want a different tool for that specific use case.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

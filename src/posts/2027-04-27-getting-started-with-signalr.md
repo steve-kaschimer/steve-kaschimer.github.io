@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "real-time", "architecture", "devops"]
 title: "Getting Started with SignalR in .NET"
 ---
 
+
+
 SignalR solves a different problem than every other API style in this series: not "how does a client request data," but "how does a client find out the moment something changed, without asking." That distinction matters because SignalR is additive to your API surface, not a replacement for it - and it has exactly one setup mistake that's both extremely common and completely silent: skip the Redis backplane past one server instance, and some clients will simply stop receiving updates, with no error anywhere in your logs telling you why.
 
 This guide covers installing SignalR on both server and client, building a Hub, the more common pattern of pushing updates from application services rather than only from Hub methods, client-side automatic reconnection, and the Redis backplane that becomes mandatory the moment you run more than one instance. By the end you'll have a real-time setup that keeps working after your first horizontal scale-out, not one that quietly breaks.
@@ -174,3 +176,10 @@ Groups let you scope a push to a subset of connected clients (e.g., everyone vie
 ### What's the most common mistake in a first SignalR setup?
 
 Deploying to more than one server instance without a Redis backplane, which fails silently rather than with an obvious error - some clients simply stop getting updates, and it's easy to mistake for a flaky client issue rather than a missing backplane. Add the backplane during initial setup if scaling is even a possibility, not after the symptom shows up.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

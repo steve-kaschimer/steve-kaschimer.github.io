@@ -11,6 +11,8 @@ tags: ["security", "devsecops", "github"]
 title: "GitHub Advanced Security: What You Get and How to Use It"
 ---
 
+
+
 Security is no longer an afterthought in modern software development. With the rise of DevSecOps, security practices are woven into every stage of the development lifecycle. GitHub, as one of the most widely used platforms for code collaboration, has stepped up its game with **GitHub Advanced Security (GHAS)**, a suite of premium features designed to help teams identify, prevent, and remediate vulnerabilities before they reach production.
 
 If you’re a DevOps practitioner new to GitHub Advanced Security, this guide will walk you through what GHAS offers, why it matters, and how to use its features effectively. By the end, you’ll understand how to integrate these tools into your workflow and elevate your security posture without slowing down development.

@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "semantic-kernel", "ai-agents", "dotnet", "agentic-de
 title: "Semantic Kernel and Azure AI Foundry: Building Your First AI Agent in .NET"
 ---
 
+
+
 Python has LangChain. .NET has Semantic Kernel. They solve the same problem - how do you wire a language model to tools, memory, and business logic in a way that's testable and deployable - but for a different runtime and a different operational context.
 
 This post builds a working agent from scratch: a `Kernel` instance backed by a Foundry-hosted model, a plugin with a real tool function the model can call, and a multi-step interaction where the agent decides when to invoke the tool and uses the result in its answer. At the end, a GitHub Actions workflow deploys the whole thing to Azure Container Apps with no stored secrets.

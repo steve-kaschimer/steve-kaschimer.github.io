@@ -11,6 +11,8 @@ tags: ["tailwind-css", "eleventy", "developer-productivity"]
 title: 5 Tailwind CSS Tips for Better Productivity
 ---
 
+
+
 Tailwind CSS has revolutionized the way I write CSS. Here are five tips that have significantly improved my workflow.
 
 ## 1. Use @apply for Repeated Patterns

@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "devops", "tooling"]
 title: "Getting Started with GitHub Actions for .NET"
 ---
 
+
+
 GitHub Actions' YAML syntax is simple enough that a working .NET build-and-test workflow takes about ten lines, which is exactly why the real setup work lives elsewhere: caching NuGet packages correctly, pinning actions to a commit SHA rather than a mutable tag, and using OIDC instead of long-lived cloud credentials for deployment. None of these are hard, but none of them are the default either - a workflow that "just builds" and one that's actually fast, secure, and production-ready look almost identical until you know what to add.
 
 This guide covers setting up a GitHub Actions workflow for .NET, bootstrapping caching and matrix builds for real project needs, the core CI and CD patterns including OIDC-based Azure deployment, and the security practices that matter specifically for GitHub Actions. By the end you'll have a pipeline that's fast on every run, not just the first one, and secure by deliberate configuration rather than by luck.
@@ -199,3 +201,10 @@ Yes - self-hosted runners let you run workflows on infrastructure you control, u
 ### What's the most common mistake in a first GitHub Actions setup for .NET?
 
 Not caching NuGet packages, leaving every run to redundantly re-download the same dependencies. The second common mistake is storing static cloud credentials as secrets instead of using OIDC, and not pinning third-party actions to a SHA, both of which are genuine, actively-discussed security gaps rather than theoretical concerns.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

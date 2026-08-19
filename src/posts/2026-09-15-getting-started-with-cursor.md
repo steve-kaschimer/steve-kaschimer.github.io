@@ -11,6 +11,8 @@ tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-product
 title: "Getting Started with Cursor: Setup, Environment, and Best Practices"
 ---
 
+
+
 Cursor's pitch is that it feels like your existing editor right up until you need it not to - Tab autocomplete that feels familiar, and then Agent mode, Composer, and Background Agents sitting one keystroke away when a task is bigger than a single suggestion. The gap between "using Cursor" and "using Cursor well" is almost entirely about the `.cursor/rules/` directory and MCP configuration most people never open.
 
 This guide covers installing Cursor, bootstrapping a project so the agent understands your codebase and conventions, the different AI surfaces Cursor exposes for different-sized tasks, and the best practices that keep output consistent and credit usage under control. By the end you'll have an environment tuned for your actual codebase rather than Cursor's defaults.
@@ -167,3 +169,10 @@ No - it's meant for scenarios the desktop editor doesn't fit well, like CI jobs 
 ### What's the most common mistake in a first Cursor setup?
 
 Skipping the `.cursor/rules/` setup entirely and relying on the agent to infer conventions from surrounding code, plus reaching for full Agent mode on tasks small enough for Cmd+K - both produce less consistent results and burn more credits than necessary for the size of the actual task.
+
+
+---
+
+Questions about this? I can help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

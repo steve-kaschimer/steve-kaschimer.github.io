@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "architecture", "developer-productivity"]
 title: "Getting Started with Custom Validation in .NET"
 ---
 
+
+
 Every validation library in this series eventually admits the same thing in its own documentation: some rules just don't fit the model. A rule that needs to check three related entities in a database, or one so specific to a single business process that expressing it declaratively would be more convoluted than just writing the logic - that's exactly where custom, hand-written validation stops being "what you do before adopting a real library" and becomes the actually correct tool.
 
 This guide covers structuring custom validation in .NET without a library, the patterns that keep hand-written validation consistent as a codebase grows, the core techniques for guard clauses and result-based validation, and the best practices that prevent custom validation from becoming an inconsistent mess across a team. By the end you'll have a validation approach with zero dependencies and no ceiling on what it can express.
@@ -181,3 +183,10 @@ For simple validation, often less work - there's no library ceremony to set up. 
 ### What's the most common mistake with custom validation?
 
 Inconsistency - different parts of a codebase solving "how do I validate this" differently, making validation logic harder to find, trust, and maintain than it needs to be. The fix is agreeing on a shared pattern early, the same discipline that applies to manual object mapping, and applying it consistently rather than reinventing the approach in every new area of the codebase.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

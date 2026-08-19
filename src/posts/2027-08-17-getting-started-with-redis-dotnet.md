@@ -11,6 +11,8 @@ tags: ["dotnet", "caching", "performance", "architecture", "devops"]
 title: "Getting Started with Redis in .NET"
 ---
 
+
+
 Redis is the default distributed cache for .NET, and most of the friction people hit adopting it isn't Redis's fault - it's the boilerplate that used to be necessary around `IDistributedCache`: manual serialization, hand-written cache-aside logic, and no built-in protection against a cold cache getting hammered by concurrent requests. .NET 9's `HybridCache` addresses most of that directly, and it's worth knowing about before you build your own wrapper around `IDistributedCache` the way most tutorials from before 2025 will show you.
 
 This guide covers installing and connecting to Redis from .NET, bootstrapping it through both the classic `IDistributedCache` approach and the newer, recommended `HybridCache` path, the core patterns for reads, writes, and invalidation, and the best practices that keep a Redis-backed cache fast and correct. By the end you'll have a distributed cache that's shared cleanly across every instance of your application.
@@ -198,3 +200,10 @@ Yes - Redis's pub/sub and data structure support make it a common backing store 
 ### What's the most common mistake in a first Redis setup for .NET?
 
 Writing manual cache-aside logic with `IDistributedCache` instead of using `HybridCache`, and creating a new `IConnectionMultiplexer` per request or per feature instead of sharing one singleton across the application. Both are easy to avoid once you know to look for them, but both are the default outcome of following an older tutorial without noticing `HybridCache` now exists.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "testing", "developer-productivity"]
 title: "Getting Started with ArchUnitNET in .NET"
 ---
 
+
+
 ArchUnitNET's fluent API reads a lot like NetArchTest's - both are ArchUnit-inspired, both express rules as unit tests, both let you assert dependency-direction constraints in a chainable, readable syntax. The real differences show up once you're modeling something more elaborate than "layer A shouldn't depend on layer B" - ArchUnitNET's support for layers and slices as first-class concepts gives you a more expressive vocabulary for describing genuinely structured systems, at the cost of a slightly larger API surface to learn.
 
 This guide covers installing ArchUnitNET, bootstrapping architecture rules with its layer and slice modeling, the core patterns for common rules, and the best practices that keep an ArchUnitNET-based rule set expressive without becoming its own maintenance burden. By the end you'll have architecture rules enforced automatically, with a richer vocabulary for expressing more complex structural constraints than a simpler tool provides.
@@ -181,3 +183,10 @@ Not necessarily - for straightforward two- or three-layer dependency-direction r
 ### What's the most common mistake in a first ArchUnitNET setup?
 
 Rebuilding the `Architecture` object per test instead of loading it once per test class, adding unnecessary overhead to the test suite. The second common mistake is not taking advantage of named layers for rule sets with more than a couple of simple dependency checks, ending up with repeated namespace-matching logic that ArchUnitNET's modeling was specifically designed to avoid.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

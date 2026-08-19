@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "observability", "developer-productivity"]
 title: "Getting Started with Microsoft.Extensions.Logging in ASP.NET Core"
 ---
 
+
+
 Setting up **Microsoft.Extensions.Logging in ASP.NET Core** looks trivial at first glance - it's already wired in by default - but that's exactly what trips people up. Because there's no NuGet package to install and no obvious "getting started" moment, most developers never learn how the log level hierarchy actually resolves, how to add providers cleanly, or why their `appsettings.json` overrides aren't taking effect the way they expect.
 
 This guide covers the built-in logging pipeline from scratch: how the default providers are registered, the two ways to configure log levels, the startup pattern for both ASP.NET Core apps and Worker Services, and how to use `ILogger<T>` correctly once it's wired up. By the end you'll understand the foundation that NLog, Serilog, and log4net all plug into - which makes those libraries much easier to reason about once you decide you need one.
@@ -293,3 +295,10 @@ Yes - it's the same pipeline regardless of whether you're using controllers or m
 ### How do I configure Microsoft.Extensions.Logging differently for Development vs Production?
 
 Use `appsettings.Development.json` to override the `Logging` section for local development - ASP.NET Core automatically layers it over `appsettings.json` based on the `ASPNETCORE_ENVIRONMENT` variable. There's no equivalent to NLog's `autoReload` for runtime changes without a restart; configuration is read once at startup unless you explicitly enable `reloadOnChange` on the configuration provider and structure your code to react to `IOptionsMonitor<LoggerFilterOptions>`.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

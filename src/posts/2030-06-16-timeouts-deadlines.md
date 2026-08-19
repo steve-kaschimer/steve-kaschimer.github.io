@@ -11,10 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Timeouts and Deadline Propagation: Giving Distributed Work a Time Budget"
 ---
 
-Every remote call can wait forever unless something decides otherwise.
 
-A timeout says:
 
+Every remote call can wait forever unless something decides otherwise. A timeout says:
 > This operation is no longer worth waiting for.
 
 A deadline makes that decision propagate through a distributed call chain.
@@ -25,20 +24,16 @@ A deadline makes that decision propagate through a distributed call chain.
 Client -> API -> Service A -> Service B -> Database
 ```
 
-If every layer independently allows 30 seconds, the original request's latency objective is meaningless.
-
-The caller needs one overall time budget.
+If every layer independently allows 30 seconds, the original request's latency objective is meaningless. The caller needs one overall time budget.
 
 ## Timeout vs. Deadline
 
 Timeout:
-
 ```text
 wait at most 2 seconds from now
 ```
 
 Deadline:
-
 ```text
 this entire operation must finish by 14:03:17.250
 ```
@@ -48,7 +43,6 @@ Deadlines compose better across services because each hop can calculate remainin
 ## Cancellation in .NET
 
 Propagate `CancellationToken`:
-
 ```csharp
 app.MapGet("/orders/{id}", async (
     Guid id,
@@ -61,30 +55,20 @@ app.MapGet("/orders/{id}", async (
 });
 ```
 
-Pass it through database and HTTP calls.
-
-Ignoring cancellation keeps doing work nobody is waiting for.
+Pass it through database and HTTP calls. Ignoring cancellation keeps doing work nobody is waiting for.
 
 ## Child Budgets
 
-A service should reserve enough time to return a response.
-
-If 800 ms remains:
-
+A service should reserve enough time to return a response. If 800 ms remains:
 ```text
 downstream timeout = 750 ms
 ```
 
-may leave almost no response budget.
-
-Budget downstream work intentionally.
+may leave almost no response budget. Budget downstream work intentionally.
 
 ## Timeout + Retry
 
-Three 2-second attempts do not fit inside a 3-second request budget.
-
-Retry must consume the same overall deadline.
-
+Three 2-second attempts do not fit inside a 3-second request budget. Retry must consume the same overall deadline.
 ```text
 overall deadline
   |
@@ -97,30 +81,20 @@ Stop when insufficient time remains.
 
 ## Queue Boundaries
 
-A synchronous deadline does not automatically make sense for asynchronous work.
-
-A queued command may instead carry:
-
+A synchronous deadline does not automatically make sense for asynchronous work. A queued command may instead carry:
 ```text
 ExpiresAt
 ```
 
-or business SLA metadata.
-
-Consumers can reject work that is no longer useful.
+or business SLA metadata. Consumers can reject work that is no longer useful.
 
 ## Timeouts Are Not Cancellation Guarantees
 
-Your caller may stop waiting while the remote service continues executing.
-
-That is why a timed-out write can have an ambiguous outcome.
-
-Idempotency remains necessary.
+Your caller may stop waiting while the remote service continues executing. That is why a timed-out write can have an ambiguous outcome. Idempotency remains necessary.
 
 ## Observability
 
 Record:
-
 ```text
 configured timeout
 remaining deadline
@@ -141,6 +115,7 @@ Timeouts become harmful when arbitrarily short values cause self-inflicted failu
 
 ## Summary
 
-Latency is a finite resource.
+Latency is a finite resource. Propagate a time budget through the call chain, cancel work that has lost its caller, and make Retry, Circuit Breaker, and downstream calls respect the same deadline.
+---
 
-Propagate a time budget through the call chain, cancel work that has lost its caller, and make Retry, Circuit Breaker, and downstream calls respect the same deadline.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

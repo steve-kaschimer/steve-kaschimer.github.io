@@ -6,160 +6,108 @@ image_alt: "A single connecting thread passing consistently through several dist
 image_prompt: "A dark-mode technical editorial illustration on a near-black background with electric teal, amber, and off-white accents. Composition centers on one continuous amber thread passing through four small distinct teal nodes positioned across a faint vertical boundary line, implying one causal story followed consistently across separate processes. Mood is continuous and traceable. Avoid: vendor logos, brand colors, circuit-board textures, gears, or generic clip art as the dominant motif."
 layout: post.njk
 site_title: Tech Notes
-summary: "A distributed operation may cross:"
+summary: "A distributed operation may cross process boundaries, but observability context keeps it traceable."
 tags: ["dotnet", "architecture", "design-patterns", "observability"]
 title: "Observability Context Propagation: Following One Operation Across the System"
 ---
 
-A distributed operation may cross:
+A single customer request in a distributed system travels through multiple services, databases, message brokers, and background workers. An HTTP endpoint calls another service. That service queries a database and publishes a message. A consumer picks up that message and triggers more work. From the system's perspective, each component logs independently. The database logs a query. The message broker logs a delivery. The HTTP framework logs a response. Without context linking all of it together, these logs are just isolated noise.
+
+Context propagation solves this. It gives every component in the chain a common identifier: a thread ID that says "all of this work is part of the same operation." When something fails, you can follow that thread and see the entire story: what the HTTP endpoint did, what the service decided, what the database returned, when the message was published, how the consumer processed it. You're not hunting through ten different log files anymore. You're following one continuous thread through the system.
+
+## Traces and Spans
+
+Modern distributed tracing models this as a tree. The whole operation is a trace. Each piece of work (the HTTP request, the SQL query, the message publish, the consumer processing) is a span within that trace. Parent and child relationships show which operation triggered which.
 
 ```text
-HTTP
-service
-database
-message broker
-worker
-another service
-```
-
-Without shared context, every component produces isolated telemetry.
-
-Context propagation connects those observations into one causal story.
-
-## Trace Context
-
-Modern distributed tracing associates operations with a trace and spans.
-
-```text
-Trace
+Trace (overall operation)
   |
-  +-- HTTP request
-  +-- SQL query
-  +-- broker publish
-  +-- consumer processing
+  +-- HTTP request span
+       |
+       +-- SQL query span
+       +-- Service call span
+            |
+            +-- Message publish span
+                 |
+                 +-- Consumer process span
 ```
 
-W3C Trace Context provides interoperable propagation across process boundaries.
+The W3C Trace Context standard defines how to propagate these identifiers across process boundaries so every system understands them the same way.
 
 ## .NET Activity
 
-.NET's tracing model centers on `Activity`.
+.NET models tracing with the `Activity` class. When you start an activity, you're creating a span for whatever operation you're about to perform.
 
 ```csharp
-using var activity =
-    activitySource.StartActivity(
-        "CalculateQuote");
+using var activity = activitySource.StartActivity("CalculateQuote");
 ```
 
-Instrumentation libraries and OpenTelemetry can create and export spans without business code manually building tracing infrastructure everywhere.
+The beauty of this is you don't have to instrument every line of code manually. Instrumentation libraries (the HTTP client, the database driver, the message publisher) all automatically create activities and propagate context. OpenTelemetry exporters then send that trace information to your observability backend. Your business code stays clean. The infrastructure handles the observability.
 
-## Correlation ID Is Not Everything
+## Not Everything Is a Trace ID
 
-A correlation ID is useful for grouping related work.
+People often collapse multiple concerns into one identifier. They use a single GUID for everything and call it "context." Stop. Each identifier serves a different purpose.
 
-Trace context additionally models parent/child relationships and sampling.
+A trace ID is for observability. It links every log, metric, and span from one end-to-end operation. A correlation ID groups related work across your business domain (it might span multiple operations or workflows). A message ID identifies a specific message for delivery guarantees. An idempotency key identifies a logical operation so you can safely retry without duplication.
 
-Idempotency keys and message IDs solve different problems.
+They're related but not the same. A message might get retried as part of the same trace but with a different message ID. A workflow might start new traces but use the same correlation ID. Trying to shoehorn all of this into one GUID creates confusion and loses information.
 
-```text
-Trace ID       -> observability
-Correlation ID -> workflow grouping
-Message ID     -> delivery identity
-Idempotency Key-> logical operation identity
+## Messaging Is Different From HTTP
+
+HTTP libraries handle trace context propagation automatically. When you make an HTTP call, the client library puts the trace headers into the request. The server library reads them and continues the trace. No code needed.
+
+Messaging is different. The trace context needs to live in message headers or metadata, not in the message body itself. Your domain event is a business concept (order placed, shipment updated, payment confirmed). It shouldn't know anything about trace infrastructure. The messaging framework should inject trace context as metadata alongside the payload.
+
+```csharp
+// Message body: clean, business-focused
+public record OrderPlaced(OrderId Id, CustomerId Customer);
+
+// Trace context: in the envelope, not the payload
+headers: { "traceparent": "00-...", "tracestate": "..." }
 ```
 
-Do not collapse all four into one magic GUID.
+## Baggage: Context for Small Values
 
-## Messaging
+Trace context is a unique ID. Baggage is a way to propagate small contextual values through that trace (things like the user ID, the tenant, the feature flag state). Use it sparingly. Never put secrets, tokens, or large payloads into baggage. It flows everywhere and can be logged. Keep it to small, safe, operational values.
 
-HTTP libraries commonly propagate trace headers automatically.
+## Logs Need Trace Context
 
-Messaging requires context in message metadata.
+A structured log entry is most useful when it includes the trace ID. That way when an operator sees a log line, they can look up the trace ID and see the full picture of what happened.
 
-```text
-publish span
-   |
-message headers
-   |
-consumer span
+```json
+{
+  "timestamp": "2024-01-15T...",
+  "level": "error",
+  "message": "Order calculation failed",
+  "orderId": 42,
+  "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+  "customerId": 99
+}
 ```
 
-Do not require the domain event payload itself to carry tracing infrastructure.
+Business identifiers like orderId are often just as important as trace IDs for debugging. Include both.
 
-## Baggage
+## Traces, Metrics, and Logs Work Together
 
-Baggage can propagate small contextual values through a trace.
+These are three different tools answering different questions. Metrics answer aggregate questions across many operations: How often does this function run? How slow is it on average? What percentage fail? Traces answer the specific question: What happened to this one operation? Logs provide detailed events as they occur. Good observability uses all three.
 
-Use it sparingly.
+A metric tells you "orders are taking twice as long lately." A trace shows you "this specific order took 8 seconds because of a slow database query." The log line shows you the exact timestamps and what each component did. They're complementary.
 
-Never treat baggage as a safe place for secrets, tokens, or large business payloads.
+## Sampling at Scale
 
-## Logs
+When you have thousands of requests per second, keeping every single trace might be prohibitively expensive. Sampling reduces the volume. But if you're too aggressive, you'll miss the rare failures you're trying to debug. The right strategy depends on your traffic volume, your retention budget, and how quickly you need to investigate incidents. Common approaches are keeping 100% of traces for errors and traces slower than a threshold, while sampling 1% of successful fast operations.
 
-Structured logs can include trace/span identifiers so operators can move from a log entry to the distributed trace.
+## Use OpenTelemetry
 
-```text
-OrderId=42
-TraceId=...
-MessageId=...
-```
+OpenTelemetry provides a vendor-neutral standard for instrumentation. You write to the OpenTelemetry APIs, and you can export to whatever backend you want (Jaeger, DataDog, Honeycomb, New Relic, whatever). If you ever need to switch, your code doesn't change. The exporter does. That decoupling is worth a lot.
 
-Business identifiers are often useful alongside technical trace context.
+## Watch Your Metric Cardinality
 
-## Metrics
+Never put unbounded values into metric dimensions. A metric like "request_duration" with a dimension for "user_id" explodes cardinality if you have millions of users. Each new user creates a new metric series. Instead, put the user ID into the trace and the logs where cardinality doesn't matter. Keep metrics aggregate across many operations.
 
-Metrics answer aggregate questions:
+## The Payoff
 
-```text
-How often?
-How slow?
-How many failures?
-```
+Once a request or workflow crosses process boundaries, context propagation becomes essential. Without it, debugging is guesswork. With it, observability becomes a concrete tool. You can follow one operation from entry to exit, see where it spent time, where it failed, what each component decided. That's the difference between "the system seems slow" and "this operation is slow because the database query against the orders table is being called in a loop."
+---
 
-Traces answer:
-
-```text
-What happened to this operation?
-```
-
-Logs provide detailed events.
-
-Good observability uses all three intentionally.
-
-## Sampling
-
-At high volume, retaining every trace may be expensive.
-
-Sampling reduces volume.
-
-But aggressive sampling can hide rare failures.
-
-Use strategies appropriate to traffic and incident needs.
-
-## OpenTelemetry
-
-OpenTelemetry provides vendor-neutral APIs, SDKs, semantic conventions, and exporters for traces, metrics, and logs.
-
-That reduces coupling between application instrumentation and a specific observability backend.
-
-## Cardinality
-
-Do not put unbounded values such as `OrderId` into metric dimensions.
-
-High-cardinality metrics can become expensive or unusable.
-
-Those identifiers belong more naturally in traces and logs.
-
-## When It Helps
-
-Context propagation is essential once a request or workflow crosses process boundaries.
-
-## When It Hurts
-
-It becomes noise when teams collect enormous telemetry without defining operational questions, retention, sampling, or privacy rules.
-
-## Summary
-
-Observability context turns distributed telemetry from isolated breadcrumbs into a causal story.
-
-Propagate standard trace context automatically, keep business and delivery identities distinct, and use OpenTelemetry to avoid binding instrumentation to one backend.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

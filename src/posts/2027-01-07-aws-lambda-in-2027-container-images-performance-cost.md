@@ -11,6 +11,8 @@ tags: ["aws", "serverless", "cost-optimization", "lambda", "devops"]
 title: "AWS Lambda in 2027: Container Images, Performance Insights, and the $0.20/Million Invocation Reality"
 ---
 
+
+
 The number everyone quotes is $0.20 per million requests. It's real and cheap - and almost never what your Lambda bill is made of. Request charges are a rounding error next to duration charges: the GB-seconds you burn while the function runs. A function billed at $0.20 per million can easily cost $8 per million in duration, and $20 if provisioned wrong. Ignore the request line; understand the duration line.
 
 The other half of the story is latency, and on Lambda that means cold starts - init cost paid per new execution environment, not per request, but the number users feel if traffic is spiky or the language slow to boot. Cold starts and duration are linked too: the memory setting that fixes one moves the other, and the container image that solves your dependency problem changes both.

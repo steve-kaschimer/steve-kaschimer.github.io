@@ -11,26 +11,18 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Value Object in Modern C#"
 ---
 
-A Value Object is defined by its value rather than by an identity.
 
-Two value objects with the same constituent values are considered
-equivalent.
 
-Modern C# gives us excellent language features for expressing this
-pattern.
+A Value Object is defined by its value rather than by an identity. Two value objects with the same constituent values are considered equivalent. Modern C# gives us excellent language features for expressing this pattern.
 
 ## Identity vs. Value
 
 An entity has identity:
-
 ``` text
 Customer 42
 ```
 
-Even if every property changes, it is still Customer 42.
-
-A value object is different:
-
+Even if every property changes, it is still Customer 42. A value object is different:
 ``` text
 Latitude: 42.3314
 Longitude: -83.0458
@@ -41,7 +33,6 @@ Two coordinates with the same values represent the same value.
 ## Records
 
 C# records provide value-based equality:
-
 ``` csharp
 public sealed record Address(
     string Line1,
@@ -52,7 +43,6 @@ public sealed record Address(
 ```
 
 Then:
-
 ``` csharp
 var a = new Address(
     "1 Main St",
@@ -75,9 +65,7 @@ That aligns naturally with Value Object semantics.
 
 ## Validation
 
-A value object should not allow invalid values merely because a record
-makes construction concise.
-
+A value object should not allow invalid values merely because a record makes construction concise.
 ``` csharp
 public sealed record EmailAddress
 {
@@ -103,17 +91,13 @@ The object normalizes and protects its value.
 ## Primitive Obsession
 
 Without Value Objects:
-
 ``` csharp
 Task SendEmailAsync(string email);
 Task ShipAsync(string postalCode);
 Task ChargeAsync(decimal amount, string currency);
 ```
 
-Everything is a primitive.
-
-With Value Objects:
-
+Everything is a primitive. With Value Objects:
 ``` csharp
 Task SendEmailAsync(EmailAddress email);
 Task ShipAsync(PostalCode postalCode);
@@ -124,16 +108,13 @@ The type system now communicates meaning.
 
 ## Strongly Typed IDs
 
-Identifiers are technically identity-related, but small value types are
-excellent wrappers around raw IDs:
-
+Identifiers are technically identity-related, but small value types are excellent wrappers around raw IDs:
 ``` csharp
 public readonly record struct OrderId(Guid Value);
 public readonly record struct CustomerId(Guid Value);
 ```
 
 Now this mistake does not compile:
-
 ``` csharp
 LoadOrder(customerId);
 ```
@@ -143,7 +124,6 @@ when the method expects `OrderId`.
 ## readonly record struct
 
 Small scalar values can be represented efficiently:
-
 ``` csharp
 public readonly record struct Percentage(decimal Value)
 {
@@ -158,35 +138,26 @@ public readonly record struct Percentage(decimal Value)
 }
 ```
 
-This gives value semantics without heap allocation in many common
-scenarios.
+This gives value semantics without heap allocation in many common scenarios.
 
 ## Immutability
 
-Value Objects are usually immutable.
-
-Instead of:
-
+Value Objects are usually immutable. Instead of:
 ``` csharp
 address.City = "Ann Arbor";
 ```
 
 create a new value:
-
 ``` csharp
 var updated =
     address with { City = "Ann Arbor" };
 ```
 
-Be careful: positional records with public `init` members may allow
-callers to create invalid values with `with`.
-
-For strongly invariant-driven values, control construction more tightly.
+Be careful: positional records with public `init` members may allow callers to create invalid values with `with`. For strongly invariant-driven values, control construction more tightly.
 
 ## Behavior Belongs on Value Objects
 
 Value Objects are not merely bags of properties.
-
 ``` csharp
 public readonly record struct Temperature(
     decimal Celsius)
@@ -200,41 +171,27 @@ Behavior that naturally belongs to the value should live with it.
 
 ## Equality
 
-Equality must reflect the concept.
-
-For an email address, case normalization may mean:
-
+Equality must reflect the concept. For an email address, case normalization may mean:
 ``` text
 Alice@example.com
 alice@example.com
 ```
 
-are treated as equal by your application.
-
-For another domain, original casing may matter.
-
-Value equality is a domain decision, not simply "compare every field."
+are treated as equal by your application. For another domain, original casing may matter. Value equality is a domain decision, not simply "compare every field."
 
 ## EF Core Complex Types
 
-EF Core can map multi-property value objects as complex types.
-
-Conceptually:
-
+EF Core can map multi-property value objects as complex types. Conceptually:
 ``` csharp
 builder.ComplexProperty(
     x => x.ShippingAddress);
 ```
 
-The value object's properties can live as columns on the owning entity
-without requiring a separate entity identity.
-
-That is often a good fit for Address-like values.
+The value object's properties can live as columns on the owning entity without requiring a separate entity identity. That is often a good fit for Address-like values.
 
 ## Value Converters
 
 Single-value wrappers can often use a value converter:
-
 ``` csharp
 builder.Property(x => x.Id)
     .HasConversion(
@@ -242,58 +199,40 @@ builder.Property(x => x.Id)
         value => new OrderId(value));
 ```
 
-This allows the domain to use a strongly typed ID while the database
-stores a normal `uniqueidentifier`.
+This allows the domain to use a strongly typed ID while the database stores a normal `uniqueidentifier`.
 
 ## Owned Types
 
-EF Core owned entity types have historically been used for
-value-object-like structures.
-
-Modern EF Core complex types more directly express types that have no
-independent identity.
-
-Choose based on the behavior and version of EF Core your application
-targets.
+EF Core owned entity types have historically been used for value-object-like structures. Modern EF Core complex types more directly express types that have no independent identity. Choose based on the behavior and version of EF Core your application targets.
 
 ## Serialization
 
-A strongly typed value object may need custom JSON representation.
-
-You might want:
-
+A strongly typed value object may need custom JSON representation. You might want:
 ``` json
 "customerId": "8f..."
 ```
 
 rather than:
-
 ``` json
 "customerId": {
   "value": "8f..."
 }
 ```
 
-JSON converters can preserve the clean external representation while
-keeping the strong internal type.
+JSON converters can preserve the clean external representation while keeping the strong internal type.
 
 ## Value Objects as Dictionary Keys
 
 Good immutable value semantics make Value Objects useful keys:
-
 ``` csharp
 Dictionary<CurrencyPair, ExchangeRate>
 ```
 
-Records automatically provide equality and hashing behavior, but confirm
-that the generated semantics match your domain.
+Records automatically provide equality and hashing behavior, but confirm that the generated semantics match your domain.
 
 ## Avoid Tiny Types Everywhere
 
-Not every string needs a wrapper.
-
-A Value Object earns its place when it captures:
-
+Not every string needs a wrapper. A Value Object earns its place when it captures:
 -   meaning,
 -   validation,
 -   behavior,
@@ -304,10 +243,7 @@ Wrapping every primitive with no added semantics can create noise.
 
 ## Testing
 
-Value Objects are easy and valuable to unit-test.
-
-Test:
-
+Value Objects are easy and valuable to unit-test. Test:
 -   valid construction,
 -   invalid construction,
 -   normalization,
@@ -318,11 +254,7 @@ Test:
 
 ## When to Use It
 
-Use Value Object when a concept is identified entirely by its value and
-deserves stronger semantics than a primitive.
-
-Common examples include:
-
+Use Value Object when a concept is identified entirely by its value and deserves stronger semantics than a primitive. Common examples include:
 -   money,
 -   address,
 -   date range,
@@ -341,12 +273,4 @@ Common examples include:
 
 ## Summary
 
-Value Object replaces loosely typed primitive data with immutable domain
-concepts whose equality is based on value.
-
-C# records and readonly record structs make the pattern especially
-expressive, while EF Core converters and complex types make persistence
-practical.
-
-The result is often a domain model that is both safer and easier to
-read.
+Value Object replaces loosely typed primitive data with immutable domain concepts whose equality is based on value. C# records and readonly record structs make the pattern especially expressive, while EF Core converters and complex types make persistence practical. The result is often a domain model that is both safer and easier to read.

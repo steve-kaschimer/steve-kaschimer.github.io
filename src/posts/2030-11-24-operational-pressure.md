@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "observability"]
 title: "Lab 15: Correct but Unhealthy"
 ---
 
+
+
 Northstar can now survive duplicate delivery and broker interruptions without corrupting business state. Then Payment gets slow. Nothing is technically inconsistent - the data is fine - but the customer is still waiting, and operations still has a real problem on its hands.
 
 ## Correctness vs. Health
@@ -30,3 +32,6 @@ The Payment worker can now simulate latency, an outage, or a decline on demand -
 ## Next
 
 The next stage adds bounded Retry with jitter, a Circuit Breaker, timeout budgets, dead-letter topology, and OpenTelemetry traces and metrics. None of that is a "cloud feature" bolted on for its own sake - each one is a direct response to a failure mode we can now actually observe.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

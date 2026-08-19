@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 6: Domain Events Separate Facts From Reactions"
 ---
 
+
+
 The previous stage showed a familiar growth pattern: `PlaceOrder` sprouting a confirmation, then loyalty, then fulfillment, then analytics, until the command had quietly become the registry of everybody who cared that an order was placed.
 
 ## The Refactor
@@ -30,3 +32,6 @@ Durability. This stage still dispatches after the database commit, which leaves 
 ## The Next Big Step
 
 Some of these reactions are purely local application behavior. Others - a fulfillment service that must know, an analytics pipeline that must know - are really external commitments in disguise. Once a reaction needs to survive a crash and cross a process boundary, in-memory dispatch stops being enough, and that's the pressure that eventually earns Integration Events, a message broker, and a Transactional Outbox. Not yet, though. First we needed to pull the fact apart from the reactions to it.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

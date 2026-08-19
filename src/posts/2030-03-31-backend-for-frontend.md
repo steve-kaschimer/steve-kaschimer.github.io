@@ -11,12 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "api-design"]
 title: "Backend for Frontend: APIs Shaped Around Client Needs"
 ---
 
-A mobile app, browser application, partner integration, and smart display may all consume the same business capabilities.
 
-They rarely need the same API shape.
 
-Backend for Frontend—BFF—creates a backend boundary tailored to a specific frontend or client class.
-
+A mobile app, browser application, partner integration, and smart display may all consume the same business capabilities. They rarely need the same API shape. Backend for Frontend, BFF, creates a backend boundary tailored to a specific frontend or client class.
 ```text
 Web App    -> Web BFF
 Mobile App -> Mobile BFF
@@ -28,7 +25,6 @@ Mobile App -> Mobile BFF
 ## The Problem
 
 A universal API often accumulates endpoints like:
-
 ```text
 /orders?includeCustomer=true
        &includeShipment=true
@@ -37,16 +33,12 @@ A universal API often accumulates endpoints like:
        &version=7
 ```
 
-Every client negotiates with the same generic contract.
-
-BFF says:
-
+Every client negotiates with the same generic contract. BFF says:
 > Let the client-facing backend speak the client's language.
 
 ## Aggregation
 
 A mobile order screen may need data from:
-
 ```text
 Orders
 Customers
@@ -54,10 +46,7 @@ Shipping
 Recommendations
 ```
 
-Without a BFF, the phone makes four network calls.
-
-With a BFF:
-
+Without a BFF, the phone makes four network calls. With a BFF:
 ```text
 Mobile
   |
@@ -82,9 +71,7 @@ public sealed record MobileOrderCard(
     DateTimeOffset? ExpectedDelivery);
 ```
 
-This DTO does not need to become a universal enterprise contract.
-
-It exists for the mobile experience.
+This DTO does not need to become a universal enterprise contract. It exists for the mobile experience.
 
 ## Minimal API Example
 
@@ -119,7 +106,6 @@ The BFF aggregates downstream capabilities.
 ## What Belongs in a BFF?
 
 Good responsibilities:
-
 - client-specific aggregation;
 - response shaping;
 - authentication/session adaptation;
@@ -128,7 +114,6 @@ Good responsibilities:
 - caching of client-facing reads.
 
 Dangerous responsibilities:
-
 - core pricing rules;
 - inventory invariants;
 - payment policy;
@@ -138,28 +123,21 @@ Business logic should remain in the owning domain/service.
 
 ## One BFF Per Client?
 
-Not mechanically.
-
-Create separate BFFs when clients have materially different needs.
-
+Not mechanically. Create separate BFFs when clients have materially different needs.
 ```text
 Web + tablet
 ```
 
 may share one.
-
 ```text
 Public partner API
 ```
 
-may deserve another.
-
-Do not create five services because there are five screen sizes.
+may deserve another. Do not create five services because there are five screen sizes.
 
 ## BFF and API Gateway
 
 They are related but different.
-
 ```text
 API Gateway
   -> cross-cutting edge concerns
@@ -175,7 +153,6 @@ BFF
 ```
 
 A request may flow:
-
 ```text
 Mobile
   |
@@ -188,34 +165,23 @@ Services
 
 ## BFF and GraphQL
 
-GraphQL can solve some client-specific query-shaping problems.
-
-It does not automatically replace BFF responsibilities such as:
-
+GraphQL can solve some client-specific query-shaping problems. It does not automatically replace BFF responsibilities such as:
 - session handling;
 - client-specific orchestration;
 - protocol translation;
 - backend security policy.
 
-Likewise, a BFF does not require REST.
-
-It can expose GraphQL.
+Likewise, a BFF does not require REST. It can expose GraphQL.
 
 ## Failure Handling
 
 Aggregation introduces partial failure.
-
 ```text
 Orders succeeds
 Recommendations fails
 ```
 
-Should the whole page fail?
-
-Maybe not.
-
-A BFF can define client-specific degradation:
-
+Should the whole page fail? Maybe not. A BFF can define client-specific degradation:
 ```text
 return order
 omit recommendations
@@ -225,14 +191,7 @@ That is a user-experience decision.
 
 ## Latency
 
-Aggregation can reduce client round trips while increasing server fan-out.
-
-Parallelize independent calls.
-
-Set timeouts.
-
-Avoid turning the BFF into a sequential waterfall:
-
+Aggregation can reduce client round trips while increasing server fan-out. Parallelize independent calls. Set timeouts. Avoid turning the BFF into a sequential waterfall:
 ```text
 A -> B -> C -> D
 ```
@@ -241,34 +200,15 @@ Measure the critical path.
 
 ## Security
 
-The BFF is often a valuable security boundary.
-
-Browser-based architectures can keep sensitive tokens server-side and use secure cookies between browser and BFF.
-
-But authentication design depends on client type and threat model.
-
-Do not treat "BFF" as a magic security label.
+The BFF is often a valuable security boundary. Browser-based architectures can keep sensitive tokens server-side and use secure cookies between browser and BFF. But authentication design depends on client type and threat model. Do not treat "BFF" as a magic security label.
 
 ## Ownership
 
-A BFF works best when owned close to the client team.
-
-If every BFF change requires approval from a centralized API team, much of the organizational benefit disappears.
-
-Conway's Law matters.
+A BFF works best when owned close to the client team. If every BFF change requires approval from a centralized API team, much of the organizational benefit disappears. Conway's Law matters.
 
 ## Duplication
 
-Some duplication between BFFs is intentional.
-
-Two clients may each map order status differently.
-
-That is fine.
-
-Duplicating **domain logic** is not.
-
-The distinction is:
-
+Some duplication between BFFs is intentional. Two clients may each map order status differently. That is fine. Duplicating **domain logic** is not. The distinction is:
 ```text
 presentation/client behavior duplication
     often acceptable
@@ -280,7 +220,6 @@ business invariant duplication
 ## Observability
 
 Track:
-
 ```text
 client endpoint latency
 downstream fan-out latency
@@ -295,7 +234,6 @@ Distributed tracing is particularly valuable because one client call may fan out
 ## Testing
 
 Test:
-
 ```text
 client contract
 aggregation behavior
@@ -310,7 +248,6 @@ Contract tests with the frontend can be highly valuable.
 ## When It Helps
 
 Use BFF when:
-
 - clients have materially different API needs;
 - client round trips are expensive;
 - client-specific aggregation is common;
@@ -319,7 +256,6 @@ Use BFF when:
 ## When It Hurts
 
 It hurts when:
-
 - every frontend gets a BFF by policy;
 - core business logic moves into BFFs;
 - BFFs become giant monoliths over all services;
@@ -327,8 +263,7 @@ It hurts when:
 
 ## Summary
 
-Backend for Frontend creates an API boundary around a client experience.
+Backend for Frontend creates an API boundary around a client experience. It gives the frontend a contract designed for its own needs while keeping core business rules in the systems that own them. Use it to reduce client/backend impedance, not to duplicate the domain.
+---
 
-It gives the frontend a contract designed for its own needs while keeping core business rules in the systems that own them.
-
-Use it to reduce client/backend impedance—not to duplicate the domain.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

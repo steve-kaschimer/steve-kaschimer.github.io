@@ -11,23 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Entity in Domain-Driven Design"
 ---
 
-An Entity is a domain object defined primarily by **identity and
-continuity**, not by the values of all its properties.
 
-Two customers can have the same name.
 
-They are still different customers.
-
-One customer can change their name.
-
-They are still the same customer.
-
-That distinction is the heart of Entity.
+An Entity is a domain object defined primarily by **identity and continuity**, not by the values of all its properties. Two customers can have the same name. They are still different customers. One customer can change their name. They are still the same customer. That distinction is the heart of Entity.
 
 ## Identity Before Data
 
 A tempting model is:
-
 ``` csharp
 public sealed record Customer(
     Guid Id,
@@ -35,19 +25,11 @@ public sealed record Customer(
     string Email);
 ```
 
-Records provide value-based equality.
-
-That can be exactly wrong for an entity.
-
-If two independently created customers happen to contain the same
-values, they do not become the same customer.
-
-Entity equality is usually about identity.
+Records provide value-based equality. That can be exactly wrong for an entity. If two independently created customers happen to contain the same values, they do not become the same customer. Entity equality is usually about identity.
 
 ## Strongly Typed Identity
 
 Modern C# makes identity types inexpensive:
-
 ``` csharp
 public readonly record struct CustomerId(Guid Value)
 {
@@ -57,7 +39,6 @@ public readonly record struct CustomerId(Guid Value)
 ```
 
 Then:
-
 ``` csharp
 public sealed class Customer
 {
@@ -95,10 +76,7 @@ The entity owns the state transition.
 
 ## An Entity Is Not a Database Row
 
-This distinction matters.
-
-A database table may contain:
-
+This distinction matters. A database table may contain:
 ``` text
 Customers
 ---------
@@ -108,25 +86,17 @@ Email
 CreatedAt
 ```
 
-That does not mean the domain needs a `Customer` entity.
-
-If the application simply edits rows with no meaningful identity-driven
-behavior, a CRUD model may be enough.
-
-DDD entities earn their cost when identity, lifecycle, and business
-rules matter.
+That does not mean the domain needs a `Customer` entity. If the application simply edits rows with no meaningful identity-driven behavior, a CRUD model may be enough. DDD entities earn their cost when identity, lifecycle, and business rules matter.
 
 ## Protect Valid State
 
 Avoid public setters:
-
 ``` csharp
 customer.CreditLimit = -1_000_000;
 customer.Status = CustomerStatus.Platinum;
 ```
 
 Prefer behavior:
-
 ``` csharp
 customer.ChangeCreditLimit(newLimit);
 customer.QualifyForPreferredStatus();
@@ -137,7 +107,6 @@ Methods should express domain language and preserve invariants.
 ## Identity Across Time
 
 An entity's attributes change:
-
 ``` text
 Customer #42
 
@@ -145,14 +114,11 @@ Customer #42
 2026 -> Steven, new@example.com
 ```
 
-The entity remains Customer #42.
-
-That continuity is what makes identity significant.
+The entity remains Customer #42. That continuity is what makes identity significant.
 
 ## Entity vs. Value Object
 
 Compare:
-
 ``` text
 Customer
   identity matters
@@ -161,43 +127,24 @@ ShippingAddress
   values usually matter
 ```
 
-If a customer changes address, the old address value can be replaced by
-a new value.
-
-If the customer changes email, we normally do not replace the customer
-with another customer.
+If a customer changes address, the old address value can be replaced by a new value. If the customer changes email, we normally do not replace the customer with another customer.
 
 ## Equality
 
-If domain entities need equality semantics, base them on stable
-identity.
-
-Do not blindly implement equality across every property.
-
-Also be careful with newly constructed entities whose database-generated
-identity does not yet exist.
-
-Strongly typed IDs created by the domain can simplify this considerably.
+If domain entities need equality semantics, base them on stable identity. Do not blindly implement equality across every property. Also be careful with newly constructed entities whose database-generated identity does not yet exist. Strongly typed IDs created by the domain can simplify this considerably.
 
 ## Persistence
 
-EF Core can map encapsulated entities.
-
-Persistence requirements should not force the domain into:
-
+EF Core can map encapsulated entities. Persistence requirements should not force the domain into:
 ``` csharp
 public string Name { get; set; }
 ```
 
-everywhere.
-
-Private setters, backing fields, owned/complex values, and explicit
-configuration allow a domain model to remain behavior-oriented.
+everywhere. Private setters, backing fields, owned/complex values, and explicit configuration allow a domain model to remain behavior-oriented.
 
 ## Do Not Put Infrastructure in the Entity
 
 This is a warning sign:
-
 ``` csharp
 public async Task SaveAsync()
 {
@@ -205,15 +152,11 @@ public async Task SaveAsync()
 }
 ```
 
-The entity should model the domain.
-
-Persistence, HTTP calls, logging, and message-broker APIs belong outside
-it.
+The entity should model the domain. Persistence, HTTP calls, logging, and message-broker APIs belong outside it.
 
 ## Lifecycle
 
 Entities often have meaningful lifecycle transitions:
-
 ``` text
 Draft
   |
@@ -224,9 +167,7 @@ Approved
 Fulfilled
 ```
 
-Model those transitions rather than exposing arbitrary status
-assignment.
-
+Model those transitions rather than exposing arbitrary status assignment.
 ``` csharp
 public void Submit()
 {
@@ -243,7 +184,6 @@ The method explains why the state can change.
 ## Testing
 
 Entity tests should focus on business behavior:
-
 ``` csharp
 [Fact]
 public void Draft_order_can_be_submitted()
@@ -258,14 +198,11 @@ public void Draft_order_can_be_submitted()
 }
 ```
 
-Also test prohibited transitions.
-
-The important tests prove invariants, not getters and setters.
+Also test prohibited transitions. The important tests prove invariants, not getters and setters.
 
 ## When It Helps
 
 Use an Entity when:
-
 -   identity matters across time;
 -   lifecycle matters;
 -   behavior belongs with the state;
@@ -273,26 +210,12 @@ Use an Entity when:
 
 ## When It Hurts
 
-Do not turn every table into a DDD Entity.
-
-If the application is straightforward data maintenance, a simpler
-persistence or DTO model may communicate the design better.
+Do not turn every table into a DDD Entity. If the application is straightforward data maintenance, a simpler persistence or DTO model may communicate the design better.
 
 ## How It Relates to Fowler
 
-Volume I's Domain Model established the broader pattern.
-
-DDD's Entity gives us one of the fundamental building blocks inside that
-model.
-
-The next article introduces the boundary that makes entities especially
-useful: the Aggregate.
+Volume I's Domain Model established the broader pattern. DDD's Entity gives us one of the fundamental building blocks inside that model. The next article introduces the boundary that makes entities especially useful: the Aggregate.
 
 ## Summary
 
-An Entity is not "a class with an ID."
-
-It is a domain concept whose identity persists while its state changes.
-
-Modern C# lets us model that identity explicitly while keeping behavior
-and invariants where they belong: inside the domain.
+An Entity is not "a class with an ID." It is a domain concept whose identity persists while its state changes. Modern C# lets us model that identity explicitly while keeping behavior and invariants where they belong: inside the domain.

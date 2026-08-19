@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "testing", "developer-productivity"]
 title: "Getting Started with Clean Architecture in .NET"
 ---
 
+
+
 Clean Architecture's core idea is simple to state and easy to get wrong in practice: dependencies point inward, toward the domain, and the domain knows nothing about the database, the web framework, or any other infrastructure detail. Getting the idea is the easy part. Getting the project structure right - so that rule is actually enforced rather than just aspired to - is where most first attempts go sideways.
 
 This guide covers scaffolding a Clean Architecture solution in .NET, bootstrapping it so the dependency rule is a compile-time guarantee rather than a convention, the core workflow of adding a feature, and the best practices that keep the pattern's ceremony proportional to the complexity it's protecting. By the end you'll have a solution structure you can extend without the discipline eroding as it grows.
@@ -228,3 +230,10 @@ Yes - this is a common and pragmatic combination. Organize the UseCases layer ar
 ### What goes in Core versus UseCases?
 
 `Core` holds domain entities, value objects, domain interfaces, and business rules intrinsic to the entities themselves (like an `Order` refusing an invalid state transition). `UseCases` holds application-specific orchestration - the steps a particular command or query needs to take, which repositories to call, and in what order - without containing infrastructure details itself.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

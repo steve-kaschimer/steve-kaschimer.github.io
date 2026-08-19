@@ -11,6 +11,8 @@ tags: ["infrastructure-as-code", "security", "devsecops", "terraform", "github-a
 title: "IaC Security Scanning in CI: Catching Terraform and Bicep Misconfigurations Before They Deploy"
 ---
 
+
+
 An S3 bucket with public read access. A storage account without encryption at rest. A virtual machine with SSH open to `0.0.0.0/0`. These are not exotic attack vectors - they are the default configuration in half the tutorials on the internet, and they ship to production every day because nobody ran a scanner before `terraform apply`.
 
 IaC misconfigurations are infrastructure bugs. The same discipline that catches application bugs in CI - write a check, fail the build, fix before merge - applies here. The tooling exists. The GitHub Actions integration is straightforward. The reason most teams don't do this isn't complexity; it's that nobody set it up on the first sprint, and now the pipeline has been running without it for eighteen months.

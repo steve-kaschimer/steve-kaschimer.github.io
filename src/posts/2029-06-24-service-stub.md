@@ -11,11 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "testing"]
 title: "Service Stub in Modern .NET"
 ---
 
-Service Stub replaces a service that is difficult to use during testing
-with a controllable implementation.
 
-External services are often:
 
+Service Stub replaces a service that is difficult to use during testing with a controllable implementation. External services are often:
 -   slow,
 -   unreliable,
 -   rate limited,
@@ -28,7 +26,6 @@ A stub gives tests deterministic behavior.
 ## The Boundary
 
 Suppose the application depends on:
-
 ``` csharp
 public interface ICreditCheckGateway
 {
@@ -38,10 +35,7 @@ public interface ICreditCheckGateway
 }
 ```
 
-Production uses a remote provider.
-
-Tests can use:
-
+Production uses a remote provider. Tests can use:
 ``` csharp
 public sealed class ApprovedCreditCheckStub
     : ICreditCheckGateway
@@ -62,7 +56,6 @@ No network call occurs.
 ## Configurable Stub
 
 A reusable stub can be configured:
-
 ``` csharp
 public sealed class CreditCheckStub(
     CreditCheckResult result)
@@ -76,7 +69,6 @@ public sealed class CreditCheckStub(
 ```
 
 A test chooses the scenario:
-
 ``` csharp
 var gateway =
     new CreditCheckStub(
@@ -86,30 +78,22 @@ var gateway =
 
 ## Stub vs. Mock
 
-The terms are often used loosely, but the distinction is useful.
-
-A **stub** supplies canned behavior:
-
+The terms are often used loosely, but the distinction is useful. A **stub** supplies canned behavior:
 ``` csharp
 gateway returns Approved
 ```
 
 A **mock** commonly verifies interaction:
-
 ``` text
 gateway must be called exactly once
 with this amount
 ```
 
-Many mocking libraries can do both.
-
-The pattern's emphasis is replacing the inconvenient service, not the
-testing-library terminology.
+Many mocking libraries can do both. The pattern's emphasis is replacing the inconvenient service, not the testing-library terminology.
 
 ## Hand-Written Stubs
 
 Hand-written stubs are often underrated.
-
 ``` csharp
 public sealed class PaymentGatewayStub
     : IPaymentGateway
@@ -127,7 +111,6 @@ public sealed class PaymentGatewayStub
 ```
 
 Advantages:
-
 -   easy to understand,
 -   reusable,
 -   debugger-friendly,
@@ -136,7 +119,6 @@ Advantages:
 ## Failure Scenarios
 
 A good Service Stub can simulate more than success.
-
 ``` csharp
 public sealed class FailingShippingStub
     : IShippingGateway
@@ -150,13 +132,11 @@ public sealed class FailingShippingStub
 }
 ```
 
-Tests can exercise behavior that is difficult to trigger reliably
-against a real service.
+Tests can exercise behavior that is difficult to trigger reliably against a real service.
 
 ## Latency and Cancellation
 
 You may need to test timeout or cancellation behavior:
-
 ``` csharp
 public sealed class SlowGatewayStub
     : IExternalGateway
@@ -173,16 +153,11 @@ public sealed class SlowGatewayStub
 }
 ```
 
-For most tests, injecting controllable timing abstractions is preferable
-to making the test actually wait.
+For most tests, injecting controllable timing abstractions is preferable to making the test actually wait.
 
 ## HttpMessageHandler Stubs
 
-Sometimes the code under test owns an HTTP Gateway and you want to stub
-below it.
-
-`HttpClient` can use a custom `HttpMessageHandler`:
-
+Sometimes the code under test owns an HTTP Gateway and you want to stub below it. `HttpClient` can use a custom `HttpMessageHandler`:
 ``` csharp
 public sealed class StubHttpMessageHandler(
     HttpResponseMessage response)
@@ -198,26 +173,16 @@ public sealed class StubHttpMessageHandler(
 }
 ```
 
-Now the real Gateway mapping code can run against deterministic HTTP
-responses.
-
-This is useful for testing protocol translation without calling the real
-provider.
+Now the real Gateway mapping code can run against deterministic HTTP responses. This is useful for testing protocol translation without calling the real provider.
 
 ## Test Servers
 
-For more realistic HTTP integration, run a local stub server.
-
-The application sends real HTTP requests to:
-
+For more realistic HTTP integration, run a local stub server. The application sends real HTTP requests to:
 ``` text
 http://localhost:<port>
 ```
 
-and the stub server returns controlled responses.
-
-This tests:
-
+and the stub server returns controlled responses. This tests:
 -   serialization,
 -   headers,
 -   HTTP methods,
@@ -225,13 +190,11 @@ This tests:
 -   retries,
 -   timeouts.
 
-It is heavier than a direct interface stub but exercises more of the
-integration stack.
+It is heavier than a direct interface stub but exercises more of the integration stack.
 
 ## Wire-Level Stubs
 
 A wire-level stub can define:
-
 ``` text
 When:
 POST /payments
@@ -241,18 +204,11 @@ Return:
 503 Service Unavailable
 ```
 
-This is valuable when testing a Gateway rather than the application
-service above it.
-
-Choose the stub level based on what the test needs to prove.
+This is valuable when testing a Gateway rather than the application service above it. Choose the stub level based on what the test needs to prove.
 
 ## Contract Drift
 
-The biggest danger is a stub that no longer behaves like the real
-service.
-
-Suppose the provider changes:
-
+The biggest danger is a stub that no longer behaves like the real service. Suppose the provider changes:
 ``` json
 {
   "status": "approved"
@@ -260,26 +216,17 @@ Suppose the provider changes:
 ```
 
 to:
-
 ``` json
 {
   "decision": "approved"
 }
 ```
 
-Your in-memory `IPaymentGateway` stub still passes because it bypasses
-serialization entirely.
-
-That is why Service Stub should not replace all real integration
-testing.
+Your in-memory `IPaymentGateway` stub still passes because it bypasses serialization entirely. That is why Service Stub should not replace all real integration testing.
 
 ## Contract Tests
 
-Run a smaller suite against the actual provider's sandbox or contract
-when possible.
-
-The goal is:
-
+Run a smaller suite against the actual provider's sandbox or contract when possible. The goal is:
 ``` text
 Fast tests -> stub
 Integration confidence -> contract/sandbox tests
@@ -289,16 +236,11 @@ Both are useful.
 
 ## Consumer-Driven Contracts
 
-In service-to-service architectures, contract testing can verify that a
-provider continues to satisfy assumptions encoded by consumers.
-
-This complements stubs by detecting drift between the fake behavior and
-the real boundary.
+In service-to-service architectures, contract testing can verify that a provider continues to satisfy assumptions encoded by consumers. This complements stubs by detecting drift between the fake behavior and the real boundary.
 
 ## ASP.NET Core Integration Tests
 
 An application test can override a production dependency:
-
 ``` csharp
 services.RemoveAll<IPaymentGateway>();
 
@@ -310,10 +252,7 @@ services.AddSingleton<IPaymentGateway>(
     });
 ```
 
-Then the test sends an actual HTTP request to the application.
-
-This gives a useful middle ground:
-
+Then the test sends an actual HTTP request to the application. This gives a useful middle ground:
 ``` text
 Real ASP.NET Core pipeline
 Real application behavior
@@ -322,10 +261,7 @@ Stubbed external dependency
 
 ## Determinism
 
-The main value of a stub is control.
-
-Tests should not randomly fail because:
-
+The main value of a stub is control. Tests should not randomly fail because:
 -   the internet is slow,
 -   a vendor sandbox is down,
 -   rate limits were exceeded,
@@ -335,19 +271,11 @@ A stub makes the dependency deterministic.
 
 ## Do Not Reimplement the Vendor
 
-A stub should model the scenarios your application needs.
-
-Do not build a complete clone of a third-party service.
-
-The more elaborate the fake becomes, the more likely you are maintaining
-a second implementation that can itself be wrong.
+A stub should model the scenarios your application needs. Do not build a complete clone of a third-party service. The more elaborate the fake becomes, the more likely you are maintaining a second implementation that can itself be wrong.
 
 ## Record/Replay
 
-Some teams record real provider responses and replay them in tests.
-
-This can create realistic fixtures, but review recordings for:
-
+Some teams record real provider responses and replay them in tests. This can create realistic fixtures, but review recordings for:
 -   secrets,
 -   personal data,
 -   expiration,
@@ -359,17 +287,13 @@ Sanitize fixtures before committing them.
 ## Testing Retries
 
 A stateful stub can return a sequence:
-
 ``` text
 Call 1 -> 503
 Call 2 -> 503
 Call 3 -> 200
 ```
 
-That allows deterministic testing of retry behavior.
-
-Likewise:
-
+That allows deterministic testing of retry behavior. Likewise:
 ``` text
 Call 1 -> timeout
 Call 2 -> success
@@ -379,17 +303,11 @@ can verify resilience policies.
 
 ## When to Use It
 
-Use Service Stub when an external dependency makes tests slow, fragile,
-expensive, or difficult to control.
+Use Service Stub when an external dependency makes tests slow, fragile, expensive, or difficult to control.
 
 ## When Not to Stop There
 
-A stub proves how your code behaves against the stub.
-
-It does not prove the real service matches your assumptions.
-
-Keep some level of real contract or integration verification for
-important dependencies.
+A stub proves how your code behaves against the stub. It does not prove the real service matches your assumptions. Keep some level of real contract or integration verification for important dependencies.
 
 ## Related Patterns
 
@@ -400,12 +318,4 @@ important dependencies.
 
 ## Summary
 
-Service Stub replaces an inconvenient external dependency with
-deterministic behavior during testing.
-
-Modern .NET makes stubbing possible at several levels: application
-interfaces, `HttpMessageHandler`, local HTTP servers, or protocol-level
-fixtures.
-
-The best test suites combine fast stubs with enough real integration
-testing to detect contract drift.
+Service Stub replaces an inconvenient external dependency with deterministic behavior during testing. Modern .NET makes stubbing possible at several levels: application interfaces, `HttpMessageHandler`, local HTTP servers, or protocol-level fixtures. The best test suites combine fast stubs with enough real integration testing to detect contract drift.

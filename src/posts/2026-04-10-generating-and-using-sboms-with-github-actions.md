@@ -11,6 +11,8 @@ tags: ["supply-chain-security", "github-actions", "devsecops"]
 title: "Generating and Using SBOMs with GitHub Actions"
 ---
 
+
+
 The SBOM requirement showed up in a procurement questionnaire. Someone on the team generated one, attached it to a Confluence page, checked the box, and moved on. Six months later a new CVE dropped for a package nobody had heard of. It turned out to be a transitive dependency - the dependency of a dependency - that had been in every release for two years. The Confluence document, already stale the day it was created, couldn't answer the question that mattered: was the vulnerable version in the build that shipped last week, or the one that shipped the week before? The audit trail was blank. The compliance checkbox was green.
 
 This is the gap between compliance theater and an actually useful **SBOM** - **Software Bill of Materials**. A document filed in a wiki tells you roughly what was on a developer's machine the day someone decided to run a scan. An SBOM attached to a specific release commit, generated automatically by your CI pipeline, cryptographically signed, and queryable on demand tells you exactly what shipped and when. The difference isn't philosophical. One is evidence; the other is paperwork. GitHub Actions - specifically `anchore/sbom-action` and GitHub's artifact attestation - makes producing the real version take about fifteen lines of YAML.

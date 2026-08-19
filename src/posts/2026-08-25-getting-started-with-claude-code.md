@@ -11,6 +11,8 @@ tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-product
 title: "Getting Started with Claude Code: Setup, Environment, and Best Practices"
 ---
 
+
+
 Installing Claude Code takes under a minute. Getting real, repeatable value out of it is a different task entirely - it depends on a handful of configuration files, permission choices, and habits that aren't obvious from a first "hello world" session. Most of what makes Claude Code feel like a programmable agent rather than a chatbot with file access lives in setup most people skip on day one.
 
 This guide covers installing Claude Code, bootstrapping a project so the agent understands your codebase from the first prompt, the core workflow once it's running, and the best practices that separate a productive setup from a fragile one. By the end you'll have an environment that gets more useful the longer you use it, not less.
@@ -67,10 +69,10 @@ Or write one directly at your project root:
 # My App
 
 ## Commands
-- `npm run dev` — start dev server on port 3000
-- `npm run build` — production build
-- `npm test` — run Jest
-- `npm run lint` — ESLint check
+- `npm run dev` ,  start dev server on port 3000
+- `npm run build` ,  production build
+- `npm test` ,  run Jest
+- `npm run lint` ,  ESLint check
 
 ## Architecture
 - Next.js 15 with App Router
@@ -188,3 +190,10 @@ Yes. Each terminal window is an independent session, and many developers run two
 ### What's the most common mistake in a first Claude Code setup?
 
 Treating `CLAUDE.md`, permissions, and hooks as one-time configuration instead of something that needs periodic upkeep. The other common one is skipping `CLAUDE.md` entirely and relying on the model to re-infer your stack and conventions every session, which produces inconsistent results compared to giving it standing instructions upfront.
+
+
+---
+
+Questions about this? I can help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

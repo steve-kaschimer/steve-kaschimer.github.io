@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "developer-productivity"]
 title: "Getting Started with JustMock in .NET"
 ---
 
+
+
 JustMock exists to answer a question the other mocking libraries in this series can't: what do you do when the code you need to test has a static dependency, a sealed class, or a non-virtual method, and refactoring it to be more mockable isn't a realistic option right now? Every proxy-based mocking library (Moq, NSubstitute, FakeItEasy) requires an interface or virtual member to intercept - JustMock's commercial edition sidesteps that requirement entirely using the .NET Profiling API, at the cost of needing to actually enable that more invasive mode deliberately.
 
 This guide covers installing JustMock, bootstrapping both its free (Lite) and commercial (elevated) modes, the core patterns for basic mocking and the advanced scenarios that are JustMock's actual reason for existing, and the best practices for knowing when you need elevated mode versus when a simpler library would do. By the end you'll know exactly which mode a given testing scenario actually requires.
@@ -173,3 +175,10 @@ Usually not as the default - if you're writing new, interface-driven code, Moq, 
 ### What's the most common mistake in a first JustMock setup?
 
 Forgetting to enable elevated mode before running tests that mock statics, sealed classes, or non-virtual members, resulting in confusing failures that don't clearly indicate the actual problem. The second common mistake is reaching for elevated mocking by default rather than defaulting to the free, simpler basic mode for code that's already interface-driven and doesn't need it.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

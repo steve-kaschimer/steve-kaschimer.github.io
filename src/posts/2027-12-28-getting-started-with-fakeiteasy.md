@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "developer-productivity"]
 title: "Getting Started with FakeItEasy in .NET"
 ---
 
+
+
 FakeItEasy's entire design fits behind one idea: whatever you're doing with a fake - stubbing a return value or verifying a call happened - it goes through the same entry point, `A.`. There's no separate mental model for "arranging" versus "asserting" the way some libraries split those concerns into different syntaxes. Once you know `A.Fake<T>()` creates a fake and `A.CallTo(...)` is how you interact with it either way, you've learned most of the library.
 
 This guide covers installing FakeItEasy, bootstrapping fakes and configuring behavior correctly, the core patterns for stubbing, verification, and argument matching under its single unified API, and the best practices that make the most of that consistency. By the end you'll have a test suite where stubbing and verifying share one discoverable shape, rather than two.
@@ -150,3 +152,10 @@ Yes - it's a mature, established library with a loyal following that predates th
 ### What's the most common mistake in a first FakeItEasy setup?
 
 Not taking advantage of the single `A.CallTo(...)` consistency and mixing in mental models from another mocking library, which can lead to verbose or inconsistent test code that doesn't reflect FakeItEasy's actual design intent. The second common mistake is choosing an imprecise `MustHaveHappened...` variant that happens to pass rather than one that actually expresses the specific interaction count being verified.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

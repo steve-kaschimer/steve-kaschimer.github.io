@@ -11,6 +11,8 @@ tags: ["security", "devsecops", "platform-engineering"]
 title: "Shift Right: Why Production Observability Is a Security Practice"
 ---
 
+
+
 Shift left is right. Catch vulnerabilities in code review, in CI, in dependency scanning - before they ship. The DevSecOps community has invested heavily here and the tooling is genuinely good. But shift left has a blind spot: it only covers the attack surface you anticipated. Attackers don't respect your threat model. They operate in production, against live systems, exploiting behavior that passed every scan because it wasn't a vulnerability until it was combined with a specific runtime condition, a specific data pattern, or a specific sequence of requests. The answer isn't to abandon shift left - it's to complement it with **shift right**: instrumentation in production that makes anomalous behavior visible before it becomes an incident.
 
 The reason this gets skipped is understandable. Shift-left tooling is largely automatic - you plug in Dependabot, add a CodeQL workflow, and the scans run without anyone thinking about them. Shift-right requires decisions: what to instrument, what thresholds to set, where to route alerts, how to avoid drowning your team in noise. Those decisions aren't hard, but they require intention. This post makes the argument for doing it, shows how to instrument a Node.js service with **OpenTelemetry** for security-relevant signals, and routes those signals into GitHub Security alerts - where your team is already reviewing Dependabot and CodeQL findings - so the operational overhead stays close to zero.

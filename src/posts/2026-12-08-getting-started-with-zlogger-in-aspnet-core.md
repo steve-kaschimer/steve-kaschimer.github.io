@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "performance", "observability"]
 title: "Getting Started with ZLogger in ASP.NET Core"
 ---
 
+
+
 Setting up **ZLogger in ASP.NET Core** looks almost identical to setting up any other `Microsoft.Extensions.Logging` provider - until you get to the actual log calls, where ZLogger asks you to write things a little differently in exchange for a meaningful performance win. Instead of message templates like `"Order {OrderId} processed"`, you write native C# string interpolation, and a source generator turns each call into allocation-free, directly-UTF8-encoded output at compile time.
 
 This guide covers a complete ZLogger setup for .NET 8: installing the package, the two ways to configure providers, `Program.cs` wiring for ASP.NET Core apps and Worker Services, and the interpolation-based logging syntax that replaces the usual `LogInformation(...)` calls. By the end you'll have a fast, low-allocation logging baseline suitable for high-throughput services.
@@ -248,3 +250,10 @@ Both work, since ZLogger's providers still implement the standard `ILogger` inte
 ### Is ZLogger worth it if I'm not logging at high volume?
 
 Probably not on its own. ZLogger's main advantage is allocation and throughput at high log volume - game servers, real-time systems, anything logging heavily per request. For typical CRUD APIs logging a handful of events per request, the built-in providers or Serilog will serve you just as well with a larger ecosystem to draw on.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

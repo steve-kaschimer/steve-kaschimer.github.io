@@ -13,10 +13,9 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Architecture Lab: Northstar Commerce"
 ---
 
-Northstar Commerce is the evolving companion application for Volume III - a small commerce app we'll deliberately under-build, then grow only when something forces our hand.
 
-The baseline is about as plain as ASP.NET Core, EF Core, and SQLite get:
 
+Northstar Commerce is the evolving companion application for Volume III - a small commerce app we'll deliberately under-build, then grow only when something forces our hand. The baseline is about as plain as ASP.NET Core, EF Core, and SQLite get:
 ```text
 ASP.NET Core -> EF Core -> SQLite
 ```
@@ -29,6 +28,7 @@ No future architecture gets pre-installed. Every pattern that shows up later in 
 
 ## Baseline Experiment
 
-Open `Features/Orders/PlaceOrder.cs`. Right now the use case owns everything: validation, product lookup, business decisions, calculation, persistence, and the HTTP response. That's fine for how simple the rules are today.
+Open `Features/Orders/PlaceOrder.cs`. Right now the use case owns everything: validation, product lookup, business decisions, calculation, persistence, and the HTTP response. That's fine for how simple the rules are today. The next experiment pushes on that simplicity until it stops holding up, and we evolve the model in response.
+---
 
-The next experiment pushes on that simplicity until it stops holding up, and we evolve the model in response.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

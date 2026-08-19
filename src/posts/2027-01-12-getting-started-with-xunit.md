@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "ci-cd", "developer-productivity"]
 title: "Getting Started with xUnit in .NET"
 ---
 
+
+
 xUnit's minimal-ceremony philosophy is the whole point, and it's also the thing that occasionally confuses people coming from NUnit or MSTest: there's no `[SetUp]` attribute because xUnit wants you to use the constructor instead, and there's no `[TearDown]` because `IDisposable` already does that job. Once that click happens - test classes are just objects with a lifecycle, not a special container the framework manages through attributes - the rest of xUnit falls into place quickly.
 
 This guide covers installing xUnit, bootstrapping test project structure and shared fixtures correctly, the core patterns for setup/teardown and parameterized tests, and the best practices that take advantage of xUnit's default parallelism rather than fighting it. By the end you'll have a test suite that's fast by default and doesn't fall into the class-level shared-state traps that trip people up under parallel execution.
@@ -180,3 +182,10 @@ Yes, via `[assembly: CollectionBehavior(DisableTestParallelization = true)]` or 
 ### What's the most common mistake in a first xUnit setup?
 
 Assuming test classes share state across test methods the way they might in a framework with class-level `[SetUp]` semantics, when xUnit actually creates a fresh instance per test by design. The second common mistake is fighting the default parallelism instead of treating any resulting flakiness as a signal to fix shared-state issues in the tests themselves.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

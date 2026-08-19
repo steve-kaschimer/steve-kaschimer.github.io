@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "fine-tuning", "llm", "agentic-development", "azure"]
 title: "Azure AI Foundry Fine-Tuning: When to Customize a Model vs. When to Prompt Better"
 ---
 
+
+
 Fine-tuning has a gravitational pull that's out of proportion to how often it's the right call. It sounds like the "serious" option - training your own model, not just writing a better prompt - so it gets reached for whenever prompting starts to feel unreliable, before anyone's actually diagnosed *why* it's unreliable. That diagnosis matters because fine-tuning is the most expensive and least flexible of the three real options, and two of the three failure modes it gets blamed for aren't fixed by it at all.
 
 ***

@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "architecture", "developer-productivity"]
 title: "Getting Started with Hangfire in .NET"
 ---
 
+
+
 Hangfire's install-to-first-job time is genuinely a few minutes, and that speed is exactly why it's easy to skip the two decisions that determine whether it stays cheap to run: what storage backend you point it at, and how much you rely on the polling interval defaults. Neither is complicated, but both are easy to leave on autopilot in a way that quietly costs you either database load or missed reliability guarantees.
 
 This guide covers installing Hangfire, bootstrapping storage and the dashboard correctly, the core patterns for fire-and-forget, delayed, and recurring jobs, and the best practices that keep Hangfire's polling model from becoming its own performance problem. By the end you'll have a background job setup with real visibility into what's running and what's failed.
@@ -178,3 +180,10 @@ Yes - Redis, PostgreSQL, and other storage backends are supported via their own 
 ### What's the most common mistake in a first Hangfire setup?
 
 Forgetting `AddHangfireServer()`, and deploying the dashboard without authorization configured. Both are easy to fix once known, but both fail silently or dangerously (respectively) if missed - worth checking explicitly rather than assuming the defaults are production-safe.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

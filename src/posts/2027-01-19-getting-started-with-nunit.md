@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "developer-productivity", "tooling"]
 title: "Getting Started with NUnit in .NET"
 ---
 
+
+
 NUnit's attribute-driven design front-loads more concepts than xUnit's constructor-based approach - `[SetUp]`, `[TearDown]`, `[TestFixture]`, `[OneTimeSetUp]` - but each one buys you something specific and well-documented, and the payoff is a genuinely expressive, readable assertion syntax that a lot of teams prefer once they're used to it. The part worth getting right early is knowing which setup attribute runs when, since NUnit gives you more granularity here than the other frameworks in this series, and using the wrong one is an easy, quiet way to make tests slower or less isolated than intended.
 
 This guide covers installing NUnit, bootstrapping test fixtures with the right setup/teardown granularity, the core patterns for parameterized tests and constraint-based assertions, and the best practices that make good use of NUnit's richer attribute vocabulary without over-using it. By the end you'll have a test suite that takes advantage of what NUnit specifically offers over its alternatives.
@@ -187,3 +189,10 @@ Technically yes, since NUnit supports both, but it's worth avoiding for consiste
 ### What's the most common mistake in a first NUnit setup?
 
 Using `[OneTimeSetUp]` for state that should actually be per-test isolated, introducing subtle cross-test coupling that only surfaces as flaky failures under certain execution orders. The second common mistake is mixing assertion styles inconsistently across the codebase rather than settling on the constraint-based approach as the team standard.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

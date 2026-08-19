@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity"]
 title: "Getting Started with Neovim for .NET Development"
 ---
 
+
+
 Every other editor in this series gives you IntelliSense and debugging the moment you install it. Neovim gives you neither - you assemble both yourself, from a language server, a completion plugin, and a debug adapter, each configured explicitly. That's the honest trade the whole editor makes: nothing works until you wire it up, and once you have, it's exactly the setup you wanted, running exactly as fast as your hardware allows, with none of a GUI IDE's overhead.
 
 This guide covers installing Neovim and the pieces that make C# development genuinely functional - a language server, completion, and debugging - bootstrapping a configuration that stays maintainable as it grows, the core navigation and debugging workflow once everything's connected, and the best practices for keeping a from-scratch .NET setup working reliably. By the end you'll have a lightweight, fully keyboard-driven .NET environment built entirely to your own specification.

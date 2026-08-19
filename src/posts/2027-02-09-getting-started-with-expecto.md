@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "developer-productivity", "tooling"]
 title: "Getting Started with Expecto in .NET (F#)"
 ---
 
+
+
 Expecto asks a genuinely different question than the other four frameworks in this series: instead of "which attributes decorate a test method," it asks "what does a test look like if it's just an ordinary F# value." Tests in Expecto are composed using the language's own tools - functions, lists, pattern matching - rather than a separate attribute-based DSL bolted on top of an object-oriented test class model. If you're coming from xUnit or NUnit, the biggest adjustment isn't syntax, it's the mental model: a test suite is data you build up, not a class the framework introspects.
 
 This guide covers installing Expecto, structuring tests as composable values, the core patterns for setup, parameterized tests, and property-based testing, and the best practices for writing tests that feel idiomatic to F# rather than translated from a C#-oriented framework. By the end you'll have a test suite that reads naturally alongside the rest of an F# codebase.
@@ -182,3 +184,10 @@ Yes, within the F# ecosystem specifically - it's a well-established, actively us
 ### What's the most common mistake when adopting Expecto?
 
 Trying to force attribute-based, class-oriented patterns from C# testing frameworks onto Expecto instead of embracing its data-and-function-composition model, which produces awkward code that fights the library rather than using it as intended. The second common mistake is underusing property-based testing, missing one of Expecto's most distinctive and valuable built-in capabilities.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

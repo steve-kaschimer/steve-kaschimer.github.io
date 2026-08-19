@@ -11,10 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Dead Letter Queue: What To Do With Messages That Never Succeed"
 ---
 
-Retries assume failure may be temporary.
 
-Some failures are not.
 
+Retries assume failure may be temporary. Some failures are not.
 ```text
 Malformed payload
 Unknown contract version
@@ -23,9 +22,7 @@ Permanent business rejection
 Poison data
 ```
 
-Retrying forever wastes capacity and can block healthier work.
-
-A Dead Letter Queue isolates messages that cannot currently be processed.
+Retrying forever wastes capacity and can block healthier work. A Dead Letter Queue isolates messages that cannot currently be processed.
 
 ## The Pattern
 
@@ -47,7 +44,6 @@ The message is removed from the normal processing path and preserved for investi
 ## Bounded Retry
 
 Dead-letter handling depends on a bounded retry policy.
-
 ```text
 Attempt 1
 Attempt 2
@@ -56,7 +52,6 @@ Dead-letter
 ```
 
 The exact number should reflect:
-
 - failure type;
 - retry delay;
 - business urgency;
@@ -67,7 +62,6 @@ Do not use "10 retries" because it sounds robust.
 ## Preserve Context
 
 A dead-lettered message should retain:
-
 ```text
 original message ID
 payload
@@ -84,7 +78,6 @@ Without context, operators cannot diagnose or replay safely.
 ## Classify Failures
 
 Useful categories:
-
 ```text
 Transient
 Permanent
@@ -94,10 +87,7 @@ Authorization
 Unknown
 ```
 
-Some failures should dead-letter immediately.
-
-For example:
-
+Some failures should dead-letter immediately. For example:
 ```text
 unsupported schema version
 ```
@@ -107,7 +97,6 @@ may never succeed through retry.
 ## Do Not Swallow Poison Messages
 
 This is dangerous:
-
 ```csharp
 catch (Exception ex)
 {
@@ -116,20 +105,16 @@ catch (Exception ex)
 }
 ```
 
-If the broker interprets that as success, the message disappears.
-
-Failure semantics must match the transport.
+If the broker interprets that as success, the message disappears. Failure semantics must match the transport.
 
 ## Dead Letter Is Not Success
 
 Moving a message to a DLQ means:
-
 ```text
 normal processing gave up
 ```
 
 not:
-
 ```text
 business process succeeded
 ```
@@ -139,7 +124,6 @@ Alerting and workflow state may need to reflect that distinction.
 ## Operational Workflow
 
 A DLQ needs a human or automated recovery process.
-
 ```text
 Detect
 Diagnose
@@ -152,22 +136,16 @@ If no one owns that workflow, the DLQ becomes a quiet data graveyard.
 
 ## Replay
 
-Replay can be dangerous.
-
-If the original consumer is not idempotent:
-
+Replay can be dangerous. If the original consumer is not idempotent:
 ```text
 replay
 ```
 
-may duplicate effects.
-
-Inbox / Idempotent Consumer makes replay much safer.
+may duplicate effects. Inbox / Idempotent Consumer makes replay much safer.
 
 ## Replay After Contract Fix
 
 A common scenario:
-
 ```text
 new event version arrives
 consumer cannot parse
@@ -181,7 +159,6 @@ This is one reason preserving the original payload and metadata matters.
 ## DLQ Metrics
 
 Measure:
-
 ```text
 dead-letter count
 rate of new dead letters
@@ -195,24 +172,16 @@ Alert on growth, not just total size.
 
 ## Automated Reprocessing
 
-Some failures can be retried later automatically.
-
-For example:
-
+Some failures can be retried later automatically. For example:
 ```text
 dependency unavailable for hours
 ```
 
-A scheduled replay process may requeue selected messages after the dependency recovers.
-
-Be careful to avoid endless loops between main queue and DLQ.
+A scheduled replay process may requeue selected messages after the dependency recovers. Be careful to avoid endless loops between main queue and DLQ.
 
 ## Security and Privacy
 
-Dead-letter payloads may contain sensitive data.
-
-Apply:
-
+Dead-letter payloads may contain sensitive data. Apply:
 - access controls;
 - retention policies;
 - encryption;
@@ -223,7 +192,6 @@ Do not dump complete message payloads into general-purpose logging.
 ## Testing
 
 Test:
-
 ```text
 transient failure retries
 permanent failure dead-letters
@@ -239,7 +207,6 @@ Use a DLQ when asynchronous work must continue even when individual messages are
 ## When It Hurts
 
 It hurts when it becomes:
-
 ```text
 catch-all error bucket
 no alerts
@@ -251,8 +218,7 @@ A DLQ without operations is delayed data loss.
 
 ## Summary
 
-Dead Letter Queue protects the healthy message stream from poison work while preserving failed messages for diagnosis and recovery.
+Dead Letter Queue protects the healthy message stream from poison work while preserving failed messages for diagnosis and recovery. The pattern is only complete when someone owns the dead-letter lifecycle. Quarantine is not resolution.
+---
 
-The pattern is only complete when someone owns the dead-letter lifecycle.
-
-Quarantine is not resolution.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

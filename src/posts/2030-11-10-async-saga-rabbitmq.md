@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 13: The Saga Crosses the Network"
 ---
 
+
+
 The previous Saga was deliberately kept in-process, which let us understand the business workflow before adding any transport complexity on top of it. Now the same state machine crosses RabbitMQ.
 
 ## What Changed
@@ -46,3 +48,6 @@ Right now the Inventory and Payment workers persist their Inbox record and busin
 ## Lesson
 
 Distributed architecture is recursive. The reliability rule we learned inside Ordering shows up again inside every participant, because patterns don't disappear when you cross a service boundary - they repeat, once per local consistency boundary, for as long as those boundaries exist.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

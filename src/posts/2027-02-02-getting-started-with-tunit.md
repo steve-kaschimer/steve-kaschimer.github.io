@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "performance", "ci-cd", "tooling"]
 title: "Getting Started with TUnit in .NET"
 ---
 
+
+
 TUnit's most important characteristic isn't a syntax difference from xUnit or NUnit - it's when test discovery happens. The three incumbent frameworks find your tests at runtime via reflection, every single test run. TUnit finds them at compile time via source generators, which is a genuinely different architecture, not a faster implementation of the same idea. That's what unlocks Native AOT support the others structurally can't offer without a rewrite, and it's why TUnit's setup guide looks familiar on the surface while behaving differently underneath.
 
 This guide covers installing TUnit, bootstrapping test classes and fixtures with dependency injection, the core patterns for parameterized and data-driven tests, and the best practices for taking advantage of what TUnit specifically offers - performance and AOT compatibility - without assuming it's a drop-in swap for an existing suite. By the end you'll have a fast, source-generated test suite and a clear sense of when TUnit's newness is worth the trade-off.
@@ -201,3 +203,10 @@ Yes - they're separate test projects with separate discovery mechanisms, so ther
 ### What's the most common mistake in a first TUnit setup?
 
 Treating it as a drop-in replacement for an existing xUnit or NUnit suite and expecting a straightforward find-and-replace migration, when attribute names, assertion syntax, and the async-first assertion model all differ meaningfully. The second common mistake is not verifying IDE and CI tooling compatibility with Microsoft.Testing.Platform before committing to TUnit for a project of real consequence.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

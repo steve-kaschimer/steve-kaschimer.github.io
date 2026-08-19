@@ -11,15 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-logic"]
 title: "Table Module in Modern .NET"
 ---
 
-Table Module organizes domain logic into one module responsible for all
-rows in a table or view. It is less commonly named in modern .NET
-discussions, but the idea remains useful.
+
+
+Table Module organizes domain logic into one module responsible for all rows in a table or view. It is less commonly named in modern .NET discussions, but the idea remains useful.
 
 ## The Key Distinction
 
-With Domain Model, one object instance commonly represents one entity.
-With Table Module, one module operates across the entire record set.
-
+With Domain Model, one object instance commonly represents one entity. With Table Module, one module operates across the entire record set.
 ``` csharp
 public sealed class InvoiceTable
 {
@@ -33,13 +31,11 @@ public sealed class InvoiceTable
 }
 ```
 
-There is no requirement for a rich `Invoice` object with methods such as
-`Pay()` or `Cancel()`.
+There is no requirement for a rich `Invoice` object with methods such as `Pay()` or `Cancel()`.
 
 ## A Modern .NET Interpretation
 
 LINQ makes set-oriented behavior natural:
-
 ``` csharp
 public sealed class OrderTable
 {
@@ -56,45 +52,33 @@ This can compose directly with EF Core.
 
 ## Table Module vs. Transaction Script
 
-Transaction Script is organized around use cases such as `SubmitOrder`
-and `CancelOrder`. Table Module is organized around record sets such as
-Orders, Customers, and Invoices.
+Transaction Script is organized around use cases such as `SubmitOrder` and `CancelOrder`. Table Module is organized around record sets such as Orders, Customers, and Invoices.
 
 ## Table Module vs. Domain Model
 
 Domain Model:
-
 ``` csharp
 order.Submit();
 ```
 
 Table Module:
-
 ``` csharp
 orders.Submit(orderId);
 ```
 
-The first associates behavior with an entity instance. The second
-associates behavior with the module responsible for the set.
+The first associates behavior with an entity instance. The second associates behavior with the module responsible for the set.
 
 ## When It Makes Sense
 
-Table Module can fit well when set-based operations dominate, reporting
-is central, data comes from views or stored procedures, or a rich object
-graph adds little value.
+Table Module can fit well when set-based operations dominate, reporting is central, data comes from views or stored procedures, or a rich object graph adds little value.
 
 ## EF Core Changes the Picture
 
-EF Core makes object-oriented persistence convenient, so modern .NET
-naturally gravitates toward entity objects. A Table Module should
-therefore add meaningful domain behavior rather than merely duplicate
-LINQ or `DbSet<T>`.
+EF Core makes object-oriented persistence convenient, so modern .NET naturally gravitates toward entity objects. A Table Module should therefore add meaningful domain behavior rather than merely duplicate LINQ or `DbSet<T>`.
 
 ## Testing
 
-Set-oriented logic can often be tested against in-memory collections,
-while queries intended for EF Core should also receive integration tests
-to verify SQL translation.
+Set-oriented logic can often be tested against in-memory collections, while queries intended for EF Core should also receive integration tests to verify SQL translation.
 
 ## Related Patterns
 
@@ -105,6 +89,4 @@ to verify SQL translation.
 
 ## Summary
 
-Table Module occupies useful middle ground: it gives business logic a
-home without requiring a rich object model. It remains a good fit when
-the problem itself is naturally tabular or set-oriented.
+Table Module occupies useful middle ground: it gives business logic a home without requiring a rich object model. It remains a good fit when the problem itself is naturally tabular or set-oriented.

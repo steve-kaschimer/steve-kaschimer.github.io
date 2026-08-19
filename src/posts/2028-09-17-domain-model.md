@@ -11,10 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-logic"]
 title: "Domain Model in Modern .NET"
 ---
 
-A Domain Model organizes business logic around objects representing
-concepts in the problem domain. Instead of treating an order as a bag of
-data manipulated by services, the order itself can own the rules
-governing its behavior.
+
+
+A Domain Model organizes business logic around objects representing concepts in the problem domain. Instead of treating an order as a bag of data manipulated by services, the order itself can own the rules governing its behavior.
 
 ## A Behavior-Rich Order
 
@@ -43,10 +42,7 @@ The model does more than store state: it protects it.
 
 ## Invariants and Value Objects
 
-An invariant is a rule that must remain true for a domain concept to be
-valid. Modern C# records and record structs are useful for value
-concepts:
-
+An invariant is a rule that must remain true for a domain concept to be valid. Modern C# records and record structs are useful for value concepts:
 ``` csharp
 public readonly record struct Money(decimal Amount, string Currency)
 {
@@ -62,9 +58,7 @@ public readonly record struct Money(decimal Amount, string Currency)
 
 ## Domain Model and Service Layer
 
-The service coordinates the use case while the model owns business
-decisions:
-
+The service coordinates the use case while the model owns business decisions:
 ``` csharp
 var order = await orders.GetByIdAsync(id, ct)
     ?? throw new OrderNotFoundException(id);
@@ -76,9 +70,7 @@ await orders.SaveAsync(order, ct);
 
 ## Persistence With EF Core
 
-The domain object does not need to call EF Core. Mapping configuration
-can live in infrastructure:
-
+The domain object does not need to call EF Core. Mapping configuration can live in infrastructure:
 ``` csharp
 public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
@@ -93,7 +85,6 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 ## Testing
 
 Many important domain tests are ordinary in-memory unit tests:
-
 ``` csharp
 [Fact]
 public void Empty_order_cannot_be_submitted()
@@ -105,15 +96,11 @@ public void Empty_order_cannot_be_submitted()
 
 ## When to Use It
 
-Domain Model becomes attractive when rules are complex, invariants
-matter, behavior is reused across workflows, and state transitions have
-business meaning.
+Domain Model becomes attractive when rules are complex, invariants matter, behavior is reused across workflows, and state transitions have business meaning.
 
 ## When Not to Use It
 
-A rich model may be unnecessary for CRUD-heavy systems, simple
-integrations, or applications where the database representation already
-closely matches the problem.
+A rich model may be unnecessary for CRUD-heavy systems, simple integrations, or applications where the database representation already closely matches the problem.
 
 ## Related Patterns
 
@@ -125,5 +112,4 @@ closely matches the problem.
 
 ## Summary
 
-A good Domain Model is executable business knowledge. Use it when the
-complexity of the business justifies the complexity of the model.
+A good Domain Model is executable business knowledge. Use it when the complexity of the business justifies the complexity of the model.

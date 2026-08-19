@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "devops", "platform-engineering", "tooling"]
 title: "Getting Started with Jenkins for .NET"
 ---
 
+
+
 Jenkins asks more of you before your first pipeline even runs than any other platform in this comparison - you're provisioning the server, installing plugins, and configuring agents yourself, work that GitHub Actions or GitLab CI hands you for free the moment you push a YAML file. That upfront cost is exactly the trade this guide is honest about: Jenkins' Groovy-based Jenkinsfiles are genuinely more expressive for complex build logic than any YAML alternative, but that expressiveness sits on top of infrastructure you now own and maintain.
 
 This guide covers installing Jenkins and configuring it for .NET builds, bootstrapping a Jenkinsfile with the plugins and agent setup that matter, the core declarative pipeline patterns, and the best practices for keeping a self-hosted Jenkins instance from becoming its own maintenance burden. By the end you'll have a working .NET pipeline and a clear-eyed understanding of the operational commitment behind it.
@@ -237,3 +239,10 @@ Primarily for genuinely complex pipeline logic that Groovy expresses more natura
 ### What's the most common mistake in a first Jenkins setup for .NET?
 
 Underestimating the ongoing maintenance commitment - treating Jenkins as a one-time setup rather than infrastructure requiring continuous plugin updates, security patches, and agent management. The second common mistake is running builds directly on inconsistent, long-lived agents instead of using Docker agents for reproducible, portable build environments.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

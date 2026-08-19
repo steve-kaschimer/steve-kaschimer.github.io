@@ -11,6 +11,8 @@ tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-product
 title: "Getting Started with OpenAI Codex: Setup, Environment, and Best Practices"
 ---
 
+
+
 OpenAI Codex is built around a different assumption than most coding agents: that you'll often want to describe a task and walk away, rather than watch every edit happen live. That async, sandboxed-by-default design is Codex's biggest strength, but it also means the setup steps that matter most - sandbox mode, approval policy, and `AGENTS.md` - are exactly the ones people skip when they just want to try it quickly.
 
 This guide covers installing the Codex CLI, bootstrapping a repository so Codex understands your project without you re-explaining it every session, the sandbox and approval model that keeps autonomous runs safe, and the best practices for getting reliable results out of hands-off execution. By the end you'll have a setup that's safe to run unattended and consistent across a team.
@@ -70,13 +72,13 @@ Or write it directly:
 FastAPI backend, PostgreSQL, Alembic migrations.
 
 ## Commands
-- `pytest` — run the test suite
-- `ruff check .` — lint
-- `alembic upgrade head` — apply migrations
+- `pytest` ,  run the test suite
+- `ruff check .` ,  lint
+- `alembic upgrade head` ,  apply migrations
 
 ## Constraints
 - Never modify files under `infra/` without explicit approval
-- Do not read `.env` — use `.env.example` as the reference for expected variables
+- Do not read `.env` ,  use `.env.example` as the reference for expected variables
 ```
 
 This is the single highest-leverage file in a Codex setup. Skipping it means Codex has no way to know your test command or which directories are off-limits, and it will guess - sometimes wrong.
@@ -170,3 +172,10 @@ Yes, via isolated git worktrees - Codex integrates with the OpenAI Agents SDK an
 ### What's the most common mistake in a first Codex setup?
 
 Skipping `AGENTS.md` entirely and defaulting to full-auto mode on a primary machine are the two most common early mistakes. The first means Codex has to guess your conventions and test commands every session; the second removes the safety net that sandboxing and approval policies are specifically designed to provide.
+
+
+---
+
+Questions about this? I can help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

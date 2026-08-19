@@ -11,6 +11,8 @@ tags: ["github-actions", "ci-cd", "deployment", "devsecops", "environments"]
 title: "GitHub Environments Deep Dive: Deployment Protection Rules, Secrets, and Variables"
 ---
 
+
+
 Most teams discover GitHub Environments when they need a required reviewer gate before production. They click through the UI, add a teammate as a reviewer, check the box, and move on. Two months later they're still passing production database URLs in repository-level secrets shared across every workflow in the repo, still manually co-ordinating "don't deploy until the staging smoke test passes," and still wondering why their deployment governance feels held together with convention rather than enforcement.
 
 Environments are a deployment control plane. The approval gate is one feature of several. The rest of the surface area - branch policies, wait timers, custom webhook rules, scoped secrets, and per-environment variables - gives you a model where deployment rules are declared in the repository rather than maintained in team memory.

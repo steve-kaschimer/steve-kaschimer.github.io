@@ -11,16 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "aspnet-core"]
 title: "Server Session State in Modern ASP.NET Core"
 ---
 
-Server Session State keeps session-specific data on the application side
-while the client carries only enough information to identify the
-session.
 
-In ASP.NET Core, `HttpContext.Session` is a direct modern example.
+
+Server Session State keeps session-specific data on the application side while the client carries only enough information to identify the session. In ASP.NET Core, `HttpContext.Session` is a direct modern example.
 
 ## The Core Idea
 
 Instead of sending the whole state to the browser:
-
 ``` text
 Client:
 cart contents
@@ -29,7 +26,6 @@ preferences
 ```
 
 the client carries a session identifier:
-
 ``` text
 Client -> session id -> server-side state
 ```
@@ -39,7 +35,6 @@ The server uses that identifier to retrieve the associated data.
 ## ASP.NET Core Session
 
 Configure a backing cache:
-
 ``` csharp
 builder.Services.AddDistributedMemoryCache();
 
@@ -52,13 +47,11 @@ builder.Services.AddSession(options =>
 ```
 
 Then add session middleware:
-
 ``` csharp
 app.UseSession();
 ```
 
 Application code can write:
-
 ``` csharp
 HttpContext.Session.SetString(
     "preferred-currency",
@@ -66,7 +59,6 @@ HttpContext.Session.SetString(
 ```
 
 and later read:
-
 ``` csharp
 var currency =
     HttpContext.Session.GetString(
@@ -77,11 +69,7 @@ The browser does not contain the actual value in the session cookie.
 
 ## Scale-Out Changes the Design
 
-An in-memory cache works only when every request for a session reaches
-the same application instance.
-
-In a scaled-out deployment:
-
+An in-memory cache works only when every request for a session reaches the same application instance. In a scaled-out deployment:
 ``` text
 Browser
   |
@@ -91,17 +79,11 @@ Load Balancer
   |-------- App C
 ```
 
-session state must either use sticky routing or live in a store
-available to all instances.
-
-A distributed cache is usually the more robust architecture.
+session state must either use sticky routing or live in a store available to all instances. A distributed cache is usually the more robust architecture.
 
 ## Keep Session Small
 
-Server-side does not mean unlimited.
-
-Large session objects increase:
-
+Server-side does not mean unlimited. Large session objects increase:
 -   memory or cache usage,
 -   serialization cost,
 -   network traffic to a distributed cache,
@@ -113,18 +95,11 @@ Store the minimum state needed for the conversation.
 ## Do Not Store Domain Aggregates in Session
 
 This is tempting:
-
 ``` csharp
 session.Set("Order", order);
 ```
 
-but problematic.
-
-The object becomes a stale copy of business data, may be expensive to
-serialize, and bypasses normal concurrency and persistence rules.
-
-Prefer an identifier:
-
+but problematic. The object becomes a stale copy of business data, may be expensive to serialize, and bypasses normal concurrency and persistence rules. Prefer an identifier:
 ``` text
 CurrentOrderId = 42
 ```
@@ -134,47 +109,25 @@ then load authoritative state through the normal persistence path.
 ## Session Is Ephemeral
 
 Session data can disappear because of:
-
 -   expiration,
 -   cache eviction,
 -   deployment,
 -   infrastructure failure,
 -   user cookie deletion.
 
-Do not treat it as durable business storage.
-
-A checkout that has legal or financial significance belongs in durable
-persistence, even if session state helps drive the UI.
+Do not treat it as durable business storage. A checkout that has legal or financial significance belongs in durable persistence, even if session state helps drive the UI.
 
 ## Concurrency
 
-Two requests from the same user can arrive concurrently.
-
-Session state can therefore have race conditions just like other shared
-state.
-
-Avoid read-modify-write logic that assumes requests for one user are
-always sequential.
+Two requests from the same user can arrive concurrently. Session state can therefore have race conditions just like other shared state. Avoid read-modify-write logic that assumes requests for one user are always sequential.
 
 ## Security
 
-The session identifier is security-sensitive because it associates a
-request with server-side state.
-
-Use secure cookie settings and the framework's session mechanisms rather
-than inventing custom predictable session IDs.
-
-Do not use session as a substitute for authentication or authorization.
+The session identifier is security-sensitive because it associates a request with server-side state. Use secure cookie settings and the framework's session mechanisms rather than inventing custom predictable session IDs. Do not use session as a substitute for authentication or authorization.
 
 ## Server Session State vs. Client Session State
 
-Client Session State sends the state itself back and forth.
-
-Server Session State sends an identifier and keeps the state on the
-application side.
-
-The trade-off is straightforward:
-
+Client Session State sends the state itself back and forth. Server Session State sends an identifier and keeps the state on the application side. The trade-off is straightforward:
 ``` text
 Client state:
 less server storage
@@ -188,7 +141,6 @@ more server coordination
 ## Testing
 
 Test:
-
 -   missing session,
 -   expired session,
 -   concurrent requests,
@@ -196,14 +148,11 @@ Test:
 -   serialization,
 -   failure of the backing cache.
 
-Business operations should remain correct even when ephemeral session
-data disappears.
+Business operations should remain correct even when ephemeral session data disappears.
 
 ## When to Use It
 
-Server Session State is useful for small amounts of short-lived
-conversational state that should not be exposed to or carried by the
-client.
+Server Session State is useful for small amounts of short-lived conversational state that should not be exposed to or carried by the client.
 
 ## Related Patterns
 
@@ -213,8 +162,4 @@ client.
 
 ## Summary
 
-Server Session State keeps conversational data on the application side
-and gives the client only a session identifier.
-
-ASP.NET Core supports the pattern directly, but session should remain
-small, ephemeral, and separate from durable domain state.
+Server Session State keeps conversational data on the application side and gives the client only a session identifier. ASP.NET Core supports the pattern directly, but session should remain small, ephemeral, and separate from durable domain state.

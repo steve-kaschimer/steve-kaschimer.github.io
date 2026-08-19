@@ -11,6 +11,8 @@ tags: ["devops", "ci-cd", "developer-productivity"]
 title: "Trunk-Based Development in Practice: What They Don't Tell You"
 ---
 
+
+
 The internet has no shortage of "trunk-based development is better than GitFlow" hot takes. They're not wrong, but they're not useful either. Teams read the post, nod along, rename their `develop` branch to `main`, and wonder two sprints later why nothing has changed. The abstract argument isn't the hard part. The hard part is the prerequisites - the tooling and cultural wiring that has to be in place before TBD actually works. Nobody writes about those.
 
 So let's do that instead.

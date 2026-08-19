@@ -11,6 +11,8 @@ tags: ["devsecops", "github", "devops"]
 title: Why GitHub is the DevSecOps Platform of Choice
 ---
 
+
+
 In the evolving landscape of software development, DevSecOps has emerged as a critical discipline - one that integrates security into every phase of the software delivery lifecycle. As organizations strive to ship faster without compromising safety, the tools we choose become more than just enablers - they shape our workflows, our culture, and ultimately, our outcomes.
 
 Among the many platforms available, GitHub stands out. Once known primarily as a code hosting service, GitHub has matured into a robust ecosystem that supports the full spectrum of DevSecOps practices. For architects and engineers tasked with embedding security into development pipelines, GitHub offers a compelling blend of automation, visibility, and developer-first design.
@@ -122,8 +124,10 @@ For DevSecOps architects and engineers, GitHub isn’t just a place to host code
 
 If you haven’t explored GitHub’s security features recently, now is a good time to dive in. Start small, automate what you can, and build a culture where security is everyone’s responsibility.
 
+
+
 ---
 
-Need help? Ask me!
+GitHub question? Happy to help.
 
 [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "developer-productivity", "tooling"]
 title: "Getting Started with DataAnnotations in .NET"
 ---
 
+
+
 DataAnnotations have been quietly doing most of .NET's validation work since long before ASP.NET Core existed, and their biggest advantage is one that's easy to take for granted: they're already there. No package to add, no configuration to wire up - decorate a property with `[Required]`, and MVC's model binding pipeline validates it automatically. The parts worth understanding well are where that automatic convenience ends, and how `IValidatableObject` picks up the slack for anything an attribute can't express on its own.
 
 This guide covers using DataAnnotations for validation in .NET, bootstrapping automatic MVC validation and the manual validation you need elsewhere, the core patterns for built-in attributes and `IValidatableObject`, and the best practices for knowing when attribute-based validation is genuinely sufficient versus when it's time to reach for something more expressive. By the end you'll have validation that's fast, familiar, and correctly scoped to what it's actually good at.
@@ -194,3 +196,10 @@ Yes, generally - it benchmarks well relative to FluentValidation in most compari
 ### What's the most common mistake in a first DataAnnotations setup?
 
 Manually checking `ModelState.IsValid` in every MVC action when `[ApiController]` already handles it automatically, adding redundant code. The second common mistake is trying to force genuinely complex conditional validation into a combination of built-in attributes rather than reaching for `IValidatableObject`, or once the logic gets unwieldy enough, FluentValidation, at the right point.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

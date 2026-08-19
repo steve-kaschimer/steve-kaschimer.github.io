@@ -11,6 +11,8 @@ tags: ["ai-agents", "code-review", "azure-ai-foundry", "github-actions", "archit
 title: "Agentic Code Review: Using AI Agents to Enforce Architecture Rules on Every PR"
 ---
 
+
+
 An architecture decision written down in an ADR is a fact about the codebase until the next PR that doesn't know it exists. "New Azure clients use `DefaultAzureCredential`, not connection strings" is easy to state once and easy to violate forever after, because the constraint lives in a document nobody re-reads while writing code. A human reviewer catching that drift requires the reviewer to have the rule memorized and to notice the violation in a diff, every time, for every rule the team has ever written down. That doesn't scale past a handful of rules or a team of more than a few people.
 
 This is a narrower problem than [Copilot's general-purpose PR review](/posts/2026-06-05-github-copilot-in-ci/), which is worth being precise about. Copilot reviews for bugs, style, and general code quality - judgment calls with no single correct answer. This post is about enforcing a *specific, repo-defined rule set*: constraints your team already decided on and wrote down, that either hold or don't. That's a deterministic-enough problem that an agent grounded in the actual rules file - not general opinions about "good architecture" - can do it reliably.

@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "architecture", "performance"]
 title: "Getting Started with Wolverine in .NET"
 ---
 
+
+
 Wolverine is the one entry in this series where "getting started with background jobs" and "getting started with the whole library" are almost the same document - scheduling is one feature of a much broader messaging framework, not the framework's reason for existing. That's worth internalizing before you write any code: if you came here purely for a job scheduler, Wolverine's in-process mediation, distributed messaging, and durable outbox are all things you're adopting alongside scheduling, not optional extras you can ignore.
 
 This guide covers installing Wolverine, bootstrapping handlers and the durable outbox that gives scheduled and published messages real delivery guarantees, the core patterns for commands, events, and scheduled jobs under one handler model, and the best practices for using Wolverine's breadth deliberately rather than accidentally. By the end you'll understand both how to schedule background work in Wolverine and why that capability sits inside a larger design.
@@ -188,3 +190,10 @@ Consider it if you're already finding yourself bolting distributed messaging, an
 ### What's the most common mistake when adopting Wolverine?
 
 Adopting it purely for background job scheduling without realizing (or wanting) the broader messaging framework that comes with it, leading to unnecessary conceptual overhead for teams that just needed a scheduler. The second common mistake is not using the durable outbox where it would actually matter, missing one of Wolverine's most concrete reliability benefits.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

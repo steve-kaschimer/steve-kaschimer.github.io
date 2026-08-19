@@ -11,6 +11,8 @@ tags: ["dotnet", "deployment", "kubernetes", "containers", "devops"]
 title: "Getting Started with Docker + Kubernetes for .NET Deployment"
 ---
 
+
+
 Containerizing a .NET application is the easy part - a Dockerfile, a build command, and you have an image. Running that image well in Kubernetes is where most of the real work lives, and it's also where .NET-specific details matter more than generic Kubernetes advice accounts for: how Kestrel should bind inside a pod, why graceful shutdown needs deliberate handling, and why the hosting model inside a container is actually simpler than what IIS or a VM would require, not more complex.
 
 This guide covers containerizing a .NET application correctly, bootstrapping Kubernetes manifests with the settings that matter for .NET workloads specifically, the core deployment workflow, and the best practices that prevent the most common production issues teams hit running .NET in Kubernetes for the first time. By the end you'll have a deployment that scales correctly and shuts down cleanly.
@@ -205,3 +207,10 @@ Yes, relatively cleanly - your container images themselves don't change, only th
 ### What's the most common mistake in a first Kubernetes deployment for .NET?
 
 Not configuring graceful shutdown, leading to dropped requests during routine rolling deployments and scale-down events. The second most common mistake is omitting resource requests/limits entirely, which risks one misbehaving pod destabilizing the rest of the cluster.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

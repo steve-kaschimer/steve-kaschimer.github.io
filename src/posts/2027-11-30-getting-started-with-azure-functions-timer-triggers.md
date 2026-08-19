@@ -11,6 +11,8 @@ tags: ["dotnet", "cloud", "architecture", "devops"]
 title: "Getting Started with Azure Functions Timer Triggers in .NET"
 ---
 
+
+
 Azure Functions timer triggers solve a problem the other four tools in this series structurally can't: what happens when your job needs to run even if your main application isn't. An in-process scheduler is only as reliable as the app hosting it - if that app is down for a deploy, crashed, or scaled to zero, nothing runs. A timer-triggered Azure Function is its own deployable unit, on its own schedule, independent of any web app's lifecycle. That's the whole appeal, and it comes with a real platform commitment in exchange.
 
 This guide covers setting up an Azure Functions project with a timer trigger using the current isolated worker model (the in-process model's support ends November 2026, so this is the only path worth building on new), bootstrapping dependency injection and configuration correctly, the core patterns for reliable execution, and the best practices for designing timer-triggered functions that behave correctly under retries and cold starts. By the end you'll have a background job that runs independently of your main application's process.
@@ -175,3 +177,10 @@ Locally, via `local.settings.json` (excluded from source control). In Azure, via
 ### What's the most common mistake in a first Azure Functions timer trigger setup?
 
 Building on the in-process model out of habit or an outdated tutorial, when the isolated worker model is both the current recommendation and the only supported path going forward. The second common mistake is assuming standard 5-field cron syntax works in `[TimerTrigger]` without checking Azure's 6-field format first.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

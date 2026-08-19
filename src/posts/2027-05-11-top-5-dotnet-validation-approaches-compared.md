@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "security", "performance", "developer-productivit
 title: "The Top 5 .NET Validation Approaches Compared: Which One Should You Choose?"
 ---
 
+
+
 Validation in .NET quietly had one of its biggest shifts in years, and it's easy to miss if you're not reading release notes closely: .NET 10 shipped native, built-in validation support for Minimal APIs, using the same `DataAnnotations` attributes MVC has relied on for over a decade. Before this, validating a Minimal API request meant reaching for a third-party package or writing manual checks in every handler - there was no first-party answer. Now there is, and it changes the calculus for a genuinely large share of new ASP.NET Core projects.
 
 This guide compares five ways to validate data in .NET - FluentValidation, classic DataAnnotations, MiniValidation, custom/manual validation, and .NET 10's native Minimal API validation - and which project profile fits each. A genuinely useful, counterintuitive fact worth knowing upfront: FluentValidation, despite being the most popular third-party option, is not the fastest. In independent benchmarks it's often the slowest of the group, sometimes by a wide margin. Performance isn't everything, but it's worth knowing before assuming popularity implies speed. This series continues with dedicated getting-started walkthroughs for each approach.
@@ -27,98 +29,33 @@ This guide compares five ways to validate data in .NET - FluentValidation, class
 
 ## FluentValidation
 
-FluentValidation is the most widely adopted third-party validation library in .NET - a fluent, strongly-typed API for building validation rules in dedicated validator classes, separate from the model being validated. Its expressiveness for complex scenarios is real and remains its strongest differentiator.
+Complex, conditional, cross-property validation, rules like "required only when that other field has a value" are natural to express and read clearly. Fluent, strongly-typed API in dedicated validator classes, separate from models. Keeps POCOs clean. Mature ASP.NET Core integration, async rules, battle-tested at scale.
 
-**Strengths:**
-
-- Genuinely excellent for complex, conditional, and cross-property validation - rules like "this field is required only when that other field has a specific value" are natural to express and read clearly
-- Keeps validation logic in dedicated validator classes, separate from your models - useful for teams that want clean POCOs with no validation attributes cluttering the model definition itself
-- Mature ASP.NET Core integration for both MVC and Minimal APIs, plus support for async validation rules
-- The most battle-tested option here for genuinely complex validation logic in production .NET systems
-
-**Weaknesses:**
-
-- Consistently benchmarks as the slowest option in independent performance comparisons - sometimes twice as slow as DataAnnotations-based approaches for equivalent validation
-- More ceremony than attribute-based approaches for simple validation - a separate validator class for a model with three basic required-field checks is real overhead for not much benefit
-- As of .NET 10, some of the specific reasons teams reached for FluentValidation in Minimal APIs no longer apply for simpler scenarios
-
-**Choose this when:** your validation logic is genuinely complex - conditional rules, cross-property dependencies, business-rule-heavy checks - where the expressiveness earns back the performance cost and additional ceremony.
+Benchmarks show it as the slowest option, sometimes twice as slow as DataAnnotations for equivalent validation. More ceremony than attributes for simple checks. As of .NET 10, some reasons for reaching for it in Minimal APIs no longer apply.
 
 ## DataAnnotations (Classic)
 
-DataAnnotations - `[Required]`, `[StringLength]`, `[Range]`, and friends - have been the default validation mechanism for ASP.NET MVC since long before ASP.NET Core existed. They remain the most broadly familiar validation approach to any .NET developer.
+Built into .NET base class libraries. No package to install. MVC validates automatically with zero config. Most broadly recognized syntax in .NET. `IValidatableObject` extends attributes with custom logic encapsulated in the model.
 
-**Strengths:**
-
-- Built directly into the .NET base class libraries - no package to install, and MVC's model binding pipeline validates them automatically with zero extra configuration
-- The most broadly recognized validation syntax in .NET
-- `IValidatableObject` extends attribute-based validation with custom logic encapsulated directly in the model, for validation that doesn't fit neatly into a single attribute
-- Genuinely fast in benchmarks, especially relative to FluentValidation
-
-**Weaknesses:**
-
-- Attributes live directly on the model, which some teams consider a separation-of-concerns problem
-- Complex or conditional validation is awkward to express purely through attributes - you end up reaching for `IValidatableObject` or custom attribute classes, more work than FluentValidation's fluent conditional syntax
-- Historically had no first-party story for Minimal APIs at all - exactly the gap .NET 10's native validation support closes
-
-**Choose this when:** you're building an MVC-based application, where this remains the default, zero-setup option, or your validation needs are straightforward enough that attribute-based rules don't feel constraining.
+Fast in benchmarks, especially relative to FluentValidation. Attributes live on the model (some see this as a separation-of-concerns issue). Complex or conditional validation is awkward purely through attributes.
 
 ## MiniValidation
 
-MiniValidation is a minimalist library built directly atop `System.ComponentModel.DataAnnotations`, created specifically to give lightweight applications a fast, low-ceremony validation option without pulling in FluentValidation's larger footprint.
+Fastest library-based approach in benchmarks via metadata caching. One-line call: `MiniValidator.TryValidate(model, out errors)`. No separate classes or config. Built on familiar DataAnnotations. Well-suited to Minimal APIs and console apps.
 
-**Strengths:**
-
-- Consistently the fastest option among the library-based approaches in independent benchmarks, due to metadata caching optimizations
-- Extremely lightweight - a single-line `MiniValidator.TryValidate(model, out errors)` call, no separate validator classes or complex configuration
-- Built on the same familiar DataAnnotations attributes rather than introducing a new syntax to learn
-- Well-suited specifically to Minimal APIs and console applications where FluentValidation's ceremony feels disproportionate
-
-**Weaknesses:**
-
-- Same expressiveness ceiling as classic DataAnnotations - complex, conditional, cross-property validation is just as awkward
-- Smaller community and less name recognition than FluentValidation
-- With .NET 10's native Minimal API validation now covering much of MiniValidation's original niche, its most distinctive use case has narrowed, though it remains valid for non-Minimal-API scenarios
-
-**Choose this when:** you want the fastest, lowest-ceremony validation option built on familiar DataAnnotations attributes, particularly for Minimal APIs on .NET versions before 10, or for console/non-web applications.
+Same ceiling as classic DataAnnotations, complex, conditional validation is awkward. Smaller community. .NET 10's native validation narrowed its most distinctive use case, though it remains valid for non-Minimal-API scenarios.
 
 ## Custom Validation
 
-Writing validation logic by hand - guard clauses, manual checks in a service method, or a hand-rolled validator class - remains a completely reasonable approach for validation that's either simple enough not to need a library, or specific enough that no library's abstraction fits naturally.
+Guard clauses, manual checks, hand-rolled validator classes. Unlimited expressiveness. Zero dependency, full transparency. No abstraction to learn.
 
-**Strengths:**
-
-- Unlimited expressiveness - there's no ceiling on what you can validate, since it's just ordinary C# with no framework constraints
-- Zero dependency, full transparency
-- No abstraction to learn - any developer can read and modify hand-written validation logic immediately
-- Often the most natural fit for genuinely complex business rules that don't map cleanly onto any validation library's model - rules spanning multiple entities, requiring database lookups, or involving significant domain logic
-
-**Weaknesses:**
-
-- No built-in error aggregation or standardized result shape - you're responsible for collecting and formatting validation errors consistently yourself
-- Easy to end up with inconsistent validation patterns across a codebase if different developers solve "how do I validate this" differently each time
-- Doesn't integrate automatically with ASP.NET Core's model binding pipeline the way DataAnnotations does - you're responsible for wiring the check into your endpoint or action yourself
-
-**Choose this when:** your validation logic is either trivially simple or genuinely complex in a way that doesn't map onto any validation library's abstraction - particularly validation requiring cross-entity checks, database lookups, or deep domain logic.
+No built-in error aggregation or standardized shape, you handle formatting. Easy to end up inconsistent across a codebase. Doesn't auto-integrate into ASP.NET Core's model binding pipeline.
 
 ## Native Minimal API Validation (.NET 10+)
 
-This is the newest entry in .NET's validation landscape - first-party, built-in validation support for Minimal APIs, using the same `DataAnnotations` attributes that have always worked in MVC, now automatically applied to Minimal API endpoint parameters with no third-party package required.
+First-party, built-in for Minimal APIs. DataAnnotations attributes applied to endpoint parameters automatically. No third-party package. Two-line setup for standardized validation and error responses. Built on same model as MiniValidation, so strong performance.
 
-**Strengths:**
-
-- Genuinely closes a real gap - before .NET 10, Minimal APIs had no first-party validation story at all
-- Uses the same familiar DataAnnotations attributes as MVC, meaning no new syntax to learn
-- Enabled with minimal configuration - roughly two lines of setup for standardized, automatic validation and error responses
-- Built on the same underlying model as MiniValidation, meaning strong performance characteristics rather than an unproven new mechanism
-
-**Weaknesses:**
-
-- Requires .NET 10 or later - a real constraint for teams not yet upgraded
-- Same expressiveness ceiling as classic DataAnnotations and MiniValidation
-- Genuinely new as of .NET 10, meaning less real-world production track record than the more established options here
-
-**Choose this when:** you're building a new Minimal API project on .NET 10 or later with straightforward to moderate validation needs, and want the lowest-friction, first-party option without adding a third-party dependency.
+Requires .NET 10+. Same ceiling as classic DataAnnotations. New as of .NET 10, less production track record than established options.
 
 ## How to Decide
 
@@ -165,3 +102,10 @@ Yes, and it's a reasonable, common pattern - using attribute-based validation fo
 ### Is custom, hand-written validation actually a reasonable choice, or just what you do before adopting a library?
 
 It's a completely legitimate, permanent choice for the right scenarios - either validation simple enough that a library's ceremony isn't worth it, or complex enough that no library's model fits naturally. The "you need a validation library" assumption is worth questioning the same way it's worth questioning for object mapping - match the tool to the actual complexity of what you're validating.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

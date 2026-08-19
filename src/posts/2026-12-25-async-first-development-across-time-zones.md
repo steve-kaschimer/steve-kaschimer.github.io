@@ -11,6 +11,8 @@ tags: ["developer-productivity", "remote-work", "writing-for-engineers", "git", 
 title: "Async-First Development: Writing Code and Processes That Work Across Time Zones"
 ---
 
+
+
 A team spread across four time zones that still runs a daily standup is a synchronous team with a scheduling problem, not an async team. The tell is what happens when someone's asleep during a decision that needed to get made: a genuinely async-first team already wrote down enough context that the decision doesn't need them in the room, and a team that only looks distributed waits until everyone's awake again, quietly synchronous the whole time behind a Zoom link.
 
 The actual discipline isn't about tooling that lets people work at different hours - Slack and GitHub already do that. It's about producing work artifacts complete enough that someone eight time zones away can pick up where you left off without a meeting to fill in what didn't make it into the artifact.

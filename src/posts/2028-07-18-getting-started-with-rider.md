@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity"]
 title: "Getting Started with JetBrains Rider for .NET Development"
 ---
 
+
+
 Rider's reputation for being faster and smarter than Visual Studio for day-to-day C# work isn't marketing copy - it comes directly from ReSharper's static analysis engine running natively inside the IDE rather than as an add-on, plus a genuinely cross-platform foundation that makes it the strongest full .NET IDE choice on macOS or Linux now that Visual Studio for Mac is gone. Getting Rider tuned to your actual workflow, rather than accepting its (already good) defaults, is what separates "solid IDE" from "the IDE that finds your bugs before you write the test."
 
 This guide covers installing Rider, bootstrapping solution settings and code inspection profiles, the core refactoring and navigation workflow that's Rider's clearest strength, and the best practices for taking full advantage of ReSharper's analysis engine baked directly in. By the end you'll have a cross-platform .NET setup tuned for speed and depth.
@@ -125,3 +127,10 @@ If you already have a `.editorconfig` file, most conventions carry over directly
 ### What's the most common mistake in a first Rider setup?
 
 Not taking advantage of Solution-Wide Analysis and refactoring tools, using Rider more like a lightweight text editor than the deep IDE it actually is. The second common mistake is not committing `.editorconfig`, leading to inconsistent formatting on teams where some developers use Rider and others use Visual Studio or VS Code.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

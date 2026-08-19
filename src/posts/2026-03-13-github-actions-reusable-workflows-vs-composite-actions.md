@@ -11,6 +11,8 @@ tags: ["github-actions", "ci-cd", "devops"]
 title: "GitHub Actions: Reusable Workflows vs. Composite Actions - Know the Difference"
 ---
 
+
+
 Every team that grows past a handful of GitHub Actions workflows eventually hits the same wall: duplicated YAML, copy-pasted step sequences, a `deploy` job that lives in six repositories. The solution is obvious - abstract the common pieces. GitHub gives you two tools to do that: **reusable workflows** and **composite actions**. The docs present them as siblings. They're not. They operate at different levels of the execution model, enforce different scoping rules, and fail in different ways when you use them outside their intended purpose.
 
 Most of the bugs I've seen come from one pattern: a developer reads about both abstractions, picks the one that looks right, and discovers the hard way that secrets don't arrive, matrix values vanish, or a branch protection rule silently stops enforcing. This post walks through three concrete failure scenarios - real YAML, real error behavior - and ends with a decision framework you can apply without rereading the docs.

@@ -13,8 +13,9 @@ tags: ["dotnet", "architecture", "design-patterns", "cqrs"]
 title: "Lab 4: CQRS Without the Circus"
 ---
 
-Northstar now has CQRS - no second database, no Kafka, no Event Sourcing, no projection worker. Just this:
 
+
+Northstar now has CQRS - no second database, no Kafka, no Event Sourcing, no projection worker. Just this:
 ```text
 Commands
   |
@@ -60,3 +61,6 @@ Placing an order now has consequences: send a confirmation email, award loyalty 
 ## Lesson
 
 CQRS didn't arrive here as a distributed architecture. It arrived as a design decision - reads and writes have different responsibilities - and everything beyond that decision stays optional until something forces it.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,18 +11,15 @@ tags: ["dotnet", "architecture", "design-patterns", "caching"]
 title: "Cache-Aside: Faster Reads Without Pretending Caches Are Simple"
 ---
 
-Caching is often introduced as:
 
+
+Caching is often introduced as:
 ```text
 put data in Redis
 application gets faster
 ```
 
-The hard part is not storing data.
-
-The hard part is deciding when cached data is valid.
-
-Cache-Aside is a common pattern where the application explicitly manages cache population.
+The hard part is not storing data. The hard part is deciding when cached data is valid. Cache-Aside is a common pattern where the application explicitly manages cache population.
 
 ## Read Flow
 
@@ -85,39 +82,26 @@ public async Task<ProductDto?> GetAsync(
 }
 ```
 
-This is the happy path.
-
-Now the real architecture begins.
+This is the happy path. Now the real architecture begins.
 
 ## Staleness
 
 Suppose:
-
 ```text
 cache: price = $100
 database updated: price = $80
 ```
 
 Until expiration or invalidation:
-
 ```text
 reader sees $100
 ```
 
-Is that acceptable?
-
-For a marketing description, maybe.
-
-For available bank balance, probably not.
-
-Cache strategy is a consistency decision.
+Is that acceptable? For a marketing description, maybe. For available bank balance, probably not. Cache strategy is a consistency decision.
 
 ## Invalidation
 
-The famous hard problem.
-
-Common approaches:
-
+The famous hard problem. Common approaches:
 ```text
 TTL expiration
 explicit invalidation on write
@@ -134,25 +118,17 @@ Update database
 Delete cache key
 ```
 
-But this is another dual-write sequence.
-
-What if:
-
+But this is another dual-write sequence. What if:
 ```text
 DB update succeeds
 cache delete fails
 ```
 
-Stale data remains.
-
-For strict correctness, caching may not be appropriate for that data.
-
-For tolerant use cases, TTL bounds the stale period.
+Stale data remains. For strict correctness, caching may not be appropriate for that data. For tolerant use cases, TTL bounds the stale period.
 
 ## Expiration
 
 TTL is simple and powerful.
-
 ```text
 product metadata: 10 minutes
 feature configuration: 1 minute
@@ -163,17 +139,13 @@ Choose TTL from business tolerance for staleness, not arbitrary round numbers.
 ## Cache Stampede
 
 A popular key expires.
-
 ```text
 10,000 requests
 all miss
 all hit database
 ```
 
-The cache protected the database until the exact moment it became most dangerous.
-
-Mitigations include:
-
+The cache protected the database until the exact moment it became most dangerous. Mitigations include:
 - request coalescing;
 - per-key locking;
 - stale-while-revalidate;
@@ -183,21 +155,15 @@ Mitigations include:
 ## Negative Caching
 
 If a missing resource is repeatedly requested:
-
 ```text
 cache "not found"
 ```
 
-for a short period.
-
-But be careful: if the resource is created moments later, the negative cache can hide it.
-
-Use shorter TTLs for negative entries.
+for a short period. But be careful: if the resource is created moments later, the negative cache can hide it. Use shorter TTLs for negative entries.
 
 ## Local vs. Distributed Cache
 
 In-memory cache:
-
 ```text
 fast
 simple
@@ -205,7 +171,6 @@ per-instance
 ```
 
 Distributed cache:
-
 ```text
 shared across instances
 network hop
@@ -213,20 +178,14 @@ operational dependency
 serialization
 ```
 
-Do not deploy Redis merely because the application has more than one endpoint.
-
-Use it when shared caching provides meaningful value.
+Do not deploy Redis merely because the application has more than one endpoint. Use it when shared caching provides meaningful value.
 
 ## Cache Failure
 
 Ask:
-
 > What happens if the cache is unavailable?
 
-Often the application should fall back to the database.
-
-But if every instance suddenly bypasses cache:
-
+Often the application should fall back to the database. But if every instance suddenly bypasses cache:
 ```text
 cache outage
    |
@@ -235,30 +194,22 @@ database receives full load
 database outage
 ```
 
-That is a cascading-failure risk.
-
-Capacity planning must account for cache loss.
+That is a cascading-failure risk. Capacity planning must account for cache loss.
 
 ## Cache Penetration
 
 Attackers or accidental clients can request huge numbers of nonexistent keys:
-
 ```text
 product:random-1
 product:random-2
 ...
 ```
 
-Every miss reaches the database.
-
-Negative caching, request validation, rate limiting, and probabilistic structures can help in extreme cases.
+Every miss reaches the database. Negative caching, request validation, rate limiting, and probabilistic structures can help in extreme cases.
 
 ## Cache Key Design
 
-Keys are contracts too.
-
-Include dimensions that affect the value:
-
+Keys are contracts too. Include dimensions that affect the value:
 ```text
 tenant
 locale
@@ -271,30 +222,20 @@ A missing dimension can become a data-isolation bug.
 
 ## Security
 
-Never accidentally serve one user's cached private data to another.
-
-A key such as:
-
+Never accidentally serve one user's cached private data to another. A key such as:
 ```text
 /dashboard
 ```
 
-is dangerous if the response depends on user identity.
-
-Cache only data whose scope is explicit.
+is dangerous if the response depends on user identity. Cache only data whose scope is explicit.
 
 ## Serialization
 
-Distributed caches store serialized data.
-
-Schema changes matter.
-
-Version cache entries or tolerate old representations during rolling deployments.
+Distributed caches store serialized data. Schema changes matter. Version cache entries or tolerate old representations during rolling deployments.
 
 ## Cache-Aside and CQRS
 
 Read models are natural cache candidates.
-
 ```text
 Query
   |
@@ -303,14 +244,11 @@ Cache
 Read Model
 ```
 
-The write model remains authoritative.
-
-This keeps cache concerns away from domain invariants.
+The write model remains authoritative. This keeps cache concerns away from domain invariants.
 
 ## Observability
 
 Track:
-
 ```text
 hit rate
 miss rate
@@ -322,14 +260,11 @@ stampede/coalescing rate
 fallback rate
 ```
 
-Hit rate alone is insufficient.
-
-A 99% hit rate can still overload the database if the remaining 1% represents enormous traffic.
+Hit rate alone is insufficient. A 99% hit rate can still overload the database if the remaining 1% represents enormous traffic.
 
 ## Testing
 
 Test:
-
 ```text
 hit
 miss
@@ -346,7 +281,6 @@ Load-test stampede scenarios.
 ## When It Helps
 
 Use Cache-Aside when:
-
 - reads are repeated;
 - source access is expensive;
 - some staleness is acceptable;
@@ -355,7 +289,6 @@ Use Cache-Aside when:
 ## When It Hurts
 
 Caching hurts when:
-
 - data must always be current;
 - access is rarely repeated;
 - invalidation complexity exceeds the performance benefit;
@@ -363,10 +296,7 @@ Caching hurts when:
 
 ## Summary
 
-Cache-Aside is simple to draw and difficult to operate well.
-
-The algorithm is:
-
+Cache-Aside is simple to draw and difficult to operate well. The algorithm is:
 ```text
 look in cache
 miss -> load source
@@ -374,7 +304,6 @@ populate cache
 ```
 
 The architecture is:
-
 ```text
 staleness
 invalidation
@@ -385,6 +314,7 @@ failure behavior
 capacity
 ```
 
-Use caching when you can state the consistency trade explicitly.
+Use caching when you can state the consistency trade explicitly. If you cannot explain how stale the data may be, you do not yet have a cache design.
+---
 
-If you cannot explain how stale the data may be, you do not yet have a cache design.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

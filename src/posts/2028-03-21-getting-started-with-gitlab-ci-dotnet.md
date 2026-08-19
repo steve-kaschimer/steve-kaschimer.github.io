@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "devops", "security", "tooling"]
 title: "Getting Started with GitLab CI for .NET"
 ---
 
+
+
 GitLab CI's single-file, single-platform philosophy means your `.gitlab-ci.yml` isn't just a build pipeline - it's sitting inside the same product that hosts your repo, runs your security scans, and tracks your issues. That consolidation is the whole pitch, and it changes the setup calculus a little: the interesting parts of a GitLab CI setup for .NET aren't just build/test/deploy, but wiring up the built-in dependency and container scanning that GitHub Actions or Azure DevOps would need a separate tool for.
 
 This guide covers setting up a GitLab CI pipeline for .NET, bootstrapping caching and multi-stage pipelines, the core patterns for build/test/deploy plus GitLab's built-in security scanning, and the best practices that take advantage of the consolidated platform rather than treating GitLab CI as a standalone build tool. By the end you'll have a pipeline that builds, tests, and scans your .NET application in one coherent configuration.
@@ -172,3 +174,10 @@ The core concepts (stages/jobs, conditional triggers, caching, environments) map
 ### What's the most common mistake in a first GitLab CI setup for .NET?
 
 Not taking advantage of the built-in security scanning templates, missing the platform's clearest differentiator and effectively using GitLab CI as if it were a standalone build tool. The second common mistake is using a static cache key instead of one tied to lock file contents, risking stale cached dependencies after a real change.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

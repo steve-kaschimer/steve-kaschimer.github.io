@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity"]
 title: "Getting Started with Visual Studio for .NET Development"
 ---
 
+
+
 Visual Studio's install wizard makes the first decision that matters most, and it's easy to get wrong: which workloads to install. Checking every box "just in case" turns a reasonable install into a multi-hour, disk-hungry mess; checking too few means discovering mid-project that you're missing Azure tooling or a specific project type. Getting this right at install time, plus a handful of settings worth changing from their defaults, is most of what separates a smooth Visual Studio setup from one that feels sluggish from day one.
 
 This guide covers installing Visual Studio with the right workloads, bootstrapping solution and project settings that keep a growing codebase fast to work in, the core debugging and diagnostic workflow that's Visual Studio's strongest differentiator, and the best practices that take advantage of what it does better than any other .NET editor. By the end you'll have a setup tuned for your actual work, not a default install carrying weight you don't need.
@@ -130,3 +132,10 @@ Right-click a breakpoint and choose "Conditions" to specify an expression that m
 ### What's the most common mistake in a first Visual Studio setup?
 
 Installing every available workload "just in case," resulting in a heavier, slower install than actually needed. The second common mistake is not committing `.editorconfig` early, leading to inconsistent formatting across a team as more developers join and each brings their own default settings.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

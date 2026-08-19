@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 24: Moving Down the Complexity Ladder"
 ---
 
+
+
 Northstar just did something architecture diagrams rarely get credit for. It became simpler.
 
 ## What We Removed
@@ -42,3 +44,6 @@ The lab includes tests that assert implementation types stay internal, because a
 ## The Big Lesson
 
 The Complexity Ladder isn't one-way. Moving from a microservice back down to a module can be a genuine architectural improvement once independent deployment stops justifying the distributed tax you're paying for it. Simplifying isn't failure - it's one of the clearest signs that the architecture is actually being driven by real forces instead of fashion.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["github-actions", "security", "devsecops"]
 title: "The GitHub Actions `permissions` Block: Principle of Least Privilege for Workflows"
 ---
 
+
+
 Every time a GitHub Actions workflow runs, GitHub provisions a **`GITHUB_TOKEN`** automatically - a short-lived credential scoped to the repository. You don't create it, rotate it, or store it as a secret. It just appears. What most developers don't realize is what that token can do by default: write to repository contents, open and merge pull requests, push packages, create deployments, manage releases, and more. All of it, unless you say otherwise. The default exists because GitHub designed it for ease of adoption - get a workflow running without thinking about permissions. That's reasonable for a first prototype. It's a real problem for anything that runs in production.
 
 The attack surface is concrete. A compromised dependency in a build step. A malicious action injected through a supply-chain attack. A command injection vulnerability in an untrusted PR title. Any of these can use the workflow's default `GITHUB_TOKEN` to read secrets, push code, or overwrite a release. Not because the workflow was misconfigured. Because the default is permissive and nobody added the `permissions` block.

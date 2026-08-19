@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "caching"]
 title: "Lab 20: Cache-Aside Is a Consistency Trade"
 ---
 
+
+
 The previous stage proved the dashboard query was being recomputed far more often than the underlying information actually changed. This stage answers that with Cache-Aside.
 
 ## The Flow
@@ -46,3 +48,6 @@ Run `./scripts/hammer-dashboard.ps1 -Count 200` again, and this time most reques
 ## The Lesson
 
 Cache-Aside isn't really about making things faster. It's about accepting bounded staleness in exchange for lower source load and lower latency - and if you can't state the acceptable stale window out loud, you don't have a cache design yet, no matter how fast the code runs.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

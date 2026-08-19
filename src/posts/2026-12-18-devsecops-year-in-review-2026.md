@@ -11,6 +11,8 @@ tags: ["devsecops", "year-in-review", "github", "azure-ai-foundry", "editorial"]
 title: "The DevSecOps Year in Review 2026: What Shipped, What Mattered, What's Next"
 ---
 
+
+
 Every year-in-review risks being a list of announcements dressed up as insight. This one tries to avoid that by being explicit about the distinction: a lot shipped in 2026, a meaningfully smaller subset of it actually changed how teams work day to day, and an even smaller subset is worth carrying real attention into 2027. What follows is opinionated on purpose - a year spent writing about most of this in detail earns a strong opinion about which parts of it were real.
 
 ***

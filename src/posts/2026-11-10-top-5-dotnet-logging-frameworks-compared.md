@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "observability", "performance", "tooling"]
 title: "The Top 5 .NET Logging Frameworks Compared: Which One Should You Choose?"
 ---
 
+
+
 Picking a logging framework for a new .NET project sounds like it should take five minutes, but the options don't all solve the same problem. Some are built in and require zero setup. Others trade a bit of setup complexity for raw throughput. Others exist specifically because plain-text logs stopped being good enough once teams started shipping to centralized log platforms that expect structured data.
 
 This guide compares the five logging frameworks .NET developers reach for most often: **Microsoft.Extensions.Logging**, **Serilog**, **NLog**, **log4net**, and **ZLogger**. Rather than declaring one universal winner, it breaks down what each one is actually good at, where it falls short, and which project profile it fits best - so you can match the framework to your situation instead of your situation to the framework. This series continues with dedicated getting-started walkthroughs for each one in ASP.NET Core.
@@ -29,122 +31,43 @@ This guide compares the five logging frameworks .NET developers reach for most o
 
 ## Microsoft.Extensions.Logging
 
-This is the logging abstraction and default provider set that ships with every ASP.NET Core and Worker Service template. It's less a "framework you choose" and more the water everyone is already swimming in - every other library in this list plugs into `ILogger<T>` rather than replacing it.
+The water everyone swims in. Built into every ASP.NET Core and Worker Service template. Every other logger on this list plugs into `ILogger<T>` rather than replacing it.
 
-**Strengths:**
+Zero setup. Configure via `appsettings.json`. The built-in providers are thin (Console, Debug, EventSource) - no rolling files, no structured sinks without adding something else.
 
-- Zero installation for ASP.NET Core and Worker Service projects
-- `appsettings.json`-driven configuration that every .NET developer already recognizes
-- The `ILogger<T>` interface it defines is what all the other frameworks in this article implement, so switching later doesn't touch your application code
-
-**Weaknesses:**
-
-- The built-in providers (Console, Debug, EventSource, EventLog) are thin - no rolling files, no structured sinks, no database targets without adding something else
-- No native structured-logging story beyond `BeginScope`
-- Not really a competitor to the other four so much as the foundation they all sit on
-
-```csharp
-builder.Logging.AddFilter("Microsoft.AspNetCore", LogLevel.Warning);
-builder.Logging.SetMinimumLevel(LogLevel.Information);
-```
-
-**Choose this when:** you're building something small, a class library that shouldn't force a specific logging dependency on consumers, or a prototype where you don't want to think about logging infrastructure yet.
+Use it for small apps, for libraries that shouldn't force a logging dependency on their consumers, or when you genuinely don't care about logging infrastructure yet. Later, when you want a real sinking system, you swap in Serilog or NLog without touching your application code, they all implement `ILogger<T>`.
 
 ## Serilog
 
-Serilog popularized structured logging in .NET - the idea that a log event is a set of named properties, not just a formatted string. It configures almost entirely through a fluent C# API rather than XML, which many developers find more discoverable and easier to unit test around.
+Structured logging: a log event is a set of named properties, not a formatted string. Configure via fluent C# API in `Program.cs`, not XML. Properties are queryable.
 
-**Strengths:**
+The sink ecosystem is enormous, Seq, Elasticsearch, Application Insights, Datadog, and dozens more are one NuGet away. Enrichers attach contextual data (machine name, correlation IDs, request ID) to every event automatically.
 
-- Structured logging is the default behavior, not an add-on
-- The sink ecosystem is enormous - Seq, Elasticsearch, Application Insights, Datadog, and dozens more are one NuGet package away
-- Enrichers let you attach contextual data (machine name, correlation IDs, request properties) to every log event automatically
-
-**Weaknesses:**
-
-- Fluent configuration in `Program.cs` can get long for complex setups, and it's less hot-reloadable than XML-based alternatives
-- Two-stage initialization (a bootstrap logger before the host builds, then the real one) trips up newcomers
-- Slightly more ceremony than NLog for simple file-and-console scenarios
-
-```csharp
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.Seq("http://localhost:5341")
-    .CreateLogger();
-
-builder.Host.UseSerilog();
-```
-
-**Choose this when:** you're shipping logs to a structured log platform (Seq, Elasticsearch, Datadog) and want properties to be queryable and filterable rather than buried in a formatted string.
+Bootstrap logger pattern (a temporary logger before the host builds, then the real one) trips up newcomers. Fluent configuration can get long for complex setups. But if you're shipping to Seq or Elasticsearch, properties being queryable instead of buried in a string matters.
 
 ## NLog
 
-NLog has been around since 2006 and remains one of the most flexible options for routing logs to many different destinations. It supports both XML and JSON configuration, and its `AsyncWrapper` target pattern makes it straightforward to keep logging off your request-handling threads.
+Flexible routing to many targets: file, console, database, network, custom. Configure via XML or JSON. Change levels and targets at runtime with `autoReload="true"` without restarting.
 
-**Strengths:**
+ASP.NET Core-aware layout renderers: `${aspnet-request-url}`, `${aspnet-TraceIdentifier}`. Async targets keep logging off your request threads.
 
-- Extremely flexible target system - file, console, database, network, and many community-maintained custom targets
-- `autoReload="true"` lets you change log levels and targets at runtime without restarting the app
-- ASP.NET Core-aware layout renderers (`${aspnet-request-url}`, `${aspnet-TraceIdentifier}`) via `NLog.Web.AspNetCore`
-
-**Weaknesses:**
-
-- XML configuration, while powerful, has a steeper learning curve than Serilog's fluent API or ZLogger's code-first approach
-- Structured logging support exists but isn't as central to the design as it is in Serilog or ZLogger
-- Requires the explicit `LogManager.Shutdown()` shutdown pattern to avoid losing buffered log entries
-
-```xml
-<target xsi:type="File"
-        fileName="${basedir}/logs/app-${shortdate}.log"
-        layout="${longdate}|${uppercase:${level}}|${logger}|${message}" />
-```
-
-**Choose this when:** you need fine-grained control over routing different loggers to different targets (file, database, email alerts) and want that routing to be adjustable at runtime without a redeploy.
+XML configuration is powerful but steeper than Serilog's fluent API. Structured logging exists but isn't first-class. Requires explicit `LogManager.Shutdown()` to avoid losing buffered entries.
 
 ## log4net
 
-log4net is the oldest logging framework on this list - a .NET port of the Java `log4j` library dating back to 2001. It's the grandparent that NLog itself was partly inspired by, and it's still actively maintained under the Apache Logging Services project. Most teams encounter it today through legacy codebases rather than choosing it fresh.
+Stable. Decades of production use. Simple appender/layout model. Still maintained under Apache Logging Services.
 
-**Strengths:**
+Only XML configuration. Fails silently on config errors by default. No first-class structured logging or async-by-default. Smaller ecosystem than NLog.
 
-- Extremely stable, well-understood API with decades of production usage behind it
-- Simple appender/layout model that's easy to reason about for straightforward file and console logging
-- Low dependency footprint
-
-**Weaknesses:**
-
-- No native JSON configuration - everything is XML
-- Fails silently on configuration errors by default, unlike NLog's `throwConfigExceptions` option
-- No first-class structured logging or async-by-default writing the way Serilog and ZLogger offer
-- Smaller and slower-moving ecosystem than NLog or Serilog for new integrations
-
-```xml
-<appender name="RollingFile" type="log4net.Appender.RollingFileAppender">
-  <file value="logs/app.log" />
-  <rollingStyle value="Date" />
-</appender>
-```
-
-**Choose this when:** you're maintaining an existing codebase already built on log4net and there's no compelling reason to migrate, or you're working in an organization with established log4net tooling and conventions.
+Use it for existing codebases already built on it. For new projects, better choices exist.
 
 ## ZLogger
 
-ZLogger is the newest and most specialized entry here - a zero-allocation, source-generator-based logger from Cysharp built directly on top of `Microsoft.Extensions.Logging`. Instead of formatting log messages into strings and then encoding them, it writes structured data directly to UTF-8 using C# string interpolation handlers, which the source generator turns into highly optimized code at compile time.
+Zero allocation, source-generated at compile time. Writes structured data directly to UTF-8 using C# string interpolation. Fastest option in benchmarks, particularly on .NET 8+.
 
-**Strengths:**
+Native string interpolation for log calls: `logger.ZLogInformation($"Order {orderId} processed")`. Built on `ILogger<T>`, slots into existing code. Supports Console, File, RollingFile, HTTP batching.
 
-- Consistently the fastest option in allocation and throughput benchmarks, particularly on .NET 8+
-- Uses native C# string interpolation for log calls (`logger.ZLogInformation($"Order {orderId} processed")`) rather than a separate template syntax
-- Built on `Microsoft.Extensions.Logging`, so it slots into existing `ILogger<T>` code with minimal friction
-- Supports the output destinations most services actually need: Console, File, RollingFile, and HTTP-based batching
-
-**Weaknesses:**
-
-- Much smaller sink ecosystem than Serilog or NLog - fewer out-of-the-box integrations with log platforms
-- Requires C# 10+ (source generator needs C# 11) and is best on .NET 8 or later to get its full performance benefit
-- Younger project with a smaller community than the other four, so fewer Stack Overflow answers and third-party tutorials
+Smaller sink ecosystem than Serilog or NLog. Requires C# 10+, best on .NET 8. Younger project, smaller community.
 
 ```csharp
 using ZLogger;
@@ -201,3 +124,10 @@ Microsoft doesn't officially endorse a third-party framework - `Microsoft.Extens
 ### Is ZLogger production-ready?
 
 Yes, it's used in production, particularly in performance-sensitive contexts like game server backends, but it's a younger project with a smaller community than Serilog, NLog, or log4net. Evaluate its sink ecosystem against your specific output needs (log aggregators, structured platforms) before committing, since it has fewer built-in integrations than the more established libraries.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

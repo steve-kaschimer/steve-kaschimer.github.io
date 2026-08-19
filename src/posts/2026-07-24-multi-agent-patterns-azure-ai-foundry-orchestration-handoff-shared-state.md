@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "ai-agents", "agentic-development", "multi-agent", "a
 title: "Multi-Agent Patterns with Azure AI Foundry: Orchestration, Handoff, and Shared State"
 ---
 
+
+
 The bottleneck in agentic systems isn't the model. It's the orchestration.
 
 A single agent eventually runs into three walls: the context window fills up before a complex task is done, specialization conflicts with generalization (a security reviewer that also writes code does both worse), and latency stacks up when one agent is responsible for every step of a pipeline. None of those are model problems. They're architecture problems.

@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "grpc", "performance", "microservices"]
 title: "Getting Started with gRPC in .NET"
 ---
 
+
+
 gRPC is the fastest of the API styles covered in this series, and the least forgiving about it - binary Protobuf serialization and HTTP/2 multiplexing buy you real performance, but only if every caller is a service you control, since there's no direct browser support and Kestrel refuses to negotiate a gRPC connection without TLS, even on localhost. Understanding that trade-off upfront saves you from reaching for gRPC in the one place it structurally can't go: a public API a frontend calls directly.
 
 This guide covers scaffolding a gRPC service, defining a `.proto` contract and sharing it across client and server through a common project reference, the core unary and streaming RPC patterns, and mapping errors through `RpcException`. By the end you'll have a service-to-service setup that's fast, strongly-typed, and won't drift out of sync between client and server.
@@ -212,3 +214,10 @@ Most noticeably in high-throughput, latency-sensitive service-to-service communi
 ### Is gRPC worth adopting for a small internal system with just two or three services?
 
 Often not the highest-priority choice at that scale - the setup cost (shared contracts, TLS, tooling) pays off more clearly as the number of services and call volume grows. For a small number of services, a simpler REST-based internal API may be less overhead for comparable practical performance, though gRPC remains a reasonable choice if the team already has the tooling in place.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["github-advanced-security", "devsecops", "platform-engineering", "codeql"
 title: "GitHub Advanced Security at the Org Level: Rolling Out GHAS Across 100+ Repos"
 ---
 
+
+
 Enabling GitHub Advanced Security (GHAS) on a single repository is a checkbox in repo settings. Rolling it out across an org with a hundred-plus repos, most with different languages, different maintenance levels, and different teams' tolerance for new noise in their PR checks, is an entirely different problem - and the version of this rollout that fails is the one where every feature gets flipped on everywhere simultaneously, developers wake up to hundreds of new alerts across repos nobody's actively triaging, and GHAS gets tagged internally as "the thing that broke everyone's Monday."
 
 The rollout that works is sequenced, not simultaneous - each layer proven out and tuned before the next one goes on, so alert volume grows at a rate teams can actually absorb.

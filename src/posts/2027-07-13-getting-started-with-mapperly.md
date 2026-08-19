@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "performance", "developer-productivity"]
 title: "Getting Started with Mapperly in .NET"
 ---
 
+
+
 Mapperly asks you to declare a partial method with the shape you want - source type in, destination type out - and then writes the actual mapping body for you at compile time. There's no runtime configuration to register, no reflection happening anywhere; the method you call in production is real, generated C# code sitting right next to your own, which you can open and read like any other file in your project.
 
 This guide covers installing Mapperly, bootstrapping mapper classes and understanding the partial-method pattern that drives everything, the core configuration attributes for property renaming and custom logic, and the best practices for getting Mapperly's full performance and safety benefit without fighting its compile-time nature. By the end you'll have fast, debuggable, compile-time-checked mapping code - and a clear sense of why this is the recommended starting point for a new project in 2026.
@@ -172,3 +174,10 @@ Yes - Mapperly handles collection mapping (lists, arrays, and other common colle
 ### What's the most common mistake in a first Mapperly setup?
 
 Not setting `EnumMappingStrategy.ByName` when source and destination enums have different numeric values, leading to silently wrong mapped results. The second common mistake is attempting a large, incremental migration from an existing AutoMapper codebase rather than reserving Mapperly for new or substantially rewritten code where its different configuration model fits more naturally.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

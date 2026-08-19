@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 14: Reliability Repeats at Every Transaction Boundary"
 ---
 
+
+
 Making the Saga asynchronous also exposed a familiar hole inside Inventory and Payments: each one committed its Inbox marker and business effect, then published its reply as a separate step. If a worker crashed after that commit but before the publish, the Saga would wait forever for a reply that was never coming. We've seen this exact bug before.
 
 ## The Fix
@@ -38,3 +40,6 @@ Northstar's Saga path now runs Ordering's Saga and Outbox through RabbitMQ into 
 ## Next Pressure
 
 Now that correctness is in reasonably good shape, the next question is about time and failure duration. What happens when Payment isn't declining, but simply unavailable? What if a message sits too long? What if a remote dependency is only transiently unhealthy? Those questions earn timeouts, retry, a circuit breaker, dead-letter handling, and observability - the next phase is about operational resilience, not transactional correctness.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

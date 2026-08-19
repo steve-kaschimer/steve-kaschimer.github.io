@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Lab 16: Resilience Is Observable Policy"
 ---
 
+
+
 Northstar is transactionally reliable now. The next question is whether it stays useful when a dependency turns slow or simply disappears.
 
 ## Retry
@@ -46,3 +48,6 @@ Set `NORTHSTAR_PAYMENT_DELAY_MS=10000` and watch the attempt timeouts fire, foll
 ## The Lesson
 
 Resilience patterns aren't decorations wrapped around `HttpClient`. They encode real policy: how long we'll wait, what counts as transient, how many extra attempts we can afford, when we should stop calling altogether, what happens to work that never succeeds, and how an operator sees any of it happening. If that policy isn't observable, it can't be operated safely - full stop.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

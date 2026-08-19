@@ -11,14 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Rate Limiting: Protecting Capacity and Fairness at the Boundary"
 ---
 
-Rate limiting controls how much work a caller may introduce over time.
 
-It protects capacity, fairness, cost, and downstream dependencies.
+
+Rate limiting controls how much work a caller may introduce over time. It protects capacity, fairness, cost, and downstream dependencies.
 
 ## Why It Exists
 
 Without limits:
-
 ```text
 one client
    |
@@ -32,7 +31,6 @@ one noisy or malicious caller can consume capacity needed by everyone else.
 ## Partition by the Right Identity
 
 Limits may be scoped by:
-
 ```text
 tenant
 API key
@@ -41,9 +39,7 @@ IP address
 route
 ```
 
-The partition should reflect the resource or fairness boundary.
-
-IP-only limiting can be problematic when many legitimate users share one address.
+The partition should reflect the resource or fairness boundary. IP-only limiting can be problematic when many legitimate users share one address.
 
 ## Algorithms
 
@@ -63,22 +59,15 @@ Smooths the boundary by considering recent windows.
 
 ### Token bucket
 
-Tokens accumulate at a configured rate and requests consume them.
-
-This allows controlled bursts.
+Tokens accumulate at a configured rate and requests consume them. This allows controlled bursts.
 
 ### Concurrency limiter
 
-Limits simultaneous work rather than requests per unit time.
-
-This is especially useful when duration is the scarce resource.
+Limits simultaneous work rather than requests per unit time. This is especially useful when duration is the scarce resource.
 
 ## ASP.NET Core
 
-ASP.NET Core includes rate-limiting middleware that can apply policies to endpoints.
-
-Conceptually:
-
+ASP.NET Core includes rate-limiting middleware that can apply policies to endpoints. Conceptually:
 ```csharp
 builder.Services.AddRateLimiter(options =>
 {
@@ -93,14 +82,11 @@ The architecture decision is more important than the API syntax: choose the righ
 ## Return Clear Rejection
 
 HTTP APIs commonly use:
-
 ```text
 429 Too Many Requests
 ```
 
-and may provide retry guidance.
-
-Clients should distinguish throttling from arbitrary server failure.
+and may provide retry guidance. Clients should distinguish throttling from arbitrary server failure.
 
 ## Rate Limit vs. Bulkhead
 
@@ -116,26 +102,15 @@ Use both when both dimensions matter.
 
 ## Distributed Limits
 
-In a multi-instance service, per-instance limits are not necessarily global limits.
-
-If a strict tenant-wide quota matters, coordinated state may be required.
-
-That coordination has latency and availability costs.
-
-Decide whether approximate or exact enforcement is needed.
+In a multi-instance service, per-instance limits are not necessarily global limits. If a strict tenant-wide quota matters, coordinated state may be required. That coordination has latency and availability costs. Decide whether approximate or exact enforcement is needed.
 
 ## Fairness
 
-A global limit can allow one tenant to consume all capacity.
-
-Partitioned limits preserve fairness.
-
-You may also reserve capacity for high-priority workloads.
+A global limit can allow one tenant to consume all capacity. Partitioned limits preserve fairness. You may also reserve capacity for high-priority workloads.
 
 ## Observability
 
 Measure:
-
 ```text
 accepted requests
 rejected requests
@@ -157,6 +132,7 @@ Bad limits reject healthy traffic, create confusing client behavior, or move bot
 
 ## Summary
 
-Rate limiting is admission control.
+Rate limiting is admission control. It should encode a deliberate capacity and fairness policy, not merely a number copied from a configuration example.
+---
 
-It should encode a deliberate capacity and fairness policy—not merely a number copied from a configuration example.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

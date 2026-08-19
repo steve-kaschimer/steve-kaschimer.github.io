@@ -11,6 +11,8 @@ tags: ["dotnet", "caching", "performance", "tooling"]
 title: "Getting Started with Memcached in .NET"
 ---
 
+
+
 Memcached's setup story is the shortest in this entire series, and that's not an accident - it's the entire design philosophy in one fact. There's no data structure configuration to reason about, no persistence tuning, no replication topology to choose between. You get a fast, multi-threaded key-value store and nothing else, which is exactly right when nothing else is what you need.
 
 This guide covers installing Memcached and connecting to it from .NET, bootstrapping a client with sensible connection pooling, the core get/set workflow (which is most of what there is), and the best practices that keep you from accidentally fighting Memcached's intentional simplicity. By the end you'll know exactly when reaching for this over Redis is the right call, not just the familiar one.
@@ -158,3 +160,10 @@ Redis is the far more common choice for session state in .NET, mainly because Me
 ### What's the most common mistake when adopting Memcached?
 
 Choosing it out of familiarity or simplicity when the actual caching need has already outgrown simple key-value - needing to cache a list, a set, or anything with more structure than a flat value is a clear signal Memcached isn't the right fit, and reaching for Redis or another richer cache would save a workaround later.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

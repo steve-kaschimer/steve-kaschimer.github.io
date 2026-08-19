@@ -11,17 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "concurrency"]
 title: "Implicit Lock in Modern .NET"
 ---
 
-Implicit Lock moves lock acquisition and concurrency enforcement into
-framework or infrastructure code so developers do not have to remember
-to apply it manually.
 
-That matters because a locking strategy is only reliable if every
-relevant operation follows it.
+
+Implicit Lock moves lock acquisition and concurrency enforcement into framework or infrastructure code so developers do not have to remember to apply it manually. That matters because a locking strategy is only reliable if every relevant operation follows it.
 
 ## The Dangerous Version
 
 Suppose developers must remember:
-
 ``` csharp
 await lockManager.AcquireAsync(order.Id, ct);
 
@@ -33,61 +29,43 @@ await lockManager.ReleaseAsync(order.Id, ct);
 ```
 
 Eventually, someone writes:
-
 ``` csharp
 order.Cancel();
 await repository.SaveAsync(order, ct);
 ```
 
-and forgets the lock.
-
-One missing call can invalidate the concurrency strategy.
+and forgets the lock. One missing call can invalidate the concurrency strategy.
 
 ## Make the Rule Structural
 
-A better approach makes concurrency part of the persistence mechanism.
-
-EF Core optimistic concurrency is a good modern example:
-
+A better approach makes concurrency part of the persistence mechanism. EF Core optimistic concurrency is a good modern example:
 ``` csharp
 builder.Property(x => x.Version)
     .IsConcurrencyToken();
 ```
 
 Application code simply performs normal work:
-
 ``` csharp
 order.Submit();
 
 await db.SaveChangesAsync(cancellationToken);
 ```
 
-EF Core automatically includes the original concurrency token in the
-update condition.
-
-The developer does not explicitly acquire an optimistic lock for every
-operation.
+EF Core automatically includes the original concurrency token in the update condition. The developer does not explicitly acquire an optimistic lock for every operation.
 
 ## SQL Server Rowversion
 
 For SQL Server:
-
 ``` csharp
 builder.Property(x => x.Version)
     .IsRowVersion();
 ```
 
-The database updates the token, and EF Core compares the original token
-during persistence.
-
-The concurrency rule becomes part of the mapping metadata.
-
-That is a strong form of implicit enforcement.
+The database updates the token, and EF Core compares the original token during persistence. The concurrency rule becomes part of the mapping metadata. That is a strong form of implicit enforcement.
 
 ## A Unit of Work Boundary
 
 A custom Unit of Work can also centralize conflict translation:
-
 ``` csharp
 public sealed class EfUnitOfWork(
     AppDbContext db)
@@ -113,14 +91,7 @@ Application services no longer repeat exception translation.
 
 ## SaveChanges Interceptors
 
-EF Core interceptors can enforce cross-cutting persistence behavior.
-
-For application-managed version tokens, an interceptor could identify
-modified concurrency-protected entities and assign new versions before
-saving.
-
-Conceptually:
-
+EF Core interceptors can enforce cross-cutting persistence behavior. For application-managed version tokens, an interceptor could identify modified concurrency-protected entities and assign new versions before saving. Conceptually:
 ``` csharp
 public interface IVersionedEntity
 {
@@ -128,15 +99,11 @@ public interface IVersionedEntity
 }
 ```
 
-Then infrastructure code ensures every modified entity receives a new
-token.
-
-This reduces the chance that a developer forgets to update the version.
+Then infrastructure code ensures every modified entity receives a new token. This reduces the chance that a developer forgets to update the version.
 
 ## Domain Base Types
 
 A Layer Supertype can also make the rule harder to miss:
-
 ``` csharp
 public abstract class VersionedEntity
 {
@@ -144,19 +111,11 @@ public abstract class VersionedEntity
 }
 ```
 
-Common EF Core configuration can then mark every derived entity's
-`Version` property as a concurrency token.
-
-Be careful not to force unrelated entities into inheritance merely for
-infrastructure convenience.
+Common EF Core configuration can then mark every derived entity's `Version` property as a concurrency token. Be careful not to force unrelated entities into inheritance merely for infrastructure convenience.
 
 ## Pessimistic Locks
 
-Implicit Lock can also support pessimistic strategies.
-
-For example, an application service decorator might acquire a logical
-resource lock before invoking a command handler:
-
+Implicit Lock can also support pessimistic strategies. For example, an application service decorator might acquire a logical resource lock before invoking a command handler:
 ``` text
 HTTP request
    |
@@ -174,7 +133,6 @@ The handler does not need to remember lock acquisition.
 ## Decorators
 
 Imagine:
-
 ``` csharp
 public interface ICommandHandler<TCommand>
 {
@@ -185,7 +143,6 @@ public interface ICommandHandler<TCommand>
 ```
 
 A decorator can apply a locking policy:
-
 ``` csharp
 public sealed class LockingHandler<TCommand>(
     ICommandHandler<TCommand> inner,
@@ -211,13 +168,11 @@ public sealed class LockingHandler<TCommand>(
 }
 ```
 
-The concurrency concern becomes infrastructure rather than handler
-boilerplate.
+The concurrency concern becomes infrastructure rather than handler boilerplate.
 
 ## Metadata-Driven Lock Policies
 
 A framework can derive locking behavior from metadata:
-
 ``` csharp
 [RequiresOfflineLock("Order")]
 public sealed record SubmitOrder(
@@ -225,27 +180,21 @@ public sealed record SubmitOrder(
 ```
 
 or through registration:
-
 ``` csharp
 services.AddLockPolicy<SubmitOrder>(
     command => LockResource.For(command.OrderId));
 ```
 
-The second approach avoids putting infrastructure attributes on
-application messages.
+The second approach avoids putting infrastructure attributes on application messages.
 
 ## Why Implicit Behavior Is Risky Too
 
-Hidden behavior can surprise developers.
-
-A call that appears simple:
-
+Hidden behavior can surprise developers. A call that appears simple:
 ``` csharp
 await handler.HandleAsync(command, ct);
 ```
 
 may now:
-
 -   acquire a distributed lease,
 -   wait,
 -   fail because of contention,
@@ -257,7 +206,6 @@ Implicit infrastructure must therefore be observable and documented.
 ## Logging and Diagnostics
 
 Record:
-
 -   resource being locked,
 -   acquisition duration,
 -   contention,
@@ -269,18 +217,11 @@ Automatic locking that cannot be diagnosed is difficult to operate.
 
 ## Avoid Magical Lock Discovery
 
-Do not build an elaborate reflection system that guesses which objects a
-command might modify.
-
-Prefer explicit policies declared centrally.
-
-The goal is to remove repetitive lock calls, not to hide the concurrency
-model.
+Do not build an elaborate reflection system that guesses which objects a command might modify. Prefer explicit policies declared centrally. The goal is to remove repetitive lock calls, not to hide the concurrency model.
 
 ## Testing
 
 Test the infrastructure itself:
-
 ``` text
 protected commands acquire locks
 unprotected commands do not
@@ -294,7 +235,6 @@ Then application-handler tests can focus on business behavior.
 ## When to Use It
 
 Implicit Lock is valuable when:
-
 -   concurrency rules must never be skipped,
 -   many operations share the same policy,
 -   infrastructure can reliably identify the lock boundary,
@@ -302,10 +242,7 @@ Implicit Lock is valuable when:
 
 ## When Explicit Is Better
 
-For rare, unusual, or highly visible locks, explicit acquisition may
-communicate intent more clearly.
-
-Not every cross-cutting concern benefits from being hidden.
+For rare, unusual, or highly visible locks, explicit acquisition may communicate intent more clearly. Not every cross-cutting concern benefits from being hidden.
 
 ## Related Patterns
 
@@ -317,11 +254,4 @@ Not every cross-cutting concern benefits from being hidden.
 
 ## Summary
 
-Implicit Lock makes concurrency protection part of the application's
-infrastructure rather than a convention every developer must remember.
-
-EF Core's automatic concurrency-token checking is a modern example of
-the principle.
-
-The pattern improves consistency, but implicit behavior should remain
-explicit in architecture, diagnostics, and documentation.
+Implicit Lock makes concurrency protection part of the application's infrastructure rather than a convention every developer must remember. EF Core's automatic concurrency-token checking is a modern example of the principle. The pattern improves consistency, but implicit behavior should remain explicit in architecture, diagnostics, and documentation.

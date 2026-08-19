@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "code-quality", "developer-productivity"]
 title: "Getting Started with Roslyn Analyzers in .NET"
 ---
 
+
+
 Roslyn Analyzers have the fastest feedback loop of any tool in this comparison for a simple reason: they run inside the same compiler that turns your code into IL, so a violation shows up as a squiggly line in your editor before you've even saved the file, not after a test run or a CI pass. That immediacy is available two ways - installing an existing analyzer package with hundreds of pre-built rules, or writing your own for something specific to your team that no general-purpose package would know to check.
 
 This guide covers installing existing analyzer packages, configuring severity and enforcement through `.editorconfig`, the basics of authoring a custom analyzer for a team-specific rule, and the best practices that keep analyzer warnings meaningful rather than becoming background noise everyone ignores. By the end you'll have instant, in-editor enforcement for both off-the-shelf and genuinely custom rules.
@@ -192,3 +194,10 @@ To a limited degree with custom authoring, but it's not their natural strength -
 ### What's the most common mistake in a first Roslyn Analyzers setup?
 
 Not committing `.editorconfig` to source control, leaving severity configuration as an individual, inconsistent IDE setting rather than a team-wide, enforced decision. The second common mistake, specific to custom analyzers, is forgetting `OutputItemType="Analyzer"` on the project reference, leading to confusion about why a correctly written analyzer never fires.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

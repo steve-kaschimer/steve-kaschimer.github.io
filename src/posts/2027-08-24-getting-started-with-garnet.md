@@ -11,6 +11,8 @@ tags: ["dotnet", "caching", "performance", "tooling"]
 title: "Getting Started with Garnet in .NET"
 ---
 
+
+
 Garnet's pitch is unusually direct for a caching tool: same protocol as Redis, so your existing client code mostly just works, but built in C# by Microsoft Research with a modern, epoch-based garbage collection design aimed squarely at strong multi-core performance. For .NET shops, that combination - Redis-compatible on the wire, native .NET under the hood - is the whole appeal, along with the honest caveat that it's meaningfully younger than everything else in this comparison.
 
 This guide covers installing and running Garnet, bootstrapping a connection using the same `StackExchange.Redis` client you'd use for Redis itself, the core workflow (which is close to identical to Redis, by design), and the best practices for adopting something newer without getting burned by gaps between it and the tool it's compatible with. By the end you'll have a working Garnet setup and a clear sense of what to verify before trusting it with production traffic.
@@ -157,3 +159,10 @@ Yes, and it's a reasonable approach given the shared protocol - you could route 
 ### What's the most common mistake evaluating Garnet?
 
 Assuming full command and module parity with Redis based on RESP compatibility alone, without testing the application's actual specific usage patterns first. The second is skipping a real evaluation against production-like traffic because the switching cost seems low - low switching cost is a reason to actually test thoroughly, not a reason to skip testing.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

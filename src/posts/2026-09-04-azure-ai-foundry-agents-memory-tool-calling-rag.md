@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "ai-agents", "rag", "azure-ai-search", "agentic-devel
 title: "Azure AI Foundry Agents: Memory, Tool Calling, and Retrieval-Augmented Generation"
 ---
 
+
+
 Ask an agent the same question in two different threads and it answers as if meeting you for the first time both times. That is not a bug in Azure AI Foundry's thread model. It is exactly what threads are for - isolated, stateless-by-default conversation containers. The bug, if there is one, is in treating "the agent has a thread" as equivalent to "the agent has memory."
 
 Those are different claims. A thread remembers what was said in *this* conversation. It says nothing about facts that are true regardless of who's asking - your product's refund policy, the contents of your documentation, last quarter's incident postmortems. And it says nothing about facts that are true about *this specific user* across every conversation they'll ever have with the agent - their subscription tier, the fact they already tried the obvious fix, their stated preference for terse answers. Three different problems. Three different Foundry primitives. Conflating them is why teams ship an agent with "memory" that still asks a returning customer to explain their issue from scratch.

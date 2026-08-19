@@ -11,6 +11,8 @@ tags: ["github-codespaces", "developer-productivity", "devcontainer", "onboardin
 title: "GitHub Codespaces for Team Onboarding: Eliminating \"Works on My Machine\" at Scale"
 ---
 
+
+
 A new hire's first day usually goes one of two ways. Either they spend it running `brew install` sixteen times, debugging a Node version mismatch, and asking in Slack why the app won't start - or they open a browser tab, click "Create codespace," and are looking at a running application four minutes later. The difference isn't luck. It's whether someone invested in the `.devcontainer/` configuration before the new hire showed up.
 
 A Codespace that isn't configured well is just a more expensive, slightly slower version of local development - a container that still needs manual setup steps, still has undocumented dependencies, still produces "works in my Codespace, not in yours" bugs. The value isn't "development happens in the cloud." It's "the environment is fully specified in the repository, so creating one is deterministic." That property is what actually kills "works on my machine" - and it's earned by getting five specific things right, not by turning Codespaces on.

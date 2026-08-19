@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "developer-productivity", "tooling"]
 title: "Getting Started with Vertical Slice Architecture in .NET"
 ---
 
+
+
 Vertical Slice Architecture starts from a different question than most patterns in this series. Instead of asking "how should we separate technical concerns," it asks "what does this specific request actually need" - and then puts the endpoint, validation, business logic, and data access for that one feature in the same place, rather than spreading it across layers that exist purely for technical tidiness.
 
 This guide covers setting up a Vertical Slice solution in .NET, bootstrapping the folder structure and libraries that make slices genuinely self-contained, the core workflow of adding a feature, and the best practices that keep slices from drifting into duplicated chaos as the codebase grows. By the end you'll have a structure where adding a feature means adding a slice, not touching four existing files.
@@ -213,3 +215,10 @@ Not by default. A slice is free to call `DbContext` directly, which is convenien
 ### What's the biggest mistake teams make adopting Vertical Slice Architecture?
 
 Treating "organize by feature" as "duplicate everything with no shared structure," which produces its own kind of mess - inconsistent validation, inconsistent error handling, and cross-cutting concerns re-implemented slightly differently in every slice. A shared pipeline for validation, logging, and error handling is what keeps many independent slices feeling like one coherent application.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["github-packages", "github-actions", "ci-cd", "artifact-management", "pla
 title: "GitHub Packages as an Internal Registry: Publishing and Consuming npm, Docker, and Maven Artifacts"
 ---
 
+
+
 A team that needs to publish internal npm packages, share Docker images across services, or distribute Maven artifacts between projects usually starts evaluating registry options: run Nexus, stand up JFrog Artifactory, or use a public registry with private packages bolted on. All three are reasonable choices. All three are also infrastructure you now own, with credentials you now manage separately from everything else - a second identity system bolted onto a CI/CD pipeline that already runs entirely on GitHub.
 
 GitHub Packages is the option most teams skip evaluating, usually because "GitHub has a package registry" doesn't register as news if you've never gone looking for it. It supports npm, Docker/OCI images, Maven, NuGet, and RubyGems, it's tied to the repository or organization you're already using, and - the part that actually saves operational effort - it authenticates with the same `GITHUB_TOKEN` every Actions workflow already gets for free. No separate registry credentials to provision, rotate, or leak.

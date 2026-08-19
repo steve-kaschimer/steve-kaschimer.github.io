@@ -11,6 +11,8 @@ tags: ["dotnet", "caching", "architecture", "developer-productivity"]
 title: "Getting Started with NCache in .NET"
 ---
 
+
+
 NCache's whole pitch is being the distributed cache built for .NET rather than adapted to it, and that shows up most clearly in the setup itself - ASP.NET Core session state and EF Core query caching are first-class, purpose-built integrations rather than something you assemble yourself on top of a generic `IDistributedCache` implementation. The trade-off is a smaller ecosystem and, for the full feature set, a commercial license - worth knowing upfront rather than discovering halfway through evaluation.
 
 This guide covers installing and connecting to NCache from .NET, bootstrapping a cache and its ASP.NET Core integrations, the core read/write/session workflow, and the best practices that make the most of its .NET-native design. By the end you'll have a working NCache setup and a clear sense of which of its enterprise features are worth turning on for your specific workload.
@@ -179,3 +181,10 @@ Technically you could run both for different purposes, but that's unusual and ad
 ### What's the most common mistake in a first NCache setup?
 
 Treating it like a drop-in Redis replacement and missing its purpose-built ASP.NET Core session and EF Core integrations - which is where NCache's .NET-native design actually pays off. The second common mistake is not confirming upfront which features require Enterprise licensing, leading to a design that assumes capabilities the deployed edition doesn't actually include.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

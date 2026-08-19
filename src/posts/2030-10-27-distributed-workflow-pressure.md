@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "distributed-systems"]
 title: "Lab 11: When One Business Operation Stops Being One Transaction"
 ---
 
+
+
 Checkout now spans three independently committed responsibilities - Order, Inventory, and Payment - with a coordinator calling them in sequence. Under normal conditions it all just works.
 
 ## Break It
@@ -30,3 +32,6 @@ What should happen once Payment declines? The business answer is to release the 
 ## Next
 
 The next stage introduces a Saga state machine, so the workflow becomes a durable concept in its own right instead of a sequence of calls hidden inside one coordinator method.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

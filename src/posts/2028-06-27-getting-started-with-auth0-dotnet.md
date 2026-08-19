@@ -11,6 +11,8 @@ tags: ["dotnet", "security", "identity", "oidc", "tooling"]
 title: "Getting Started with Auth0 for .NET"
 ---
 
+
+
 Auth0's whole value proposition shows up in the first ten minutes - register an application in the dashboard, install one SDK package, and you have working login, without writing an OAuth flow by hand or standing up any infrastructure. The setup work that actually matters happens after that quick win: configuring token validation correctly for your API, deciding how roles and permissions map to Auth0's model, and understanding what you're paying for as your user base grows.
 
 This guide covers registering an application with Auth0, bootstrapping authentication in an ASP.NET Core app and API, the core patterns for roles and permissions, and the best practices for using a managed platform well rather than fighting its opinions. By the end you'll have working authentication with minimal infrastructure, and a clear sense of how Auth0's pricing scales as you grow.
@@ -187,3 +189,10 @@ Yes - use the `Auth0.AspNetCore.Authentication` SDK for the web application's lo
 ### What's the most common mistake in a first Auth0 setup?
 
 Misconfigured Allowed Callback/Logout URLs, causing a login or logout flow that appears correctly set up to fail at the redirect step. The second common mistake is not configuring an Auth0 Action to include custom claims like roles, leading to confusing "the user is authenticated but my authorization policy still rejects them" issues.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

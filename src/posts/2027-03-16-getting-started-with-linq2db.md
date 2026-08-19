@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "performance", "tooling"]
 title: "Getting Started with Linq2Db in .NET"
 ---
 
+
+
 Linq2Db occupies an unusual spot in the .NET ORM landscape: it gives you EF Core's most-loved feature - strongly-typed, composable LINQ queries - without the change tracking, identity map, or unit-of-work machinery that comes bundled with a full ORM whether you want it or not. For teams that want LINQ's ergonomics and nothing else, that's the entire pitch, and it's a narrower, more deliberate tool than either EF Core or Dapper.
 
 This guide covers installing Linq2Db, bootstrapping a data connection and mapped entities, the core query and update workflow without change tracking to lean on, and the best practices that keep a Linq2Db data layer predictable as it grows. By the end you'll have a lightweight, fast, strongly-typed query layer that stays honest about exactly what SQL it's generating.
@@ -176,3 +178,10 @@ The main difference is query style - Linq2Db gives you strongly-typed, compiler-
 ### What's the most common mistake in a first Linq2Db setup?
 
 Falling into an EF Core-style habit of fetching an entity, mutating it, and looking for a `SaveChanges()` equivalent that doesn't exist. Linq2Db's update model is set-based and explicit by design - learning that pattern early avoids writing code that looks idiomatic but doesn't take advantage of what makes Linq2Db efficient in the first place.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

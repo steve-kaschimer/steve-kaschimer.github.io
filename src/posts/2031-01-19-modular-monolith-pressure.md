@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 23: Did These Boundaries Need to Be Services?"
 ---
 
+
+
 Northstar now runs `Ordering.Api`, `Inventory.Worker`, and `Payments.Worker` on top of RabbitMQ, an Outbox, an Inbox, a Saga, Retry, a Circuit Breaker, a Dead Letter Queue, and OpenTelemetry. Every one of those patterns solved a real problem. The question worth asking now is a different one: which of those problems actually came from the business, and which came from the deployment topology we happened to choose?
 
 ## The Inventory Boundary
@@ -34,3 +36,6 @@ Nothing about this erases the boundaries themselves. The modular monolith still 
 ## Next
 
 The next stage builds that shape explicitly.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

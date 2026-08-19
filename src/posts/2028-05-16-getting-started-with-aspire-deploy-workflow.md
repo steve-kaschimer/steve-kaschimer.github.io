@@ -11,6 +11,8 @@ tags: ["dotnet", "deployment", "aspire", "azure", "devops"]
 title: "Getting Started with .NET Aspire's Deploy Workflow"
 ---
 
+
+
 Aspire's local development story - the AppHost, service discovery, the dashboard - is well covered elsewhere in this series. What's less widely known is that Aspire 9.2 and later ships a genuine deployment workflow on top of that same application model: `aspire publish` and `aspire deploy` commands that generate real deployment artifacts - Docker Compose files, Kubernetes manifests, Bicep templates - from the exact same AppHost definition you've already been using for local development. This guide is about that second half, the part that gets less attention than the local dev experience but closes a real gap between "works on my machine" and "deployed to production."
 
 This guide covers using Aspire's publish and deploy commands, bootstrapping the configuration that determines which target your application deploys to, the core workflow for both Azure (via `azd`) and other targets, and the best practices for treating Aspire's deploy tooling as what it actually is - a consistency layer, not a deployment platform of its own. By the end you'll have a deployment pipeline that stays in sync with your local development model instead of drifting from it.
@@ -151,3 +153,10 @@ Aspire's publisher model is extensible, meaning custom publishers can be built f
 ### What's the most common mistake when using Aspire's deploy workflow?
 
 Hand-editing generated Bicep or Kubernetes manifests directly instead of making customizations through the AppHost's configuration APIs, causing those changes to be lost or drift out of sync on the next publish. The second common mistake is treating the deploy workflow as a full deployment platform rather than understanding it's a tooling layer sitting on top of an actual target you still need to operationally understand.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["github-actions", "security", "devsecops", "runners", "platform-engineeri
 title: "GitHub Actions Self-Hosted Runners: Security Hardening for Production Workloads"
 ---
 
+
+
 A self-hosted runner earns its keep two ways: it can reach your private network without a VPN tunnel or a public endpoint, and it can run on hardware GitHub doesn't offer - a GPU for model training, a specific chip architecture, whatever your build actually needs. Both are real, good reasons. Neither is why most teams that stand one up have actually thought about what they gave up to get it.
 
 A GitHub-hosted runner is a freshly provisioned VM, destroyed the moment the job finishes. A self-hosted runner, by default, is a persistent process on a machine that stays up, stays network-connected, and executes whatever the next queued job tells it to - across every job that machine ever picks up, not just one. That's not a self-hosted runner problem exactly; it's the default configuration most teams reach for because it's the simplest one to stand up, and it inverts the isolation property GitHub-hosted runners give you for free.

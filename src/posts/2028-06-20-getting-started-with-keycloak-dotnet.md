@@ -11,6 +11,8 @@ tags: ["dotnet", "security", "identity", "oidc", "devops"]
 title: "Getting Started with Keycloak for .NET"
 ---
 
+
+
 Keycloak's free, standards-compliant OIDC implementation means the .NET integration side is genuinely simple - any OAuth2/OIDC-compliant provider works with the same `Microsoft.AspNetCore.Authentication.OpenIdConnect` middleware, so from ASP.NET Core's perspective, Keycloak looks like any other identity provider you point configuration at. The real work in a Keycloak setup lives on the other side: realms, clients, and the fact that you're now operating a Java-based service as part of your infrastructure, regardless of how comfortably .NET talks to it.
 
 This guide covers installing and running Keycloak, bootstrapping a realm and client for a .NET application, the core OIDC integration pattern in ASP.NET Core, and the best practices for operating Keycloak well as infrastructure your team owns. By the end you'll have a free, production-capable identity provider integrated cleanly with .NET.
@@ -157,3 +159,10 @@ Yes - this is one of Keycloak's genuine advantages over OIDC-only alternatives l
 ### What's the most common mistake in a first Keycloak setup?
 
 Running `start-dev` mode in production instead of a properly hardened configuration with a real database and TLS. The second common mistake is assuming a flat role claim structure without checking Keycloak's actual token output, leading to authorization policies that silently never match.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

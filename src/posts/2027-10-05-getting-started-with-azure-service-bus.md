@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "cloud", "architecture", "devops"]
 title: "Getting Started with Azure Service Bus in .NET"
 ---
 
+
+
 Azure Service Bus's reputation as the best .NET developer experience among message brokers isn't marketing - the `Azure.Messaging.ServiceBus` SDK genuinely feels like it was designed by people who write ASP.NET Core applications, not adapted from a cross-language client. That smoothness can hide a couple of decisions worth making deliberately rather than by default: whether you need queues or topics, and how you handle message locking for longer-running processing.
 
 This guide covers installing and connecting to Azure Service Bus from .NET, bootstrapping queues and topic/subscription pub-sub, the core send/receive workflow including message locking, and the best practices that keep a Service Bus-backed system reliable under real failure conditions. By the end you'll have a working setup using either pattern, and a clear sense of which one fits a given scenario.
@@ -212,3 +214,10 @@ Yes - MassTransit supports Azure Service Bus as a transport, giving you the same
 ### What's the most common mistake in a first Azure Service Bus setup?
 
 Leaving `AutoCompleteMessages` at its default and not explicitly completing messages after successful processing, risking the same "marked done before actually done" class of bug that applies to auto-commit in Kafka. The second common mistake is choosing a queue for a scenario that actually needs a topic's fan-out to multiple independent consumers.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

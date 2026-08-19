@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "cloud", "architecture", "devops"]
 title: "Getting Started with Amazon SQS in .NET"
 ---
 
+
+
 Amazon SQS's simplicity is its whole pitch, and that simplicity is genuinely refreshing after RabbitMQ's exchange model or Kafka's partition mechanics - a queue, messages go in, messages come out, AWS handles the rest. The part worth understanding upfront isn't complexity so much as a set of binary decisions SQS asks you to make explicitly: standard or FIFO, short or long polling, and how deletion (not "completion" - SQS's model is genuinely different here) fits into your processing logic.
 
 This guide covers installing and connecting to SQS from .NET, bootstrapping standard and FIFO queues, the core send/receive/delete workflow, and the best practices that keep an SQS-backed system correct under real failure and retry conditions. By the end you'll have a working setup and a clear sense of when FIFO's added guarantees are actually worth their throughput cost.
@@ -199,3 +201,10 @@ It scopes ordering - messages with the same `MessageGroupId` are delivered stric
 ### What's the most common mistake in a first SQS setup?
 
 Deleting a message immediately upon receipt rather than after successful processing, which risks losing work if a crash happens in between. The second common mistake is defaulting to FIFO queues out of an abundance of caution about ordering, without actually needing the ordering guarantee - unnecessarily giving up standard queues' higher throughput for a requirement that wasn't real.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "performance", "architecture"]
 title: "The Top 5 .NET ORMs Compared: Which One Should You Choose?"
 ---
 
+
+
 Every .NET data access decision eventually collapses into the same question: how much should the ORM do for you, versus how much SQL do you want to write yourself? That's really the axis all five of these tools sit on. EF Core sits at the "do the most for me" end. Dapper sits at the "get out of my way" end. The other three - NHibernate, Linq2Db, and RepoDb - fill in the space between with their own specific trade-offs, and none of them are simply worse versions of EF Core or Dapper.
 
 This guide compares the five ORMs .NET developers reach for most often, what each one actually optimizes for, and which project profile fits best. One thing worth knowing upfront: for a meaningful share of real production systems, the honest answer isn't "pick one" - it's EF Core for the domain and migrations, with Dapper handling the specific read paths where raw SQL control matters more than abstraction. That hybrid pattern comes up often enough in this comparison that it's worth keeping in mind while reading. This series continues with dedicated getting-started walkthroughs for each ORM in .NET.
@@ -30,96 +32,45 @@ This guide compares the five ORMs .NET developers reach for most often, what eac
 
 ## EF Core
 
-Entity Framework Core is Microsoft's official ORM and the default starting point for most new ASP.NET Core projects in 2026. It's a full ORM in the traditional sense: entities, change tracking, LINQ queries translated to SQL, and a mature migrations system for evolving your schema alongside your code.
+The default for new ASP.NET Core projects. Full ORM: entities, change tracking, LINQ → SQL, mature migrations system. Actively maintained by Microsoft with tight ecosystem integration.
 
-**Strengths:**
+Code First, Database First, Model First workflows. LINQ queries are strongly typed and refactor-safe, catches bugs raw SQL strings miss. Migrations are good, schema evolution alongside code.
 
-- Actively maintained by Microsoft with tight integration into the rest of the .NET ecosystem - `dotnet ef` tooling, dependency injection, and ASP.NET Core all assume EF Core as a baseline
-- Supports Code First, Database First, and Model First workflows, so it fits teams that want to design the schema in C# or teams that need to map an existing database
-- LINQ queries are strongly typed and refactor-safe, catching a class of bugs raw SQL strings can't
-- Migrations are genuinely good - schema evolution alongside code changes is one of EF Core's most mature capabilities relative to every other option here
-
-**Weaknesses:**
-
-- Change tracking has real overhead, and it's easy to accidentally pay for it on read-only queries if you forget `AsNoTracking()`
-- Generated SQL for complex queries can be inefficient or surprising compared to hand-written SQL, especially for reporting-style aggregations
-- The abstraction can obscure what's actually happening at the database level, which occasionally makes performance problems harder to diagnose than with a thinner layer
-
-**Choose this when:** you're starting a new ASP.NET Core project and don't have a specific reason to reach for something else - it's the right default, not just the popular one.
+Change tracking has overhead; `AsNoTracking()` fixes read-only queries. Generated SQL for complex queries can surprise you compared to hand-written. Abstraction obscures what's happening at the database level, making perf diagnostics harder.
 
 ## Dapper
 
-Dapper is a micro-ORM originally built at Stack Overflow, designed to do exactly one thing well: map the results of a SQL query you write yourself onto .NET objects, as fast as possible, with almost no overhead beyond raw ADO.NET.
+Map SQL query results onto .NET objects, as fast as possible. Minimal footprint, no config ceremony. Built at Stack Overflow.
 
-**Strengths:**
+Full SQL control. When you need to hand-tune execution plans or use database-specific features EF Core doesn't model. Supports multi-mapping, batching, bulk ops.
 
-- Consistently the fastest option for complex raw SQL and large result sets, and close to raw ADO.NET performance in general
-- Minimal footprint - a single lightweight library, no configuration ceremony, easy to learn in an afternoon
-- Full SQL control, which matters when you need to hand-tune a query for a specific execution plan or use database-specific features EF Core doesn't model well
-- Supports multi-mapping, batching, and bulk operations for scenarios where that control pays off
+No change tracking, no migrations, no schema management. Every query is a raw SQL string, refactoring a column name doesn't get caught by the compiler. Doesn't scale gracefully to large domain models with many relationships.
 
-**Weaknesses:**
-
-- No change tracking, no migrations, and no schema management - Dapper is exclusively about executing SQL and mapping results, so you need another tool or manual process for everything else
-- Every query is a raw SQL string, so refactoring a column name doesn't get caught by the compiler the way a LINQ query would
-- Scales less gracefully to large domain models with many relationships, since there's no built-in graph tracking or navigation the way a full ORM provides
-
-**Choose this when:** you have specific read paths - reporting queries, high-throughput endpoints, anything with a SQL query you'd rather write and tune directly - where the control is worth giving up the abstraction. Very commonly paired with EF Core rather than used as a full replacement.
+Very commonly paired with EF Core for specific read paths (reporting, high-throughput) rather than used as a full replacement.
 
 ## NHibernate
 
-NHibernate is the .NET port of Java's Hibernate, and it's been used in large enterprise .NET applications for well over a decade. It's a full ORM with deep configuration options - HQL (its own query language), a Criteria API, a LINQ provider, and fine-grained control over caching and loading behavior.
+.NET port of Java's Hibernate. Used in large enterprise apps for over a decade. Full ORM: HQL, Criteria API, LINQ provider. Extremely configurable, multi-database, custom mapping strategies (Fluent, XML, attributes), precise lazy/eager control. First and second-level caching mature and well-documented.
 
-**Strengths:**
+Steeper learning curve than anything here. Configuration surface is large. EF Core has closed most of the differentiation gap while offering better tooling and a larger community.
 
-- Extremely configurable - multi-database support, custom mapping strategies (Fluent API, XML, attribute-based), and precise control over lazy vs. eager loading
-- First-level and second-level caching are mature and well-documented, useful for high-read enterprise workloads
-- Proven at scale in large, long-running enterprise systems, with well-understood behavior after years of production use
-
-**Weaknesses:**
-
-- Steeper learning curve than any other option here - the configuration surface is large, and the XML/Fluent mapping conventions take real time to internalize
-- EF Core has closed most of the feature gap that used to differentiate NHibernate, while offering better tooling integration and a much larger active community
-- Not the recommended starting point for a new, greenfield .NET project in 2026 - its strongest use case is genuinely existing systems already built on it
-
-**Choose this when:** you're maintaining or extending an existing NHibernate codebase. For new projects, EF Core has caught up enough in capability that NHibernate's added complexity is harder to justify than it used to be.
+Best for existing NHibernate codebases. For new projects, EF Core's caught up enough that NHibernate's complexity is harder to justify.
 
 ## Linq2Db
 
-Linq2Db (LINQ to DB) is a lightweight ORM that gives you strongly-typed LINQ queries with minimal abstraction between your code and the generated SQL - closer in spirit to a "thin LINQ layer over SQL" than a full ORM with change tracking and unit-of-work semantics.
+Strongly-typed LINQ queries with minimal abstraction between code and SQL. Thin LINQ layer over SQL, not a full ORM.
 
-**Strengths:**
+Very fast, no change tracking, no identity map overhead. LINQ translates to SQL predictably. Wide database provider support.
 
-- Very fast - because there's no change tracking or identity map overhead, query execution stays close to what you'd get writing SQL by hand
-- LINQ queries translate to SQL predictably, with less of the "what did EF Core actually generate here" uncertainty that can come with a heavier ORM
-- Supports a wide range of database providers, and is a strong fit for teams that want LINQ's ergonomics without paying for features they don't use
-
-**Weaknesses:**
-
-- No change tracking, so update workflows require more explicit handling than EF Core's automatic dirty-checking
-- Smaller community and ecosystem than EF Core or Dapper, meaning fewer tutorials, Stack Overflow answers, and third-party integrations to lean on
-- Less commonly adopted than the other four, so hiring and onboarding developers already familiar with it is less likely
-
-**Choose this when:** you want LINQ's type safety and query composability without the overhead of change tracking, and you're comfortable trading community size for a leaner, more predictable query layer.
+No change tracking, so updates require explicit handling. Smaller community and ecosystem. Less commonly adopted.
 
 ## RepoDb
 
-RepoDb positions itself deliberately between Dapper and EF Core - a hybrid micro-ORM that offers Dapper-like raw SQL execution alongside method-based CRUD operations that reduce the boilerplate a pure micro-ORM leaves you to write yourself.
+Hybrid micro-ORM between Dapper and EF Core. Raw SQL execution + method-based CRUD (`Insert`, `Update`, `Delete`, `Query`). Reduces boilerplate while keeping raw SQL available.
 
-**Strengths:**
+Genuinely fast, benchmarks match or exceed Dapper while offering more convenience. Built-in second-level caching and query tracing. Async throughout. Flexible mapping.
 
-- Genuinely fast - benchmarks frequently show it matching or exceeding Dapper's performance while offering more built-in convenience
-- Method-based CRUD (`Insert`, `Update`, `Delete`, `Query`) reduces the amount of hand-written SQL needed for routine operations, while raw SQL is still available when you need it
-- Built-in second-level caching and query tracing are useful additions a pure micro-ORM like Dapper doesn't provide out of the box
-- Async support throughout, and flexible mapping (type, field, multi-result-set) for less common data shapes
-
-**Weaknesses:**
-
-- Smaller community and ecosystem than EF Core, Dapper, or even NHibernate, which means less third-party tooling and fewer people to ask when something goes wrong
-- No migrations or schema management, the same gap Dapper has - you're on your own for evolving the database schema
-- Less battle-tested at scale in the broadest sense than the four more established options here, simply due to smaller adoption
-
-**Choose this when:** you want Dapper's performance profile but find yourself re-writing the same CRUD boilerplate repeatedly, and you're comfortable adopting a less widely used library in exchange for that convenience.
+Smaller community than EF Core or Dapper. No migrations or schema management (same gap as Dapper). Less battle-tested at scale.
 
 ## How to Decide
 
@@ -166,3 +117,10 @@ Yes, both are used in production systems, but with meaningfully smaller communit
 ### How do migrations work if I'm not using EF Core?
 
 Dapper, RepoDb, and Linq2Db all leave schema migrations entirely up to you - common approaches include a dedicated migration tool (like DbUp, Fluent Migrator, or Flyway) independent of the query layer. NHibernate has some tooling support for schema generation and migration, though less mature than EF Core's. This is one of the clearest differentiators when choosing between a full ORM and a micro-ORM: a full ORM typically owns migrations end-to-end, while a micro-ORM treats it as a separate concern.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "cloud", "devops", "tooling"]
 title: "Getting Started with Azure DevOps for .NET"
 ---
 
+
+
 Azure DevOps' YAML pipelines feel familiar if you already know GitHub Actions - steps, stages, triggers - but the vocabulary and structure are genuinely different underneath, and the payoff for learning them is real specifically where Azure is your deployment target: native Azure service connections, deep App Service/Container Apps/AKS deployment tasks, and governance features that don't require an enterprise upgrade tier the way some competitors do.
 
 This guide covers setting up an Azure Pipelines YAML pipeline for .NET, bootstrapping caching and multi-stage build/deploy structure, the core patterns for Azure-native deployment, and the best practices that take advantage of what Azure DevOps specifically does well. By the end you'll have a pipeline that's fast, secure, and deeply integrated with Azure if that's your deployment target.
@@ -182,3 +184,10 @@ Configure it under **Pipelines → Environments → [your environment] → Appro
 ### What's the most common mistake in a first Azure DevOps setup for .NET?
 
 Using a service principal with a stored secret for Azure service connections instead of workload identity federation, missing the same security benefit OIDC provides in GitHub Actions. The second common mistake is not using the `Cache@2` task for NuGet packages, leaving builds slower than necessary on every run.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

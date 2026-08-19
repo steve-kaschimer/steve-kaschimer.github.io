@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Lab 18: Load Is an Architectural Force"
 ---
 
+
+
 A perfectly correct system can still fail simply because it accepts more work than its dependencies can process. Northstar now treats capacity as something to design for explicitly, not something to hope infrastructure sizing quietly handles.
 
 ## Queue-Based Load Leveling
@@ -38,3 +40,6 @@ A request now moves from the client through rate limiting, into Ordering, onto a
 ## Lesson
 
 Capacity isn't just an infrastructure sizing problem you solve once and forget. It's part of application behavior, and a production architecture has to decide, deliberately, what work to admit, what to buffer, what to parallelize, and what to simply reject. Those are architectural decisions, not ops afterthoughts.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

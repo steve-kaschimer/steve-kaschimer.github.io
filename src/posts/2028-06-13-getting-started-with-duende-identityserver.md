@@ -11,6 +11,8 @@ tags: ["dotnet", "security", "identity", "oidc", "architecture"]
 title: "Getting Started with Duende IdentityServer"
 ---
 
+
+
 Duende IdentityServer's first real decision happens before you write any code: are you actually under the community edition's revenue threshold, or does your organization need a commercial license? That question genuinely determines whether this is the right tool at all, and it's worth resolving explicitly rather than building an identity provider around a licensing assumption you haven't confirmed. Once that's settled, Duende asks you to build more than most teams expect - it's a protocol framework, not a turnkey identity server, and the UI, user store, and admin tooling are all yours to supply.
 
 This guide covers installing Duende IdentityServer, bootstrapping clients, scopes, and a user store correctly, the core OIDC/OAuth flows you'll actually implement, and the best practices for building the scaffolding Duende deliberately doesn't provide. By the end you'll have a working identity provider and a realistic sense of the ongoing ownership that comes with it.
@@ -172,3 +174,10 @@ Yes, meaningfully - Duende is a framework requiring you to understand OAuth flow
 ### What's the most common mistake in a first Duende IdentityServer setup?
 
 Not confirming licensing status before investing significant engineering time, only to discover a commercial license is required partway through. The second common mistake is underestimating the UI and supporting-flow work Duende doesn't provide out of the box, leading to a much larger implementation effort than initially planned.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

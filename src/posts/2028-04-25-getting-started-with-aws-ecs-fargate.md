@@ -11,6 +11,8 @@ tags: ["dotnet", "deployment", "aws", "containers", "devops"]
 title: "Getting Started with AWS ECS/Fargate for .NET Deployment"
 ---
 
+
+
 ECS paired with Fargate is AWS's answer to the same problem Azure Container Apps solves - run containers without managing a cluster - but it asks you to make one decision Azure's platform doesn't: EC2-backed ECS or Fargate. That choice determines whether you're managing the underlying compute yourself or handing it entirely to AWS, and it's worth making deliberately rather than defaulting to whichever example you copied first.
 
 This guide covers deploying a .NET application to ECS with Fargate, bootstrapping the task definition and service configuration that matter for .NET workloads specifically, the core deployment workflow, and the best practices for taking advantage of AWS's ecosystem integration without adding unnecessary operational complexity. By the end you'll have a serverless container deployment integrated with the rest of your AWS infrastructure.
@@ -176,3 +178,10 @@ Generally less so - AWS's documentation and tooling investment is broader and le
 ### What's the most common mistake in a first ECS/Fargate deployment?
 
 Not configuring CloudWatch Logs from the start, leading to a frustrating debugging experience once a task fails and its ephemeral logs are gone. The second common mistake is embedding secrets directly in the task definition instead of referencing Secrets Manager, leaving sensitive values in plain text within deployment configuration.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

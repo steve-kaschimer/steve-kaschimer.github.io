@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "architecture", "developer-productivity"]
 title: "Getting Started with Quartz.NET in .NET"
 ---
 
+
+
 Quartz.NET's reputation for complexity is earned, but it's complexity in service of a specific thing: scheduling rules that are genuinely hard to express correctly. "Every weekday at 9am in the customer's local time zone, except public holidays, and never let two runs overlap" is a real requirement some systems have, and it's exactly the kind of rule Hangfire's simpler cron-based model wasn't built to express cleanly. Understanding Quartz.NET's core vocabulary - jobs, triggers, and schedulers as distinct concepts - is most of what makes the rest of it click.
 
 This guide covers installing Quartz.NET, bootstrapping it with ASP.NET Core's hosting model and persistent job storage, the core job/trigger/scheduler workflow, and the best practices that make the most of its scheduling sophistication without drowning in configuration. By the end you'll have a scheduler capable of handling rules that would be awkward or impossible to express in a simpler tool.
@@ -181,3 +183,10 @@ When your actual scheduling need is simple - "run this job every night at 2 AM,"
 ### What's the most common mistake in a first Quartz.NET setup?
 
 Reaching for it when the actual scheduling need is simple, taking on real configuration complexity for no corresponding benefit. The second common mistake is forgetting `UseClustering()` when running multiple instances, leading to the same job firing once per instance instead of once total.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

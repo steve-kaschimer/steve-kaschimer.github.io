@@ -11,6 +11,8 @@ tags: ["llmops", "azure-ai-foundry", "prompt-engineering", "ci-cd", "agentic-dev
 title: "LLMOps: Versioning, Testing, and Deploying Prompts as First-Class Artifacts"
 ---
 
+
+
 A prompt buried as a string literal inside application code changes the same way a magic number would - someone edits it inline to fix an immediate problem, ships it in the same PR as an unrelated bug fix, and nothing about that change is versioned, tested, or reviewable as its own unit. Three weeks later, response quality has quietly degraded and nobody can point to when, because the prompt that caused it was never a thing with a history - it was just text sitting inside a function.
 
 Prompts are code. Not metaphorically - they determine program behavior as directly as any conditional, and they deserve the same three things code gets by default: a version history, a test suite that runs before a change ships, and a deployment process that can be rolled back. This post covers all three, plus the one property that makes prompt changes specifically risky in a way most code changes aren't - the same prompt, evaluated as "fine" in isolation, can still be a regression relative to the version it's replacing, which is why the deployment gate here compares against a baseline, not just a fixed bar.

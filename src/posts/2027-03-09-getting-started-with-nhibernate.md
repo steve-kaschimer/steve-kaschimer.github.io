@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "architecture", "tooling"]
 title: "Getting Started with NHibernate in .NET"
 ---
 
+
+
 NHibernate predates most of the .NET ORM landscape it now gets compared against, and it shows in a good way and a demanding one. The good way: caching, mapping flexibility, and loading control are all mature and battle-tested after over a decade of production use in large enterprise systems. The demanding way: there's real configuration depth to learn before any of that maturity pays off, and skipping straight to "just make it work" produces a setup that fights you the moment your model gets non-trivial.
 
 This guide covers installing NHibernate, bootstrapping session management and mapping the way most production NHibernate codebases actually do it (Fluent NHibernate, not raw XML), the core session and transaction workflow, and the best practices that keep NHibernate's flexibility from turning into accidental complexity. By the end you'll have a setup suited to extending an existing NHibernate codebase or making a deliberate, informed choice to start a new one.
@@ -194,3 +196,10 @@ Yes, the same hybrid pattern applies - NHibernate for your domain model and chan
 ### What's the most common mistake in a first NHibernate setup?
 
 Rebuilding the `ISessionFactory` per request instead of treating it as an expensive, one-time singleton, and forgetting to mark entity members `virtual`, which silently breaks lazy loading in a way that's confusing to diagnose without understanding NHibernate's proxy-based mechanism.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

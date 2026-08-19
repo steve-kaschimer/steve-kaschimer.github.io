@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "cqrs"]
 title: "Lab 3: When the Write Model Becomes the Wrong Read Model"
 ---
 
+
+
 Northstar's Order aggregate is doing exactly its job, protecting quantity rules, pricing, discounts, status transitions, approval rules, and cancellation. Then the product team asks for an approval dashboard, operations asks for a paginated order list, and customers ask for order history - and none of those requests actually need any domain behavior at all.
 
 ## The First Implementation
@@ -46,3 +48,6 @@ No message broker, no outbox, no read replica, no eventual consistency, no micro
 ## The Lesson
 
 A rich Domain Model didn't become a mistake here - it's still the right tool for writes. The mistake would be making every read pay for write-side behavior it doesn't need. Reads and writes are starting to pull apart, and that pull is exactly the pressure CQRS exists to relieve.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

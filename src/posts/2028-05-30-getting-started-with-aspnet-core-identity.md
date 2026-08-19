@@ -11,6 +11,8 @@ tags: ["dotnet", "security", "identity", "aspnet-core"]
 title: "Getting Started with ASP.NET Core Identity"
 ---
 
+
+
 ASP.NET Core Identity's scaffolding gets you a working login page in minutes, which is exactly why it's easy to stop there and miss the configuration that actually matters for a real application: password and lockout policies tuned to your actual risk tolerance, email confirmation wired to a real sender, and a clear-eyed sense of when you've outgrown what Identity alone can do. None of these show up as errors if you skip them - they show up as security gaps or awkward workarounds months later.
 
 This guide covers installing and scaffolding ASP.NET Core Identity, bootstrapping the configuration that matters beyond the defaults, the core patterns for roles and claims-based authorization, and the best practices - including recognizing the point where you need to pair Identity with a protocol framework rather than stretch it further. By the end you'll have a genuinely production-ready user management layer, not just a working demo.
@@ -176,3 +178,10 @@ The core mechanisms (password hashing, lockout, anti-forgery tokens) are solid a
 ### What's the most common mistake in a first ASP.NET Core Identity setup?
 
 Leaving the default `IEmailSender` stub in place and assuming email confirmation or password reset works, when it silently does nothing until a real implementation is added. The second common mistake is trying to stretch Identity to cover SSO or API token issuance instead of recognizing that's the signal to add a protocol framework on top.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

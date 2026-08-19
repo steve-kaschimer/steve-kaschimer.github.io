@@ -11,18 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "data-access"]
 title: "Table Data Gateway in Modern .NET"
 ---
 
-Table Data Gateway places the SQL for a table or view behind a single
-object. Instead of allowing database knowledge to spread through
-controllers, jobs, and application services, the gateway becomes the
-entry point for reading and writing that table.
+
+
+Table Data Gateway places the SQL for a table or view behind a single object. Instead of allowing database knowledge to spread through controllers, jobs, and application services, the gateway becomes the entry point for reading and writing that table.
 
 ## The Problem
 
-Direct SQL can be an excellent choice, but scattered SQL creates
-coupling. A schema change can force edits throughout the application.
-
-A gateway gives persistence logic a clear home:
-
+Direct SQL can be an excellent choice, but scattered SQL creates coupling. A schema change can force edits throughout the application. A gateway gives persistence logic a clear home:
 ``` csharp
 public sealed class OrderGateway(DbConnection connection)
 {
@@ -43,8 +38,7 @@ public sealed class OrderGateway(DbConnection connection)
 }
 ```
 
-There is one `OrderGateway` for the table - not one gateway instance per
-row.
+There is one `OrderGateway` for the table - not one gateway instance per row.
 
 ## Pairing It With Transaction Script
 
@@ -73,24 +67,17 @@ The script owns the workflow. The gateway owns persistence.
 ## Meaningful Gateway Methods
 
 A gateway need not be generic CRUD. Methods such as:
-
 ``` csharp
 Task<IReadOnlyList<OrderRow>> FindReadyToShipAsync(
     DateTimeOffset asOf,
     CancellationToken cancellationToken);
 ```
 
-can centralize important persistence queries without pretending that
-database operations are domain objects.
+can centralize important persistence queries without pretending that database operations are domain objects.
 
 ## What About EF Core?
 
-`DbSet<T>` already provides a powerful table-like persistence API. A
-gateway that simply forwards `Add`, `Find`, `Update`, and `Remove`
-usually adds little.
-
-Table Data Gateway is more compelling when:
-
+`DbSet<T>` already provides a powerful table-like persistence API. A gateway that simply forwards `Add`, `Find`, `Update`, and `Remove` usually adds little. Table Data Gateway is more compelling when:
 -   SQL is intentionally explicit,
 -   stored procedures or views dominate,
 -   the application is record-oriented,
@@ -99,21 +86,15 @@ Table Data Gateway is more compelling when:
 
 ## Transactions
 
-Gateways should not necessarily own transaction boundaries. A use case
-may coordinate several gateways inside one transaction. The application
-operation or Unit of Work can own that boundary.
+Gateways should not necessarily own transaction boundaries. A use case may coordinate several gateways inside one transaction. The application operation or Unit of Work can own that boundary.
 
 ## Testing
 
-Gateway tests should generally be integration tests against the real
-database technology. Mocks cannot verify SQL syntax, column mapping,
-constraints, or query behavior.
+Gateway tests should generally be integration tests against the real database technology. Mocks cannot verify SQL syntax, column mapping, constraints, or query behavior.
 
 ## Trade-offs
 
-Benefits include explicit SQL, centralized database access, and a simple
-persistence boundary. Costs include manual mapping and a table-oriented
-API that may become awkward for a rich object model.
+Benefits include explicit SQL, centralized database access, and a simple persistence boundary. Costs include manual mapping and a table-oriented API that may become awkward for a rich object model.
 
 ## Related Patterns
 
@@ -124,6 +105,4 @@ API that may become awkward for a rich object model.
 
 ## Summary
 
-Table Data Gateway is a deliberate choice for table-oriented
-persistence. When direct SQL is the right tool, a gateway keeps that SQL
-contained and gives the rest of the application a focused API.
+Table Data Gateway is a deliberate choice for table-oriented persistence. When direct SQL is the right tool, a gateway keeps that SQL contained and gives the rest of the application a focused API.

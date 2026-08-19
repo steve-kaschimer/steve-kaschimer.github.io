@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 10: Inbox Makes Duplicate Delivery Harmless"
 ---
 
+
+
 The previous stage delivered one `OrderPlacedIntegrationEvent` twice, and Fulfillment created two work items in response - exactly what at-least-once delivery allows unless the consumer protects itself.
 
 ## The Inbox
@@ -38,3 +40,6 @@ Northstar's reliable path now runs Ordering's transaction into an Outbox, out th
 ## Next
 
 With that bridge in place, we can make the workflow genuinely distributed. Placing an order is about to require reserving inventory, authorizing payment, and scheduling fulfillment, each owned by its own participant with its own transaction - and once any of those steps can fail after an earlier one has already committed, that's the pressure Saga exists to solve.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

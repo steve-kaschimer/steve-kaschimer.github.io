@@ -11,6 +11,8 @@ tags: ["github", "ci-cd", "developer-productivity", "branch-protection", "platfo
 title: "GitHub Merge Queues: Safe, Scalable Merging Without Branch Protection Bottlenecks"
 ---
 
+
+
 `strict_required_status_checks_policy: true` is the setting that makes a required status check mean something - a PR can't merge unless it passed CI against the current state of `main`, not some earlier version of it. It's also the setting that turns your merge rate into a bottleneck the moment more than one PR is trying to land at the same time. The [Rulesets post](/posts/2026-05-08-github-branch-protection-rules-vs-rulesets/) covered why you want that setting on. This post covers what happens once you have ten engineers relying on it and why the fix isn't disabling it.
 
 Here's the failure mode. Two PRs are both green and both up to date with `main`. The first one merges. The instant it does, the second PR is no longer up to date - `main` moved out from under it. Its "up to date" status flips to false, its required check is no longer satisfiable as-is, and it has to re-sync and re-run CI before it can merge. Now imagine ten PRs merging in a day, each one invalidating everyone still in flight behind it. Every merge triggers a re-run somewhere else. CI capacity goes to repeated validation of the same changes against slightly different bases, and "my PR was green an hour ago, why is it red now" becomes a routine complaint instead of a rare one.

@@ -11,6 +11,8 @@ tags: ["dotnet", "security", "identity", "azure", "oidc"]
 title: "Getting Started with Microsoft Entra External ID for .NET"
 ---
 
+
+
 Microsoft Entra External ID is genuinely the newest name in this entire series' auth comparison - Microsoft's current, officially recommended replacement for Azure AD B2C - which means the setup steps below are worth double-checking against Microsoft's own documentation before a production deployment, since this is an actively evolving product rather than a long-settled one. What's already clear is the integration path: `Microsoft.Identity.Web` remains the library ASP.NET Core applications use, the same package that's underpinned Azure AD and Azure AD B2C integration for years.
 
 This guide covers registering an application with Microsoft Entra External ID, bootstrapping authentication in an ASP.NET Core application using `Microsoft.Identity.Web`, the core patterns for consumer and B2B scenarios, and the best practices for a product that's still actively maturing. By the end you'll have working authentication integrated with Microsoft's current recommended CIAM platform.
@@ -174,3 +176,10 @@ Through user flows configured in the Entra admin center - defining available ide
 ### What's the most common mistake in a first Entra External ID setup?
 
 Following outdated guidance, given how actively this specific product is evolving relative to more settled options in this comparison - confirm any configuration pattern against current Microsoft documentation rather than an older tutorial. The second common mistake is not carefully planning the consumer/B2B unification pattern upfront if an application needs to serve both user types, since that specific configuration is more nuanced than a pure consumer-only or pure B2B-only setup.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

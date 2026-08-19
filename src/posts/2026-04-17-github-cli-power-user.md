@@ -11,6 +11,8 @@ tags: ["github", "developer-productivity", "platform-engineering"]
 title: "GitHub CLI Power User: 10 `gh` Commands That Replace Browser Tabs"
 ---
 
+
+
 Most developers have GitHub open in a browser tab permanently. They switch to it to check a PR status, review a diff, watch a failing run, paste in a secret, or find the branch name for an issue. Each of those trips is 30 seconds of context-switching that breaks whatever thread of thought was running in the background. The **`gh` CLI** eliminates most of them - not because it's clever, but because it puts GitHub's full API surface in the terminal, where you already are.
 
 The problem isn't that people don't know `gh` exists. Most developers have it installed. The problem is that they used `gh pr create` once, found it fine, and never went deeper. This post covers the commands that actually change how you work: the ones that replace complete browser workflows rather than just wrapping a single API call.

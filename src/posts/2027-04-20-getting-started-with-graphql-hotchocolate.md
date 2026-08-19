@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "graphql", "performance", "architecture"]
 title: "Getting Started with GraphQL (Hot Chocolate) in .NET"
 ---
 
+
+
 Hot Chocolate is the standard GraphQL server library for .NET, and its core pitch is real: clients get to request exactly the fields they need in a single query, instead of the server dictating a fixed response shape the way REST does. What the pitch leaves out is that this flexibility comes with two problems you'll hit almost immediately on any non-trivial schema - the N+1 query problem, and clients being able to construct expensive queries you didn't anticipate. Both have well-established fixes, but only if you know to apply them from the start.
 
 This guide covers installing Hot Chocolate, defining a code-first schema with projections, solving the N+1 problem with `DataLoader`, and limiting query cost before a client can accidentally (or deliberately) construct an expensive query. By the end you'll have a GraphQL API that stays fast as your schema grows, not one that works fine in a demo and falls over on a real dataset.
@@ -177,3 +179,10 @@ Yes - it's common for a service to expose a GraphQL endpoint for flexible client
 ### What's the most common mistake in a first Hot Chocolate setup?
 
 Not using `DataLoader` for resolvers that fetch related data per-item, which works fine in development against a small dataset and then produces an N+1 query explosion in production. Skipping depth/paging limits is the second most common - both are cheap to add early and expensive to retrofit after a real client is already depending on the unbounded schema.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

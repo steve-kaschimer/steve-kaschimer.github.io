@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 7: When a Domain Event Needs a Delivery Guarantee"
 ---
 
+
+
 The previous stage gave us a useful local fact - `OrderPlaced` - and now Fulfillment becomes its own operational concern. The requirement quietly shifts from "run some code after order placement" to "Fulfillment must eventually hear about every placed order," and those two things are not the same guarantee at all.
 
 ## Domain Event vs. Integration Event
@@ -30,3 +32,6 @@ Configure publishing to fail and watch what happens: the order commits, but the 
 ## The Pattern We Have Earned
 
 Transactional Outbox. The next stage changes the sequence so the Order row and an OutboxMessage row save together in one transaction, and publishing happens later, out of band. The broker stops being part of the order transaction at all - that's the key move.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

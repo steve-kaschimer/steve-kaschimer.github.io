@@ -11,6 +11,8 @@ tags: ["dotnet", "deployment", "azure", "containers", "devops"]
 title: "Getting Started with Azure Container Apps for .NET Deployment"
 ---
 
+
+
 Azure Container Apps' whole pitch is that you get containerized, cloud-native deployment without ever touching a Kubernetes manifest or provisioning a cluster - and for a genuinely large share of .NET applications, that trade is exactly right. The part worth understanding before committing is where its simplicity has real edges: no DaemonSets, no privileged containers, no GPU node selection. Knowing those limits upfront means you're choosing ACA deliberately, not discovering its ceiling mid-project.
 
 This guide covers deploying a .NET application to Azure Container Apps, bootstrapping scaling and configuration correctly, the core deployment workflow via the Azure CLI or `azd`, and the best practices that take advantage of what ACA does well without running into its known limitations unexpectedly. By the end you'll have a serverless container deployment that scales automatically, including down to zero for idle workloads.
@@ -184,3 +186,10 @@ Yes, and the migration path is well-defined - your container images don't change
 ### What's the most common mistake when adopting Azure Container Apps?
 
 Not understanding its real limitations (no DaemonSets, limited networking control, primarily stateless workloads) before committing, and discovering them mid-project rather than as an informed, upfront decision. The second common mistake is embedding secrets directly in environment variables instead of using ACA's secret reference mechanism.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

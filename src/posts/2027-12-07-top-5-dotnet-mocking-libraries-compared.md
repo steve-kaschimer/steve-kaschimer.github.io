@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "developer-productivity"]
 title: "The Top 5 .NET Mocking Libraries Compared: Which One Should You Choose?"
 ---
 
+
+
 Mocking library comparisons in .NET used to be a simple two-horse race between Moq and NSubstitute, decided mostly by syntax preference. That changed in August 2023, when Moq 4.20 shipped a component called SponsorLink that read a developer's Git email, hashed it, and sent it to a server to check GitHub Sponsors status - without clear consent. The feature was reverted within days, but the trust damage wasn't, and it genuinely reshaped adoption patterns across the .NET ecosystem in a way this comparison can't honestly skip over.
 
 This guide compares five mocking libraries: Moq, NSubstitute, FakeItEasy, JustMock, and Rocks - the last one included specifically because it represents where a meaningful slice of the community has been heading since 2023: compile-time, source-generator-based mocking that sidesteps the runtime proxy-generation model (and the trust concerns that came with a library controlling what happens during your build) entirely. All five remain legitimate choices; the point of this comparison isn't to declare Moq unusable, but to give you the full picture - technical and otherwise - before you pick. This series continues with dedicated getting-started walkthroughs for each library.
@@ -28,94 +30,37 @@ This guide compares five mocking libraries: Moq, NSubstitute, FakeItEasy, JustMo
 
 ## Moq
 
-Moq remains the most widely used mocking library in .NET, with the richest feature set and the most existing documentation and Stack Overflow coverage of any option here. It's also the library whose 2023 incident is impossible to leave out of an honest comparison.
+Most widely used. Richest feature set: argument matchers, sequential setups, callback chains, in-order verification, protected virtual methods. Largest community, deepest documentation. Powerful lambda-based syntax.
 
-**Strengths:**
-
-- The richest feature set of the mainstream options: argument matchers, sequential setups, callback chains, in-order verification, and support for protected virtual methods are all first-class
-- The largest community and the deepest well of existing documentation, examples, and troubleshooting resources, simply by virtue of having been the default for so long
-- Powerful, expressive lambda-based syntax (`mock.Setup(x => x.Method()).Returns(value)`) that many teams are already deeply familiar with
-
-**Weaknesses:**
-
-- In August 2023, version 4.20.0 shipped SponsorLink, a closed-source component that read a developer's Git email, hashed it, and sent the hash to an Azure service to check GitHub Sponsors status - without clear, explicit consent. It was reverted within days, but the trust damage prompted a real wave of migration to alternatives
-- Many organizations and teams responded by pinning to pre-4.20 versions, banning Moq outright, or migrating entirely - worth knowing if you're joining a team or evaluating a codebase's current stance
-- Same runtime proxy-generation limitations as NSubstitute and FakeItEasy - can't mock non-virtual members, sealed classes, or static methods without a different architecture entirely
-
-**Choose this when:** you're maintaining an existing Moq codebase with no urgent driver to migrate, or your team has evaluated the SponsorLink history and is comfortable pinning to a clean, current version.
+In August 2023, version 4.20.0 shipped SponsorLink, closed-source component that read a dev's Git email, hashed it, sent it to Azure to check GitHub Sponsors status without clear consent. Reverted in days; trust damage prompted real migration wave. Many organizations pinned to pre-4.20, banned it, or migrated entirely. Same runtime proxy-generation limitations as NSubstitute and FakeItEasy, can't mock non-virtual, sealed, static.
 
 ## NSubstitute
 
-NSubstitute's core design idea is that the substitute object itself is the mock - there's no separate wrapper type, no `.Object` property to unwrap, no `Setup()` call. You call `Substitute.For<T>()` and the returned object acts naturally as both the fake and the configuration target, which produces test code that reads close to plain English.
+Substitute object itself is the mock, no separate wrapper, no `.Object`, no `Setup()`. Cleanest, most natural syntax: `sub.Method().Returns(value)` with no ceremony. No SponsorLink concerns. Increased adoption as teams migrated from Moq. Async "just works."
 
-**Strengths:**
-
-- The cleanest, most natural syntax of the mainstream options - `sub.Method().Returns(value)` with no ceremony, which measurably lowers cognitive load during code review
-- No SponsorLink-equivalent trust concerns, and it saw meaningfully increased adoption specifically as teams migrated away from Moq in 2023 and after
-- Async support "just works" without special-cased syntax, fitting naturally into modern, async-heavy .NET codebases
-
-**Weaknesses:**
-
-- Does not support strict mocks in the traditional sense - every unconfigured call succeeds silently by default, which some teams consider a real gap if they specifically want unconfigured calls to fail loudly
-- Same runtime proxy-generation limitations as Moq and FakeItEasy - interfaces and virtual members only
-- Its natural, minimal-ceremony syntax can occasionally make certain advanced scenarios (complex callback chains, some argument-matching patterns) less immediately discoverable than Moq's more explicit API
-
-**Choose this when:** you're starting a new project and want the lowest-friction, most readable syntax with no history to weigh, or you're migrating away from Moq and want the most commonly cited replacement path.
+No strict mock support, unconfigured calls succeed silently by default. Same runtime proxy-generation limitations, interfaces and virtual only. Advanced scenarios (complex callbacks, argument matching) less immediately discoverable than Moq's explicit API.
 
 ## FakeItEasy
 
-FakeItEasy's whole design centers on one consistent entry point - everything, whether you're stubbing a return value or verifying a call happened, goes through `A.CallTo(...)` or `A.Fake<T>()`. That consistency is the library's main pitch: no separate mental model for "setting up" versus "asserting."
+One consistent entry point: everything (stubbing, verification) goes through `A.CallTo(...)` or `A.Fake<T>()`. Consistent API shape for both, no separate mental model for setup vs. assertion. Mature and stable, loyal following predating Moq controversy. Clear, discoverable API.
 
-**Strengths:**
-
-- One consistent API shape for both stubbing and verification, appealing specifically to teams who find having two different syntaxes for those two concerns (as some other libraries have) an unnecessary cognitive split
-- Mature and stable, with a loyal following that predates the Moq controversy - not simply a beneficiary of 2023's migration wave, but an established option in its own right
-- Clear, discoverable API surface, since nearly everything you need hangs off the single `A.` static class
-
-**Weaknesses:**
-
-- Smaller community than Moq or NSubstitute, meaning somewhat less third-party documentation and fewer examples to draw on when you hit an unusual scenario
-- Same runtime proxy-generation limitations shared by Moq and NSubstitute - no mocking of non-virtual, sealed, or static members
-- Less commonly the default recommendation in comparison articles relative to NSubstitute specifically, despite being a comparably mature and capable choice
-
-**Choose this when:** you want a single, consistent mental model for both stubbing and verification, and you're not specifically drawn to NSubstitute's no-`Setup()` minimalism.
+Smaller community than Moq or NSubstitute. Same runtime proxy-generation limitations. Less commonly recommended than NSubstitute despite being comparably mature.
 
 ## JustMock
 
-JustMock, from Telerik/Progress, is architecturally different from the other mainstream open-source options - it offers a free tier (JustMock Lite) using standard proxy-based mocking, and a commercial tier that uses the .NET Profiling API to mock things the others structurally can't: static methods and classes, sealed classes, non-virtual members, private members, and even framework types like `DateTime` and `File`.
+Architecturally different, free tier (JustMock Lite) with proxy-based mocking, commercial tier uses .NET Profiling API to mock statics, sealed classes, non-virtual, private members, even framework types like `DateTime` and `File`.
 
-**Strengths:**
+Only option here that can mock statics/sealed/non-virtual without refactoring. Genuinely valuable for legacy code where interfaces/virtuals aren't practical. Fluent AAA API. Actively maintained by Telerik.
 
-- The only option in this comparison that can mock static methods, sealed classes, and non-virtual members without requiring you to first refactor the code under test to be more mockable
-- Genuinely valuable for legacy codebases where introducing interfaces and virtual members everywhere isn't practical or is a much larger undertaking than the testing task at hand
-- A fluent, AAA-pattern (Arrange/Act/Assert) API that's approachable once you're working within its model
-- Actively maintained by Telerik with regular releases and CI/CD integrations (Azure Pipelines, GitLab, Jenkins)
-
-**Weaknesses:**
-
-- The advanced "elevated mocking" capabilities (statics, sealed classes, non-virtual members) require the commercial edition and the Profiler API, which needs explicit enabling and isn't part of the free tier
-- Real licensing cost for the full feature set, unlike the other four options in this comparison, which are all free and open source
-- Less commonly reached for outside legacy-code or enterprise contexts specifically because most well-designed, interface-driven codebases don't need its most distinctive capabilities
-
-**Choose this when:** you're working with legacy code that has static dependencies, sealed classes, or non-virtual members you can't easily refactor around, and the commercial license is justified by the testing capability it unlocks.
+Advanced "elevated mocking" requires commercial edition and Profiler API. Real licensing cost. Less commonly reached for outside legacy/enterprise contexts.
 
 ## Rocks
 
-Rocks takes a fundamentally different technical approach from the other four: instead of generating mock proxies at runtime via a library like Castle DynamicProxy, it uses C# source generators to produce strongly-typed mock code at compile time. This is architecturally the same shift TUnit represents for test frameworks - moving work from runtime reflection/proxying to build-time generation.
+Fundamentally different approach, C# source generators produce strongly-typed mock code at compile time instead of runtime proxy generation (like Castle DynamicProxy). Same shift TUnit represents for test frameworks.
 
-**Strengths:**
+No runtime proxy generation, mocks are ordinary source-generated C# code, full Native AOT and trimmed-deployment compatibility. Compile-time errors for mismatched setups. No dependency on runtime library controlling proxy behavior (trust advantage in post-SponsorLink context).
 
-- No runtime proxy generation at all - mocks are ordinary, source-generated C# code, which means full compatibility with Native AOT and trimmed deployments that runtime-proxy-based mocking libraries can't offer
-- Compile-time errors for mismatched setups, since the generated mock code is checked by the compiler the same as any other code, rather than failing at test-run time
-- No dependency on a runtime library controlling proxy generation behavior - a meaningful trust and transparency advantage in the specific post-SponsorLink context this comparison exists in
-
-**Weaknesses:**
-
-- Small community and much less real-world adoption than the four options above - fewer examples, less troubleshooting content, and a genuinely newer, less battle-tested project
-- The source-generator model means a different syntax and mental model from the proxy-based libraries most .NET developers already know, adding a real learning curve when migrating
-- As with any source-generator-based tool, build times can increase somewhat, and debugging generated code occasionally requires understanding what the generator actually produced
-
-**Choose this when:** you're building for Native AOT or trimmed deployments where runtime proxy generation isn't viable at all, or you specifically want compile-time-checked mocks and are comfortable adopting a newer, smaller-community tool to get there.
+Small community, much less real-world adoption. Source-generator model means different syntax and mental model. Build times increase somewhat. Debugging generated code requires understanding what the generator produced.
 
 ## How to Decide
 
@@ -162,3 +107,10 @@ Not automatically, and not without a concrete reason - a large, working Moq-base
 ### Does NSubstitute's lack of strict mocking matter in practice?
 
 It depends on your team's testing philosophy. NSubstitute's default behavior - unconfigured calls succeed silently rather than throwing - means a test won't fail just because you forgot to configure an interaction, which some teams prefer for reducing brittle tests, while others specifically want strict mocking to catch unexpected interactions early. If strict-by-default matters to you, this is a concrete technical reason to lean toward Moq or FakeItEasy instead.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

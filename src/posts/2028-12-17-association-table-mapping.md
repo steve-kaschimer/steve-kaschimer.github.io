@@ -11,30 +11,23 @@ tags: ["dotnet", "architecture", "design-patterns", "orm"]
 title: "Association Table Mapping in Modern .NET"
 ---
 
-A many-to-many relationship is easy to express with objects:
 
+
+A many-to-many relationship is easy to express with objects:
 ``` csharp
 post.Tags
 ```
 
 and:
-
 ``` csharp
 tag.Posts
 ```
 
-A relational database cannot represent that relationship with one
-foreign key on either side.
-
-It needs another table.
-
-Association Table Mapping maps the object relationship through that join
-table.
+A relational database cannot represent that relationship with one foreign key on either side. It needs another table. Association Table Mapping maps the object relationship through that join table.
 
 ## The Relational Shape
 
 Suppose posts and tags have a many-to-many relationship.
-
 ``` text
 Posts
 ---------
@@ -51,7 +44,6 @@ TagId
 ```
 
 Each row in `PostTags` represents one association.
-
 ``` text
 PostId  TagId
 ------  -----
@@ -65,7 +57,6 @@ Post 10 has tags 2 and 7. Post 11 has tag 2.
 ## The Object Shape
 
 The object model wants collections:
-
 ``` csharp
 public sealed class Post
 {
@@ -87,17 +78,13 @@ Association Table Mapping bridges those collections to `PostTags`.
 ## EF Core Many-to-Many Mapping
 
 EF Core can infer a conventional many-to-many relationship:
-
 ``` csharp
 builder
     .HasMany(x => x.Tags)
     .WithMany(x => x.Posts);
 ```
 
-EF Core then manages the join representation.
-
-The application can work naturally:
-
+EF Core then manages the join representation. The application can work naturally:
 ``` csharp
 post.Tags.Add(tag);
 
@@ -108,25 +95,16 @@ The resulting persistence operation creates an association row.
 
 ## Skip Navigations
 
-Modern EF Core can expose the many-to-many relationship without
-requiring the application model to define a CLR class for the join row.
-
-That means:
-
+Modern EF Core can expose the many-to-many relationship without requiring the application model to define a CLR class for the join row. That means:
 ``` csharp
 post.Tags
 ```
 
-can effectively "skip" over the join entity.
-
-This is convenient when the association contains no meaningful data of
-its own.
+can effectively "skip" over the join entity. This is convenient when the association contains no meaningful data of its own.
 
 ## When the Association Has Data
 
-Now suppose assigning a user to a project includes a role and assignment
-date:
-
+Now suppose assigning a user to a project includes a role and assignment date:
 ``` text
 ProjectMembers
 -------------------------------------
@@ -136,12 +114,7 @@ Role
 AssignedAt
 ```
 
-This is no longer just a technical join.
-
-The association itself has information.
-
-Model it explicitly:
-
+This is no longer just a technical join. The association itself has information. Model it explicitly:
 ``` csharp
 public sealed class ProjectMember
 {
@@ -180,30 +153,22 @@ builder.Entity<ProjectMember>(member =>
 });
 ```
 
-The association is still stored in a join table, but it is no longer
-hidden.
+The association is still stored in a join table, but it is no longer hidden.
 
 ## Association or Entity?
 
-This is an important modeling question.
-
-Consider:
-
+This is an important modeling question. Consider:
 ``` text
 Student <-> Course
 ```
 
 If the join table contains only:
-
 ``` text
 StudentId
 CourseId
 ```
 
-it may be purely an association.
-
-But if it contains:
-
+it may be purely an association. But if it contains:
 ``` text
 StudentId
 CourseId
@@ -214,22 +179,17 @@ CompletedAt
 ```
 
 the concept is starting to look like:
-
 ``` text
 Enrollment
 ```
 
-That deserves a first-class name.
-
-A useful modeling principle is:
-
+That deserves a first-class name. A useful modeling principle is:
 > When a relationship develops meaningful state or behavior, consider
 > modeling the relationship itself as a domain concept.
 
 ## Composite Keys
 
 A join table commonly uses both foreign keys as its primary key:
-
 ``` csharp
 builder.HasKey(x => new
 {
@@ -238,33 +198,24 @@ builder.HasKey(x => new
 });
 ```
 
-That naturally prevents the same association from being inserted twice.
-
-Some schemas instead use a surrogate key:
-
+That naturally prevents the same association from being inserted twice. Some schemas instead use a surrogate key:
 ``` text
 PostTagId
 PostId
 TagId
 ```
 
-If so, a unique constraint on `(PostId, TagId)` may still be needed if
-duplicate relationships are invalid.
+If so, a unique constraint on `(PostId, TagId)` may still be needed if duplicate relationships are invalid.
 
 ## Adding and Removing Associations
 
 With skip navigations:
-
 ``` csharp
 post.Tags.Add(tag);
 post.Tags.Remove(tag);
 ```
 
-EF Core translates collection changes into inserts and deletes against
-the association table when changes are saved.
-
-With an explicit association entity:
-
+EF Core translates collection changes into inserts and deletes against the association table when changes are saved. With an explicit association entity:
 ``` csharp
 var membership = ProjectMember.Assign(
     project.Id,
@@ -279,20 +230,12 @@ the application can express richer rules around the association.
 
 ## Many-to-Many Does Not Always Belong Inside One Aggregate
 
-The database may say two tables are related.
-
-That does not mean the domain should load both entire collections.
-
-For large relationships, this is dangerous:
-
+The database may say two tables are related. That does not mean the domain should load both entire collections. For large relationships, this is dangerous:
 ``` csharp
 project.Members
 ```
 
-could represent tens of thousands of rows.
-
-A query-oriented API may be better:
-
+could represent tens of thousands of rows. A query-oriented API may be better:
 ``` csharp
 var members = await db.ProjectMembers
     .Where(x => x.ProjectId == projectId)
@@ -302,13 +245,11 @@ var members = await db.ProjectMembers
     .ToListAsync(cancellationToken);
 ```
 
-Persistence relationships and aggregate boundaries are not the same
-thing.
+Persistence relationships and aggregate boundaries are not the same thing.
 
 ## Querying Across an Association
 
 EF Core allows natural traversal:
-
 ``` csharp
 var posts = await db.Posts
     .Where(post =>
@@ -316,18 +257,11 @@ var posts = await db.Posts
     .ToListAsync(cancellationToken);
 ```
 
-The ORM translates the object-oriented relationship expression into
-relational joins.
-
-This is Data Mapper and Association Table Mapping working together.
+The ORM translates the object-oriented relationship expression into relational joins. This is Data Mapper and Association Table Mapping working together.
 
 ## Performance
 
-Many-to-many relationships deserve attention because object collections
-can hide large relational operations.
-
-Potential issues include:
-
+Many-to-many relationships deserve attention because object collections can hide large relational operations. Potential issues include:
 -   loading huge collections,
 -   cartesian expansion from eager loading,
 -   N+1 queries from lazy loading,
@@ -338,28 +272,21 @@ Projection is often the best choice for read-heavy scenarios.
 
 ## Delete Behavior
 
-Deleting an association should normally delete the join row, not either
-endpoint:
-
+Deleting an association should normally delete the join row, not either endpoint:
 ``` text
 Remove Post 10 <-> Tag 7
 ```
 
 should remove:
-
 ``` text
 PostTags(10, 7)
 ```
 
-not Post 10 or Tag 7.
-
-Database constraints and EF Core configuration should reflect the
-intended ownership semantics.
+not Post 10 or Tag 7. Database constraints and EF Core configuration should reflect the intended ownership semantics.
 
 ## Testing
 
 Useful integration tests include:
-
 -   adding an association,
 -   removing an association,
 -   preventing duplicates,
@@ -367,13 +294,11 @@ Useful integration tests include:
 -   persisting association attributes,
 -   verifying delete behavior.
 
-When the association has domain behavior, that behavior should also have
-ordinary unit tests.
+When the association has domain behavior, that behavior should also have ordinary unit tests.
 
 ## When to Use Skip Navigations
 
 Skip navigations are excellent when:
-
 -   the join contains only foreign keys,
 -   the association has no behavior,
 -   both sides benefit from collection navigation,
@@ -382,7 +307,6 @@ Skip navigations are excellent when:
 ## When to Use an Explicit Association Entity
 
 Prefer an explicit entity when:
-
 -   the association has attributes,
 -   it has lifecycle or status,
 -   it has business rules,
@@ -400,15 +324,4 @@ Prefer an explicit entity when:
 
 ## Summary
 
-Association Table Mapping turns an object-oriented many-to-many
-relationship into a relational join table.
-
-Modern EF Core can make simple associations nearly invisible through
-skip navigations.
-
-But when the relationship gains data or behavior, hiding it becomes
-counterproductive. At that point, give the association a name and model
-it explicitly.
-
-Sometimes the most important object in a relationship is the
-relationship itself.
+Association Table Mapping turns an object-oriented many-to-many relationship into a relational join table. Modern EF Core can make simple associations nearly invisible through skip navigations. But when the relationship gains data or behavior, hiding it becomes counterproductive. At that point, give the association a name and model it explicitly. Sometimes the most important object in a relationship is the relationship itself.

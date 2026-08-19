@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity", "architecture"]
 title: "Getting Started with AutoMapper in .NET"
 ---
 
+
+
 AutoMapper's convention-based mapping - properties matched by name automatically, everything else configured via a `Profile` - is still exactly as convenient as it was before April 2025. What's changed is that adding AutoMapper to a new project is no longer a purely technical decision; it's also a licensing one, since current versions require a paid license beyond the free community tier for larger organizations. That's the piece worth resolving before writing any mapping code, not after.
 
 This guide covers installing AutoMapper (including the licensing question you need to settle first), bootstrapping profiles and configuration correctly, the core patterns for custom mapping and EF Core's `ProjectTo`, and the best practices that keep AutoMapper's convention-based magic from becoming a debugging headache. By the end you'll have a working mapping setup and a clear-eyed view of where AutoMapper stands today.
@@ -155,3 +157,10 @@ Yes - it continues to receive updates despite the licensing change. It hasn't be
 ### What's the most common mistake in a first AutoMapper setup?
 
 Not resolving the licensing question before building significant architecture around it, only to discover the compliance implications later. The second common mistake is skipping `AssertConfigurationIsValid()`, leaving configuration errors to surface as confusing runtime bugs instead of being caught immediately in a test.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

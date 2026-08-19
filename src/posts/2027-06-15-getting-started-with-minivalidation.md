@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "performance", "developer-productivity"]
 title: "Getting Started with MiniValidation in .NET"
 ---
 
+
+
 MiniValidation's whole pitch fits in one sentence: it's the same DataAnnotations attributes you already know, running through a validator specifically optimized to be fast, with none of FluentValidation's ceremony. Built by Damian Edwards specifically for the gap Minimal APIs used to have - no automatic validation pipeline the way MVC has always had - it's a single-function-call library that stayed relevant even after .NET 10 introduced native Minimal API validation, since it still covers console apps and .NET versions before 10.
 
 This guide covers installing MiniValidation, bootstrapping validation calls for Minimal API endpoints and other application types, the core patterns for nested and recursive validation, and the best practices for using it in exactly the scenarios it's built for. By the end you'll have fast, low-ceremony validation using attributes you already know.
@@ -186,3 +188,10 @@ Depends on your validation complexity - MiniValidation is faster and lower-cerem
 ### What's the most common mistake when adopting MiniValidation?
 
 Adding it to a .NET 10+ Minimal API project without checking whether native validation already covers the same need, introducing an unnecessary dependency. The second common mistake is expecting MiniValidation to handle complex conditional validation as naturally as FluentValidation, when it shares the same expressiveness ceiling as classic DataAnnotations.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

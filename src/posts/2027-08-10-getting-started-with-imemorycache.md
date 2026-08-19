@@ -11,6 +11,8 @@ tags: ["dotnet", "caching", "performance", "developer-productivity"]
 title: "Getting Started with IMemoryCache in .NET"
 ---
 
+
+
 `IMemoryCache` is the easiest caching decision in .NET to get right and, paradoxically, one of the easiest to misuse - not because the API is complicated, but because it's so simple to add that people reach for it in places a distributed cache actually belongs, and forget it exists in places where it would help. Understanding what it is (a single-process dictionary with expiration policies) and isn't (anything that survives a restart, or is visible to another instance) is most of what you need to use it well.
 
 This guide covers using `IMemoryCache` in .NET, bootstrapping it correctly with expiration and size limits, the core `GetOrCreate` pattern that avoids most common mistakes, and the best practices - including when .NET 9's `HybridCache` is a better starting point than `IMemoryCache` directly. By the end you'll know exactly which caching problems this tool solves, and which ones it doesn't.
@@ -178,3 +180,10 @@ Technically yes, but it's usually the wrong choice for anything beyond single-in
 ### What's the most common mistake with IMemoryCache?
 
 Treating it as if it were shared state across instances - caching something on one server and being surprised another server doesn't see it. The second most common is forgetting expiration entirely, letting entries accumulate until memory pressure forces eviction rather than actively managing entry lifetime.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

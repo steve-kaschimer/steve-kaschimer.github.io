@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "testing"]
 title: "Lab 27: Contract Tests Catch Boundary Breakage Early"
 ---
 
+
+
 Northstar now has boundaries that can evolve independently of each other, which raises an obvious question: how do we actually know a provider change still satisfies what its consumers depend on?
 
 ## The Consumer View
@@ -34,3 +36,6 @@ Because an overspecified contract just becomes another form of coupling. If the 
 ## The Lesson
 
 Consumer-driven contract testing gives independently deploying teams real confidence to evolve their APIs, and it catches the breaking changes before two independently deployed versions ever meet each other for the first time in production.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

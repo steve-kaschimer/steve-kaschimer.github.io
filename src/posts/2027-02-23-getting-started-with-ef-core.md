@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "performance", "developer-productivity"]
 title: "Getting Started with EF Core in .NET"
 ---
 
+
+
 EF Core's reputation as "the default" .NET ORM is well earned, but the gap between a tutorial's `dotnet ef migrations add` and a setup that stays maintainable is bigger than it looks at first. Change tracking that silently costs you performance on read-only queries, migrations that mysteriously fail to find your `DbContext`, and repository abstractions people add out of habit rather than need are the three things that trip up most first real projects.
 
 This guide covers installing EF Core, bootstrapping a `DbContext` and migrations workflow that won't fight you later, the core query and change-tracking patterns worth knowing from day one, and the best practices that keep performance predictable as your model grows. By the end you'll have a data access layer that's fast by default, not fast only after a painful profiling session.
@@ -203,3 +205,10 @@ Yes, via community-maintained providers - MySQL, Oracle, and others all have EF 
 ### What's the most common mistake in a first EF Core setup?
 
 Forgetting `AsNoTracking()` on read-only queries, which quietly adds overhead across an entire application, and installing `Microsoft.EntityFrameworkCore.Design` in the wrong project in a multi-project solution, which breaks migrations in a way that's confusing to diagnose the first time you hit it.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

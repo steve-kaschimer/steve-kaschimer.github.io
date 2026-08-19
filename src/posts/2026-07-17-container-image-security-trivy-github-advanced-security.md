@@ -11,6 +11,8 @@ tags: ["container-security", "github-advanced-security", "devsecops", "trivy", "
 title: "Container Image Security in CI: Scanning with Trivy and GitHub Advanced Security"
 ---
 
+
+
 The scanner runs. Two hundred alerts appear. Nobody fixes anything.
 
 This is not a Trivy problem or a GitHub problem. It's a configuration problem. An unconfigured vulnerability scanner produces a list sorted by count, not by urgency, with no distinction between CVEs that have a fix available today and CVEs where the upstream hasn't shipped a patch in two years. Every alert looks equally important, which means none of them are. The team stops looking at the output. The scanner keeps running. The checkbox stays green.

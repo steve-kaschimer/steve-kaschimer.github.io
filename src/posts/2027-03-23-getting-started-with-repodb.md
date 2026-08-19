@@ -11,6 +11,8 @@ tags: ["dotnet", "orm", "database", "performance", "developer-productivity"]
 title: "Getting Started with RepoDb in .NET"
 ---
 
+
+
 RepoDb's whole reason for existing is a specific complaint: Dapper is fast but leaves you writing the same CRUD SQL over and over, while EF Core does CRUD for you but at a real performance and abstraction cost. RepoDb sits deliberately between them - generated CRUD methods when you want convenience, raw SQL when you want control, and consistently strong benchmark performance either way.
 
 This guide covers installing RepoDb, bootstrapping connection handling and its code-generation-free mapping approach, the core CRUD and raw-query workflow, and the best practices that make the most of its hybrid design instead of accidentally using it like a slower Dapper. By the end you'll have a fast, low-boilerplate data layer that still gives you an escape hatch to raw SQL whenever you need it.
@@ -190,3 +192,10 @@ Yes, it's used in production systems, though with a meaningfully smaller communi
 ### What's the most common mistake in a first RepoDb setup?
 
 Forgetting to call the provider's bootstrap method at startup, and treating RepoDb exactly like Dapper by hand-writing raw SQL for everything - which works, but skips the reduced-boilerplate CRUD methods that are RepoDb's main advantage over plain Dapper in the first place.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

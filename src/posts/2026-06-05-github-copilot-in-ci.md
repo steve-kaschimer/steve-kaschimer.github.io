@@ -11,6 +11,8 @@ tags: ["github-copilot", "github-actions", "ai", "code-review", "developer-produ
 title: "GitHub Copilot in CI: Automating Code Review at Scale"
 ---
 
+
+
 Most teams use GitHub Copilot the same way they use autocomplete: a single developer, in an editor, getting suggestions on the code in front of them. That's a real productivity gain. It's also a fraction of what Copilot can do in a CI context, where it can review every PR, on every push, without a human reviewer being available - and where the quality of its configuration determines whether it becomes a genuine signal or just another source of noise to dismiss.
 
 This post covers how to wire up Copilot code review in a way that actually helps: what to configure, what to exclude, how to prevent it from becoming a gate that erodes trust, and how to read its output alongside human review rather than instead of it.
@@ -291,3 +293,10 @@ Copilot review does not catch **correctness for domain logic**. Whether a billin
 Copilot review does not replace **pair programming or design review** for complex changes. A PR that involves a significant new feature, a refactor, or a change to a shared contract benefits from synchronous discussion before the code is written, not asynchronous comments after.
 
 The framing that works: Copilot review is good at catching the category of issues that a careful developer would catch by reading their own diff slowly. Most developers, under time pressure, do not read their own diffs that carefully before requesting review. Copilot does it for free, every time. That is a genuine and bounded value proposition - and it leaves the harder problems exactly where they should be.
+
+
+---
+
+AI implementation question? I'm here to help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

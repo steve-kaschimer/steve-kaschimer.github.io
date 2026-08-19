@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "architecture", "performance", "microservices"]
 title: "Getting Started with NATS in .NET"
 ---
 
+
+
 NATS's core pitch is that most messaging doesn't need to be as heavy as it usually is - subject-based publish-subscribe, a tiny operational footprint, and genuinely low latency, without RabbitMQ's exchange configuration or Kafka's partition mechanics. The trade-off is equally direct: core NATS is fire-and-forget with no persistence at all, and understanding exactly when that's fine (and when you need JetStream layered on top) is the single most important decision in adopting it.
 
 This guide covers installing and connecting to NATS from .NET, bootstrapping both core NATS pub/sub and JetStream for durable messaging, the core patterns for publish/subscribe and request-reply, and the best practices for knowing which of the two modes a given piece of your system actually needs. By the end you'll have a lightweight messaging setup and a clear mental model for when "lightweight" stops being enough.
@@ -191,3 +193,10 @@ Solid and actively maintained, but with a meaningfully smaller community and few
 ### What's the most common mistake when adopting NATS?
 
 Using core NATS for a scenario that actually needed JetStream's durability, and discovering message loss in production rather than as a deliberate, understood design decision made upfront. The second common mistake is underestimating the smaller ecosystem's impact on day-to-day development compared to more established brokers.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

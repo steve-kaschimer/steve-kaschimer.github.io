@@ -11,6 +11,8 @@ tags: ["responsible-ai", "azure-ai-foundry", "devsecops", "compliance", "governa
 title: "Responsible AI in the SDLC: Governance Gates You Can Automate with GitHub Actions"
 ---
 
+
+
 Every org shipping AI features has a Responsible AI policy document by now. Fewer have anything that checks a specific model deployment against it before that deployment reaches production. The gap between "we have principles" and "we enforce them" is the same gap this blog keeps returning to for every other kind of governance - branch protection, secret scanning, deployment approval - and it closes the same way: turn the principle into a check, and put the check in the pipeline the deployment can't skip.
 
 This post maps three of Microsoft's Responsible AI principles to concrete CI gates - content safety, fairness, and transparency - and wires them into one deployment workflow. It's not all six principles, and that's deliberate: some of what "responsible AI" means is process and culture, not something a GitHub Actions job can verify. Being honest about that boundary is part of the point.

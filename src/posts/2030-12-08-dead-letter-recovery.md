@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 17: Dead Lettering Stops Poison Work From Owning the Queue"
 ---
 
+
+
 Retries only make sense while another attempt has a real chance of succeeding. A message that's permanently broken needs to leave the normal processing path eventually, or it never will.
 
 ## The Failure Loop
@@ -34,3 +36,6 @@ Because the consumers already use Inbox-based idempotent processing, replaying a
 ## Lesson
 
 A queue should only carry work that still has a reasonable shot at succeeding. Dead-lettering protects throughput by moving permanently unhealthy work out of that path - without losing it, just setting it aside for someone to actually look at.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["github-actions", "security", "devsecops", "oidc", "ci-cd"]
 title: "OpenID Connect in GitHub Actions: Replacing Long-Lived Secrets with Short-Lived Tokens"
 ---
 
+
+
 Most GitHub Actions workflows that deploy to a cloud provider contain something like this:
 
 ```yaml

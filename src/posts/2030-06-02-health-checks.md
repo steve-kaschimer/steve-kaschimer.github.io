@@ -11,10 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "observability"]
 title: "Health Checks: Liveness, Readiness, and Knowing What 'Healthy' Means"
 ---
 
-A health endpoint answers an operational question about a running application.
 
-The hard part is deciding **which question**.
 
+A health endpoint answers an operational question about a running application. The hard part is deciding **which question**.
 ```text
 Is the process alive?
 Can it receive traffic?
@@ -26,23 +25,16 @@ Those are different questions.
 ## Liveness
 
 Liveness asks:
-
 > Is this process functioning enough that restarting it might help?
 
-Keep liveness conservative.
-
-If a remote dependency fails, restarting every application instance may make the outage worse.
+Keep liveness conservative. If a remote dependency fails, restarting every application instance may make the outage worse.
 
 ## Readiness
 
 Readiness asks:
-
 > Should this instance receive new traffic?
 
-An application can be alive but temporarily not ready.
-
-Examples:
-
+An application can be alive but temporarily not ready. Examples:
 ```text
 startup initialization incomplete
 required local state unavailable
@@ -51,18 +43,11 @@ instance draining for shutdown
 
 ## Dependency Health
 
-You may also expose detailed dependency diagnostics for operators.
-
-Do not automatically make every optional dependency a readiness requirement.
-
-If Recommendations fails but Checkout can still work, taking Checkout out of rotation reduces availability unnecessarily.
+You may also expose detailed dependency diagnostics for operators. Do not automatically make every optional dependency a readiness requirement. If Recommendations fails but Checkout can still work, taking Checkout out of rotation reduces availability unnecessarily.
 
 ## ASP.NET Core
 
-ASP.NET Core supports health-check registration and mapped endpoints.
-
-Conceptually:
-
+ASP.NET Core supports health-check registration and mapped endpoints. Conceptually:
 ```csharp
 builder.Services
     .AddHealthChecks()
@@ -76,14 +61,11 @@ Use tags or separate registrations to give endpoints distinct semantics.
 
 ## Deep Checks Can Cause Load
 
-A health probe that performs an expensive query every few seconds across hundreds of instances can become production traffic.
-
-Health checks should be cheap and bounded.
+A health probe that performs an expensive query every few seconds across hundreds of instances can become production traffic. Health checks should be cheap and bounded.
 
 ## Startup
 
 Readiness is useful during startup:
-
 ```text
 process started
    |
@@ -97,7 +79,6 @@ Traffic begins only after the application can serve it correctly.
 ## Graceful Shutdown
 
 During shutdown:
-
 ```text
 mark not ready
 stop accepting new work
@@ -109,10 +90,7 @@ This reduces dropped requests during deployments.
 
 ## Health vs. Observability
 
-A green `/health` endpoint does not prove the application is healthy for users.
-
-You still need:
-
+A green `/health` endpoint does not prove the application is healthy for users. You still need:
 - metrics;
 - logs;
 - traces;
@@ -123,9 +101,7 @@ Health checks are machine-oriented routing/recovery signals.
 
 ## Security
 
-Detailed health output can reveal topology, versions, or dependency names.
-
-Keep public responses minimal and restrict diagnostic details appropriately.
+Detailed health output can reveal topology, versions, or dependency names. Keep public responses minimal and restrict diagnostic details appropriately.
 
 ## When It Helps
 
@@ -137,6 +113,7 @@ Poorly designed checks cause restart storms, remove healthy capacity, or create 
 
 ## Summary
 
-Do not build one endpoint called `/health` and ask it to mean everything.
+Do not build one endpoint called `/health` and ask it to mean everything. Separate liveness from readiness, classify dependencies by business criticality, and make probe behavior cheap enough to remain safe during an outage.
+---
 
-Separate liveness from readiness, classify dependencies by business criticality, and make probe behavior cheap enough to remain safe during an outage.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

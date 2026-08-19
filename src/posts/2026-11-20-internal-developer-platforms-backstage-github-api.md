@@ -11,6 +11,8 @@ tags: ["developer-platform", "backstage", "github", "platform-engineering", "dev
 title: "Internal Developer Platforms with GitHub: Backstage, Service Catalog, and the GitHub API"
 ---
 
+
+
 A service catalog answers a question every engineering org eventually needs answered fast: what services exist, who owns them, and where's the code. The failure mode almost every catalog eventually hits isn't a missing feature - it's staleness. Someone stands up a new service, forgets to register it in the catalog, and six months later there are three services nobody outside their team knows exist. A catalog maintained by hand decays at the rate people forget to update it, which is to say: continuously.
 
 Backstage, the CNCF-graduated developer portal originally built at Spotify, is the most widely adopted answer to "what does our service catalog look like," and GitHub is its most natural data source when your repos already carry most of the metadata a catalog needs - ownership via CODEOWNERS, activity via commit history, lifecycle state via archived/active status. Wiring Backstage to read that directly, instead of asking teams to duplicate it into a separate catalog UI, is what keeps the catalog accurate without becoming another chore nobody does.

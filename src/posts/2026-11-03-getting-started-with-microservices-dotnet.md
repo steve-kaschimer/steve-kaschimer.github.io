@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "microservices", "observability", "devops"]
 title: "Getting Started with Microservices Architecture in .NET"
 ---
 
+
+
 Microservices solve a problem most projects don't have yet: independent teams needing to deploy, scale, and release parts of a system without blocking each other. When that problem is real, the pattern pays for itself. When it isn't, the same distributed-systems overhead - network calls where there used to be method calls, eventual consistency where there used to be a transaction - becomes pure cost with no corresponding benefit. .NET Aspire has made the local development side of this dramatically less painful than it used to be, but it doesn't change the fundamental trade-off.
 
 This guide covers scaffolding a microservices solution in .NET using Aspire, bootstrapping service-to-service communication and observability, the core workflow of adding or changing a service, and the best practices that keep a distributed system debuggable instead of chaotic. By the end you'll have a local development setup that mirrors production topology without requiring a full Kubernetes cluster on your laptop.
@@ -189,3 +191,10 @@ When the organizational problem it solves - independent team deployment and scal
 ### Can I start with a Modular Monolith and migrate specific modules to Microservices later?
 
 Yes, and this is often the lower-risk path. A Modular Monolith with well-enforced module boundaries - narrow public contracts, isolated data per module - translates naturally into service boundaries later. Migrating one module into its own service once a concrete scaling or ownership need appears is generally safer than architecting for distributed systems complexity from day one.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

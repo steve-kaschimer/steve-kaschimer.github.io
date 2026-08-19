@@ -11,6 +11,8 @@ tags: ["github-actions", "ci-cd", "platform-engineering"]
 title: "Enforcing Code Quality with GitHub Actions Status Checks You Can Actually Trust"
 ---
 
+
+
 Your required status checks are configured. CI is green. PRs merge. The team believes the gate is working.
 
 Then someone asks: what happens if a developer pushes directly to `main`? What happens when the test suite takes 18 minutes and developers start merging before results are in - or, worse, start suppressing failures to keep velocity up? What happens when a job is renamed in the workflow file and silently stops matching the required check name, so every PR from that point forward merges without the check running at all?

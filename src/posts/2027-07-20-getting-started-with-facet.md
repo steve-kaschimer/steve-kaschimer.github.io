@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "architecture", "developer-productivity"]
 title: "Getting Started with Facet in .NET"
 ---
 
+
+
 Facet starts from a different question than every other tool in this series. AutoMapper, Mapster, Mapperly, and manual mapping all assume you've already written the destination DTO class, and focus on generating the code that populates it. Facet asks why you wrote that class by hand at all - given a domain model and a declarative attribute describing which fields matter for a specific view, it generates both the DTO type and the mapping code from a single source generator pass.
 
 This guide covers installing Facet, bootstrapping your first generated facet from a domain model, the core patterns for excluding fields and generating multiple views of the same entity, and the best practices for using it specifically where its narrower, DTO-generation-focused approach fits better than a general-purpose mapper. By the end you'll have eliminated a category of boilerplate the rest of this comparison series doesn't even attempt to address.
@@ -154,3 +156,10 @@ Not wholesale - Facet solves a narrower problem than general-purpose mapping. If
 ### What's the most common mistake when adopting Facet?
 
 Trying to use it as a general-purpose mapping replacement for scenarios it wasn't designed for, rather than reserving it specifically for the "generate a focused view of a domain entity" pattern where it genuinely eliminates meaningful boilerplate. The second common mistake is not being deliberate about excluded fields, especially sensitive ones, given how directly the generated DTO's shape follows from the domain model's structure.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

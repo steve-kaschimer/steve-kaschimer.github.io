@@ -11,18 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "The Architecture Complexity Ladder"
 ---
 
-The most expensive architecture is not always the most sophisticated
-one.
 
-It is the architecture that solves problems you do not have.
 
-This article gives us a ladder for deciding when a .NET application has
-earned additional structure.
+The most expensive architecture is not always the most sophisticated one. It is the architecture that solves problems you do not have. This article gives us a ladder for deciding when a .NET application has earned additional structure.
 
 ## Level 0: CRUD
 
 Start here when the application primarily stores and retrieves data.
-
 ``` text
 HTTP
  |
@@ -34,7 +29,6 @@ Database
 ```
 
 A Minimal API endpoint plus EF Core may be enough.
-
 ``` csharp
 app.MapGet(
     "/customers/{id:guid}",
@@ -48,15 +42,11 @@ app.MapGet(
                 : Results.NotFound());
 ```
 
-Do not create four projects and twelve interfaces merely because the
-application might become complicated someday.
+Do not create four projects and twelve interfaces merely because the application might become complicated someday.
 
 ## Level 1: Use Cases
 
-The endpoint begins accumulating workflow.
-
-Extract an application operation:
-
+The endpoint begins accumulating workflow. Extract an application operation:
 ``` text
 Endpoint
    |
@@ -65,17 +55,11 @@ Use Case
 DbContext
 ```
 
-Now HTTP concerns and application behavior can evolve independently.
-
-This may look like a Service Layer, Transaction Script, command handler,
-or vertical slice handler.
-
-The name matters less than the boundary.
+Now HTTP concerns and application behavior can evolve independently. This may look like a Service Layer, Transaction Script, command handler, or vertical slice handler. The name matters less than the boundary.
 
 ## Level 2: Domain Model
 
 Business rules become interconnected.
-
 ``` text
 if customer is preferred
 and order total exceeds...
@@ -84,7 +68,6 @@ except when region...
 ```
 
 Now a rich model can protect invariants.
-
 ``` text
 Endpoint
    |
@@ -99,22 +82,15 @@ The complexity of the domain has earned domain modeling.
 
 ## Level 3: Separate Reads and Writes
 
-The model that protects invariants is not necessarily the model that
-answers:
-
+The model that protects invariants is not necessarily the model that answers:
 > Show the last 100 orders with customer name, shipment state, and
 > total.
 
-Do not torture the aggregate into becoming a report engine.
-
-Separate commands and queries.
-
-That is the beginning of CQRS.
+Do not torture the aggregate into becoming a report engine. Separate commands and queries. That is the beginning of CQRS.
 
 ## Level 4: Internal Events
 
 One business action triggers several reactions:
-
 ``` text
 OrderPlaced
    |
@@ -123,13 +99,11 @@ OrderPlaced
    +--> create fulfillment task
 ```
 
-Domain events can decouple reactions inside the same bounded context
-while keeping the domain language explicit.
+Domain events can decouple reactions inside the same bounded context while keeping the domain language explicit.
 
 ## Level 5: External Integration
 
 Now another process must hear about the order.
-
 ``` text
 Orders
    |
@@ -140,33 +114,21 @@ Broker
 Fulfillment
 ```
 
-A method call has become distributed communication.
-
-We must now care about delivery, duplication, ordering, and
-compatibility.
+A method call has become distributed communication. We must now care about delivery, duplication, ordering, and compatibility.
 
 ## Level 6: Reliable Messaging
 
 The classic dual-write appears:
-
 ``` text
 Save database
 Publish message
 ```
 
-Those are two independent operations.
-
-If one succeeds and the other fails, the system becomes inconsistent.
-
-The Transactional Outbox becomes relevant.
-
-On the receiving side, at-least-once delivery makes idempotent
-consumption relevant.
+Those are two independent operations. If one succeeds and the other fails, the system becomes inconsistent. The Transactional Outbox becomes relevant. On the receiving side, at-least-once delivery makes idempotent consumption relevant.
 
 ## Level 7: Distributed Workflow
 
 A business transaction now spans:
-
 ``` text
 Orders
 Payments
@@ -174,25 +136,11 @@ Inventory
 Shipping
 ```
 
-No single local transaction owns the workflow.
-
-Saga and Compensating Transaction become candidates.
-
-At this point, architecture is as much about failure recovery as
-happy-path execution.
+No single local transaction owns the workflow. Saga and Compensating Transaction become candidates. At this point, architecture is as much about failure recovery as happy-path execution.
 
 ## Level 8: Independent Scale and Failure
 
-Traffic is bursty.
-
-A queue buffers work.
-
-Multiple consumers process it.
-
-Remote services fail.
-
-Now patterns such as:
-
+Traffic is bursty. A queue buffers work. Multiple consumers process it. Remote services fail. Now patterns such as:
 -   Queue-Based Load Leveling;
 -   Competing Consumers;
 -   Retry;
@@ -204,7 +152,6 @@ address concrete operational forces.
 ## You Can Stop Anywhere
 
 This is the most important part of the ladder.
-
 ``` text
 Level 0  CRUD
 Level 1  Use Cases
@@ -217,15 +164,11 @@ Level 7  Distributed Workflow
 Level 8  Resilience and Scale
 ```
 
-There is no prize for Level 8.
-
-A well-designed Level 1 system is better than a Level 8 architecture
-built for a Level 1 problem.
+There is no prize for Level 8. A well-designed Level 1 system is better than a Level 8 architecture built for a Level 1 problem.
 
 ## Different Parts Can Sit on Different Rungs
 
 A single application may contain:
-
 ``` text
 Admin settings       -> CRUD
 Checkout              -> Domain Model
@@ -234,19 +177,14 @@ Email notifications   -> Queue
 Payments              -> Idempotency + resilience
 ```
 
-Architecture does not need to be uniform.
-
-Consistency is useful, but forcing every subsystem to use the most
-complex pattern required anywhere in the system is expensive.
+Architecture does not need to be uniform. Consistency is useful, but forcing every subsystem to use the most complex pattern required anywhere in the system is expensive.
 
 ## The Escalation Question
 
 Before adding a pattern, ask:
-
 > What happened that made the current design insufficient?
 
 Good answers sound like:
-
 ``` text
 "We are losing events between the database and broker."
 
@@ -260,7 +198,6 @@ Good answers sound like:
 ```
 
 Weak answers sound like:
-
 ``` text
 "It's best practice."
 
@@ -273,25 +210,8 @@ Weak answers sound like:
 
 ## Architecture Debt vs. Architecture Speculation
 
-Under-design can create architecture debt.
-
-Over-design creates architecture speculation.
-
-Both are expensive.
-
-The goal is evolutionary architecture: introduce boundaries early enough
-that change remains possible, but introduce machinery only when the
-forces justify it.
+Under-design can create architecture debt. Over-design creates architecture speculation. Both are expensive. The goal is evolutionary architecture: introduce boundaries early enough that change remains possible, but introduce machinery only when the forces justify it.
 
 ## Summary
 
-The Architecture Complexity Ladder is not a maturity model.
-
-It is a cost model.
-
-Each step buys capabilities and introduces new failure modes, concepts,
-code, tests, and operational responsibilities.
-
-Move upward because the software has encountered a problem that the next
-pattern solves - not because sophisticated architecture looks
-impressive.
+The Architecture Complexity Ladder is not a maturity model. It is a cost model. Each step buys capabilities and introduces new failure modes, concepts, code, tests, and operational responsibilities. Move upward because the software has encountered a problem that the next pattern solves - not because sophisticated architecture looks impressive.

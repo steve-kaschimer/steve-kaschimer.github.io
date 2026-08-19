@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "code-quality", "ci-cd"]
 title: "Getting Started with SonarQube in .NET"
 ---
 
+
+
 SonarQube's setup story is different from every other tool in this series in one important way: it's not a NuGet package you add and forget, it's a platform - either a server you run yourself or SonarCloud, hosted for you - that your CI pipeline talks to on every analysis run. That extra piece of infrastructure is exactly why it can do things a test-scoped library can't: quality gates that block a pull request, trend tracking across months of commits, and a dashboard covering far more than architecture alone.
 
 This guide covers setting up SonarQube for a .NET project, bootstrapping the SonarScanner for .NET in your build pipeline, configuring a quality gate that actually blocks bad code, and the best practices that keep SonarQube's broader scope from becoming noise nobody looks at. By the end you'll have automated analysis running on every push, with a gate that means something.
@@ -167,3 +169,10 @@ It adds real time - the scanner instruments the build and uploads analysis resul
 ### What's the most common mistake in a first SonarQube setup?
 
 Not wiring up coverage reports correctly, resulting in a misleading 0% coverage metric on the dashboard. The second common mistake is using a shallow Git checkout in CI, which silently degrades SonarQube's new-code detection accuracy without producing an obvious error to alert you to the problem.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

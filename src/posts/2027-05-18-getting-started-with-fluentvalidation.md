@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "developer-productivity", "tooling"]
 title: "Getting Started with FluentValidation in .NET"
 ---
 
+
+
 FluentValidation's core appeal is genuinely simple to state: validation rules read like sentences, live in their own class away from your model, and handle conditional logic naturally. What's less obvious until you've profiled it is that this expressiveness has a real performance cost - FluentValidation is consistently one of the slower validation options in independent benchmarks, sometimes by a wide margin. Neither fact should be a surprise by the time you're setting it up; they should shape where in your application you actually reach for it.
 
 This guide covers installing FluentValidation, bootstrapping validators and ASP.NET Core integration correctly, the core patterns for conditional and cross-property rules, and the best practices that make the most of its expressiveness without paying its performance cost where you don't need to. By the end you'll have validation logic that's genuinely easier to read for complex rules, deployed specifically where that complexity exists.
@@ -188,3 +190,10 @@ Yes - create a validator instance directly and call `.Validate()` or `.ValidateA
 ### What's the most common mistake in a first FluentValidation setup?
 
 Using it uniformly for every model regardless of complexity, paying its ceremony and performance cost for validation simple enough that DataAnnotations or native Minimal API validation would have handled just as well with less overhead. The second common mistake, specific to Minimal APIs, is calling `ValidateAsync` manually inside every handler instead of centralizing that logic in a shared endpoint filter.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

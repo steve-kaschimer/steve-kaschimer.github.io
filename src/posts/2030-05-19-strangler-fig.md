@@ -11,8 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Strangler Fig: Modernizing Systems Without the Big-Bang Rewrite"
 ---
 
-The Strangler Fig pattern replaces an existing system incrementally.
 
+
+The Strangler Fig pattern replaces an existing system incrementally.
 ```text
 Clients
    |
@@ -25,27 +26,22 @@ New behavior grows around the old system until the old implementation can be ret
 ## Why Not Rewrite Everything?
 
 Big-bang rewrites combine several risks:
-
 - requirements rediscovery;
 - feature parity;
 - migration;
 - operational cutover;
 - years of accumulated edge cases.
 
-The old system continues changing while the replacement is being built.
-
-Strangler Fig reduces the size of each bet.
+The old system continues changing while the replacement is being built. Strangler Fig reduces the size of each bet.
 
 ## Choose a Slice
 
 Do not begin with:
-
 ```text
 rewrite database
 ```
 
 Begin with a business capability:
-
 ```text
 Customer Search
 Invoice Generation
@@ -57,7 +53,6 @@ Route that capability to the new implementation while everything else remains ol
 ## Routing
 
 The interception point might be:
-
 - reverse proxy;
 - API gateway;
 - facade;
@@ -71,12 +66,7 @@ The interception point might be:
 
 ## Data Is Usually Harder Than Routing
 
-Code can be strangled endpoint by endpoint.
-
-Data ownership is harder.
-
-Migration strategies include:
-
+Code can be strangled endpoint by endpoint. Data ownership is harder. Migration strategies include:
 ```text
 new module reads legacy data
 new system owns new records
@@ -88,10 +78,7 @@ Avoid indefinite dual writes if possible. They create synchronization ambiguity.
 
 ## Anti-Corruption Layer
 
-The new model should not become a prettier wrapper around the legacy model.
-
-Use an ACL:
-
+The new model should not become a prettier wrapper around the legacy model. Use an ACL:
 ```text
 New Domain
    |
@@ -104,10 +91,7 @@ This lets modernization improve the model rather than preserve every historical 
 
 ## Measure Progress
 
-Track capabilities, traffic, and data ownership moved to the new system.
-
-A strangler program without deletion becomes:
-
+Track capabilities, traffic, and data ownership moved to the new system. A strangler program without deletion becomes:
 ```text
 Legacy + New + Integration Forever
 ```
@@ -116,9 +100,7 @@ Retirement is part of the pattern.
 
 ## Rollback
 
-Incremental routing makes rollback easier.
-
-If a new slice fails, route traffic back while fixing it—provided data semantics still permit that.
+Incremental routing makes rollback easier. If a new slice fails, route traffic back while fixing it, provided data semantics still permit that.
 
 ## When It Helps
 
@@ -126,12 +108,11 @@ Use Strangler Fig for systems too important or complex to replace safely in one 
 
 ## When It Hurts
 
-It adds temporary architecture: routing, translation, duplicated capability, and migration machinery.
-
-For a small replaceable application, a clean replacement may be cheaper.
+It adds temporary architecture: routing, translation, duplicated capability, and migration machinery. For a small replaceable application, a clean replacement may be cheaper.
 
 ## Summary
 
-Strangler Fig turns modernization into a sequence of reversible capability migrations.
+Strangler Fig turns modernization into a sequence of reversible capability migrations. The destination matters, but so does creating a safe path from here to there.
+---
 
-The destination matters, but so does creating a safe path from here to there.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

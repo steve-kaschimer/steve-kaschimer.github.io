@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Lab 1: When Transaction Script Starts to Hurt"
 ---
 
+
+
 Northstar v1 used a straightforward transaction script, and that was the right call at the time. But the business has moved on, and the script is starting to show it.
 
 ## New Rules
@@ -22,7 +24,6 @@ Northstar now needs product-specific purchase limits, discontinued-product check
 ## Inspect `PlaceOrder`
 
 `PlaceOrder` now knows about:
-
 ```text
 product availability
 quantity policy
@@ -39,7 +40,6 @@ That's a lot of reasons for one method to change.
 ## Inspect `CancelOrder`
 
 Cancellation has its own status-transition rule buried inside it:
-
 ```csharp
 if (order.Status == "Shipped")
 ```
@@ -60,9 +60,7 @@ The current tests mostly check state after the fact. Try writing one that actual
 
 ## The Architectural Pressure
 
-What we're missing is one place that can say: an Order owns its own lifecycle, decides for itself whether it can be cancelled, and decides for itself whether its items can change. Money and pricing shouldn't be anonymous decimals passed around by convention. The application use case should coordinate that behavior, not contain it.
-
-That's a description of a Domain Model, whether we call it one yet or not.
+What we're missing is one place that can say: an Order owns its own lifecycle, decides for itself whether it can be cancelled, and decides for itself whether its items can change. Money and pricing shouldn't be anonymous decimals passed around by convention. The application use case should coordinate that behavior, not contain it. That's a description of a Domain Model, whether we call it one yet or not.
 
 ## What We Will Change Next
 
@@ -75,3 +73,6 @@ No message broker, no CQRS infrastructure, no microservices, no distributed cach
 ## The Lesson
 
 Transaction Script didn't become a bad pattern. The forces around it changed - and noticing that distinction, rather than blaming the pattern, is the whole point of this lab.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

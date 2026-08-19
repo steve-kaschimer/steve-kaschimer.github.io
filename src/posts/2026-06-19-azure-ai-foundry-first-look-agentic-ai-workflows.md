@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "ai-agents", "agentic-development", "azure", "llm"]
 title: "Azure AI Foundry: A Developer's First Look at Agentic AI Workflows"
 ---
 
+
+
 When people describe Azure AI Foundry, they usually start with platform language. If you're a developer trying to build your first agent, that framing is not very useful.
 
 The practical way to think about Foundry is this:
@@ -208,3 +210,10 @@ Once this baseline works, the next useful step is multi-agent coordination: one 
 But don't jump there on day one. A single agent with one tool and clean deployment boundaries teaches almost everything you need to avoid the early architecture traps.
 
 If you've already used Assistants or LangChain, Foundry isn't a new mental model - it's a different operating model for the same core pattern: model + tools + context + orchestration.
+
+
+---
+
+Azure question? I've got answers.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "devops", "platform-engineering", "tooling"]
 title: "The Top 5 CI/CD Platforms for .NET Compared: Which One Should You Choose?"
 ---
 
+
+
 CI/CD platform comparisons tend to get treated as a popularity contest, and the popularity numbers are genuinely useful data - GitHub Actions leads organizational adoption at roughly a third of teams, with Jenkins and GitLab CI rounding out the top three. But adoption share answers "what do most teams use," not "what should your team use," and for .NET specifically, the honest answer depends heavily on where your code already lives and how much governance your organization actually needs.
 
 This guide compares five CI/CD platforms .NET teams reach for most often: GitHub Actions, Azure DevOps, GitLab CI, TeamCity, and Jenkins. None of these are wrong choices - the research is remarkably consistent that there's no universal winner, only the best fit for a given repo host, governance model, and infrastructure preference. What matters is matching the platform to where your code already lives and how much control your organization actually needs over the build infrastructure itself. This series continues with dedicated getting-started walkthroughs for each platform with .NET.
@@ -28,41 +30,19 @@ This guide compares five CI/CD platforms .NET teams reach for most often: GitHub
 
 ## GitHub Actions
 
-GitHub Actions leads CI/CD adoption in 2026 by a clear margin, and for .NET teams already hosting code on GitHub, it's consistently the natural default - YAML-based workflows, a massive marketplace of community actions, and zero friction between where your code lives and where it builds.
+Leads adoption. Natural default for .NET teams on GitHub. YAML workflows, massive marketplace, zero friction.
 
-**Strengths:**
+Tightest GitHub integration, PRs, checks, deployments in same interface. Generous free tier. Enormous marketplace (NuGet, Azure, test reporting). GitHub Actions Importer for Jenkins/CircleCI/DevOps/GitLab (70-90% accuracy).
 
-- The tightest possible integration with GitHub itself - pull requests, checks, and deployments all live in the same interface developers already use daily
-- A generous free tier for public and reasonably-sized private repositories, with per-minute billing beyond that threshold
-- An enormous marketplace of community and first-party actions, meaning most .NET-specific needs (NuGet publishing, Azure deployment, test reporting) already have a well-maintained action rather than requiring custom scripting
-- The official GitHub Actions Importer CLI supports migrating from Jenkins, CircleCI, Azure DevOps, and GitLab CI, with Jenkins pipelines reportedly migrating at 70-90% accuracy - a real, practical path if you're consolidating tooling
-
-**Weaknesses:**
-
-- Build speed on standard runners can lag behind purpose-built compute providers (like CircleCI) for genuinely heavy test suites, though this gap narrows with self-hosted runners
-- Complex enterprise governance requirements push you toward GitHub Enterprise, which carries real cost at scale
-- Security requires deliberate configuration - pinning actions to a full commit SHA rather than a mutable tag, using OIDC instead of static cloud credentials, and applying least-privilege permissions are all things you need to actively do, not defaults you get automatically
-
-**Choose this when:** your code already lives on GitHub and you don't have a specific reason to look elsewhere - it's the least-friction option for the largest share of .NET teams in 2026.
+Build speed lags on standard runners for heavy suites (better with self-hosted). Enterprise governance needs GitHub Enterprise. Security requires deliberate config (SHA pinning, OIDC, least-privilege).
 
 ## Azure DevOps
 
-Azure DevOps (Azure Pipelines specifically, for CI/CD) remains the deepest, most natural fit for teams heavily invested in the Microsoft ecosystem - Windows-based builds, Azure deployment targets, and enterprise governance requirements all get first-class treatment here in ways that feel more native than bolting the same capability onto a GitHub-hosted pipeline.
+Deepest fit for Microsoft-invested teams. Windows-based builds, Azure targets, enterprise governance all first-class.
 
-**Strengths:**
+Cheapest for Windows-heavy workloads. Deep Azure integration (App Service, Container Apps, AKS). Strong governance out of box. Works with GitHub repos too, not just Azure Repos.
 
-- Genuinely the cheapest option for Windows-heavy build workloads in cost comparisons - a real, measurable advantage if your .NET builds specifically need Windows runners rather than Linux
-- Deep, natural integration with the rest of the Azure ecosystem - deploying to Azure App Service, Azure Container Apps, or AKS is more streamlined here than assembling the equivalent from third-party actions elsewhere
-- Strong governance and approval workflows out of the box, well suited to enterprise compliance requirements without needing an upgraded tier the way some competitors require
-- Works with repositories hosted on GitHub as well as Azure Repos, so it's not strictly limited to Microsoft-hosted source control
-
-**Weaknesses:**
-
-- Less central to the broader industry conversation than GitHub Actions or Jenkins - smaller community, fewer third-party integrations and examples relative to the two most dominant platforms
-- The most natural fit specifically for Microsoft-stack-heavy teams; teams without existing Azure or Microsoft ecosystem investment get comparatively less differentiated value
-- Its own YAML pipeline syntax, while capable, is a distinct thing to learn if your team is more familiar with GitHub Actions' or GitLab's conventions
-
-**Choose this when:** your team is deep in the Microsoft/Azure ecosystem, needs Windows-heavy build infrastructure at the lowest cost, or requires strong built-in enterprise governance without upgrading to a premium tier elsewhere.
+Less central industry conversation than GitHub Actions or Jenkins. Natural fit for Microsoft-stack teams; less value otherwise. Own YAML syntax to learn.
 
 ## GitLab CI
 
@@ -166,3 +146,10 @@ Yes - Azure Pipelines works with GitHub-hosted repositories as well as Azure Rep
 ### How do I decide between GitLab CI and assembling separate tools (GitHub Actions plus a separate security scanner)?
 
 It comes down to whether platform consolidation itself is valuable to your team, versus preferring best-of-breed tools for each individual function. GitLab CI's pitch is specifically reducing the number of separate tools and integrations you maintain; if you're satisfied with GitHub Actions plus point solutions for security scanning and project management, there's less incentive to consolidate onto GitLab purely for its CI/CD capability.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

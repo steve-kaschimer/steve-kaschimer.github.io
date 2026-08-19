@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "developer-productivity"]
 title: "Getting Started with Moq in .NET"
 ---
 
+
+
 Moq's core workflow - `Setup`, `Returns`, `Verify` - is likely the mocking syntax the largest share of .NET developers already know, and that familiarity is a real reason to keep using it. The one thing worth addressing directly before anything else: in August 2023, Moq shipped a component called SponsorLink that harvested developer email hashes without clear consent. It was reverted within days, and current versions don't contain it, but knowing this history - and pinning to a version you trust - is part of using Moq responsibly in 2026, not optional background trivia.
 
 This guide covers installing Moq (with a note on version selection given its history), bootstrapping mocks and setups correctly, the core patterns for stubbing, verification, and argument matching, and the best practices that keep a Moq-based test suite maintainable. By the end you'll have a working mocking setup and a clear, informed stance on the version question.
@@ -160,3 +162,10 @@ No - Moq, like NSubstitute and FakeItEasy, relies on generating a runtime proxy 
 ### What's the most common mistake in a first Moq setup?
 
 Forgetting to pass `.Object` and accidentally trying to use the `Mock<T>` wrapper itself as if it were the fake instance, which won't compile against code expecting the actual interface type. The second common mistake is over-specifying argument matchers with exact values where `It.IsAny<T>()` would make the test appropriately less brittle.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,42 +11,18 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-logic"]
 title: "Transaction Script, Domain Model, and Service Layer"
 ---
 
-One of the most important decisions in application architecture is
-deciding **where business logic should live**.
 
-A beginner's application often starts with business logic in request
-handlers. At first, that's perfectly reasonable.
 
-Then another operation needs the same rules.
-
-And another.
-
-Eventually, the application has multiple procedures that partially
-overlap.
-
-Martin Fowler's catalog describes three particularly important
-approaches to organizing domain logic:
-
+One of the most important decisions in application architecture is deciding **where business logic should live**. A beginner's application often starts with business logic in request handlers. At first, that's perfectly reasonable. Then another operation needs the same rules. And another. Eventually, the application has multiple procedures that partially overlap. Martin Fowler's catalog describes three particularly important approaches to organizing domain logic:
 -   **Transaction Script**
 -   **Domain Model**
 -   **Table Module**
 
-It also describes **Service Layer**, which defines the application's
-boundary and coordinates operations.
-
-This article focuses on Transaction Script, Domain Model, and Service
-Layer because they form one of the most useful architectural choices in
-everyday application development.
+It also describes **Service Layer**, which defines the application's boundary and coordinates operations. This article focuses on Transaction Script, Domain Model, and Service Layer because they form one of the most useful architectural choices in everyday application development.
 
 ## Transaction Script
 
-Transaction Script organizes business logic around operations.
-
-Each operation performs the work necessary to complete a particular
-request.
-
-For example:
-
+Transaction Script organizes business logic around operations. Each operation performs the work necessary to complete a particular request. For example:
 ``` csharp
 public async Task SubmitOrderAsync(
     int orderId,
@@ -77,14 +53,11 @@ public async Task SubmitOrderAsync(
 }
 ```
 
-The procedure is the unit of business behavior.
-
-This approach can be excellent for simple applications.
+The procedure is the unit of business behavior. This approach can be excellent for simple applications.
 
 ## When Transaction Script Works Well
 
 Transaction Script is particularly attractive when:
-
 -   workflows are straightforward,
 -   business rules aren't highly interconnected,
 -   operations are independent,
@@ -92,7 +65,6 @@ Transaction Script is particularly attractive when:
 -   the database already represents much of the business structure.
 
 For example:
-
 ``` csharp
 public async Task CancelSubscriptionAsync(
     Subscription subscription,
@@ -106,15 +78,11 @@ public async Task CancelSubscriptionAsync(
 }
 ```
 
-There may be little benefit in creating a rich domain model around such
-a simple operation.
+There may be little benefit in creating a rich domain model around such a simple operation.
 
 ## The Problem With Transaction Script
 
-Complexity starts appearing when rules overlap.
-
-Suppose our order application has:
-
+Complexity starts appearing when rules overlap. Suppose our order application has:
 ``` text
 Create order
 Submit order
@@ -125,27 +93,14 @@ Apply discount
 Calculate shipping
 ```
 
-If each procedure contains its own understanding of order rules, those
-rules can become duplicated.
-
-For example, a status check might appear in three different operations.
-
-Now imagine the business requirement changes:
-
+If each procedure contains its own understanding of order rules, those rules can become duplicated. For example, a status check might appear in three different operations. Now imagine the business requirement changes:
 > An order can also be submitted from `PendingApproval`.
 
-We have to find every place where the rule is encoded.
-
-This is where a Domain Model can become valuable.
+We have to find every place where the rule is encoded. This is where a Domain Model can become valuable.
 
 ## Domain Model
 
-Fowler describes Domain Model as an object model of the domain that
-incorporates both behavior and data.
-
-Instead of putting the rule in an operation, we can put the rule on the
-domain object:
-
+Fowler describes Domain Model as an object model of the domain that incorporates both behavior and data. Instead of putting the rule in an operation, we can put the rule on the domain object:
 ``` csharp
 public sealed class Order
 {
@@ -175,10 +130,7 @@ public sealed class Order
 }
 ```
 
-Now the rule has a clear owner.
-
-Any application operation that needs to submit an order can call:
-
+Now the rule has a clear owner. Any application operation that needs to submit an order can call:
 ``` csharp
 order.Submit();
 ```
@@ -187,11 +139,7 @@ The behavior is centralized.
 
 ## Rich Models vs. Anemic Models
 
-A domain model is sometimes called "rich" when its objects contain
-meaningful behavior.
-
-Compare a data-only model:
-
+A domain model is sometimes called "rich" when its objects contain meaningful behavior. Compare a data-only model:
 ``` csharp
 public sealed class Order
 {
@@ -201,7 +149,6 @@ public sealed class Order
 ```
 
 with:
-
 ``` csharp
 public sealed class Order
 {
@@ -214,27 +161,11 @@ public sealed class Order
 }
 ```
 
-The first is mostly data.
-
-The second encapsulates behavior.
-
-Neither is automatically correct.
-
-An anemic model can be perfectly reasonable when the domain is simple.
-
-A rich model becomes more valuable as business rules become more complex
-and interconnected.
+The first is mostly data. The second encapsulates behavior. Neither is automatically correct. An anemic model can be perfectly reasonable when the domain is simple. A rich model becomes more valuable as business rules become more complex and interconnected.
 
 ## The Service Layer
 
-The Service Layer is different.
-
-Fowler describes it as defining an application's boundary with a layer
-of services that establishes available operations and coordinates the
-application's response to each operation.
-
-Consider:
-
+The Service Layer is different. Fowler describes it as defining an application's boundary with a layer of services that establishes available operations and coordinates the application's response to each operation. Consider:
 ``` csharp
 public sealed class SubmitOrderService(
     IOrderRepository orders,
@@ -262,10 +193,7 @@ public sealed class SubmitOrderService(
 }
 ```
 
-The service coordinates the use case.
-
-But the `Order` owns the business rule:
-
+The service coordinates the use case. But the `Order` owns the business rule:
 ``` csharp
 order.Submit();
 ```
@@ -275,7 +203,6 @@ That's an important distinction.
 ## Service Layer Doesn't Mean "Put All Logic in Services"
 
 A common .NET architecture mistake is:
-
 ``` text
 Controller
     ↓
@@ -284,26 +211,15 @@ Service
 Repository
 ```
 
-with the service containing every business rule.
-
-Eventually the service becomes a procedural dumping ground.
-
-The better interpretation of Service Layer is **coordination**.
-
-The service answers:
-
+with the service containing every business rule. Eventually the service becomes a procedural dumping ground. The better interpretation of Service Layer is **coordination**. The service answers:
 > "What needs to happen to complete this application operation?"
 
 The domain answers:
-
 > "What business rules govern these concepts?"
 
 ## A Practical Combination
 
-Modern applications frequently combine the approaches.
-
-For example:
-
+Modern applications frequently combine the approaches. For example:
 ``` text
 HTTP endpoint
       ↓
@@ -315,7 +231,6 @@ Persistence
 ```
 
 The HTTP endpoint handles HTTP:
-
 ``` csharp
 app.MapPost(
     "/orders/{id}/submit",
@@ -333,7 +248,6 @@ app.MapPost(
 ```
 
 The application service coordinates:
-
 ``` csharp
 public async Task ExecuteAsync(...)
 {
@@ -346,7 +260,6 @@ public async Task ExecuteAsync(...)
 ```
 
 The domain object enforces business rules:
-
 ``` csharp
 public void Submit()
 {
@@ -354,10 +267,7 @@ public void Submit()
 }
 ```
 
-This isn't a contradiction.
-
-Transaction Script, Domain Model, and Service Layer solve different
-problems.
+This isn't a contradiction. Transaction Script, Domain Model, and Service Layer solve different problems.
 
 ## How Do You Choose?
 
@@ -390,10 +300,7 @@ And these choices can coexist.
 
 ## An Example
 
-Imagine a simple invoice application.
-
-A Transaction Script might be:
-
+Imagine a simple invoice application. A Transaction Script might be:
 ``` csharp
 public async Task PayInvoiceAsync(
     int invoiceId,
@@ -412,7 +319,6 @@ public async Task PayInvoiceAsync(
 ```
 
 As requirements grow:
-
 ``` text
 An invoice can only be paid if:
 - it is open,
@@ -423,10 +329,7 @@ An invoice can only be paid if:
 - the invoice isn't disputed.
 ```
 
-The operation now contains significant business knowledge.
-
-A domain model becomes more attractive:
-
+The operation now contains significant business knowledge. A domain model becomes more attractive:
 ``` csharp
 invoice.Pay(payment);
 ```
@@ -436,15 +339,9 @@ with the business rules encapsulated by the invoice.
 ## Don't Turn Every Entity Into a Domain Model
 
 There's another common mistake:
-
 > "We're using Domain Model, therefore every class needs behavior."
 
-No.
-
-A domain model should earn its complexity.
-
-A value object can be useful:
-
+No. A domain model should earn its complexity. A value object can be useful:
 ``` csharp
 public readonly record struct CountryCode
 {
@@ -462,15 +359,11 @@ public readonly record struct CountryCode
 }
 ```
 
-That's useful behavior.
-
-But a simple database-backed lookup table doesn't necessarily need
-elaborate domain behavior.
+That's useful behavior. But a simple database-backed lookup table doesn't necessarily need elaborate domain behavior.
 
 ## Modern C# Makes These Patterns Easier
 
 Modern C# gives us useful tools for expressing domain concepts:
-
 -   records,
 -   record structs,
 -   init-only properties,
@@ -481,40 +374,18 @@ Modern C# gives us useful tools for expressing domain concepts:
 -   primary constructors.
 
 For example:
-
 ``` csharp
 public readonly record struct Money(
     decimal Amount,
     string Currency);
 ```
 
-can represent a value concept without requiring a large class hierarchy.
-
-Likewise, controlled state transitions can make invalid state changes
-difficult to express.
-
-The language helps us implement the model.
-
-It doesn't tell us whether we need the model.
+can represent a value concept without requiring a large class hierarchy. Likewise, controlled state transitions can make invalid state changes difficult to express. The language helps us implement the model. It doesn't tell us whether we need the model.
 
 ## The Guiding Principle
 
 The most useful rule is:
-
 > **Put behavior where the knowledge required to perform that behavior
 > naturally belongs.**
 
-If the behavior is about HTTP, put it near HTTP.
-
-If it coordinates an application operation, put it in the application
-layer.
-
-If it represents an invariant of an order, invoice, reservation, or
-customer, consider putting it in the domain model.
-
-If the operation is trivial, a Transaction Script may be the better
-answer.
-
-Architecture is not about choosing the most sophisticated pattern.
-
-It's about choosing the pattern whose trade-offs fit the problem.
+If the behavior is about HTTP, put it near HTTP. If it coordinates an application operation, put it in the application layer. If it represents an invariant of an order, invoice, reservation, or customer, consider putting it in the domain model. If the operation is trivial, a Transaction Script may be the better answer. Architecture is not about choosing the most sophisticated pattern. It's about choosing the pattern whose trade-offs fit the problem.

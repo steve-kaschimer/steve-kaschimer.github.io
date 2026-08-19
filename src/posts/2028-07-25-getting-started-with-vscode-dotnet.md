@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity"]
 title: "Getting Started with VS Code for .NET Development"
 ---
 
+
+
 VS Code's C# story used to require a fair amount of manual extension-hunting to get something resembling IntelliSense and a working debugger. That's not the situation anymore - Microsoft's C# Dev Kit bundles the pieces that matter into one coherent extension, and the setup is now genuinely a few clicks rather than a scavenger hunt. The part still worth knowing deliberately: that extension is licensed specifically for genuine VS Code, not for Cursor or other VS Code-compatible forks, which matters if you're choosing between editors in this family.
 
 This guide covers installing VS Code and the C# Dev Kit, bootstrapping a project with the settings that keep a growing solution fast and consistent, the core debugging and testing workflow, and the best practices for getting a genuinely solid .NET experience out of what's still a lightweight, general-purpose editor at heart. By the end you'll have a fast, capable C# setup that doesn't carry a full IDE's resource footprint.
@@ -153,3 +155,10 @@ Yes - both VS Code itself and the C# Dev Kit extension are free to use, includin
 ### What's the most common mistake in a first VS Code setup for .NET?
 
 Opening loose `.cs` files instead of the project folder, leading to confusing IntelliSense and navigation failures that look like a broken installation but are actually a workspace-loading issue. The second common mistake is expecting Cursor to work identically to VS Code for C# tooling, when the C# Dev Kit's licensing specifically excludes that fork.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

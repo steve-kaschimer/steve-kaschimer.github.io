@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "microservices"]
 title: "Lab 25: Modernization Is a Migration Problem"
 ---
 
+
+
 Northstar now has a legacy Shipping capability, ugly in ways that feel painfully familiar: `STATUS_CD`, `ACCOUNT_NO`, `SHIP_REF`, `LAST_ERR`. The obvious temptation is to just rewrite it. That's not an architecture, though - it's a wish.
 
 ## The Real Problem
@@ -26,3 +28,6 @@ Put a routing boundary in front of the capability. At first, 100% of traffic sti
 ## Next
 
 Move one narrow capability - shipping status - over to the new Fulfillment module, and leave everything else on the legacy path. Keeping the migration that small is exactly what makes it reversible.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,12 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Inbox and Idempotent Consumer: Making Duplicate Messages Harmless"
 ---
 
-Transactional Outbox deliberately accepts at-least-once publication.
 
-Brokers may also redeliver messages.
 
-Therefore consumers must assume:
-
+Transactional Outbox deliberately accepts at-least-once publication. Brokers may also redeliver messages. Therefore consumers must assume:
 > The same logical message can arrive more than once.
 
 Inbox / Idempotent Consumer makes that safe.
@@ -32,21 +29,15 @@ Broker sends Message 42 again
 ```
 
 If the handler is:
-
 ```csharp
 account.Credit(100m);
 ```
 
-the customer may receive $200.
-
-The broker did not malfunction.
-
-The consumer was not idempotent.
+the customer may receive $200. The broker did not malfunction. The consumer was not idempotent.
 
 ## Inbox Table
 
 Persist processed message IDs:
-
 ```text
 InboxMessages
 -------------------------------
@@ -56,7 +47,6 @@ Handler
 ```
 
 Before processing:
-
 ```text
 Has MessageId already committed?
 ```
@@ -66,7 +56,6 @@ If yes, skip.
 ## The Atomicity Requirement
 
 This is not enough:
-
 ```text
 check inbox
 perform business change
@@ -74,10 +63,7 @@ commit business change
 write inbox
 ```
 
-A crash between the two commits can repeat the effect.
-
-Instead:
-
+A crash between the two commits can repeat the effect. Instead:
 ```text
 BEGIN TRANSACTION
 
@@ -127,67 +113,40 @@ Production code should rely on a unique constraint too, because concurrent dupli
 ## Unique Constraint as Final Arbiter
 
 Two consumers can both observe:
-
 ```text
 message not yet processed
 ```
 
-A unique constraint on `MessageId` ensures only one transaction can commit the inbox marker.
-
-Treat the database as the concurrency arbiter.
+A unique constraint on `MessageId` ensures only one transaction can commit the inbox marker. Treat the database as the concurrency arbiter.
 
 ## Idempotency by Business Identity
 
-Sometimes you do not need a generic Inbox table.
-
-If the business operation has natural identity:
-
+Sometimes you do not need a generic Inbox table. If the business operation has natural identity:
 ```text
 PaymentId
 ShipmentId
 ReservationId
 ```
 
-the domain/database can enforce uniqueness directly.
-
-For example:
-
+the domain/database can enforce uniqueness directly. For example:
 ```text
 OrderPayments.PaymentId UNIQUE
 ```
 
-A duplicate message attempting to apply the same payment becomes harmless.
-
-This is often stronger than purely technical message deduplication.
+A duplicate message attempting to apply the same payment becomes harmless. This is often stronger than purely technical message deduplication.
 
 ## Inbox Retention
 
-Can processed IDs be deleted?
-
-Eventually, maybe.
-
-But once an ID is deleted, an old redelivery can be processed again.
-
-Choose retention based on broker replay windows, business risk, and archival behavior.
-
-For high-value operations, long-lived business uniqueness may be better than short-lived technical dedupe.
+Can processed IDs be deleted? Eventually, maybe. But once an ID is deleted, an old redelivery can be processed again. Choose retention based on broker replay windows, business risk, and archival behavior. For high-value operations, long-lived business uniqueness may be better than short-lived technical dedupe.
 
 ## Message Identity vs. Correlation
 
-Do not deduplicate by correlation ID.
-
-One business workflow may legitimately contain many messages sharing the same correlation ID.
-
-Use:
-
+Do not deduplicate by correlation ID. One business workflow may legitimately contain many messages sharing the same correlation ID. Use:
 ```text
 MessageId
 ```
 
-for delivery identity.
-
-Use:
-
+for delivery identity. Use:
 ```text
 CorrelationId
 ```
@@ -197,24 +156,17 @@ for tracing the broader workflow.
 ## Side Effects Outside the Database
 
 Suppose the consumer:
-
 ```text
 writes DB
 sends email
 ```
 
-The Inbox transaction can protect the DB effect.
-
-It cannot atomically protect an external email provider.
-
-Options include:
-
+The Inbox transaction can protect the DB effect. It cannot atomically protect an external email provider. Options include:
 - make email naturally idempotent;
 - use a separate Outbox for the email command/event;
 - store a durable send record.
 
 Reliable consumers often combine Inbox and Outbox:
-
 ```text
 Consume message
    |
@@ -231,16 +183,11 @@ This is an extremely powerful pattern composition.
 
 ## Poison Messages
 
-Idempotency does not solve permanent failure.
-
-If a valid-but-unprocessable message fails every attempt, it may need dead-letter handling.
-
-That is the next topic.
+Idempotency does not solve permanent failure. If a valid-but-unprocessable message fails every attempt, it may need dead-letter handling. That is the next topic.
 
 ## Observability
 
 Track:
-
 ```text
 duplicate messages skipped
 inbox insert conflicts
@@ -255,7 +202,6 @@ A spike in duplicates may indicate broker retries, worker crashes, or acknowledg
 ## Testing
 
 Test:
-
 ```text
 same MessageId twice -> one effect
 two concurrent duplicates -> one effect
@@ -268,7 +214,6 @@ Use a real database for concurrency tests.
 ## When It Helps
 
 Use Inbox / Idempotent Consumer when:
-
 - delivery is at least once;
 - duplicate effects are harmful;
 - consumers update local durable state;
@@ -276,18 +221,11 @@ Use Inbox / Idempotent Consumer when:
 
 ## When It Hurts
 
-Do not create a giant dedupe subsystem when operations are naturally idempotent already.
-
-Prefer business uniqueness where available.
+Do not create a giant dedupe subsystem when operations are naturally idempotent already. Prefer business uniqueness where available.
 
 ## Summary
 
-At-least-once delivery moves responsibility to the consumer:
+At-least-once delivery moves responsibility to the consumer: duplicates must be safe. Persist message identity in the same local transaction as the business effect, enforce uniqueness atomically, and prefer business-level identities when they provide stronger guarantees. Outbox prevents message loss. Inbox prevents duplicate effects.
+---
 
-duplicates must be safe.
-
-Persist message identity in the same local transaction as the business effect, enforce uniqueness atomically, and prefer business-level identities when they provide stronger guarantees.
-
-Outbox prevents message loss.
-
-Inbox prevents duplicate effects.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

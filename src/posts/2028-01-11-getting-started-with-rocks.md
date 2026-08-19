@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "performance"]
 title: "Getting Started with Rocks in .NET"
 ---
 
+
+
 Rocks asks you to accept one trade upfront: a smaller community and a genuinely different syntax, in exchange for mocks that are ordinary, compiler-checked C# code instead of runtime-generated proxies. There's no `System.Reflection.Emit`, no IL generation happening behind the scenes that you can't step into while debugging - Rocks uses C# source generators to write real mock classes at build time, which is also exactly what makes it compatible with Native AOT and trimmed deployments in a way every proxy-based library in this comparison structurally isn't.
 
 This guide covers installing Rocks, bootstrapping expectations and mocks with its source-generated model, the core patterns for configuring and verifying behavior, and the best practices for adopting a tool whose architecture (not just its API) differs from what most .NET developers already know. By the end you'll have compile-time-checked mocks and a clear sense of when that trade-off is worth making.
@@ -163,3 +165,10 @@ No - Rocks still requires an interface or unsealed class with virtual members, s
 ### What's the most common mistake when adopting Rocks?
 
 Adopting it purely because it's newer or technically interesting, without an actual AOT or compile-time-checking requirement driving the decision, and then being surprised by the smaller community and less familiar syntax compared to Moq or NSubstitute. The second common mistake is not checking current framework target requirements before starting, since Rocks' generated code target has moved forward across major releases.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

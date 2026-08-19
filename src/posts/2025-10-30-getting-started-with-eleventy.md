@@ -11,6 +11,8 @@ tags: ["eleventy", "developer-productivity"]
 title: Getting Started with Eleventy
 ---
 
+
+
 Eleventy (or 11ty) is a fantastic static site generator that's simple, flexible, and incredibly fast. If you're looking to build a blog, documentation site, or any static website, Eleventy is an excellent choice.
 
 ## Why Eleventy?
@@ -69,8 +71,10 @@ Eleventy strikes a perfect balance between simplicity and power. It gets out of 
 
 Happy building!
 
+
+
 ---
 
-Need help? Ask me!
+Questions about this? I can help.
 
 [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Lab 8: Transactional Outbox Makes the Integration Event Durable"
 ---
 
+
+
 The previous stage deliberately did the naive thing: save the Order, then publish the Integration Event. That left a hole - if the first step succeeded and the second never did, Ordering and Fulfillment quietly disagreed about reality.
 
 ## The New Transaction
@@ -34,3 +36,6 @@ Picture the publish succeeding right before the process crashes, before `Publish
 ## Next
 
 We'll build a Fulfillment consumer and deliberately deliver the same message twice, and that's where Inbox / Idempotent Consumer earns its place.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

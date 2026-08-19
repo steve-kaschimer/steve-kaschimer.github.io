@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "concurrency"]
 title: "Lab 21: Optimistic Concurrency Protects Intent"
 ---
 
+
+
 Northstar's workflow state is now long-lived, and that creates a new risk on its own: an operator reads Saga version 7, the workflow itself advances to version 8, and only then does the operator submit an action built against the version they originally read. Without concurrency protection, that stale action can silently overwrite state that's already moved on.
 
 ## The Version
@@ -34,3 +36,6 @@ Because the interaction here can involve a human thinking, or slow external work
 ## The Lesson
 
 Concurrency control was never really about who wins a race. It's about whether the system can safely apply an action against state that's already changed since the caller last looked at it - and that's a business decision dressed up as a database feature, not the other way around.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

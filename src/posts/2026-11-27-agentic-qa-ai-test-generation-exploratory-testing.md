@@ -11,6 +11,8 @@ tags: ["ai-agents", "testing", "agentic-development", "azure-ai-foundry", "devel
 title: "Agentic QA: How AI Agents Are Reshaping Test Generation and Exploratory Testing"
 ---
 
+
+
 Writing tests is the part of software development most consistently deferred, not because it's hard but because it's tedious relative to writing the feature itself - and tedious work is exactly what agents are good at accelerating, as long as someone stays honest about what "good at" means here. An agent that reads a function and produces a plausible-looking test suite in ten seconds is a genuinely different experience from writing that suite by hand. Whether the suite is actually testing the right things is a separate question the speed doesn't answer, and conflating the two is how a team ends up with high coverage numbers and a production incident the tests should have caught.
 
 ***

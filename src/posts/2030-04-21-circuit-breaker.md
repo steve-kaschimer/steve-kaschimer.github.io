@@ -11,12 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "resilience"]
 title: "Circuit Breaker: Stop Calling a Dependency That Is Already Failing"
 ---
 
-Retry assumes another attempt may succeed.
 
-What if the dependency is down for ten minutes?
 
-Continuing to call it creates:
-
+Retry assumes another attempt may succeed. What if the dependency is down for ten minutes? Continuing to call it creates:
 ```text
 timeouts
 blocked resources
@@ -29,10 +26,7 @@ Circuit Breaker temporarily stops calls to a dependency that appears unhealthy.
 
 ## The Electrical Analogy
 
-A circuit breaker protects a system by opening the circuit when failure exceeds a threshold.
-
-Software follows the same state model:
-
+A circuit breaker protects a system by opening the circuit when failure exceeds a threshold. Software follows the same state model:
 ```text
 Closed
   |
@@ -54,14 +48,11 @@ Closed
 
 ## Closed
 
-Calls flow normally.
-
-The breaker observes failures.
+Calls flow normally. The breaker observes failures.
 
 ## Open
 
 Calls fail immediately without contacting the dependency.
-
 ```text
 dependency call
      X
@@ -69,7 +60,6 @@ fail fast
 ```
 
 This protects:
-
 - threads/tasks;
 - sockets;
 - connection pools;
@@ -78,16 +68,12 @@ This protects:
 
 ## Half-Open
 
-After a recovery interval, allow limited probe traffic.
-
-If probes succeed:
-
+After a recovery interval, allow limited probe traffic. If probes succeed:
 ```text
 close circuit
 ```
 
 If they fail:
-
 ```text
 open again
 ```
@@ -96,10 +82,7 @@ Do not unleash full production traffic on the first sign of recovery.
 
 ## What Counts as Failure?
 
-Not every unsuccessful business result should trip the circuit.
-
-Examples:
-
+Not every unsuccessful business result should trip the circuit. Examples:
 ```text
 HTTP 503 -> probably dependency failure
 timeout  -> probably dependency failure
@@ -112,7 +95,6 @@ Failure classification matters.
 ## Circuit Breaker + Retry
 
 A common composition:
-
 ```text
 Request
   |
@@ -123,10 +105,7 @@ Circuit Breaker
 Dependency
 ```
 
-But ordering and implementation details matter.
-
-The goal is:
-
+But ordering and implementation details matter. The goal is:
 - retry brief transient failures;
 - stop hammering sustained failures.
 
@@ -134,10 +113,7 @@ Do not let retries bypass the breaker.
 
 ## Fallback
 
-When the circuit is open, the caller needs a policy.
-
-Possible outcomes:
-
+When the circuit is open, the caller needs a policy. Possible outcomes:
 ```text
 return cached data
 degrade optional feature
@@ -145,14 +121,11 @@ queue work
 return unavailable
 ```
 
-Fallback must be semantically valid.
-
-Never return stale or fabricated data merely to make dashboards green.
+Fallback must be semantically valid. Never return stale or fabricated data merely to make dashboards green.
 
 ## Example: Recommendations
 
 If Recommendations is unavailable:
-
 ```text
 Product page
   |
@@ -166,46 +139,34 @@ Excellent graceful degradation.
 ## Example: Payment
 
 If Payment is unavailable:
-
 ```text
 pretend payment succeeded
 ```
 
-is obviously unacceptable.
-
-Return a clear unavailable/pending state or queue only if the business supports it.
+is obviously unacceptable. Return a clear unavailable/pending state or queue only if the business supports it.
 
 ## Per-Dependency Isolation
 
 Do not use one global circuit:
-
 ```text
 one vendor fails
 everything opens
 ```
 
-Circuit state should align with the dependency/failure boundary.
-
-Sometimes even separate operations on one dependency deserve different breakers.
+Circuit state should align with the dependency/failure boundary. Sometimes even separate operations on one dependency deserve different breakers.
 
 ## Distributed Instances
 
-Each application instance may maintain its own circuit state.
-
-That is usually fine.
-
-A shared global breaker adds coordination complexity and may create its own failure mode.
+Each application instance may maintain its own circuit state. That is usually fine. A shared global breaker adds coordination complexity and may create its own failure mode.
 
 ## Health Checks Are Different
 
 Health checks answer:
-
 ```text
 is dependency healthy right now?
 ```
 
 Circuit breakers answer:
-
 ```text
 should this caller currently attempt requests?
 ```
@@ -215,7 +176,6 @@ Do not poll health endpoints on every request as a substitute for a breaker.
 ## Observability
 
 Track:
-
 ```text
 state transitions
 open duration
@@ -230,7 +190,6 @@ An open circuit should be operationally visible.
 ## Testing
 
 Test:
-
 ```text
 threshold opens circuit
 open circuit fails fast
@@ -245,7 +204,6 @@ Time abstraction such as `TimeProvider` can make timing behavior easier to test.
 ## When It Helps
 
 Use Circuit Breaker when:
-
 - a remote dependency can fail for meaningful periods;
 - repeated calls consume scarce resources;
 - callers can fail fast or degrade;
@@ -253,22 +211,17 @@ Use Circuit Breaker when:
 
 ## When It Hurts
 
-It adds state and tuning.
-
-For a local in-memory method call, it is nonsense.
-
-For a dependency whose every request is independent and cheap, it may add little.
+It adds state and tuning. For a local in-memory method call, it is nonsense. For a dependency whose every request is independent and cheap, it may add little.
 
 ## Summary
 
-Circuit Breaker protects the caller and the dependency from sustained failure.
-
-Retry says:
-
+Circuit Breaker protects the caller and the dependency from sustained failure. Retry says:
 > try again carefully.
 
 Circuit Breaker says:
-
 > stop trying for now.
 
 Together, they let the system distinguish a brief glitch from an outage.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

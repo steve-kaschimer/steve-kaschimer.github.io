@@ -11,6 +11,8 @@ tags: ["github-actions", "eleventy", "ci-cd"]
 title: "Deploying to GitHub Pages with GitHub Actions: Beyond the Defaults"
 ---
 
+
+
 Most tutorials for deploying to GitHub Pages start with `peaceiris/actions-gh-pages` or the GitHub UI's auto-generated workflow. Both work. Neither is production-grade. The problems are predictable: every run reinstalls all npm packages from scratch, build artifacts persist indefinitely against your storage quota, and the site goes live on every push to `main` with no human gate between "CI passed" and "it's in front of users."
 
 The official `actions/deploy-pages` action - introduced in 2022 and now the GitHub-recommended approach - solves most of this. But using it correctly means understanding OIDC token authentication, the artifact lifecycle, and how GitHub Environments create a reviewable deployment gate. This post builds the full production pipeline, step by step, for an Eleventy + Tailwind CSS site.

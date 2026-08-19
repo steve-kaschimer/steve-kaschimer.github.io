@@ -11,6 +11,8 @@ tags: ["azure-ai-foundry", "mcp", "ai-agents", "agentic-development", "azure"]
 title: "Azure AI Foundry MCP Servers: Building and Registering Custom Tools for Your Agents"
 ---
 
+
+
 Every agent post on this blog so far has reached for `FunctionTool` - a Python function, decorated and registered directly with the agent, living in the same codebase and deployed as part of the same runtime. That pattern works well for capabilities specific to one agent. It breaks down the moment two different agents - or two different teams - need the same capability: a GitHub API wrapper, an internal knowledge-base query, gets copy-pasted and reimplemented per agent, drifting slightly each time someone tweaks one copy and not the others.
 
 The Model Context Protocol (MCP) is Anthropic's open standard for exactly this seam: a tool is implemented once, as its own server, exposing a standard schema over a standard transport - and any MCP-compatible agent runtime, Azure AI Foundry included, can register it and call it without the tool's implementation living inside the agent's own code at all.

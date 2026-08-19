@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "testing", "developer-productivity"]
 title: "Getting Started with Layered (N-Tier) Architecture in .NET"
 ---
 
+
+
 Layered architecture doesn't get much attention in architecture talks anymore, but it's still how a huge share of production .NET applications are actually built - and for genuinely simple, CRUD-shaped applications, that's the right call, not a compromise. The mistake isn't using layered architecture; it's using it past the point where it stops fitting the problem.
 
 This guide covers setting up a layered .NET solution from scratch, bootstrapping the project structure so layers stay honest about their boundaries, the core workflow of adding a feature, and the best practices that keep a layered codebase from decaying into a tangled mess as it grows. By the end you'll have a clean, conventional starting point - and a clear sense of when to reach for something else instead.
@@ -193,3 +195,10 @@ Yes, though it's less natural than pairing CQRS with Vertical Slice Architecture
 ### Does layered architecture prevent the "big ball of mud" problem?
 
 Not automatically. Layered architecture separates *technical* concerns but does nothing to prevent unrelated business logic from accumulating in a single business layer over time. Preventing that requires the same kind of deliberate internal organization (splitting services by responsibility) that any architecture needs as it grows.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

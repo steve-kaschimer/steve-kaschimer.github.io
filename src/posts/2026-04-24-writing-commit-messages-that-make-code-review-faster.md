@@ -11,6 +11,8 @@ tags: ["writing-for-engineers", "developer-productivity", "devops"]
 title: "Writing Commit Messages That Make Code Review Faster"
 ---
 
+
+
 You open a PR for review. It has twelve commits. The messages read: "fix", "wip", "update", "more fixes", "actually fix", "pr feedback". There is no narrative, no context, no explanation of what was tried and discarded. To understand why any particular line changed, you have to reverse-engineer intent from the diff alone - which is exactly what the commit messages were supposed to make unnecessary. This is a communication failure, and it compounds: bad commit messages make code review slower, make `git bisect` a guessing game, make `git blame` useless for anything except finding who to ask, and make onboarding new teammates onto a codebase a puzzle instead of a story.
 
 The fix takes about 60 seconds per commit. Most developers just haven't been taught the format.

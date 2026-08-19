@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "testing", "developer-productivity"]
 title: "Getting Started with NetArchTest in .NET"
 ---
 
+
+
 NetArchTest's entire value proposition is that architecture rules stop being something written in a design doc nobody rereads and start being something your build actually checks. The setup is genuinely small - a NuGet package and a test class - which is exactly why it's worth doing early in a project rather than after the dependency violations it would have caught have already accumulated.
 
 This guide covers installing NetArchTest, bootstrapping a dedicated architecture test project, the core rule patterns for enforcing dependency direction and naming conventions, and the best practices that keep these tests useful rather than either too loose to matter or too brittle to survive normal refactoring. By the end you'll have your architecture's rules enforced the same way any other regression is - automatically, on every build.
@@ -192,3 +194,10 @@ That's a signal to have an explicit conversation about whether the rule (or the 
 ### What's the most common mistake in a first NetArchTest setup?
 
 Writing rules without including diagnostic failure information, so a failing test tells you something's wrong but not what - turning what should be a fast fix into a search. The second common mistake is letting rules go stale as the architecture legitimately evolves, rather than treating the rule set itself as something that needs periodic review.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

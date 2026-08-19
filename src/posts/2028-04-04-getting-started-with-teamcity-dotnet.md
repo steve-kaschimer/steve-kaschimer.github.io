@@ -11,6 +11,8 @@ tags: ["dotnet", "ci-cd", "devops", "tooling"]
 title: "Getting Started with TeamCity for .NET"
 ---
 
+
+
 TeamCity's build configuration UI is where most people start, and it's a genuinely good way to learn the concepts - but the moment you have more than one project, the thing that actually matters is Kotlin DSL: version-controlled, code-based pipeline definitions instead of UI-configured settings that live only in TeamCity's own database. That's the real setup decision this guide centers on, since it's what determines whether your TeamCity configuration is reviewable, diffable, and portable, or a black box only reproducible by clicking through the same UI steps again.
 
 This guide covers setting up a TeamCity build configuration for .NET using both the UI and Kotlin DSL, bootstrapping build chains for multi-project solutions, the core patterns for dependency management between builds, and the best practices that take advantage of what TeamCity specifically does well - sophisticated build orchestration - without treating it like a simpler YAML-based CI tool. By the end you'll have version-controlled pipeline configuration and a real build chain, not just a single linear job.
@@ -197,3 +199,10 @@ Omit an automatic VCS trigger from the deployment build configuration, so it onl
 ### What's the most common mistake in a first TeamCity setup for .NET?
 
 Configuring everything through the UI without migrating to Kotlin DSL, leaving build configuration unreviewable and hard to reproduce as the project grows. The second common mistake is not modeling genuine build dependencies as an actual build chain, missing TeamCity's core differentiating strength and using it as if it were a simpler, linear CI tool.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

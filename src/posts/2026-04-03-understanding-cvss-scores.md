@@ -11,6 +11,8 @@ tags: ["security", "devsecops", "supply-chain-security"]
 title: "Understanding CVSS Scores: A Practical Guide for Developers"
 ---
 
+
+
 Dependabot fires an alert. It says Critical 9.8. The developer drops everything, merges the patch PR, and marks it done - without reading the advisory, without checking whether the vulnerable package is even reachable in their deployment, without asking whether an exploit exists in the wild. The fire drill takes two hours and disrupts the sprint. Or the opposite happens: after the fifteenth Critical alert this month, the developer dismisses it without reading, and a genuinely exploitable vulnerability sits open in a public-facing API for six weeks. Both failures trace back to the same root cause - treating a CVSS score as a verdict rather than a starting point.
 
 The score is not a triage decision. It's a standardized severity estimate calculated against an imaginary worst-case deployment. The number tells you how bad the vulnerability could be in ideal attack conditions. It says nothing about your infrastructure, your network topology, your authentication requirements, or whether a working exploit even exists. Once you understand how the score is constructed, you stop panic-patching on every 9.8 and stop dismissing alerts because you're fatigued. You read the vector string, check your context, and make a call in two minutes instead of two hours.

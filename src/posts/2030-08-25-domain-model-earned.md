@@ -13,12 +13,13 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 2: The Domain Model Earns Its Keep"
 ---
 
+
+
 Northstar v2 exposed the problem plainly: business rules had no clear owner. `PlaceOrder`, `CancelOrder`, and `ChangeOrderQuantity` each knew a piece of Order behavior, and none of them owned the whole thing. The fix isn't "more services" - it's modeling the business concept itself.
 
 ## What Changed
 
 The Order is now an Aggregate Root:
-
 ```text
 Order
 ├── Items
@@ -29,7 +30,6 @@ Order
 ```
 
 External code can no longer reach in and mutate important state directly. It has to ask:
-
 ```csharp
 order.AddItem(...);
 order.ChangeQuantity(...);
@@ -60,3 +60,6 @@ The write model keeps getting richer, and soon the UI is going to want an order 
 ## Lesson
 
 We didn't introduce a Domain Model because DDD is fashionable. We introduced it because the transaction scripts had stopped being a coherent home for shared business rules. The pattern was earned, not assumed.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

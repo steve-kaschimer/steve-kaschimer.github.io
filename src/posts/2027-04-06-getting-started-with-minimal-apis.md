@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "developer-productivity", "tooling"]
 title: "Getting Started with Minimal APIs in .NET"
 ---
 
+
+
 Minimal APIs are the leaner of the two REST styles ASP.NET Core offers, and Microsoft's recommended default for new projects - `dotnet new webapi` scaffolds them unless you explicitly opt into Controllers. The pitch is straightforward: fewer classes, less ceremony, an endpoint that's a few lines of code. The part that trips people up isn't the basics, it's what happens once you have more than a handful of endpoints and `Program.cs` starts sprawling.
 
 This guide covers installing and scaffolding a Minimal API project, organizing endpoints with route groups and per-feature extension methods before `Program.cs` becomes unmanageable, wiring up OpenAPI documentation, and adding validation through a reusable endpoint filter. By the end you'll have a setup that stays organized as it grows, not just a working "hello world" endpoint.
@@ -198,3 +200,10 @@ Dependency injection is per-handler-parameter in Minimal APIs instead of per-con
 ### What's the most common mistake in a first Minimal API setup?
 
 Letting every endpoint accumulate directly in `Program.cs` without adopting route groups and extension methods early, and skipping validation entirely because it isn't automatic the way it is with `[ApiController]` - both are avoidable with patterns that take only a little more setup than the naive approach.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

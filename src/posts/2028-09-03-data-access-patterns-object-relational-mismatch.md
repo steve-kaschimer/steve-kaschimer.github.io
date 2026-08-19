@@ -11,11 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "data-access"]
 title: "Data Access Patterns and the Object-Relational Impedance Mismatch"
 ---
 
-Most business applications have two very different representations of
-information.
 
-Inside the application, we want concepts such as:
 
+Most business applications have two very different representations of information. Inside the application, we want concepts such as:
 ``` csharp
 public sealed class Order
 {
@@ -28,7 +26,6 @@ public sealed class Order
 ```
 
 In a relational database, we might have:
-
 ``` text
 Orders
 --------------------------------
@@ -52,26 +49,11 @@ Quantity
 UnitPrice
 ```
 
-These representations are related, but they aren't identical.
-
-This difference is often called the **object-relational impedance
-mismatch**.
-
-Fowler's catalog contains a large group of patterns concerned with
-bridging this gap, including Table Data Gateway, Row Data Gateway,
-Active Record, Data Mapper, Unit of Work, Identity Map, Lazy Load,
-Repository, and several structural mapping patterns.
-
-Modern .NET developers encounter many of these ideas through Entity
-Framework Core.
-
-Understanding the patterns helps us understand what EF Core is
-doing - and decide when its abstractions are appropriate.
+These representations are related, but they aren't identical. This difference is often called the **object-relational impedance mismatch**. Fowler's catalog contains a large group of patterns concerned with bridging this gap, including Table Data Gateway, Row Data Gateway, Active Record, Data Mapper, Unit of Work, Identity Map, Lazy Load, Repository, and several structural mapping patterns. Modern .NET developers encounter many of these ideas through Entity Framework Core. Understanding the patterns helps us understand what EF Core is doing - and decide when its abstractions are appropriate.
 
 ## Why Objects and Tables Don't Line Up Perfectly
 
 An object might contain behavior:
-
 ``` csharp
 public void Cancel()
 {
@@ -82,12 +64,7 @@ public void Cancel()
 }
 ```
 
-A relational table doesn't.
-
-A table contains rows and columns.
-
-The object model might also contain:
-
+A relational table doesn't. A table contains rows and columns. The object model might also contain:
 ``` text
 Order
  ├── Customer
@@ -97,12 +74,7 @@ Order
  └── ShippingAddress
 ```
 
-while the database might spread this information across several tables.
-
-This creates mapping decisions.
-
-For example:
-
+while the database might spread this information across several tables. This creates mapping decisions. For example:
 ``` text
 Object                  Database
 
@@ -118,11 +90,7 @@ There isn't always a single obvious mapping.
 
 ## Table Data Gateway
 
-Fowler describes Table Data Gateway as an object acting as a gateway to
-a database table, with one instance handling all rows in the table.
-
-A simplified implementation might be:
-
+Fowler describes Table Data Gateway as an object acting as a gateway to a database table, with one instance handling all rows in the table. A simplified implementation might be:
 ``` csharp
 public sealed class CustomerGateway(
     DbConnection connection)
@@ -143,20 +111,11 @@ public sealed class CustomerGateway(
 }
 ```
 
-The gateway is concerned with the database table.
-
-This can be useful when the application primarily works with relational
-data and doesn't require a rich domain model.
+The gateway is concerned with the database table. This can be useful when the application primarily works with relational data and doesn't require a rich domain model.
 
 ## Row Data Gateway
 
-Row Data Gateway moves the abstraction in the other direction.
-
-Fowler describes it as an object acting as a gateway to a single record,
-with one instance per row.
-
-Conceptually:
-
+Row Data Gateway moves the abstraction in the other direction. Fowler describes it as an object acting as a gateway to a single record, with one instance per row. Conceptually:
 ``` csharp
 public sealed class CustomerRow
 {
@@ -171,22 +130,11 @@ public sealed class CustomerRow
 }
 ```
 
-The object represents a row.
-
-This is a useful historical pattern to understand because it explains
-some older data-access architectures.
+The object represents a row. This is a useful historical pattern to understand because it explains some older data-access architectures.
 
 ## Active Record
 
-Active Record combines data representation with database access and
-domain behavior.
-
-Fowler describes Active Record as an object that wraps a database row or
-view, encapsulates database access, and adds domain logic over that
-data.
-
-A conceptual example:
-
+Active Record combines data representation with database access and domain behavior. Fowler describes Active Record as an object that wraps a database row or view, encapsulates database access, and adds domain logic over that data. A conceptual example:
 ``` csharp
 public sealed class Customer
 {
@@ -207,30 +155,20 @@ public sealed class Customer
 ```
 
 The object knows both:
-
 ``` text
 What am I?
 ```
 
 and:
-
 ``` text
 How do I save myself?
 ```
 
-Active Record can be productive for applications whose domain closely
-resembles their database structure.
+Active Record can be productive for applications whose domain closely resembles their database structure.
 
 ## Data Mapper
 
-Data Mapper takes the opposite approach.
-
-Fowler describes Data Mapper as a layer that moves data between objects
-and a database while keeping the objects and database independent of one
-another.
-
-Conceptually:
-
+Data Mapper takes the opposite approach. Fowler describes Data Mapper as a layer that moves data between objects and a database while keeping the objects and database independent of one another. Conceptually:
 ``` text
 Domain Object
      ↑
@@ -241,13 +179,7 @@ Data Mapper
 Database
 ```
 
-The domain object doesn't need to know how it is persisted.
-
-This is much closer to the architecture many developers build with EF
-Core.
-
-For example:
-
+The domain object doesn't need to know how it is persisted. This is much closer to the architecture many developers build with EF Core. For example:
 ``` csharp
 public sealed class Order
 {
@@ -261,7 +193,6 @@ public sealed class Order
 ```
 
 And configuration can define how it maps:
-
 ``` csharp
 public sealed class OrderConfiguration
     : IEntityTypeConfiguration<Order>
@@ -281,17 +212,7 @@ The domain model doesn't need to contain SQL.
 
 ## Entity Framework Core and These Patterns
 
-EF Core is particularly interesting because it provides functionality
-associated with several established patterns simultaneously.
-
-A `DbContext` tracks entities and their changes.
-
-That resembles the behavior described by **Unit of Work**, which Fowler
-defines as maintaining a list of objects affected by a business
-transaction and coordinating their persistence.
-
-Consider:
-
+EF Core is particularly interesting because it provides functionality associated with several established patterns simultaneously. A `DbContext` tracks entities and their changes. That resembles the behavior described by **Unit of Work**, which Fowler defines as maintaining a list of objects affected by a business transaction and coordinating their persistence. Consider:
 ``` csharp
 var order = await db.Orders
     .SingleAsync(
@@ -304,31 +225,20 @@ await db.SaveChangesAsync(cancellationToken);
 ```
 
 The application doesn't explicitly say:
-
 ``` csharp
 unitOfWork.RegisterChanged(order);
 ```
 
-The ORM tracks the change.
-
-Then:
-
+The ORM tracks the change. Then:
 ``` csharp
 await db.SaveChangesAsync();
 ```
 
-coordinates persistence.
-
-Understanding this is important because developers sometimes create
-abstractions that duplicate functionality their ORM already provides.
+coordinates persistence. Understanding this is important because developers sometimes create abstractions that duplicate functionality their ORM already provides.
 
 ## The Repository Question
 
-Fowler's Repository provides a collection-like interface over domain
-objects and mediates between the domain and data-mapping layers.
-
-A repository might look like:
-
+Fowler's Repository provides a collection-like interface over domain objects and mediates between the domain and data-mapping layers. A repository might look like:
 ``` csharp
 public interface IOrderRepository
 {
@@ -343,7 +253,6 @@ public interface IOrderRepository
 ```
 
 And an EF Core implementation:
-
 ``` csharp
 public sealed class OrderRepository(
     AppDbContext db) : IOrderRepository
@@ -367,14 +276,11 @@ public sealed class OrderRepository(
 }
 ```
 
-This can be useful.
-
-But it isn't automatically necessary.
+This can be useful. But it isn't automatically necessary.
 
 ## When a Repository Adds Value
 
 A repository can provide a valuable domain-facing abstraction when:
-
 -   the domain shouldn't know about EF Core,
 -   persistence queries are complex,
 -   aggregate boundaries need protection,
@@ -383,7 +289,6 @@ A repository can provide a valuable domain-facing abstraction when:
 -   or the repository provides a useful seam for testing.
 
 For example:
-
 ``` csharp
 public interface OrderRepository
 {
@@ -393,10 +298,7 @@ public interface OrderRepository
 }
 ```
 
-This communicates something meaningful.
-
-Compare it with:
-
+This communicates something meaningful. Compare it with:
 ``` csharp
 Task<Order?> GetByIdAsync(...);
 Task AddAsync(...);
@@ -404,44 +306,26 @@ Task UpdateAsync(...);
 Task DeleteAsync(...);
 ```
 
-If the latter simply exposes `DbSet<Order>`, the abstraction may not be
-buying much.
+If the latter simply exposes `DbSet<Order>`, the abstraction may not be buying much.
 
 ## Identity Map
 
-Another pattern lurking inside ORMs is **Identity Map**.
-
-Fowler describes Identity Map as ensuring that each object is loaded
-only once by keeping loaded objects in a map and looking them up there
-when needed.
-
-The conceptual problem is this:
-
+Another pattern lurking inside ORMs is **Identity Map**. Fowler describes Identity Map as ensuring that each object is loaded only once by keeping loaded objects in a map and looking them up there when needed. The conceptual problem is this:
 ``` csharp
 var customer1 = LoadCustomer(42);
 var customer2 = LoadCustomer(42);
 ```
 
 Should these be:
-
 ``` csharp
 ReferenceEquals(customer1, customer2)
 ```
 
-or two separate objects representing the same database row?
-
-An ORM's tracking system can maintain identity within its context.
-
-That becomes particularly important when several parts of a business
-operation manipulate the same entity.
+or two separate objects representing the same database row? An ORM's tracking system can maintain identity within its context. That becomes particularly important when several parts of a business operation manipulate the same entity.
 
 ## Lazy Load
 
-Fowler defines Lazy Load as an object that doesn't contain all of the
-required data but knows how to retrieve it when needed.
-
-The attraction is obvious:
-
+Fowler defines Lazy Load as an object that doesn't contain all of the required data but knows how to retrieve it when needed. The attraction is obvious:
 ``` csharp
 var order = await repository.GetAsync(id);
 
@@ -451,10 +335,7 @@ foreach (var line in order.Lines)
 }
 ```
 
-But lazy loading can also hide database queries.
-
-Code that appears innocent:
-
+But lazy loading can also hide database queries. Code that appears innocent:
 ``` csharp
 foreach (var order in orders)
 {
@@ -463,16 +344,12 @@ foreach (var order in orders)
 ```
 
 could potentially cause:
-
 ``` text
 1 query for orders
 N queries for customers
 ```
 
-This is the classic N+1 query problem.
-
-Modern applications often prefer explicit loading or projections:
-
+This is the classic N+1 query problem. Modern applications often prefer explicit loading or projections:
 ``` csharp
 var orders = await db.Orders
     .Select(order => new OrderSummary(
@@ -486,11 +363,7 @@ Now the data requirement is visible in the query.
 
 ## Mapping Isn't Always One-to-One
 
-One of the most important lessons from object-relational mapping is that
-the domain model and database schema can evolve independently.
-
-Suppose the domain has:
-
+One of the most important lessons from object-relational mapping is that the domain model and database schema can evolve independently. Suppose the domain has:
 ``` csharp
 public sealed record Address(
     string Street,
@@ -499,7 +372,6 @@ public sealed record Address(
 ```
 
 The database might store:
-
 ``` text
 Customer
 --------------------------------
@@ -508,34 +380,21 @@ City
 PostalCode
 ```
 
-This is Fowler's **Embedded Value** pattern: an object is mapped into
-several fields of another object's table.
-
-Modern EF Core can support this kind of mapping directly.
-
-The important concept is that:
-
+This is Fowler's **Embedded Value** pattern: an object is mapped into several fields of another object's table. Modern EF Core can support this kind of mapping directly. The important concept is that:
 ``` text
 Address
 ```
 
 is a domain concept while:
-
 ``` text
 Street + City + PostalCode
 ```
 
-is a persistence representation.
-
-They don't have to have the same shape.
+is a persistence representation. They don't have to have the same shape.
 
 ## Query Objects
 
-Fowler's **Query Object** represents a database query as an object.
-
-In modern C#, we might express something similar using specifications or
-query objects:
-
+Fowler's **Query Object** represents a database query as an object. In modern C#, we might express something similar using specifications or query objects:
 ``` csharp
 public sealed record OrdersForCustomer(
     CustomerId CustomerId,
@@ -559,7 +418,6 @@ public sealed record OrdersForCustomer(
 ```
 
 Then:
-
 ``` csharp
 var query = new OrdersForCustomer(
     customerId,
@@ -570,25 +428,14 @@ var orders = await query
     .ToListAsync(cancellationToken);
 ```
 
-Whether this abstraction is useful depends on the application's query
-complexity.
-
-Again, the pattern isn't the objective.
+Whether this abstraction is useful depends on the application's query complexity. Again, the pattern isn't the objective.
 
 ## Don't Fight the ORM
 
-One of the most important practical lessons is that modern ORMs already
-implement many established patterns.
-
-If EF Core solves the problem adequately, don't recreate it simply
-because a book describes the pattern.
-
-Instead ask:
-
+One of the most important practical lessons is that modern ORMs already implement many established patterns. If EF Core solves the problem adequately, don't recreate it simply because a book describes the pattern. Instead ask:
 > What additional problem does my abstraction solve?
 
 For example:
-
 ``` text
 EF Core
  ├── change tracking
@@ -598,25 +445,16 @@ EF Core
  └── querying
 ```
 
-A custom infrastructure layer that simply forwards all of these
-operations may make the application harder to understand.
-
-But a domain-specific repository:
-
+A custom infrastructure layer that simply forwards all of these operations may make the application harder to understand. But a domain-specific repository:
 ``` csharp
 FindOpenOrdersEligibleForShipment(...)
 ```
 
-might provide meaningful value.
-
-The difference is **abstraction for a reason versus abstraction for
-ceremony**.
+might provide meaningful value. The difference is **abstraction for a reason versus abstraction for ceremony**.
 
 ## The Practical Mental Model
 
-When working with persistence in modern .NET, it helps to think in terms
-of responsibilities:
-
+When working with persistence in modern .NET, it helps to think in terms of responsibilities:
 ``` text
 Domain
   ↓
@@ -639,10 +477,7 @@ Database
 Durable relational state
 ```
 
-Not every application needs every box.
-
-A small CRUD application may reasonably be:
-
+Not every application needs every box. A small CRUD application may reasonably be:
 ``` text
 ASP.NET Core
       ↓
@@ -652,7 +487,6 @@ Database
 ```
 
 A complex business system may benefit from:
-
 ``` text
 API
  ↓
@@ -667,23 +501,17 @@ EF Core
 Database
 ```
 
-The correct architecture depends on the complexity and constraints of
-the system.
+The correct architecture depends on the complexity and constraints of the system.
 
 ## The Big Lesson
 
-Data access patterns are ultimately about managing a boundary between
-two worlds.
-
-The application wants:
-
+Data access patterns are ultimately about managing a boundary between two worlds. The application wants:
 -   objects,
 -   behavior,
 -   invariants,
 -   domain concepts.
 
 The database wants:
-
 -   tables,
 -   rows,
 -   columns,
@@ -691,17 +519,4 @@ The database wants:
 -   joins,
 -   transactions.
 
-Patterns provide different strategies for bridging those worlds.
-
-Modern .NET has made many of those strategies easier to implement - and
-in some cases has made implementing them manually unnecessary.
-
-The goal isn't to recreate Fowler's architecture exactly.
-
-It's to understand the ideas well enough to recognize what your
-framework is already doing, identify the problems it doesn't solve, and
-introduce additional abstractions only where they provide real
-architectural value.
-
-That distinction will become increasingly important as we move through
-the individual patterns in the series.
+Patterns provide different strategies for bridging those worlds. Modern .NET has made many of those strategies easier to implement - and in some cases has made implementing them manually unnecessary. The goal isn't to recreate Fowler's architecture exactly. It's to understand the ideas well enough to recognize what your framework is already doing, identify the problems it doesn't solve, and introduce additional abstractions only where they provide real architectural value. That distinction will become increasingly important as we move through the individual patterns in the series.

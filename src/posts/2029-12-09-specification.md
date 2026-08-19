@@ -11,8 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Specification: Giving Business Predicates a Name"
 ---
 
-Business rules often begin as conditionals.
 
+
+Business rules often begin as conditionals.
 ``` csharp
 if (customer.IsActive &&
     customer.TotalSpend >= 10_000m &&
@@ -22,9 +23,7 @@ if (customer.IsActive &&
 }
 ```
 
-Then the same rule appears elsewhere.
-
-Specification gives that rule a name.
+Then the same rule appears elsewhere. Specification gives that rule a name.
 
 ## A Domain Specification
 
@@ -39,7 +38,6 @@ public sealed class PreferredCustomerSpecification
 ```
 
 Now code can say:
-
 ``` csharp
 if (preferredCustomers.IsSatisfiedBy(customer))
 {
@@ -51,7 +49,6 @@ The business concept is explicit.
 ## The Value Is the Language
 
 Specification is most useful when the predicate itself is meaningful:
-
 ``` text
 CustomerIsEligibleForRefund
 OrderRequiresManualReview
@@ -59,7 +56,6 @@ ShipmentCanBeExpedited
 ```
 
 A specification named:
-
 ``` text
 CustomerNameStartsWithS
 ```
@@ -69,7 +65,6 @@ may simply be a LINQ predicate wearing formal clothing.
 ## Composing Specifications
 
 Specifications are often composable:
-
 ``` text
 PreferredCustomer
 AND
@@ -78,12 +73,7 @@ AND NOT
 RestrictedRegion
 ```
 
-That can be modeled with combinators.
-
-But composition machinery can quickly become more complicated than the
-business rule.
-
-Start simple.
+That can be modeled with combinators. But composition machinery can quickly become more complicated than the business rule. Start simple.
 
 ## In-Memory vs. Queryable Specifications
 
@@ -103,9 +93,7 @@ evaluates an existing domain object.
 Expression<Func<Customer, bool>>
 ```
 
-can potentially be translated by EF Core into SQL.
-
-These are related but not identical responsibilities.
+can potentially be translated by EF Core into SQL. These are related but not identical responsibilities.
 
 ## Query Specification Example
 
@@ -119,53 +107,33 @@ public sealed class ActiveCustomers
 ```
 
 Then:
-
 ``` csharp
 var customers = await db.Customers
     .Where(spec.ToExpression())
     .ToListAsync(cancellationToken);
 ```
 
-This can reduce duplicated query rules.
-
-But it also means the specification knows about expression trees and
-query-provider constraints.
-
-That may be acceptable in an application/query layer and undesirable in
-a pure domain layer.
+This can reduce duplicated query rules. But it also means the specification knows about expression trees and query-provider constraints. That may be acceptable in an application/query layer and undesirable in a pure domain layer.
 
 ## The Translation Trap
 
 A perfectly valid C# method:
-
 ``` csharp
 customer.IsPreferred()
 ```
 
-may not translate into SQL.
-
-Trying to make every domain specification both:
-
+may not translate into SQL. Trying to make every domain specification both:
 ``` text
 rich domain behavior
 and
 database-translatable expression
 ```
 
-can distort the model.
-
-Do not force one abstraction to satisfy incompatible concerns.
+can distort the model. Do not force one abstraction to satisfy incompatible concerns.
 
 ## Specification and CQRS
 
-CQRS gives us an elegant escape hatch.
-
-Command-side specifications can operate on aggregates.
-
-Query-side filters can use efficient SQL-oriented expressions.
-
-They do not have to be the same object.
-
+CQRS gives us an elegant escape hatch. Command-side specifications can operate on aggregates. Query-side filters can use efficient SQL-oriented expressions. They do not have to be the same object.
 ``` text
 Write Model
   -> domain specification
@@ -176,11 +144,7 @@ Read Model
 
 ## Specification vs. Validation
 
-Validation asks whether input/state is valid.
-
-Specification often asks whether an object satisfies a business
-criterion.
-
+Validation asks whether input/state is valid. Specification often asks whether an object satisfies a business criterion.
 ``` text
 Email syntax valid?
     -> validation
@@ -193,40 +157,26 @@ The boundary can overlap, but the intent differs.
 
 ## Specification vs. Policy
 
-The names are often close.
-
-A Policy may decide or calculate behavior.
-
-A Specification traditionally answers whether something satisfies a
-criterion.
-
+The names are often close. A Policy may decide or calculate behavior. A Specification traditionally answers whether something satisfies a criterion.
 ``` csharp
 bool IsSatisfiedBy(T candidate)
 ```
 
-Do not become doctrinaire about terminology. Prefer the domain's
-language.
+Do not become doctrinaire about terminology. Prefer the domain's language.
 
 ## Repository Specifications
 
 Some architectures expose:
-
 ``` csharp
 Task<IReadOnlyList<T>> ListAsync(
     ISpecification<T> specification);
 ```
 
-This can centralize filtering, includes, ordering, and pagination.
-
-It can also turn the repository into a custom LINQ provider.
-
-Evaluate whether the abstraction is buying clarity or hiding EF Core
-behind a less capable API.
+This can centralize filtering, includes, ordering, and pagination. It can also turn the repository into a custom LINQ provider. Evaluate whether the abstraction is buying clarity or hiding EF Core behind a less capable API.
 
 ## Testing
 
 Specifications should have table-driven examples:
-
 ``` text
 active + high spend + good standing -> true
 inactive                         -> false
@@ -239,7 +189,6 @@ Tests become executable examples of the business term.
 ## When It Helps
 
 Specification is valuable when:
-
 -   a business predicate has a meaningful name;
 -   the rule is reused;
 -   rules compose;
@@ -248,7 +197,6 @@ Specification is valuable when:
 ## When It Hurts
 
 It hurts when:
-
 -   every `Where` clause becomes a class;
 -   generic infrastructure overwhelms simple predicates;
 -   domain code is distorted to satisfy SQL translation;
@@ -256,18 +204,8 @@ It hurts when:
 
 ## How It Relates to Fowler
 
-Specification complements Domain Model, Query Object, Repository, and
-Value Object.
-
-It gives recurring selection/business criteria first-class
-representation.
+Specification complements Domain Model, Query Object, Repository, and Value Object. It gives recurring selection/business criteria first-class representation.
 
 ## Summary
 
-Specification is powerful because it turns a recurring business question
-into an explicit concept.
-
-Use it for predicates worth naming.
-
-Do not create a class hierarchy merely to avoid writing a readable LINQ
-expression.
+Specification is powerful because it turns a recurring business question into an explicit concept. Use it for predicates worth naming. Do not create a class hierarchy merely to avoid writing a readable LINQ expression.

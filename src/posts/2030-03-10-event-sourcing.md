@@ -11,8 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "event-sourcing"]
 title: "Event Sourcing: Persisting Facts Instead of Current State"
 ---
 
-Most applications persist current state.
 
+
+Most applications persist current state.
 ```text
 Orders
 ----------------
@@ -22,7 +23,6 @@ Total = 125.00
 ```
 
 Event Sourcing persists the sequence of facts that produced that state.
-
 ```text
 OrderCreated
 ItemAdded
@@ -31,20 +31,16 @@ OrderConfirmed
 OrderShipped
 ```
 
-Current state becomes a projection of history.
-
-This is a profound architectural shift.
+Current state becomes a projection of history. This is a profound architectural shift.
 
 ## State-Based Persistence
 
 Traditional persistence says:
-
 ```text
 What is true now?
 ```
 
 Event Sourcing says:
-
 ```text
 What happened?
 ```
@@ -54,7 +50,6 @@ The event stream is the source of truth.
 ## Aggregate Stream
 
 For one aggregate:
-
 ```text
 Order-42
 
@@ -90,7 +85,6 @@ public sealed class Order
 ```
 
 The important distinction:
-
 ```text
 Raise event
 then apply event
@@ -120,7 +114,6 @@ The aggregate can be rebuilt from its history.
 ## Append-Only Store
 
 The event store writes:
-
 ```text
 StreamId
 Version
@@ -131,28 +124,15 @@ OccurredAt
 Metadata
 ```
 
-Events are appended.
-
-Existing events are not normally updated.
+Events are appended. Existing events are not normally updated.
 
 ## Optimistic Concurrency
 
-Suppose the stream version is 7.
-
-Client A and B both load version 7.
-
-A appends version 8.
-
-B tries to append with expected version 7.
-
-The store rejects it.
-
-Event streams therefore provide a natural optimistic concurrency boundary.
+Suppose the stream version is 7. Client A and B both load version 7. A appends version 8. B tries to append with expected version 7. The store rejects it. Event streams therefore provide a natural optimistic concurrency boundary.
 
 ## CQRS Partnership
 
 Event Sourcing and CQRS often pair well:
-
 ```text
 Event Store
    |
@@ -161,10 +141,7 @@ Event Store
    +--> Search Projection
 ```
 
-Write-side events feed specialized read models.
-
-But:
-
+Write-side events feed specialized read models. But:
 ```text
 CQRS does not require Event Sourcing.
 Event Sourcing does not require separate read databases.
@@ -175,7 +152,6 @@ Keep the patterns conceptually separate.
 ## Projection
 
 A projection transforms event history into queryable state.
-
 ```csharp
 public Task HandleAsync(
     OrderPlaced @event)
@@ -184,16 +160,11 @@ public Task HandleAsync(
 }
 ```
 
-Projections are disposable if they can be rebuilt from the event log.
-
-That can be powerful.
-
-It also means projection rebuilds must be operationally feasible.
+Projections are disposable if they can be rebuilt from the event log. That can be powerful. It also means projection rebuilds must be operationally feasible.
 
 ## Eventual Consistency
 
 Read models often lag behind newly appended events.
-
 ```text
 append event ✓
 projection update pending
@@ -204,33 +175,22 @@ This is a product and UX concern, not just implementation detail.
 
 ## Snapshots
 
-Long streams can be expensive to replay.
-
-A snapshot stores:
-
+Long streams can be expensive to replay. A snapshot stores:
 ```text
 state at version 10,000
 ```
 
 Then rehydration loads:
-
 ```text
 snapshot
 + events 10,001 onward
 ```
 
-Snapshots are optimization.
-
-The event stream remains the authoritative history.
+Snapshots are optimization. The event stream remains the authoritative history.
 
 ## Event Schema Evolution
 
-Events live forever.
-
-That means today's code may need to read events written years ago.
-
-Options include:
-
+Events live forever. That means today's code may need to read events written years ago. Options include:
 - upcasters;
 - tolerant readers;
 - versioned event types;
@@ -240,48 +200,34 @@ This is one of Event Sourcing's largest long-term costs.
 
 ## Never Rewrite History Casually
 
-If an event contains incorrect business data, replacing history can destroy audit meaning.
-
-Often the right approach is a compensating/corrective event:
-
+If an event contains incorrect business data, replacing history can destroy audit meaning. Often the right approach is a compensating/corrective event:
 ```text
 CustomerAddressCorrected
 ```
 
-not editing the original fact.
-
-Regulatory or privacy requirements may complicate this and require special treatment.
+not editing the original fact. Regulatory or privacy requirements may complicate this and require special treatment.
 
 ## Event Sourcing Is Not Audit Logging
 
 An audit log says:
-
 ```text
 who changed what
 ```
 
 Event Sourcing says:
-
 ```text
 domain state is derived from this event stream
 ```
 
-You can have audit logging without Event Sourcing.
-
-Most systems should.
+You can have audit logging without Event Sourcing. Most systems should.
 
 ## Event Sourcing Is Not "Use Kafka"
 
-Kafka can store event streams.
-
-That does not automatically make your domain event-sourced.
-
-Event Sourcing is about the persistence model of domain state.
+Kafka can store event streams. That does not automatically make your domain event-sourced. Event Sourcing is about the persistence model of domain state.
 
 ## Benefits
 
 Event Sourcing can provide:
-
 - complete business history;
 - temporal queries;
 - new projections from old events;
@@ -292,7 +238,6 @@ Event Sourcing can provide:
 ## Costs
 
 It also introduces:
-
 - event schema evolution;
 - projection infrastructure;
 - eventual consistency;
@@ -306,7 +251,6 @@ These costs are substantial.
 ## Good Fits
 
 Event Sourcing shines in domains where history itself is valuable:
-
 ```text
 financial ledger
 trading
@@ -319,21 +263,17 @@ complex temporal rules
 ## Poor Fits
 
 A settings screen where users edit:
-
 ```text
 DisplayName
 Theme
 PageSize
 ```
 
-probably does not need an immutable event log and projection infrastructure.
-
-Do not confuse architectural sophistication with suitability.
+probably does not need an immutable event log and projection infrastructure. Do not confuse architectural sophistication with suitability.
 
 ## Testing
 
 Event-sourced aggregates are beautifully testable:
-
 ```text
 Given:
   OrderCreated
@@ -346,14 +286,11 @@ Then:
   OrderPlaced
 ```
 
-The test describes behavior as history -> command -> new facts.
-
-Also test projection rebuilds and event compatibility.
+The test describes behavior as history -> command -> new facts. Also test projection rebuilds and event compatibility.
 
 ## Observability
 
 Monitor:
-
 ```text
 append failures
 stream conflicts
@@ -368,7 +305,6 @@ Projection lag should have SLOs if user-facing freshness matters.
 ## When It Helps
 
 Use Event Sourcing when:
-
 - business history is first-class;
 - temporal reconstruction matters;
 - multiple projections provide major value;
@@ -378,13 +314,11 @@ Use Event Sourcing when:
 ## When It Hurts
 
 It hurts when adopted because:
-
 ```text
 "events are modern"
 ```
 
 or:
-
 ```text
 "we might need audit later"
 ```
@@ -393,10 +327,7 @@ The complexity is too high for speculative benefit.
 
 ## Summary
 
-Event Sourcing makes historical facts the source of truth.
+Event Sourcing makes historical facts the source of truth. That unlocks remarkable capabilities: replay, temporal reasoning, new projections, and auditability. It also makes event contracts, projection infrastructure, eventual consistency, and operational tooling part of your permanent architecture. Use it when history is part of the domain, not merely because events are fashionable.
+---
 
-That unlocks remarkable capabilities: replay, temporal reasoning, new projections, and auditability.
-
-It also makes event contracts, projection infrastructure, eventual consistency, and operational tooling part of your permanent architecture.
-
-Use it when history is part of the domain—not merely because events are fashionable.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "observability"]
 title: "Lab 22: Safe Change Needs Runtime Controls"
 ---
 
+
+
 Northstar is now important enough that deployment itself has become a source of risk. Feature flags and health checks help here, and they solve genuinely different problems.
 
 ## Feature Flag
@@ -42,3 +44,6 @@ Because "is it alive," "is it ready," and "are all its dependencies perfect" are
 ## The Lesson
 
 Runtime safety isn't only about handling failures after they've happened. It's also about controlling how new behavior enters production in the first place, and giving the orchestration platform the right signals to route traffic safely around whatever's actually going on.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

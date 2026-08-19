@@ -11,6 +11,8 @@ tags: ["ai-agents", "ai-coding-tools", "agentic-development", "developer-product
 title: "Getting Started with GitHub Copilot: Setup, Environment, and Best Practices"
 ---
 
+
+
 GitHub Copilot is the AI coding tool most developers touch first, largely because it lives inside editors they already have open. That familiarity is also why a lot of teams never get past inline autocomplete - agent mode, custom instructions, and the cloud coding agent are all there, but none of them turn on by exploring the UI casually. They're a deliberate setup step.
 
 This guide covers installing Copilot, bootstrapping a repository so agent mode understands your conventions from the start, the difference between in-editor agent mode and the cloud coding agent, and the best practices that keep its output consistent across a team. By the end you'll have gone from "autocomplete with better taste" to an agent that actually knows your project.
@@ -147,3 +149,10 @@ No. Reserve the cloud coding agent for well-scoped, lower-risk work, and keep se
 ### How do I get Copilot to follow my testing conventions consistently?
 
 Put your testing standards explicitly in `copilot-instructions.md` - which test runner to use, naming conventions, coverage expectations - and tell agent mode directly in your prompt to run tests before considering a task finished. Without an explicit stop condition, the agent may consider the task done once code compiles, not once it's verified.
+
+
+---
+
+Questions about this? I can help.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

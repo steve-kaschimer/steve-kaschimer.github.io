@@ -11,6 +11,8 @@ tags: ["security", "github", "devsecops"]
 title: "Secrets Management on GitHub: Best Practices and Pitfalls"
 ---
 
+
+
 Secrets are the lifeblood of modern applications. API keys, database credentials, encryption tokens - these tiny strings unlock access to critical systems and sensitive data. But when secrets are mishandled, they become one of the fastest paths to a breach. In fact, exposed credentials are among the most common causes of security incidents today.
 
 If you’ve ever seen a developer hardcode an API key into a config file or commit a password to a public repository, you know how easy it is for secrets to leak. And once they’re out, attackers don’t need to break encryption or exploit zero-days. They simply use the keys you left behind.

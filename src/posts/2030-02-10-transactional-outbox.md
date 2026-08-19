@@ -11,8 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "reliability"]
 title: "Transactional Outbox: Making Database Changes and Events Reliable"
 ---
 
-One of the most dangerous distributed-system bugs fits in six lines:
 
+
+One of the most dangerous distributed-system bugs fits in six lines:
 ```csharp
 db.Orders.Add(order);
 
@@ -28,31 +29,22 @@ The database write and message publish are two independent operations.
 ## The Dual-Write Problem
 
 Failure scenario A:
-
 ```text
 DB commit succeeds
 Message publish fails
 ```
 
-The order exists.
-
-Nobody hears about it.
-
-Failure scenario B:
-
+The order exists. Nobody hears about it. Failure scenario B:
 ```text
 Message publish succeeds
 DB commit fails
 ```
 
-Consumers react to an order that does not exist.
-
-A local database transaction cannot atomically commit both a relational database and an external broker.
+Consumers react to an order that does not exist. A local database transaction cannot atomically commit both a relational database and an external broker.
 
 ## The Outbox Idea
 
 Write the business state and outbound message into the same database transaction.
-
 ```text
 BEGIN TRANSACTION
 
@@ -68,7 +60,6 @@ Then a separate dispatcher publishes Outbox rows to the broker.
 ## Outbox Table
 
 Conceptually:
-
 ```text
 OutboxMessages
 --------------------------------
@@ -103,14 +94,11 @@ db.OutboxMessages.Add(
 await db.SaveChangesAsync(cancellationToken);
 ```
 
-EF Core commits both rows together.
-
-No broker call occurs inside the transaction.
+EF Core commits both rows together. No broker call occurs inside the transaction.
 
 ## Dispatcher
 
 A background process polls unpublished rows:
-
 ```text
 SELECT pending outbox rows
        |
@@ -120,7 +108,6 @@ mark published
 ```
 
 Example shape:
-
 ```csharp
 public sealed class OutboxPublisher(
     OrdersDbContext db,
@@ -150,54 +137,38 @@ public sealed class OutboxPublisher(
 }
 ```
 
-This is simplified.
-
-Production implementations need stronger concurrency and retry handling.
+This is simplified. Production implementations need stronger concurrency and retry handling.
 
 ## At-Least-Once Publication
 
 A subtle failure remains:
-
 ```text
 publish succeeds
 dispatcher crashes
 before marking row published
 ```
 
-On restart, the same message may publish again.
-
-Therefore Outbox usually provides:
-
+On restart, the same message may publish again. Therefore Outbox usually provides:
 ```text
 at-least-once publication
 ```
 
-not magical exactly-once delivery.
-
-Consumers must be idempotent.
+not magical exactly-once delivery. Consumers must be idempotent.
 
 ## Why Not Mark Published First?
 
 If we mark before publishing:
-
 ```text
 mark published
 crash
 message never sent
 ```
 
-We traded duplication for message loss.
-
-For most business integrations, duplicate-tolerant at-least-once delivery is safer.
+We traded duplication for message loss. For most business integrations, duplicate-tolerant at-least-once delivery is safer.
 
 ## Polling Concurrency
 
-Multiple dispatcher instances may run simultaneously.
-
-Avoid having all of them publish the same row at once.
-
-Strategies include:
-
+Multiple dispatcher instances may run simultaneously. Avoid having all of them publish the same row at once. Strategies include:
 - row locking;
 - skip-locked reads;
 - leasing;
@@ -209,41 +180,31 @@ The exact solution is database-specific.
 ## Ordering
 
 If event order matters for one aggregate:
-
 ```text
 OrderCreated
 OrderPaid
 OrderShipped
 ```
 
-the dispatcher and broker must preserve the required ordering boundary.
-
-A common approach is to publish with an aggregate/order ID as partition or session key.
-
-Do not assume table order equals distributed processing order.
+the dispatcher and broker must preserve the required ordering boundary. A common approach is to publish with an aggregate/order ID as partition or session key. Do not assume table order equals distributed processing order.
 
 ## Outbox Payload
 
 Options include storing:
-
 ```text
 serialized integration event
 ```
 
 or:
-
 ```text
 event type + structured columns + payload
 ```
 
-Store enough information to publish independently of the original aggregate.
-
-The dispatcher should not need to reload domain state to recreate the event later.
+Store enough information to publish independently of the original aggregate. The dispatcher should not need to reload domain state to recreate the event later.
 
 ## Event Creation Timing
 
 An important sequence:
-
 ```text
 domain changes
 domain event raised
@@ -256,10 +217,7 @@ The integration event should represent committed intent, but publication can occ
 
 ## Cleanup
 
-Outbox tables grow forever unless cleaned.
-
-Use retention:
-
+Outbox tables grow forever unless cleaned. Use retention:
 ```text
 delete published rows older than N days
 archive if audit requirements exist
@@ -270,7 +228,6 @@ Do cleanup in batches to avoid giant delete transactions.
 ## Observability
 
 Measure:
-
 ```text
 pending outbox count
 oldest pending age
@@ -280,18 +237,11 @@ dispatcher throughput
 duplicate publication rate
 ```
 
-The most important metric is often **oldest unpublished message age**.
-
-A dispatcher that is quietly stuck is an integration outage.
+The most important metric is often **oldest unpublished message age**. A dispatcher that is quietly stuck is an integration outage.
 
 ## Transactions and External Calls
 
-Do not keep the database transaction open while calling the broker.
-
-That defeats the pattern and increases lock duration.
-
-The whole point is:
-
+Do not keep the database transaction open while calling the broker. That defeats the pattern and increases lock duration. The whole point is:
 ```text
 commit locally first
 publish asynchronously later
@@ -300,7 +250,6 @@ publish asynchronously later
 ## Outbox and CQRS
 
 With separate read stores:
-
 ```text
 Write DB
   |
@@ -313,14 +262,11 @@ Projection
 Read DB
 ```
 
-Outbox provides the reliable bridge.
-
-This is why CQRS often leads to Outbox once read/write stores separate.
+Outbox provides the reliable bridge. This is why CQRS often leads to Outbox once read/write stores separate.
 
 ## Testing
 
 Important tests:
-
 ```text
 business row and outbox row commit together
 rollback removes both
@@ -333,7 +279,6 @@ cleanup removes only old published rows
 ## When It Helps
 
 Use Transactional Outbox when:
-
 - business state and message publication must not diverge;
 - one local database transaction cannot include the broker;
 - asynchronous integration is important;
@@ -342,7 +287,6 @@ Use Transactional Outbox when:
 ## When It Hurts
 
 It adds:
-
 - storage;
 - polling/CDC machinery;
 - duplicate delivery;
@@ -355,17 +299,13 @@ Do not add it when there is no dual-write problem.
 ## Summary
 
 Transactional Outbox solves one specific reliability gap:
-
 ```text
 database commit
 +
 message publication
 ```
 
-cannot usually be one distributed atomic transaction.
+cannot usually be one distributed atomic transaction. Persist the outbound message with the business state, publish it later, and accept at-least-once delivery explicitly. Outbox gives you reliable publication. Idempotent Consumer gives you safe reception.
+---
 
-Persist the outbound message with the business state, publish it later, and accept at-least-once delivery explicitly.
-
-Outbox gives you reliable publication.
-
-Idempotent Consumer gives you safe reception.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

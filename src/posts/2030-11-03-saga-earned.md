@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "distributed-systems"]
 title: "Lab 12: Saga Makes Distributed Workflow State Explicit"
 ---
 
+
+
 The previous stage proved the problem out in the open: inventory reserved, payment declined, and no global rollback anywhere to be found. This stage introduces a durable workflow object, `CheckoutSaga`, to actually own that gap.
 
 ## The Saga Remembers Progress
@@ -34,3 +36,6 @@ The coordinator still calls Inventory and Payment in-process, and that's deliber
 ## Lesson
 
 Saga wasn't introduced because the application suddenly had multiple services. It was introduced because one business transaction crossed independent commit boundaries, and partial success needed an explicit way to recover.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "code-quality", "testing", "ci-cd"]
 title: "The Top 5 .NET Architecture & Quality Enforcement Tools Compared: Which One Should You Choose?"
 ---
 
+
+
 Architecture decisions have a way of degrading the moment nobody's actively enforcing them. A team agrees the domain layer shouldn't reference infrastructure, everyone nods, and eighteen months later a deadline-pressured developer adds exactly that reference because it was the fastest way to ship a fix. Code review might catch it. It might not. The tools in this comparison exist specifically to make that rule a build failure instead of a hope.
 
 This guide compares five tools .NET teams use to keep architecture and code quality honest over time: NetArchTest, ArchUnitNET, SonarQube, Roslyn Analyzers, and NDepend. They split into two real categories worth understanding upfront - NetArchTest and ArchUnitNET are architecture-testing libraries specifically (you write rules as unit tests), while SonarQube, Roslyn Analyzers, and NDepend are broader static analysis tools that happen to include architectural rule capability alongside a much wider net of code quality, security, and maintainability checks. Picking between them is less "which is best" and more "which layer of enforcement am I actually trying to add." This series continues with dedicated getting-started walkthroughs for each tool.
@@ -28,95 +30,43 @@ This guide compares five tools .NET teams use to keep architecture and code qual
 
 ## NetArchTest
 
-NetArchTest is a fluent, ArchUnit-inspired library purpose-built for one job: writing architectural rules as ordinary unit tests. It reads types from a compiled assembly and lets you assert things like "classes in this namespace shouldn't depend on that namespace" using a chainable API that reads close to natural language.
+Fluent, ArchUnit-inspired library purpose-built for one job: write architectural rules as unit tests. Assert "classes in this namespace shouldn't depend on that namespace" using chainable API that reads like natural language.
 
-**Strengths:**
+Minimal setup, NuGet package in existing test project. Runs as part of test suite, violations show up same feedback loop as any other failing test. Fluent API is readable. Works well for dependency-direction and structural rules (Clean Architecture, Modular Monolith).
 
-- Minimal setup - it's a NuGet package added to your existing test project, with no separate server, license, or infrastructure
-- Runs as part of your normal test suite, meaning architecture violations show up in the same feedback loop as any other failing test, at the same speed
-- The fluent API (`Types.InAssembly(...).ShouldNot().HaveDependencyOn(...)`) is genuinely readable, making rules easy to write and easy for a reviewer to understand at a glance
-- Works well specifically for the dependency-direction rules that Clean Architecture, Modular Monolith, and similar patterns depend on being enforced
-
-**Weaknesses:**
-
-- Narrow in scope by design - it doesn't touch code smells, security vulnerabilities, duplication, or the broader quality concerns SonarQube or NDepend cover
-- Being reflection-based, it inspects compiled assemblies, which means rules run against build output, not live source - a minor but real distinction from analyzers that see your code as you type it
-- No dashboard, trend tracking, or visualization - results are pass/fail test output, nothing more
-
-**Choose this when:** you specifically want to enforce dependency-direction and structural rules (Clean Architecture layers, Modular Monolith boundaries) as part of your existing test suite, without adopting a broader static analysis platform.
+Narrow scope, doesn't touch code smells, security, duplication, or broader quality concerns. Reflection-based (inspects compiled assemblies), runs against build output not live source. No dashboard or trend tracking.
 
 ## ArchUnitNET
 
-ArchUnitNET is NetArchTest's closest sibling - also a fluent, architecture-testing library, also inspired by Java's ArchUnit, also designed to be written as unit tests. The choice between the two is largely about API expressiveness and specific feature preferences rather than a fundamentally different approach.
+NetArchTest's closest sibling, fluent, architecture-testing library, inspired by Java's ArchUnit, written as unit tests. Choice between the two is API expressiveness and feature preferences, not fundamentally different.
 
-**Strengths:**
+More expressive rule-definition API in some areas than NetArchTest. Richer support for layers, slices, complex structural relationships. First-class xUnit/NUnit/MSTest integration packages. Architecture rules live in test suite, run at test speed.
 
-- A more expressive rule-definition API in some areas than NetArchTest, with richer support for describing layers, slices, and more complex structural relationships
-- First-class integration packages for xUnit, NUnit, and MSTest specifically, making it drop directly into whichever test framework your project already uses
-- Same core benefit as NetArchTest - architecture rules live in your test suite, run at test speed, and fail your build the same way any other test failure would
-
-**Weaknesses:**
-
-- Smaller adoption and community than NetArchTest specifically, despite comparable capability, meaning somewhat less documentation and fewer examples to draw on
-- Same narrow scope as NetArchTest - purely architectural/structural rules, not a substitute for broader code quality tooling
-- The choice between ArchUnitNET and NetArchTest often comes down to which specific rule syntax a team finds more natural, which isn't always obvious without trying both firsthand
-
-**Choose this when:** you want the same architecture-testing approach as NetArchTest but find its specific rule vocabulary or feature set (layer/slice modeling, in particular) a better fit for how you want to express your project's structure.
+Smaller community than NetArchTest. Same narrow scope, purely architectural/structural. Choice often comes down to which rule syntax a team finds more natural.
 
 ## SonarQube
 
-SonarQube is a full static analysis platform, not a library you add to a test project - it runs as a server (self-hosted or SonarCloud) that your CI pipeline sends analysis results to, producing a dashboard tracking code smells, bugs, security vulnerabilities, duplication, test coverage, and yes, some architectural constraints like dependency cycles.
+Full static analysis platform, not a library, runs as server (self-hosted or SonarCloud) that CI sends results to. Dashboard tracks code smells, bugs, security vulnerabilities, duplication, coverage, some architectural constraints.
 
-**Strengths:**
+Far broader scope than architecture-testing libraries. Quality gates block PRs/deployments if metrics fall below threshold, organization-wide enforcement. Strong trend tracking across repositories. Free Community edition meaningful; paid tiers advanced.
 
-- Far broader scope than either architecture-testing library - one platform covering code smells, security hotspots, duplication, coverage trends, and some dependency/architecture checks together
-- Quality gates can block a pull request or deployment from proceeding if metrics fall below a defined threshold, giving you an organization-wide enforcement mechanism, not just a per-repo one
-- Strong for tracking trends over time across many repositories - a view NetArchTest or ArchUnitNET, being test-scoped, don't provide
-- Free Community edition covers a meaningful amount of functionality; paid tiers add more advanced security and portfolio-level features
-
-**Weaknesses:**
-
-- Requires standing up and maintaining a separate server (or paying for SonarCloud), which is real infrastructure overhead compared to a NuGet package
-- Feedback happens at CI/analysis speed, not at every keystroke or every local test run - a slower loop than compiler-integrated analyzers
-- Defining project-specific custom rules requires deeper engagement with SonarQube's SDK and API, more involved than NetArchTest's fluent rule syntax
-
-**Choose this when:** you want organization-wide quality gates, trend tracking, and a broad net of checks (not just architecture) across potentially many repositories, and you're willing to run the infrastructure (or pay for SonarCloud) to get it.
+Requires infrastructure or SonarCloud cost. Feedback at CI/analysis speed, not keystroke. Custom rules require deeper SDK engagement.
 
 ## Roslyn Analyzers
 
-Roslyn Analyzers run inside the C# compiler itself - they're not a separate tool you invoke, they're part of the same compilation pipeline that turns your code into IL, which means violations surface as compiler warnings or errors directly in your IDE, as you type, not after a test run or a CI pass.
+Run inside C# compiler, not separate tool, part of compilation pipeline. Violations surface as compiler warnings/errors in IDE in real time, as you type.
 
-**Strengths:**
+Fastest feedback loop, violations in editor before save. Built into .NET SDK, large ecosystem (Roslynator 500+ rules). Write fully custom analyzers for team-specific rules. Zero infrastructure.
 
-- The fastest possible feedback loop of anything in this comparison - violations appear in your editor in real time, often before you've even saved the file
-- Built into the .NET SDK itself, with a large existing ecosystem of analyzer packages (Roslynator alone brings 500+ rules) covering everything from code style to structural conventions
-- You can write fully custom analyzers for team-specific rules - not just consuming existing packages, but authoring your own compiler-integrated checks
-- Zero additional infrastructure - analyzers run as part of the build every team member already does
-
-**Weaknesses:**
-
-- Writing a custom analyzer from scratch has a real learning curve - it requires understanding Roslyn's syntax tree and semantic model APIs, meaningfully more involved than NetArchTest's fluent rule syntax
-- Existing analyzer packages cover a lot of ground, but architecture-specific dependency rules (like NetArchTest's "layer A shouldn't depend on layer B") are less commonly the focus of general-purpose analyzer packages, and require either a specialized package or custom authoring
-- Purely compile-time - can't express rules that need runtime information or need to reason across an entire compiled assembly the way NetArchTest's assembly-scanning approach can more naturally
-
-**Choose this when:** instant, in-editor feedback matters more than anything else, and you want either the broad existing ecosystem of analyzer packages or the ability to author fully custom, team-specific compiler rules.
+Learning curve for custom analyzers (Roslyn syntax tree and semantic model APIs). Architecture-specific dependency rules less common in general-purpose packages. Purely compile-time, can't express runtime rules or reason across entire assembly.
 
 ## NDepend
 
-NDepend is a commercial, deeply feature-rich static analysis tool often described as the "Swiss Army knife" for .NET code quality - dependency graph visualization, a powerful LINQ-based query language (CQLinq) for interrogating your codebase's structure, quality gates, and trend tracking, all in one standalone tool with CI integration.
+Commercial, deeply feature-rich. "Swiss Army knife" for .NET, dependency graph visualization, CQLinq (LINQ-based query language), quality gates, trend tracking, all in standalone tool with CI integration.
 
-**Strengths:**
+CQLinq writes arbitrarily sophisticated queries against codebase structure. Rich visualizations spot structural problems. Strong trend tracking. Can import Roslyn analyzer results.
 
-- CQLinq lets you write arbitrarily sophisticated queries against your codebase's structure using LINQ syntax - genuinely more expressive and detailed than any other tool in this comparison for deep dependency analysis
-- Rich visualizations (dependency graphs, dependency matrices) that make it easier to spot structural problems humans miss reading code directly
-- Strong trend tracking - NDepend is well suited to answering "is our technical debt getting better or worse over time," not just "does this pass right now"
-- Can import Roslyn analyzer results, letting it serve as a unifying dashboard rather than purely a competing tool
-
-**Weaknesses:**
-
-- Commercial, per-seat licensing - a real cost compared to every other tool in this comparison except SonarQube's paid tiers
-- Windows-oriented tooling history (though it has broadened over time), worth checking against your team's actual platform mix
-- The learning curve for CQLinq, while powerful, is real - getting full value out of NDepend takes more investment than writing a NetArchTest fluent assertion
+Commercial per-seat licensing. Windows-oriented history. CQLinq learning curve real.
 
 **Choose this when:** you want the deepest possible dependency and quality analysis with strong visualization and trend tracking, and the licensing cost is justified by the insight it provides across a codebase of real size and complexity.
 
@@ -163,3 +113,10 @@ No - they automate the parts of review that are mechanical and easy to miss unde
 ### Which of these tools should a team adopt first if starting from nothing?
 
 Roslyn Analyzers, since they're free, already built into the SDK, and require no new infrastructure - adding an existing package like Roslynator is close to zero-cost and immediately useful. NetArchTest or ArchUnitNET is a natural second step once you have specific dependency-direction rules (from adopting Clean Architecture or a Modular Monolith, for instance) you want enforced automatically. SonarQube or NDepend become worth the additional investment once you're managing quality across multiple repositories or want deeper trend visibility than test-scoped tools provide.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

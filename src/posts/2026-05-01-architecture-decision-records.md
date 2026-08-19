@@ -11,6 +11,8 @@ tags: ["writing-for-engineers", "developer-productivity"]
 title: "Architecture Decision Records: The 30-Minute Investment That Pays Off for Years"
 ---
 
+
+
 Six months into a project, a new engineer asks why the codebase uses library X instead of the obvious choice Y. Nobody remembers. The original decision-maker has left. The Slack thread is gone. The PR description says "initial implementation." The team spends 45 minutes reconstructing a decision that took 20 minutes to make - and they still aren't sure they got it right.
 
 This happens constantly. It is entirely avoidable.

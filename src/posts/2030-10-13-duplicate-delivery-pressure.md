@@ -13,12 +13,13 @@ tags: ["dotnet", "architecture", "design-patterns", "messaging"]
 title: "Lab 9: At-Least-Once Delivery Means Duplicate Effects Are Your Problem"
 ---
 
+
+
 Transactional Outbox solved message loss. It never promised to solve duplicate delivery, and it shouldn't have.
 
 ## Reproduce It
 
 Send the same integration event twice:
-
 ```json
 {
   "eventId": "11111111-1111-1111-1111-111111111111",
@@ -38,3 +39,6 @@ The publisher can no longer promise you'll receive this exactly once. From here 
 ## Next
 
 We'll add an Inbox, so the consumer persists "MessageId processed" in the same transaction that creates the `FulfillmentWork` record. That shared transaction, and the atomicity it buys, is the whole point.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

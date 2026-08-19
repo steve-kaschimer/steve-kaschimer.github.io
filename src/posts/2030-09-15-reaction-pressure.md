@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Lab 5: When One Successful Command Creates Too Many Reactions"
 ---
 
+
+
 Northstar's `PlaceOrder` command works. Now the business wants consequences - a confirmation, loyalty points, fulfillment work, an analytics update - so we just call them from inside the handler. That's not bad engineering. It's the simplest thing that could possibly work.
 
 ## The New Shape
@@ -30,3 +32,6 @@ The domain already knows the fact that matters here: `OrderPlaced`. There's no r
 ## Next
 
 The next stage introduces a Domain Event - the aggregate simply records that `OrderPlaced` happened, handlers react to it, and the application dispatches those reactions around the Unit of Work boundary. Everything stays in-process for now, with no broker in sight, and that distinction is going to matter quite a bit in a few stages.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,6 +11,8 @@ tags: ["dotnet", "validation", "developer-productivity", "tooling"]
 title: "Getting Started with Native Minimal API Validation in .NET 10"
 ---
 
+
+
 Minimal APIs went four major versions without a first-party answer to a question MVC solved on day one: how does a request get validated before it reaches your handler. Every project either wrote manual checks, reached for MiniValidation, or brought in FluentValidation just to cover a gap that should have been built in. .NET 10 closes that gap directly - the same `DataAnnotations` attributes MVC has used for over a decade now work automatically in Minimal API endpoints, with no third-party package required.
 
 This guide covers enabling native validation in .NET 10, bootstrapping it correctly for both simple and nested request models, the core patterns for what it covers and what it doesn't, and the best practices for using it as the default for new Minimal API projects. By the end you'll have automatic, first-party request validation with the same attributes you already know from MVC.
@@ -173,3 +175,10 @@ It's a reasonable simplification if your validation needs are the straightforwar
 ### What's the most common mistake when adopting native Minimal API validation?
 
 Forgetting to call `builder.Services.AddValidation()`, so validation silently doesn't run despite the attributes being present on the model. The second common mistake is expecting it to handle complex conditional validation as naturally as FluentValidation, when it shares the exact same expressiveness ceiling as classic DataAnnotations underneath.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

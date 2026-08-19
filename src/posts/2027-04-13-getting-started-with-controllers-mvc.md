@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "developer-productivity", "tooling"]
 title: "Getting Started with Controllers (MVC) in .NET"
 ---
 
+
+
 Controllers are the original ASP.NET Core web API pattern, and while new project templates now default to Minimal APIs, Controllers remain the right call for large APIs that benefit from `[ApiController]`'s conventions. The part worth understanding isn't the syntax - it's what `[ApiController]` is actually doing for you behind the scenes, since that's exactly what you'd otherwise have to reconstruct by hand in Minimal APIs.
 
 This guide covers scaffolding a Controllers-based Web API, what `[ApiController]` actually provides (automatic model validation, binding source inference, standardized error responses), wiring up FluentValidation for cases the built-in validation doesn't cover, and using action filters for cross-cutting concerns. By the end you'll understand not just how to write a controller, but what convention it's leaning on and why.
@@ -177,3 +179,10 @@ Yes - both can be registered and used in the same ASP.NET Core application. It's
 ### What's the most common mistake in a first Controllers setup?
 
 Manually reimplementing behaviors `[ApiController]` already provides for free - explicit `ModelState.IsValid` checks, hand-written error response shapes - usually because the developer isn't aware those come automatically with the attribute, producing inconsistent behavior across the API where some actions get the automatic treatment and others don't.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

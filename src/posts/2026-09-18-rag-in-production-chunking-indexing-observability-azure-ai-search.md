@@ -11,6 +11,8 @@ tags: ["rag", "azure-ai-search", "azure-ai-foundry", "llm", "agentic-development
 title: "RAG in Production: Chunking, Indexing, and Observability with Azure AI Search"
 ---
 
+
+
 A RAG prototype takes an afternoon: split some documents into chunks, embed them, put them in a vector store, do a similarity search at query time, stuff the results into a prompt. It works, well enough to demo. Then it goes to production, and the same pipeline that answered demo questions correctly starts missing obvious answers, citing the wrong document, or retrieving three chunks that are all technically relevant and none of which actually contain the fact the user asked about.
 
 The generation step - the part everyone evaluates first, because it's the part that produces visible output - is rarely the actual problem. If retrieval returns the wrong chunks, or the right chunk with the critical sentence split across a chunk boundary, no amount of prompt engineering on the generation side fixes it. The [memory and RAG post](/posts/2026-09-04-azure-ai-foundry-agents-memory-tool-calling-rag/) covered building a basic retrieval tool. This post covers the decisions that determine whether that tool actually works: how you chunk, how you index, how you search, and how you measure retrieval quality separately from generation quality - because conflating the two is how a retrieval bug spends three days being debugged as a prompt problem.

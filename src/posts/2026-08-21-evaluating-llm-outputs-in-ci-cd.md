@@ -11,6 +11,8 @@ tags: ["llm", "testing", "ai-agents", "azure-ai-foundry", "ci-cd"]
 title: "Evaluating LLM Outputs in CI/CD: Testing Your AI Features Like Production Code"
 ---
 
+
+
 The hardest part of shipping an AI feature is not the first deployment. It is the tenth. The one after you upgraded the underlying model, or tweaked the system prompt, or added a new tool to the agent. The first deployment had a human reviewing every output. The tenth has whatever process you put in place after the first one.
 
 Most teams put nothing in place. They test the happy path manually, deploy, and treat regressions as support tickets. For traditional application code, that is a bad practice. For LLM features, it is a specific kind of bad practice - the kind where you do not find out something broke until a user tells you, because the outputs look plausible even when they are wrong.

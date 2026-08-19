@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "developer-productivity"]
 title: "Getting Started with NSubstitute in .NET"
 ---
 
+
+
 NSubstitute's defining decision is that there's no wrapper object - `Substitute.For<T>()` returns something that behaves like the real interface and also happens to be your configuration target. There's no `.Object` to unwrap, no separate `Setup()` call before you can specify a return value; you just call the method on the substitute directly, and calling it again with `.Returns(...)` is how you configure it. That single design choice is responsible for most of what people mean when they say NSubstitute's syntax is "the cleanest."
 
 This guide covers installing NSubstitute, bootstrapping substitutes and configuring return values correctly, the core patterns for verification and argument matching, and the best practices that take advantage of its minimal-ceremony design without losing the precision strict mocking sometimes provides. By the end you'll have a test suite that reads close to plain English, and a clear understanding of the one behavior (no strict mode) worth knowing about upfront.
@@ -148,3 +150,10 @@ Yes - it's open source with no comparable incident to Moq's SponsorLink history,
 ### What's the most common mistake in a first NSubstitute setup?
 
 Looking for a `.Setup()` method out of habit from Moq and being confused when it doesn't exist, rather than configuring the substitute by calling its methods directly. The second common mistake is assuming unconfigured calls will fail the way they might in a strict-mode mocking library, when NSubstitute's default behavior is to succeed silently instead.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

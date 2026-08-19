@@ -11,6 +11,8 @@ tags: ["github", "developer-productivity", "project-management", "github-actions
 title: "GitHub Projects Automation: Custom Fields, Workflows, and the GraphQL API"
 ---
 
+
+
 Most teams use GitHub Projects the way they use a whiteboard: they move cards around manually, they check in on Fridays to see what slipped, and they treat the board as a reporting artifact rather than a live system. That's a reasonable starting point. It's not where you should stay.
 
 GitHub Projects v2 ships with a GraphQL API, a set of built-in automation workflows, and custom field types that compose into a lightweight engineering system. You can auto-assign new issues to the current sprint, reflect PR state back to issue status without human intervention, and schedule a weekly digest from a GitHub Actions workflow. None of this requires a third-party tool. None of it requires leaving GitHub.

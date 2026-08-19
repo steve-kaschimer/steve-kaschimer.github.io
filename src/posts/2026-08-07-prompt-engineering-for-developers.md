@@ -11,6 +11,8 @@ tags: ["prompt-engineering", "ai-agents", "agentic-development", "azure-ai-found
 title: "Prompt Engineering for Developers: Writing Reliable Instructions for Agentic Systems"
 ---
 
+
+
 Most prompt engineering advice is written for chatbots. Keep it short. Be conversational. Add "let's think step by step." That advice is fine for a consumer product where a suboptimal response is mildly annoying.
 
 Agents are different. When an agent misreads an instruction, it calls the wrong tool, produces output in the wrong format, or handles an ambiguous user request by silently guessing - and the downstream systems consuming that output don't get a chance to ask for clarification. The cost of a bad prompt in an agentic system isn't a poor answer; it's a corrupt pipeline run or a stuck workflow that fails three steps later with a cryptic error.

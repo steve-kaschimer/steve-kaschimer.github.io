@@ -11,10 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "orm"]
 title: "Query Object in Modern .NET"
 ---
 
-Query Object represents a database query as an object.
 
-Instead of scattering query conditions throughout services:
 
+Query Object represents a database query as an object. Instead of scattering query conditions throughout services:
 ``` csharp
 var orders = await db.Orders
     .Where(x => x.CustomerId == customerId)
@@ -28,16 +27,12 @@ you can give that query a name and a reusable representation.
 ## Why This Pattern Exists
 
 Queries often contain business-relevant selection logic:
-
 -   overdue invoices,
 -   active subscriptions nearing renewal,
 -   orders eligible for shipment,
 -   customers requiring review.
 
-When those conditions are repeated, the application begins to duplicate
-query knowledge.
-
-A Query Object gives the query a home.
+When those conditions are repeated, the application begins to duplicate query knowledge. A Query Object gives the query a home.
 
 ## A Simple Modern Query Object
 
@@ -56,7 +51,6 @@ public sealed record OrdersReadyToShip(
 ```
 
 Usage:
-
 ``` csharp
 var query = new OrdersReadyToShip(
     timeProvider.GetUtcNow());
@@ -71,7 +65,6 @@ The query condition is now named and reusable.
 ## Parameterized Queries
 
 Query Objects become more useful when they capture query parameters:
-
 ``` csharp
 public sealed record CustomerOrdersQuery(
     CustomerId CustomerId,
@@ -106,21 +99,12 @@ This moves query-building logic out of controllers and services.
 ## Query Object vs. Repository Method
 
 You could instead write:
-
 ``` csharp
 Task<IReadOnlyList<Order>>
     FindOrdersReadyToShipAsync(...);
 ```
 
-on a repository.
-
-Both approaches can be valid.
-
-A repository method is attractive when the query is central to the
-domain and there are only a few important retrieval operations.
-
-Query Objects scale better when:
-
+on a repository. Both approaches can be valid. A repository method is attractive when the query is central to the domain and there are only a few important retrieval operations. Query Objects scale better when:
 -   there are many combinations,
 -   filters compose,
 -   sorting and paging vary,
@@ -128,11 +112,7 @@ Query Objects scale better when:
 
 ## Query Object vs. Specification
 
-In modern .NET, Query Object often overlaps with the Specification
-pattern.
-
-A specification may represent a predicate:
-
+In modern .NET, Query Object often overlaps with the Specification pattern. A specification may represent a predicate:
 ``` csharp
 public sealed record PaidOrdersSpecification
 {
@@ -143,23 +123,17 @@ public sealed record PaidOrdersSpecification
 ```
 
 A Query Object usually represents more of the query:
-
 -   filtering,
 -   sorting,
 -   includes,
 -   paging,
 -   projection.
 
-The exact terminology varies between teams.
-
-The architectural question is more important than the label.
+The exact terminology varies between teams. The architectural question is more important than the label.
 
 ## Projection-Oriented Query Objects
 
-A query object does not have to return domain entities.
-
-For read-heavy use cases, returning a projection is often better:
-
+A query object does not have to return domain entities. For read-heavy use cases, returning a projection is often better:
 ``` csharp
 public sealed record OrderSearchQuery(
     CustomerId CustomerId)
@@ -183,40 +157,28 @@ This avoids loading a full aggregate just to render a list.
 
 ## Keep IQueryable Boundaries Deliberate
 
-Returning `IQueryable<T>` from deep infrastructure can be powerful, but
-it can also leak persistence details throughout the application.
-
-For example:
-
+Returning `IQueryable<T>` from deep infrastructure can be powerful, but it can also leak persistence details throughout the application. For example:
 ``` csharp
 IQueryable<Order> GetOrders();
 ```
 
 lets any caller append:
-
 ``` csharp
 .Include(...)
 .AsSplitQuery()
 .TagWith(...)
 ```
 
-or provider-specific expressions.
-
-That may defeat the abstraction.
-
-A Query Object can still use `IQueryable<T>` internally while exposing a
-more stable execution boundary.
+or provider-specific expressions. That may defeat the abstraction. A Query Object can still use `IQueryable<T>` internally while exposing a more stable execution boundary.
 
 ## Executable Query Objects
 
 Instead of:
-
 ``` csharp
 IQueryable<Order> Apply(...)
 ```
 
 the object can execute itself through a persistence abstraction:
-
 ``` csharp
 public sealed class OrdersReadyToShipQuery(
     AppDbContext db)
@@ -238,16 +200,11 @@ public sealed class OrdersReadyToShipQuery(
 }
 ```
 
-Now callers do not receive `IQueryable`.
-
-This is often a clean fit for application-level read models.
+Now callers do not receive `IQueryable`. This is often a clean fit for application-level read models.
 
 ## Query Object and CQRS
 
-Query Object can fit naturally into a lightweight CQRS-style design.
-
-Commands change state:
-
+Query Object can fit naturally into a lightweight CQRS-style design. Commands change state:
 ``` text
 SubmitOrder
 CancelOrder
@@ -255,20 +212,17 @@ RefundOrder
 ```
 
 Queries return read models:
-
 ``` text
 GetOrderDetails
 SearchOrders
 GetOrdersReadyToShip
 ```
 
-You do not need a message bus or a large framework to benefit from the
-separation.
+You do not need a message bus or a large framework to benefit from the separation.
 
 ## Dynamic Filtering
 
 Query Objects are particularly useful for search screens:
-
 ``` csharp
 public sealed record SearchOrders(
     string? Search,
@@ -280,20 +234,16 @@ public sealed record SearchOrders(
 ```
 
 The query object can centralize:
-
 -   optional filters,
 -   sorting,
 -   pagination,
 -   projection.
 
-This keeps controller code focused on HTTP rather than query
-construction.
+This keeps controller code focused on HTTP rather than query construction.
 
 ## The Danger of Generic Query DSLs
 
-A common over-engineering path is creating a universal query
-abstraction:
-
+A common over-engineering path is creating a universal query abstraction:
 ``` csharp
 Query<Order>
     .Where(...)
@@ -302,12 +252,7 @@ Query<Order>
     .Page(...)
 ```
 
-If it merely reimplements LINQ badly, it adds no value.
-
-A Query Object should provide meaning, not just another syntax.
-
-Good:
-
+If it merely reimplements LINQ badly, it adds no value. A Query Object should provide meaning, not just another syntax. Good:
 ``` text
 OrdersReadyToShip
 OverdueInvoices
@@ -315,7 +260,6 @@ CustomersNeedingVerification
 ```
 
 Less useful:
-
 ``` text
 GenericQueryBuilder<T>
 ```
@@ -324,28 +268,16 @@ unless you are genuinely building infrastructure.
 
 ## Translation Matters
 
-When Query Objects build EF Core expressions, they must remain
-translatable to SQL.
-
-This compiles:
-
+When Query Objects build EF Core expressions, they must remain translatable to SQL. This compiles:
 ``` csharp
 .Where(x => SomeCustomMethod(x))
 ```
 
-but EF Core may not be able to translate it.
-
-Query-object tests should therefore include integration coverage for
-nontrivial expressions.
+but EF Core may not be able to translate it. Query-object tests should therefore include integration coverage for nontrivial expressions.
 
 ## Testing
 
-Pure expression-building logic can be unit-tested for some cases.
-
-But the highest-value tests run the query against the actual provider.
-
-They verify:
-
+Pure expression-building logic can be unit-tested for some cases. But the highest-value tests run the query against the actual provider. They verify:
 -   SQL translation,
 -   null semantics,
 -   sorting,
@@ -357,7 +289,6 @@ They verify:
 ## When to Use It
 
 Query Object is useful when:
-
 -   complex queries repeat,
 -   search/filter logic grows,
 -   query logic deserves names,
@@ -367,14 +298,11 @@ Query Object is useful when:
 ## When Not to Use It
 
 Avoid creating a class for every trivial query:
-
 ``` csharp
 db.Countries.OrderBy(x => x.Name)
 ```
 
-does not automatically need `GetCountriesAlphabeticallyQuery`.
-
-Use the pattern when it reduces duplication or improves meaning.
+does not automatically need `GetCountriesAlphabeticallyQuery`. Use the pattern when it reduces duplication or improves meaning.
 
 ## Related Patterns
 
@@ -386,11 +314,4 @@ Use the pattern when it reduces duplication or improves meaning.
 
 ## Summary
 
-Query Object gives important database queries an explicit
-representation.
-
-In modern .NET, LINQ already gives us a powerful query language, so the
-pattern is rarely about inventing another one.
-
-Its value is in naming, composing, and isolating query intent so the
-application's read logic remains understandable as complexity grows.
+Query Object gives important database queries an explicit representation. In modern .NET, LINQ already gives us a powerful query language, so the pattern is rarely about inventing another one. Its value is in naming, composing, and isolating query intent so the application's read logic remains understandable as complexity grows.

@@ -11,6 +11,8 @@ tags: ["tailwind-css", "eleventy"]
 title: "Tailwind CSS v4: What Actually Changed and How to Migrate"
 ---
 
+
+
 Tailwind v4 isn't a config syntax refresh with a migration codemod attached. It's a rewritten engine - **Oxide**, built in Rust - that changes how configuration works, how CSS is generated, how plugins are authored, and how the CLI operates. The headline benchmarks (full builds 5× faster, incremental builds 100×+ faster) are real, but the migration isn't purely mechanical. For developers with custom color palettes, class-based dark mode, or typography plugin overrides, there are breaking changes the codemod doesn't handle.
 
 This post walks through what actually changed, migrates this blog's real v3 `tailwind.config.js` to v4 line by line, and flags the three breaking changes most likely to catch you off-guard. The migration is manageable - under an hour for a typical Eleventy blog - but you need to know what you're walking into.

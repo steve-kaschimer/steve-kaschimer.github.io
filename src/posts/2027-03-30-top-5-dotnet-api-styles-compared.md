@@ -11,6 +11,8 @@ tags: ["dotnet", "api-design", "architecture", "performance", "developer-product
 title: "The Top 5 .NET API Styles Compared: Which One Should You Choose?"
 ---
 
+
+
 Every .NET API decision eventually collapses into the same question: what does the client actually need from this endpoint - a simple request-response, structured conventions at scale, raw speed between services, exactly the fields it asks for, or a live push the moment something changes? That's the axis these five styles sit on. Minimal APIs and Controllers both answer "request-response," just with different amounts of built-in structure. gRPC trades flexibility for speed between services that don't need a browser. GraphQL lets the client shape the response instead of the server dictating it. SignalR isn't really a REST alternative at all - it's for real-time push, a different problem entirely.
 
 This guide compares the five API styles .NET developers reach for most often, what each one actually optimizes for, and which project profile fits best. None of these are mutually exclusive within a single application - a typical production system might expose Minimal API or Controller endpoints for its public REST surface, gRPC between internal services, and SignalR for one specific real-time feature, all in the same solution. This series continues with dedicated getting-started walkthroughs for each style.
@@ -28,96 +30,39 @@ This guide compares the five API styles .NET developers reach for most often, wh
 
 ## Minimal APIs
 
-Minimal APIs are Microsoft's current recommended default for new ASP.NET Core REST APIs - a lightweight, low-ceremony way to define HTTP endpoints without the conventions and infrastructure a full MVC controller pipeline brings along.
+Microsoft's current default for new REST APIs. A working endpoint is five lines, no controller class, no routing attributes, just a handler and a route definition.
 
-**Strengths:**
+You reach for Minimal APIs when you want to move fast on a new service. Route groups keep the code organized as it grows. OpenAPI support is built in, and validation plugs in through endpoint filters. The template scaffolds correctly from day one.
 
-- Low ceremony - a working endpoint is a few lines, with no controller class, action method, or attribute routing boilerplate required
-- Route groups and per-feature extension methods (`MapOrderEndpoints`) keep a growing API organized without falling back to MVC's conventions
-- First-class OpenAPI support via `Microsoft.AspNetCore.OpenApi`, and validation wires in cleanly through custom endpoint filters
-- Fast to start with, and the template Microsoft ships by default for new Web API projects
-
-**Weaknesses:**
-
-- Less built-in structure than Controllers - model binding, validation, and filtering conventions are things you assemble yourself rather than inherit for free
-- Fewer years of established community patterns to lean on compared to MVC's long history, though this gap is closing fast
-- A very large API with many endpoints can end up needing the same kind of organizational discipline Controllers give you by default, just self-imposed instead of framework-enforced
-
-**Choose this when:** you're starting a new REST API and don't have a large existing MVC codebase or team convention pulling you toward Controllers - it's the more modern default in 2026, not just the newer option.
+The tradeoff: you assemble conventions yourself. A large REST API that would benefit from Controllers' `[ApiController]` model binding and automatic validation defaults won't get those automatically. You'll rebuild them by hand. That's fine for a small service; it's friction at scale.
 
 ## Controllers (MVC)
 
-Controllers are the original ASP.NET Core web API pattern, and remain the right choice for large APIs that benefit from `[ApiController]`'s built-in conventions - automatic model validation, binding source inference, and consistent problem-details error responses - without having to reconstruct them by hand.
+The original ASP.NET Core pattern and still the right choice for large APIs. `[ApiController]` gives you model validation, binding source inference, and error responses without writing them yourself. `IActionFilter` is a mature cross-cutting-concerns tool that's been battle-tested for years.
 
-**Strengths:**
-
-- `[ApiController]` gives you automatic model validation, binding source inference, and standardized error responses out of the box
-- Filters (`IActionFilter` and friends) provide a mature, well-understood cross-cutting concerns mechanism distinct from middleware
-- Deep, long-established community knowledge and tooling, since this has been the default ASP.NET Core API pattern since the framework's earliest versions
-- Conventions scale well to large teams and large APIs, where consistent structure across many endpoints matters more than minimizing per-endpoint ceremony
-
-**Weaknesses:**
-
-- More ceremony per endpoint than Minimal APIs - a controller class and action method for what might be a five-line Minimal API handler
-- New ASP.NET Core project templates default to Minimal APIs now, so scaffolding Controllers requires an explicit flag (`dotnet new webapi --use-controllers`) rather than being the default path
-- The conventions that pay off at scale can feel like unnecessary structure on a small service with a handful of endpoints
-
-**Choose this when:** you have a large REST API, an existing MVC codebase, or a team that values `[ApiController]`'s established conventions over Minimal APIs' lighter footprint.
+Use Controllers when you have a large API and want consistent structure across many endpoints, or when your team already knows MVC conventions well. A small service with a handful of endpoints doesn't need this overhead.
 
 ## gRPC
 
-gRPC is a binary RPC framework built on HTTP/2 and Protocol Buffers, designed for fast, strongly-typed communication between services - not for talking to a browser directly.
+The fastest option by a clear margin. Binary Protobuf plus HTTP/2 multiplexing beats JSON-over-HTTP for both payload size and connection efficiency. You get strongly-typed contracts in `.proto` files, shared between client and server, so contracts can't drift. Streaming RPCs (unary, server-push, client-push, bidirectional) are native.
 
-**Strengths:**
-
-- Fastest option here by a clear margin - binary Protobuf serialization plus HTTP/2 multiplexing beats JSON-over-HTTP/1.1 for both payload size and connection efficiency
-- Strongly-typed contracts via `.proto` files, shared across client and server through a common project reference, which keeps them from drifting apart
-- Native support for streaming RPCs (client, server, and bidirectional), a capability none of the request-response styles here have built in
-- `RpcException`/`StatusCode` gives you a structured, consistent error-handling model across every RPC
-
-**Weaknesses:**
-
-- No browser support without gRPC-Web plus a compatible proxy - genuinely not an option for a public API a frontend calls directly
-- Requires HTTP/2 and TLS even for local development, since Kestrel needs both to negotiate the protocol on a dual-purpose endpoint
-- Protobuf's binary format isn't human-readable on the wire, which makes ad hoc debugging less convenient than inspecting a JSON payload
-
-**Choose this when:** you're building internal service-to-service communication where every service is under your control and browsers aren't in the picture - it's the wrong tool for a public-facing API a frontend calls directly.
+The catch: no browser support. gRPC-Web plus a proxy exists, but it's a shim. Use gRPC for internal service-to-service calls where you control both ends. Not for public APIs.
 
 ## GraphQL (Hot Chocolate)
 
-GraphQL, via the Hot Chocolate library, lets the client specify exactly which fields it wants in a single request, instead of the server dictating a fixed response shape the way REST and gRPC both do.
+The client requests exactly the fields it needs, no over-fetching junk, no "I need one more field, time for another round trip" under-fetching. One `/graphql` endpoint instead of a sprawl of REST endpoints tailored to specific views.
 
-**Strengths:**
+Watch for N+1 queries. A list of parent entities plus a related field per item will hammer your database unless you batch with `DataLoader`. Cost and depth limiting aren't optional, a client can write a query that's genuinely expensive to run. The learning curve is steeper than REST if your team hasn't done resolvers before.
 
-- Clients request exactly the fields they need, eliminating both over-fetching (getting fields you don't use) and under-fetching (needing a second request for related data)
-- A single `/graphql` endpoint replaces a proliferation of REST endpoints tailored to specific client views
-- `[UseProjection]`/`[UseFiltering]`/`[UseSorting]` push those concerns down to the database query itself rather than requiring hand-written variants per use case
-- Banana Cake Pop, Hot Chocolate's built-in IDE, gives you interactive schema exploration without needing a separate API client
-
-**Weaknesses:**
-
-- The N+1 query problem is a real, common pitfall - resolving a list of parent entities and then a related field per item can silently issue one query per item unless you use a `DataLoader` to batch them
-- Needs deliberate cost and depth limiting (`AddMaxExecutionDepthRule`, paging options) or a client can construct a query that's expensive to resolve
-- A steeper conceptual learning curve than REST for teams unfamiliar with resolvers, the N+1 problem, and schema-first thinking
-
-**Choose this when:** your clients have genuinely varied data needs - different views need different shapes of the same underlying data - and you're willing to take on resolver design and query-cost limiting as an ongoing concern, not a one-time setup step.
+Use GraphQL when clients have genuinely different data shapes, a web view needs columns A, B, C and a mobile view needs B, C, D. One schema, many views. If every client asks for the same fields, REST is simpler.
 
 ## SignalR
 
-SignalR is ASP.NET Core's real-time communication library, built on WebSockets (with automatic fallback transports) for pushing updates to connected clients the moment something happens - not a REST, GraphQL, or gRPC replacement, but a different category of problem.
+Real-time push for live dashboards, notifications, chat, collaborative editing. Not a REST alternative, orthogonal to it. You'll probably use it alongside your REST API, not instead of it.
 
-**Strengths:**
+Built on WebSockets with automatic fallback if they're unavailable. `IHubContext<T>` lets any part of your app push to connected clients. Reconnection is automatic.
 
-- Purpose-built for real-time push - live dashboards, notifications, chat, collaborative features - where polling would be wasteful or too slow
-- `IHubContext<T>` lets any part of your application push updates to connected clients, not just code running inside a Hub method itself
-- Client libraries (JavaScript, .NET, and others) include automatic reconnection handling out of the box
-- Falls back gracefully to other transports when WebSockets aren't available, without changing your application code
-
-**Weaknesses:**
-
-- Requires a Redis backplane (`Microsoft.AspNetCore.SignalR.StackExchangeRedis`) the moment you run more than one server instance - and forgetting it fails silently, with some clients simply missing updates rather than throwing an error
-- Solves a fundamentally different problem than REST/GraphQL/gRPC, so it's additive to an API surface, not a replacement for it
-- Persistent connections carry real infrastructure cost at scale - connection count and server affinity become operational concerns REST endpoints don't have
+One gotcha: scale past one server and you need a Redis backplane (`Microsoft.AspNetCore.SignalR.StackExchangeRedis`). Forget it and you don't get an error, some clients just silently miss updates. Infrastructure costs are real at scale: connection count and server affinity are now operational concerns.
 
 **Choose this when:** you have a genuine real-time push requirement - clients need to know about a change the moment it happens, not on their next poll - and you're prepared to add a backplane before scaling past one instance.
 
@@ -162,3 +107,10 @@ Yes - Kestrel requires HTTP/2 and TLS to negotiate a gRPC connection on a dual-p
 ### Is SignalR a replacement for GraphQL subscriptions?
 
 Not a general-purpose replacement, but they overlap for real-time use cases. SignalR is a dedicated real-time library with broader adoption and a simpler mental model for pure push scenarios; GraphQL subscriptions integrate real-time updates into an existing GraphQL schema, which is more natural if you're already using GraphQL for the rest of your API and want events to flow through the same client.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

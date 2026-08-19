@@ -11,6 +11,8 @@ tags: ["github", "devsecops", "platform-engineering"]
 title: "GitHub Branch Protection Rules vs. Rulesets: The New Way to Enforce Standards"
 ---
 
+
+
 Most teams set up branch protection rules once, years ago, and haven't touched them since. That's understandable - once it's configured, it's invisible infrastructure. What's less visible is the hole in it. Classic branch protection has a default behavior that's documented but easy to miss: **repository admins bypass all rules**. Require pull request reviews? An admin can push directly to `main`. Require status checks? An admin can merge without them. For most small and medium teams - where the admin is also a developer - the protection they think they have has a gap large enough to drive a production incident through.
 
 **GitHub Rulesets** close that gap. They also add organization-level enforcement, tag protection, named bypass actors, and an evaluation mode that lets you audit what would be blocked before you enforce anything. This post maps what changed between the two systems, walks through a production-ready Ruleset configuration, and includes an audit workflow that checks Ruleset coverage across every repo in your org.

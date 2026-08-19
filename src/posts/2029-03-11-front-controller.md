@@ -11,16 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "aspnet-core"]
 title: "Front Controller in Modern ASP.NET Core"
 ---
 
-Front Controller channels web requests through a common handler before
-dispatching them to request-specific behavior.
 
-ASP.NET Core makes this pattern feel almost invisible because its
-request pipeline is built around the same idea.
+
+Front Controller channels web requests through a common handler before dispatching them to request-specific behavior. ASP.NET Core makes this pattern feel almost invisible because its request pipeline is built around the same idea.
 
 ## The Problem
 
 Every endpoint may need the same concerns:
-
 -   authentication,
 -   authorization,
 -   exception handling,
@@ -29,13 +26,11 @@ Every endpoint may need the same concerns:
 -   correlation,
 -   security headers.
 
-Duplicating those concerns in every controller produces inconsistent
-behavior and maintenance problems.
+Duplicating those concerns in every controller produces inconsistent behavior and maintenance problems.
 
 ## The ASP.NET Core Pipeline
 
 A simplified application:
-
 ``` csharp
 var app = builder.Build();
 
@@ -49,11 +44,7 @@ app.MapControllers();
 app.Run();
 ```
 
-Requests enter a shared pipeline before routing reaches a particular
-controller or endpoint.
-
-Conceptually:
-
+Requests enter a shared pipeline before routing reaches a particular controller or endpoint. Conceptually:
 ``` text
 Request
    |
@@ -73,7 +64,6 @@ This is strongly aligned with Front Controller.
 ## Middleware as Common Request Processing
 
 Custom middleware can centralize application-wide behavior:
-
 ``` csharp
 public sealed class CorrelationMiddleware(
     RequestDelegate next)
@@ -94,7 +84,6 @@ public sealed class CorrelationMiddleware(
 ```
 
 Register it once:
-
 ``` csharp
 app.UseMiddleware<CorrelationMiddleware>();
 ```
@@ -104,7 +93,6 @@ Every relevant request now passes through the behavior.
 ## Dispatching to Request-Specific Logic
 
 After common processing, routing selects a handler:
-
 ``` csharp
 [HttpPost("/orders/{id:guid}/submit")]
 public async Task<IActionResult> Submit(
@@ -119,17 +107,11 @@ public async Task<IActionResult> Submit(
 }
 ```
 
-The common pipeline and specific controller action have distinct
-responsibilities.
+The common pipeline and specific controller action have distinct responsibilities.
 
 ## Front Controller and Page Controller
 
-These patterns work together.
-
-Front Controller handles common request concerns.
-
-Page Controller handles one page or action.
-
+These patterns work together. Front Controller handles common request concerns. Page Controller handles one page or action.
 ``` text
 Request
    |
@@ -144,20 +126,11 @@ Modern frameworks commonly combine both.
 
 ## Filters and Endpoint Filters
 
-Not every shared concern belongs in middleware.
-
-MVC filters and Minimal API endpoint filters can apply behavior closer
-to endpoint execution.
-
-The architectural principle remains the same: centralize behavior that
-should be consistent rather than copying it into every handler.
+Not every shared concern belongs in middleware. MVC filters and Minimal API endpoint filters can apply behavior closer to endpoint execution. The architectural principle remains the same: centralize behavior that should be consistent rather than copying it into every handler.
 
 ## Exception Handling
 
-Central exception handling is a classic Front Controller responsibility.
-
-Instead of:
-
+Central exception handling is a classic Front Controller responsibility. Instead of:
 ``` csharp
 try
 {
@@ -169,44 +142,23 @@ catch (OrderNotFoundException)
 }
 ```
 
-in dozens of actions, a centralized handler can translate known
-application exceptions into HTTP responses consistently.
+in dozens of actions, a centralized handler can translate known application exceptions into HTTP responses consistently.
 
 ## Authentication and Authorization
 
-Security is another strong example.
-
-Controllers should not repeatedly parse tokens or reproduce
-authorization logic.
-
-The common request pipeline can establish identity, while policies
-decide whether the selected operation is allowed.
+Security is another strong example. Controllers should not repeatedly parse tokens or reproduce authorization logic. The common request pipeline can establish identity, while policies decide whether the selected operation is allowed.
 
 ## Keep Business Logic Out of the Pipeline
 
-Centralization can go too far.
-
-Middleware should not become a giant application service containing
-order, billing, customer, and inventory behavior.
-
-The Front Controller coordinates web concerns. Domain and application
-behavior still belong behind the presentation boundary.
+Centralization can go too far. Middleware should not become a giant application service containing order, billing, customer, and inventory behavior. The Front Controller coordinates web concerns. Domain and application behavior still belong behind the presentation boundary.
 
 ## Testing
 
-ASP.NET Core integration tests are particularly valuable because the
-behavior of the pattern emerges from pipeline ordering.
-
-Tests can verify that authentication, authorization, exception handling,
-headers, and endpoint dispatch work together correctly.
+ASP.NET Core integration tests are particularly valuable because the behavior of the pattern emerges from pipeline ordering. Tests can verify that authentication, authorization, exception handling, headers, and endpoint dispatch work together correctly.
 
 ## When to Use It
 
-For modern ASP.NET Core applications, some form of Front Controller
-behavior is effectively built into the framework.
-
-The design work lies in deciding which concerns belong in middleware,
-filters, endpoint-specific handlers, or application services.
+For modern ASP.NET Core applications, some form of Front Controller behavior is effectively built into the framework. The design work lies in deciding which concerns belong in middleware, filters, endpoint-specific handlers, or application services.
 
 ## Related Patterns
 
@@ -217,9 +169,4 @@ filters, endpoint-specific handlers, or application services.
 
 ## Summary
 
-Front Controller centralizes common web request handling before
-dispatching to request-specific behavior.
-
-ASP.NET Core's middleware and routing pipeline are a modern expression
-of that idea. The pattern helps explain why cross-cutting HTTP concerns
-belong in a shared pipeline rather than repeated across controllers.
+Front Controller centralizes common web request handling before dispatching to request-specific behavior. ASP.NET Core's middleware and routing pipeline are a modern expression of that idea. The pattern helps explain why cross-cutting HTTP concerns belong in a shared pipeline rather than repeated across controllers.

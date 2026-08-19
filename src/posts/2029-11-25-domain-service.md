@@ -11,29 +11,20 @@ tags: ["dotnet", "architecture", "design-patterns", "domain-driven-design"]
 title: "Domain Service: Behavior That Doesn't Belong to an Entity"
 ---
 
-Domain behavior should usually live with the state it governs.
 
-But sometimes an important business operation does not naturally belong
-to one Entity or Value Object.
 
-That is where a Domain Service can help.
+Domain behavior should usually live with the state it governs. But sometimes an important business operation does not naturally belong to one Entity or Value Object. That is where a Domain Service can help.
 
 ## The Smell That Comes First
 
 Suppose transferring money requires two accounts:
-
 ``` text
 Source Account
 Destination Account
 Transfer Policy
 ```
 
-Putting the whole operation on the source account feels wrong.
-
-Putting it on the destination feels equally wrong.
-
-The operation is meaningful to the domain but not naturally owned by
-either entity.
+Putting the whole operation on the source account feels wrong. Putting it on the destination feels equally wrong. The operation is meaningful to the domain but not naturally owned by either entity.
 
 ## A Domain Service
 
@@ -57,18 +48,11 @@ public sealed class FundsTransferService
 }
 ```
 
-The service contains domain logic.
-
-It works with domain objects.
-
-It does not know about HTTP, EF Core, logging, or message brokers.
+The service contains domain logic. It works with domain objects. It does not know about HTTP, EF Core, logging, or message brokers.
 
 ## Domain Service vs. Application Service
 
-This distinction matters.
-
-Application Service:
-
+This distinction matters. Application Service:
 ``` text
 Load account
 Load destination
@@ -78,19 +62,15 @@ Publish consequences
 ```
 
 Domain Service:
-
 ``` text
 Decide whether/how the transfer is valid
 ```
 
-The application service orchestrates.
-
-The domain service models business meaning.
+The application service orchestrates. The domain service models business meaning.
 
 ## Do Not Move Entity Behavior Out
 
 This is an anemic design:
-
 ``` csharp
 public sealed class OrderService
 {
@@ -103,18 +83,15 @@ public sealed class OrderService
 ```
 
 If cancellation depends only on Order's own state, it belongs on Order:
-
 ``` csharp
 order.Cancel();
 ```
 
-A Domain Service is not a place to put logic because methods on entities
-feel impure.
+A Domain Service is not a place to put logic because methods on entities feel impure.
 
 ## Stateless by Default
 
 Domain services are commonly stateless:
-
 ``` csharp
 public sealed class PricingPolicy
 {
@@ -127,10 +104,7 @@ public sealed class PricingPolicy
 }
 ```
 
-Dependencies can themselves be domain abstractions when necessary.
-
-But be cautious if the service starts needing:
-
+Dependencies can themselves be domain abstractions when necessary. But be cautious if the service starts needing:
 ``` text
 DbContext
 HttpClient
@@ -142,16 +116,12 @@ You may have crossed into application or infrastructure concerns.
 
 ## External Information
 
-Sometimes a domain decision needs external information.
-
-For example:
-
+Sometimes a domain decision needs external information. For example:
 ``` text
 Can this currency conversion occur?
 ```
 
 A domain abstraction might provide rates:
-
 ``` csharp
 public interface IExchangeRateProvider
 {
@@ -161,23 +131,17 @@ public interface IExchangeRateProvider
 }
 ```
 
-But if retrieving that rate requires async HTTP and retry policies, a
-cleaner application flow may fetch the information first and pass a
-domain value into the domain service.
-
-Keep network behavior out of the model where practical.
+But if retrieving that rate requires async HTTP and retry policies, a cleaner application flow may fetch the information first and pass a domain value into the domain service. Keep network behavior out of the model where practical.
 
 ## Naming Matters
 
 Avoid generic names:
-
 ``` text
 OrderDomainService
 CustomerDomainService
 ```
 
 Prefer domain language:
-
 ``` text
 PricingPolicy
 FundsTransferService
@@ -190,7 +154,6 @@ The name should tell a domain expert what the service does.
 ## Policy Objects
 
 Many "domain services" are really policies.
-
 ``` csharp
 public sealed class RefundEligibilityPolicy
 {
@@ -208,7 +171,6 @@ That is useful because the business concept itself has a name.
 ## Testing
 
 Domain service tests should need no application host.
-
 ``` csharp
 var result = policy.CanRefund(
     order,
@@ -217,13 +179,11 @@ var result = policy.CanRefund(
 Assert.True(result);
 ```
 
-If every test needs a database and web server, the service probably
-contains more than domain logic.
+If every test needs a database and web server, the service probably contains more than domain logic.
 
 ## When It Helps
 
 Use a Domain Service when:
-
 -   the operation is part of the ubiquitous language;
 -   it contains meaningful business rules;
 -   it involves several domain objects;
@@ -232,7 +192,6 @@ Use a Domain Service when:
 ## When It Hurts
 
 It hurts when it becomes:
-
 ``` text
 OrderService
   4,000 lines
@@ -243,19 +202,8 @@ That is often an anemic domain disguised as DDD.
 
 ## How It Relates to Fowler
 
-Fowler's Service Layer organizes application operations.
-
-Domain Service operates **inside** the domain model.
-
-The names sound similar; their responsibilities are different.
+Fowler's Service Layer organizes application operations. Domain Service operates **inside** the domain model. The names sound similar; their responsibilities are different.
 
 ## Summary
 
-Start by putting behavior on the Entity or Value Object that owns it.
-
-When an important domain operation genuinely spans concepts and has no
-natural owner, give that operation a domain name and model it as a
-Domain Service.
-
-Do not use Domain Service as an escape hatch from object-oriented domain
-modeling.
+Start by putting behavior on the Entity or Value Object that owns it. When an important domain operation genuinely spans concepts and has no natural owner, give that operation a domain name and model it as a Domain Service. Do not use Domain Service as an escape hatch from object-oriented domain modeling.

@@ -13,6 +13,8 @@ tags: ["dotnet", "architecture", "design-patterns", "caching"]
 title: "Lab 19: When the Read Side Becomes Expensive"
 ---
 
+
+
 Northstar's operations dashboard is genuinely useful, and it's also getting expensive. Every refresh asks the database for the total Saga count, the active count, the timed-out count, the compensated count, the average checkout amount, and the twenty slowest workflows. The query itself is legitimate - the pressure comes purely from how often it runs.
 
 ## Reproduce It
@@ -30,3 +32,6 @@ Payment authorization, inventory reservation, and Saga state transitions stay un
 ## Next
 
 The next stage wraps the dashboard in Cache-Aside, and deliberately deals with TTL, staleness, cache-miss stampedes, invalidation, and cache failure along the way - because those five things are the real architecture of caching, not the lookup itself.
+---
+
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

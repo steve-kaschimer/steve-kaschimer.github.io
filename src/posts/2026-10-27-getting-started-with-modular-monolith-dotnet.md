@@ -11,6 +11,8 @@ tags: ["dotnet", "architecture", "microservices", "platform-engineering", "ci-cd
 title: "Getting Started with Modular Monolith Architecture in .NET"
 ---
 
+
+
 A Modular Monolith is deceptively easy to describe and genuinely hard to keep honest: one deployable application, internally split into modules that behave almost like separate services - owning their own data, exposing narrow public interfaces, and never reaching directly into each other's internals. The description sounds like good hygiene any codebase should have. The hard part is that nothing forces it to stay true except deliberate enforcement, and the moment that enforcement lapses, it's just a monolith again.
 
 This guide covers structuring a Modular Monolith solution in .NET, bootstrapping module boundaries so they're compiler-enforced rather than aspirational, the core workflow of adding a feature within the right module, and the best practices that keep boundaries intact as the system and team grow. By the end you'll have a structure that gets most of the benefit people associate with Microservices, without the operational cost.
@@ -205,3 +207,10 @@ There's no fixed number - the practical limit is usually about whether your team
 ### Do I need message queues or an event bus for a Modular Monolith?
 
 Not necessarily. Because modules run in the same process, in-process event dispatching (a simple mediator or domain event pattern) is often enough to keep modules decoupled without introducing external messaging infrastructure. A real message broker becomes more relevant if you're anticipating splitting specific modules into separate services later.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

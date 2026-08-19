@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "observability", "tooling"]
 title: "Getting Started with Serilog in ASP.NET Core"
 ---
 
+
+
 Setting up **Serilog in ASP.NET Core** is quick once you know the shape of it, but the fluent, code-first configuration style throws a curveball at people used to XML or JSON-based logging: there's no single config file to point at, and the two-stage initialization (a bootstrap logger before the host builds, then the real one) isn't obvious from the docs alone.
 
 This guide covers a complete Serilog setup for .NET 8 - installing the right packages, both configuration styles, the startup pattern for ASP.NET Core apps and Worker Services, and how structured logging changes the way you write log calls. By the end you'll have a production-ready baseline you can extend with additional sinks as needed.
@@ -291,3 +293,10 @@ Yes, identically to controller-based apps. `builder.Host.UseSerilog(...)` wires 
 ### How do I configure Serilog differently for Development vs Production?
 
 If using JSON configuration, `appsettings.Development.json` overrides `MinimumLevel` and `WriteTo` the same way it does for any other configuration section. If using code-first configuration, branch on `builder.Environment.IsDevelopment()` directly inside the `UseSerilog` callback to add or remove sinks conditionally.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

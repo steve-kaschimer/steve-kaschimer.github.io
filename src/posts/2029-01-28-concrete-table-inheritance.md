@@ -11,11 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "orm"]
 title: "Concrete Table Inheritance in Modern .NET"
 ---
 
-Concrete Table Inheritance creates a table for each concrete class in an
-inheritance hierarchy and repeats inherited fields in each concrete
-table.
 
-In EF Core terminology, this is **table-per-concrete-type (TPC)**.
+
+Concrete Table Inheritance creates a table for each concrete class in an inheritance hierarchy and repeats inherited fields in each concrete table. In EF Core terminology, this is **table-per-concrete-type (TPC)**.
 
 ## The Same C# Hierarchy
 
@@ -39,10 +37,7 @@ public sealed class BankAccountPaymentMethod : PaymentMethod
 }
 ```
 
-Because `PaymentMethod` is abstract, TPC does not need a base table.
-
-Instead:
-
+Because `PaymentMethod` is abstract, TPC does not need a base table. Instead:
 ``` text
 CardPaymentMethods
 ---------------------------------
@@ -59,8 +54,7 @@ BankName
 AccountLastFour
 ```
 
-Inherited properties such as `DisplayName` are duplicated across
-concrete tables.
+Inherited properties such as `DisplayName` are duplicated across concrete tables.
 
 ## EF Core Configuration
 
@@ -80,7 +74,6 @@ Each concrete object can be represented by one row in one table.
 ## TPC vs. TPT
 
 TPT normalizes inherited fields:
-
 ``` text
 PaymentMethods
       +
@@ -88,65 +81,45 @@ CardPaymentMethods
 ```
 
 TPC duplicates them:
-
 ``` text
 CardPaymentMethods contains all card fields
 BankAccountPaymentMethods contains all bank fields
 ```
 
-TPC therefore avoids the join needed to reconstruct a single concrete
-object.
+TPC therefore avoids the join needed to reconstruct a single concrete object.
 
 ## Querying One Concrete Type
 
 A leaf-type query can be straightforward:
-
 ``` csharp
 var cards = await db.Set<CardPaymentMethod>()
     .Where(x => x.Network == "Visa")
     .ToListAsync(cancellationToken);
 ```
 
-All required card data lives in the card table.
-
-This is one of TPC's strongest characteristics.
+All required card data lives in the card table. This is one of TPC's strongest characteristics.
 
 ## Querying the Base Type
 
 The application can still write:
-
 ``` csharp
 var methods = await db.PaymentMethods
     .ToListAsync(cancellationToken);
 ```
 
-But there is no common table containing all payment methods.
-
-The relational query must combine results from concrete tables.
-
-So TPC shifts complexity:
-
+But there is no common table containing all payment methods. The relational query must combine results from concrete tables. So TPC shifts complexity:
 -   concrete-type reads become simple,
 -   polymorphic base-type reads become more involved.
 
 ## Key Generation Matters
 
-All entities in an EF Core hierarchy must have unique key values even
-when they live in different concrete tables.
-
-That means this is unsafe conceptually:
-
+All entities in an EF Core hierarchy must have unique key values even when they live in different concrete tables. That means this is unsafe conceptually:
 ``` text
 CardPaymentMethods.Id = 1
 BankAccountPaymentMethods.Id = 1
 ```
 
-if both belong to the same mapped hierarchy.
-
-Providers that support sequences can use a shared sequence.
-Application-generated globally unique identifiers are another natural
-option:
-
+if both belong to the same mapped hierarchy. Providers that support sequences can use a shared sequence. Application-generated globally unique identifiers are another natural option:
 ``` csharp
 public Guid Id { get; protected set; } = Guid.CreateVersion7();
 ```
@@ -155,39 +128,20 @@ Key-generation strategy should be designed as part of the mapping.
 
 ## Referential Integrity
 
-TPC can make some foreign-key relationships harder to enforce at the
-database level.
-
-If another table references a `PaymentMethod`, which table should its
-foreign key target?
-
-The identity might live in `CardPaymentMethods` or
-`BankAccountPaymentMethods`.
-
-There is no single base table containing every valid ID.
-
-This is an important structural consequence, not merely an ORM
-implementation detail.
+TPC can make some foreign-key relationships harder to enforce at the database level. If another table references a `PaymentMethod`, which table should its foreign key target? The identity might live in `CardPaymentMethods` or `BankAccountPaymentMethods`. There is no single base table containing every valid ID. This is an important structural consequence, not merely an ORM implementation detail.
 
 ## Duplicated Columns
 
-TPC deliberately denormalizes inherited state.
-
-If the base class gains:
-
+TPC deliberately denormalizes inherited state. If the base class gains:
 ``` csharp
 public DateTimeOffset CreatedAt { get; protected set; }
 ```
 
-every concrete table needs a corresponding column.
-
-That duplication is the price paid for keeping each concrete object's
-state together in one table.
+every concrete table needs a corresponding column. That duplication is the price paid for keeping each concrete object's state together in one table.
 
 ## Adding a New Concrete Type
 
 A new subtype generally means a new table:
-
 ``` csharp
 public sealed class WalletPaymentMethod : PaymentMethod
 {
@@ -195,26 +149,15 @@ public sealed class WalletPaymentMethod : PaymentMethod
 }
 ```
 
-The new table repeats all inherited columns plus its own.
-
-Existing concrete tables need not gain subtype-specific columns, unlike
-TPH.
+The new table repeats all inherited columns plus its own. Existing concrete tables need not gain subtype-specific columns, unlike TPH.
 
 ## Performance
 
-TPC can perform well when workloads mostly query individual concrete
-types because each object is contained in one table.
-
-Base-type queries may require unions across concrete tables.
-
-Current EF Core guidance generally favors TPH as the broad default, with
-TPC worth considering when leaf-type querying dominates and benchmarks
-show a benefit.
+TPC can perform well when workloads mostly query individual concrete types because each object is contained in one table. Base-type queries may require unions across concrete tables. Current EF Core guidance generally favors TPH as the broad default, with TPC worth considering when leaf-type querying dominates and benchmarks show a benefit.
 
 ## Choosing Among the Three
 
 Using our payment hierarchy:
-
 ``` text
 TPH / Single Table
   One table
@@ -234,22 +177,15 @@ TPC / Concrete Table
   More complex polymorphic queries
 ```
 
-There is no universally correct mapping.
-
-The right choice depends on how the hierarchy is queried, updated,
-constrained, and expected to evolve.
+There is no universally correct mapping. The right choice depends on how the hierarchy is queried, updated, constrained, and expected to evolve.
 
 ## When to Use It
 
-Concrete Table Inheritance is worth considering when most queries target
-concrete leaf types, concrete types have substantially different shapes,
-and benchmarked performance favors TPC.
+Concrete Table Inheritance is worth considering when most queries target concrete leaf types, concrete types have substantially different shapes, and benchmarked performance favors TPC.
 
 ## When to Reconsider
 
-Prefer another strategy when polymorphic base queries dominate,
-database-enforced references to the base hierarchy are important, or
-duplicated inherited columns create unacceptable schema maintenance.
+Prefer another strategy when polymorphic base queries dominate, database-enforced references to the base hierarchy are important, or duplicated inherited columns create unacceptable schema maintenance.
 
 ## Related Patterns
 
@@ -261,12 +197,4 @@ duplicated inherited columns create unacceptable schema maintenance.
 
 ## Summary
 
-Concrete Table Inheritance optimizes the relational representation
-around concrete objects rather than the hierarchy as a whole.
-
-EF Core's TPC support makes the strategy practical, but it introduces
-real consequences for key generation, polymorphic queries, duplicated
-columns, and referential integrity.
-
-Choose it from measured access patterns, not from the shape of the class
-diagram.
+Concrete Table Inheritance optimizes the relational representation around concrete objects rather than the hierarchy as a whole. EF Core's TPC support makes the strategy practical, but it introduces real consequences for key generation, polymorphic queries, duplicated columns, and referential integrity. Choose it from measured access patterns, not from the shape of the class diagram.

@@ -11,6 +11,8 @@ tags: ["dotnet", "testing", "tooling", "devops"]
 title: "Getting Started with MSTest in .NET"
 ---
 
+
+
 MSTest's reputation as "the Visual Studio one" undersells where it's actually landed in recent years - it now supports both the legacy VSTest platform and the newer Microsoft.Testing.Platform, and its feature gap with xUnit and NUnit has narrowed considerably. The part worth getting right early is less about MSTest's capability and more about which testing platform you're actually building against, since that choice affects tooling behavior in ways that aren't always obvious from the project template alone.
 
 This guide covers installing MSTest, bootstrapping test classes with the right setup/teardown granularity, the core patterns for parameterized tests and assertions, and the best practices for a framework that's deeply tied to the Microsoft ecosystem specifically. By the end you'll have a test suite that fits naturally into a Visual Studio-centric or broader Microsoft-stack workflow.
@@ -177,3 +179,10 @@ Yes, though it's real, non-trivial work - attribute names, assertion syntax, and
 ### What's the most common mistake in a first MSTest setup?
 
 Forgetting that `[ClassInitialize]` and `[ClassCleanup]` must be static methods, which produces a straightforward compile error but is a common stumbling block coming from xUnit or NUnit's instance-based lifecycle patterns. The second common mistake is not being aware of which testing platform (VSTest vs. Microsoft.Testing.Platform) a project is actually running on, which can affect CI behavior in ways that aren't obvious from the project file alone.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

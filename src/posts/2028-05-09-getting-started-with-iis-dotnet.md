@@ -11,6 +11,8 @@ tags: ["dotnet", "deployment", "iis", "windows", "devops"]
 title: "Getting Started with IIS for .NET Deployment"
 ---
 
+
+
 IIS deployments have one failure mode that shows up more often than any other in this series: a completely correct application that returns a 500 error the moment it hits the server, because a single prerequisite - the .NET Core Hosting Bundle - wasn't installed on the Windows Server itself. It's a five-minute fix once you know to look for it, and a genuinely confusing debugging session if you don't. Getting the handful of Windows-Server-specific setup steps right up front is most of what separates a smooth IIS deployment from a frustrating one.
 
 This guide covers deploying an ASP.NET Core application to IIS, bootstrapping the server prerequisites and application pool configuration correctly, the core out-of-process hosting model IIS uses for modern .NET, and the best practices that prevent the most common first-deployment failures. By the end you'll have a working IIS deployment and a clear understanding of what's actually happening between IIS and your application underneath it.
@@ -155,3 +157,10 @@ Yes, fully - IIS has mature, well-established tooling for certificate binding an
 ### What's the most common mistake in a first IIS deployment?
 
 Forgetting to install the .NET Core Hosting Bundle on the Windows Server, resulting in a confusing 500 error despite correct application code. The second common mistake is leaving `managedRuntimeVersion` at its default (rather than empty), which can cause IIS to attempt to load an incorrect runtime context for the application pool.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

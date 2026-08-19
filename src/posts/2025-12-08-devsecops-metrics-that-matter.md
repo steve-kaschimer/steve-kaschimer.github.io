@@ -11,6 +11,8 @@ tags: ["devsecops", "devops"]
 title: "DevSecOps Metrics That Matter: What to Measure, How to Track It in GitHub, and Why It Matters"
 ---
 
+
+
 Modern software delivery is a balancing act. Teams strive to move fast, but every shortcut can introduce risk. DevSecOps exists to resolve that tension by embedding security into development workflows without slowing innovation. Yet there’s a catch: you can’t improve what you don’t measure. Metrics are the compass that keeps your DevSecOps journey on course.
 
 The challenge isn’t data scarcity. GitHub and other platforms generate plenty of signals. The challenge is knowing which metrics matter, how to track them effectively, and why they’re worth your attention. In this post, we’ll explore the essential DevSecOps metrics, show how to capture them using GitHub’s capabilities, and explain why these numbers should influence decisions across your organization.

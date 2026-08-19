@@ -11,19 +11,13 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Layer Supertype in Modern .NET"
 ---
 
-Layer Supertype is a type that acts as the common superclass for all
-types in a layer.
 
-It gives the layer one place for behavior or data that every member
-genuinely shares.
 
-In modern .NET, the pattern is useful - but inheritance should be
-applied more carefully than it often was in older enterprise frameworks.
+Layer Supertype is a type that acts as the common superclass for all types in a layer. It gives the layer one place for behavior or data that every member genuinely shares. In modern .NET, the pattern is useful - but inheritance should be applied more carefully than it often was in older enterprise frameworks.
 
 ## The Basic Idea
 
 Suppose every domain entity has an identifier:
-
 ``` csharp
 public abstract class Entity<TId>
     where TId : notnull
@@ -33,7 +27,6 @@ public abstract class Entity<TId>
 ```
 
 Then:
-
 ``` csharp
 public sealed class Customer
     : Entity<CustomerId>
@@ -42,7 +35,6 @@ public sealed class Customer
 ```
 
 and:
-
 ``` csharp
 public sealed class Order
     : Entity<OrderId>
@@ -55,7 +47,6 @@ The base type gives the domain layer shared semantics.
 ## Shared Identity Semantics
 
 A richer entity base might implement equality:
-
 ``` csharp
 public abstract class Entity<TId>
     where TId : notnull
@@ -76,15 +67,11 @@ public abstract class Entity<TId>
 }
 ```
 
-Now entity identity behavior is consistent throughout the layer.
-
-Whether this belongs in a base class depends on your domain model, but
-it illustrates the pattern well.
+Now entity identity behavior is consistent throughout the layer. Whether this belongs in a base class depends on your domain model, but it illustrates the pattern well.
 
 ## Persistence Layer Supertype
 
 A persistence layer might have:
-
 ``` csharp
 public abstract class RepositoryBase
 {
@@ -96,7 +83,6 @@ public abstract class RepositoryBase
 ```
 
 Then:
-
 ``` csharp
 public sealed class OrderRepository(
     AppDbContext db)
@@ -105,15 +91,11 @@ public sealed class OrderRepository(
 }
 ```
 
-This can remove repeated plumbing.
-
-But if the base class exists only to save one constructor parameter
-declaration, composition may be simpler.
+This can remove repeated plumbing. But if the base class exists only to save one constructor parameter declaration, composition may be simpler.
 
 ## Controllers
 
 Older ASP.NET applications frequently created:
-
 ``` csharp
 public abstract class ApplicationController
     : Controller
@@ -123,12 +105,7 @@ public abstract class ApplicationController
 }
 ```
 
-Then every controller inherited from it.
-
-Some shared presentation behavior may justify this.
-
-But modern ASP.NET Core offers alternatives:
-
+Then every controller inherited from it. Some shared presentation behavior may justify this. But modern ASP.NET Core offers alternatives:
 -   middleware,
 -   filters,
 -   endpoint filters,
@@ -136,13 +113,11 @@ But modern ASP.NET Core offers alternatives:
 -   authorization policies,
 -   extension methods.
 
-A base controller should not become the only way to access half the
-application.
+A base controller should not become the only way to access half the application.
 
 ## The Fragile Base Class Problem
 
 A Layer Supertype can slowly accumulate unrelated conveniences:
-
 ``` csharp
 public abstract class BaseEntity
 {
@@ -157,23 +132,16 @@ public abstract class BaseEntity
 ```
 
 Now every entity is forced to participate in:
-
 -   auditing,
 -   soft delete,
 -   domain events,
 -   optimistic concurrency,
 
-whether or not those concepts make sense.
-
-The common base has become infrastructure policy by inheritance.
+whether or not those concepts make sense. The common base has become infrastructure policy by inheritance.
 
 ## Prefer True Commonality
 
-A good Layer Supertype represents something that is genuinely universal
-within the layer.
-
-For example:
-
+A good Layer Supertype represents something that is genuinely universal within the layer. For example:
 ``` csharp
 public abstract class DomainEvent
 {
@@ -181,16 +149,11 @@ public abstract class DomainEvent
 }
 ```
 
-may make sense if every domain event shares the concept.
-
-A `BaseThingWithEveryFeatureWeMightNeed` does not.
+may make sense if every domain event shares the concept. A `BaseThingWithEveryFeatureWeMightNeed` does not.
 
 ## Interfaces as Layer Supertypes
 
-Fowler's original formulation emphasizes a superclass, but modern C#
-interfaces can sometimes provide the shared type relationship without
-implementation inheritance:
-
+Fowler's original formulation emphasizes a superclass, but modern C# interfaces can sometimes provide the shared type relationship without implementation inheritance:
 ``` csharp
 public interface IHasDomainEvents
 {
@@ -200,7 +163,6 @@ public interface IHasDomainEvents
 ```
 
 Infrastructure can operate on the capability:
-
 ``` csharp
 foreach (var entry in db.ChangeTracker
     .Entries<IHasDomainEvents>())
@@ -209,24 +171,15 @@ foreach (var entry in db.ChangeTracker
 }
 ```
 
-This is often more flexible than requiring all entities to inherit from
-one large base class.
+This is often more flexible than requiring all entities to inherit from one large base class.
 
 ## Default Interface Members
 
-Modern C# can even provide limited shared implementation in interfaces.
-
-Use that capability carefully.
-
-Interface inheritance communicates capability; base-class inheritance
-communicates both type and implementation reuse.
-
-Choose based on what the layer actually needs.
+Modern C# can even provide limited shared implementation in interfaces. Use that capability carefully. Interface inheritance communicates capability; base-class inheritance communicates both type and implementation reuse. Choose based on what the layer actually needs.
 
 ## Generic Constraints
 
 A shared type can enable reusable infrastructure:
-
 ``` csharp
 public interface IEntity<TId>
 {
@@ -235,7 +188,6 @@ public interface IEntity<TId>
 ```
 
 Then:
-
 ``` csharp
 public static T FindById<T, TId>(
     IEnumerable<T> entities,
@@ -246,15 +198,11 @@ public static T FindById<T, TId>(
 }
 ```
 
-The layer's shared contract becomes useful without requiring a concrete
-superclass.
+The layer's shared contract becomes useful without requiring a concrete superclass.
 
 ## Layer Supertype and EF Core
 
-EF Core can map inherited properties automatically.
-
-For example:
-
+EF Core can map inherited properties automatically. For example:
 ``` csharp
 public abstract class AuditedEntity
 {
@@ -262,20 +210,11 @@ public abstract class AuditedEntity
 }
 ```
 
-Derived mapped entities inherit the property.
-
-That is convenient, but remember that a C# inheritance decision can
-affect the persistence model.
-
-Keep domain and schema consequences in mind.
+Derived mapped entities inherit the property. That is convenient, but remember that a C# inheritance decision can affect the persistence model. Keep domain and schema consequences in mind.
 
 ## Cross-Cutting Concerns
 
-Before putting a cross-cutting concern in a Layer Supertype, ask whether
-another mechanism is a better fit.
-
-For example:
-
+Before putting a cross-cutting concern in a Layer Supertype, ask whether another mechanism is a better fit. For example:
 ``` text
 Logging            -> middleware / decorator
 Authorization      -> policies
@@ -289,19 +228,11 @@ Inheritance is one tool, not the default home for shared behavior.
 
 ## Testing
 
-A Layer Supertype deserves focused tests if it contains important
-behavior such as equality or event handling.
-
-More importantly, test derived types to ensure the inherited semantics
-actually fit them.
-
-A base abstraction that constantly needs exceptions is probably too
-broad.
+A Layer Supertype deserves focused tests if it contains important behavior such as equality or event handling. More importantly, test derived types to ensure the inherited semantics actually fit them. A base abstraction that constantly needs exceptions is probably too broad.
 
 ## When to Use It
 
 Layer Supertype is useful when:
-
 -   every object in a layer shares real behavior,
 -   shared semantics must remain consistent,
 -   generic infrastructure benefits from a common type,
@@ -309,11 +240,7 @@ Layer Supertype is useful when:
 
 ## When to Avoid It
 
-Avoid it when the base class becomes a convenience bucket or forces
-unrelated concerns onto every type.
-
-Modern dependency injection and composition often provide cleaner
-alternatives.
+Avoid it when the base class becomes a convenience bucket or forces unrelated concerns onto every type. Modern dependency injection and composition often provide cleaner alternatives.
 
 ## Related Patterns
 
@@ -324,11 +251,4 @@ alternatives.
 
 ## Summary
 
-Layer Supertype gives an architectural layer a common type and a home
-for truly shared behavior.
-
-In modern .NET, the strongest implementations tend to be small and
-deliberate.
-
-Use inheritance for genuine shared semantics - not merely because
-several classes happen to need similar plumbing.
+Layer Supertype gives an architectural layer a common type and a home for truly shared behavior. In modern .NET, the strongest implementations tend to be small and deliberate. Use inheritance for genuine shared semantics - not merely because several classes happen to need similar plumbing.

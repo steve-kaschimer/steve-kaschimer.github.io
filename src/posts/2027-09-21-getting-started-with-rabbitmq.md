@@ -11,6 +11,8 @@ tags: ["dotnet", "messaging", "architecture", "developer-productivity"]
 title: "Getting Started with RabbitMQ in .NET"
 ---
 
+
+
 Working directly against RabbitMQ's raw AMQP client in .NET means hand-managing connections, channels, serialization, retry policy, and error queues yourself - all solvable, all boilerplate you'd rather not maintain per project. This is why the overwhelming majority of real .NET RabbitMQ integrations go through MassTransit rather than the raw client: it gives you strongly-typed messages and consumers instead of AMQP primitives, and it's the setup this guide focuses on, since it's genuinely how most teams should approach RabbitMQ in .NET.
 
 This guide covers installing RabbitMQ and MassTransit, bootstrapping publishers and consumers with sensible endpoint configuration, the core publish/consume/request-reply workflow, and the best practices that keep a RabbitMQ-backed system resilient rather than fragile. By the end you'll have a working pub/sub setup with retry and dead-lettering handled for you, not hand-rolled.
@@ -205,3 +207,10 @@ If you're using MassTransit, largely yes - your message contracts and consumer c
 ### What's the most common mistake in a first RabbitMQ setup?
 
 Working directly against the raw RabbitMQ client instead of MassTransit, reimplementing retry logic, dead-lettering, and serialization that MassTransit already provides. The second common mistake is leaving `PrefetchCount` and `ConcurrentMessageLimit` at defaults without considering whether they actually match a given consumer's workload.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

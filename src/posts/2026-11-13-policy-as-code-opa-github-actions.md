@@ -11,6 +11,8 @@ tags: ["policy-as-code", "opa", "github-actions", "devsecops", "compliance"]
 title: "Policy as Code with OPA and GitHub Actions: Enforcing Org Standards at the Merge Gate"
 ---
 
+
+
 An engineering standard written down as a wiki page or a Slack pin gets followed exactly as consistently as reviewers remember it exists. "Every workflow file needs an explicit `permissions` block" is easy to state once in an onboarding doc and easy to forget three months later when someone's copy-pasting a workflow from a different repo that predates the standard. [The permissions-block post](/posts/2026-03-25-github-actions-permissions-block/) made the case for the standard itself; this post is about the layer most teams skip - making the standard something a machine checks on every PR, not something a human is trusted to remember.
 
 Open Policy Agent (OPA) is a general-purpose policy engine, and Rego is its policy language - rules expressed as code, versioned in the repo, evaluated deterministically against structured input. The pitch isn't "replace code review with a policy engine." It's narrower and more useful: take the subset of review comments that are actually deterministic yes/no checks against a written standard, and stop spending a human reviewer's attention on them.

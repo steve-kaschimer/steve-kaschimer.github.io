@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity", "performance"]
 title: "Getting Started with Mapster in .NET"
 ---
 
+
+
 Mapster's `Adapt()` extension method is the fastest on-ramp of any library in this series - it works on any object with zero configuration, matching properties by name automatically. That immediacy is real, but it's worth pairing with an honest look at where the project stands: development has genuinely slowed in recent times, and its long-term maintenance trajectory carries more uncertainty than it used to. Neither of those facts should stop you from using Mapster today; they should inform how much you build around it for tomorrow.
 
 This guide covers installing Mapster, bootstrapping both its zero-config runtime mode and its optional compile-time source-generation mode, the core patterns for custom mapping configuration, and the best practices for using it well given its current position in the ecosystem. By the end you'll have a fast, flexible mapping setup and a clear sense of when to lean on which of its two execution modes.
@@ -166,3 +168,10 @@ Support is more limited than AutoMapper's mature `ProjectTo` capability. If EF C
 ### What's the most common mistake in a first Mapster setup?
 
 Adding unnecessary `TypeAdapterConfig` configuration for mappings that would have worked correctly by convention alone, missing out on Mapster's core zero-configuration convenience. The second common mistake is not checking current project activity before committing a new, long-lived project to it, given its genuinely slowed development pace.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

@@ -11,8 +11,9 @@ tags: ["dotnet", "architecture", "design-patterns", "software-design"]
 title: "Feature Flags: Separating Deployment From Release"
 ---
 
-A feature flag lets deployed code exist without making the behavior available to everyone.
 
+
+A feature flag lets deployed code exist without making the behavior available to everyone.
 ```text
 Deploy code
    |
@@ -36,14 +37,11 @@ if (await features.IsEnabledAsync(
 return await oldCheckout.ExecuteAsync(...);
 ```
 
-The conditional is easy.
-
-The lifecycle is the pattern.
+The conditional is easy. The lifecycle is the pattern.
 
 ## Types of Flags
 
 Useful categories include:
-
 ```text
 release flag
 experiment flag
@@ -51,14 +49,11 @@ operations/kill-switch flag
 permission/entitlement flag
 ```
 
-They have different expected lifetimes.
-
-A release flag should usually disappear after rollout.
+They have different expected lifetimes. A release flag should usually disappear after rollout.
 
 ## Progressive Delivery
 
 A flag can target:
-
 ```text
 internal users
 1% of customers
@@ -73,7 +68,6 @@ This reduces blast radius.
 ## Kill Switch
 
 Some flags exist specifically to disable optional or risky behavior quickly:
-
 ```text
 recommendation engine causing failures
 -> disable recommendations
@@ -84,27 +78,15 @@ That can be faster and safer than an emergency deployment.
 ## Flags and Domain Logic
 
 Avoid scattering:
-
 ```csharp
 if (flag) ...
 ```
 
-through every layer.
-
-Evaluate the flag near the decision boundary and choose one coherent behavior path.
-
-Otherwise two implementations become interleaved and difficult to remove.
+through every layer. Evaluate the flag near the decision boundary and choose one coherent behavior path. Otherwise two implementations become interleaved and difficult to remove.
 
 ## Flag Debt
 
-Every temporary flag creates two possible systems.
-
-Ten boolean flags can theoretically create 1,024 combinations.
-
-Remove obsolete flags aggressively.
-
-Store metadata such as:
-
+Every temporary flag creates two possible systems. Ten boolean flags can theoretically create 1,024 combinations. Remove obsolete flags aggressively. Store metadata such as:
 ```text
 owner
 purpose
@@ -114,15 +96,11 @@ expiration date
 
 ## Testing
 
-Test both meaningful paths while the flag exists.
-
-For targeted rollouts, test evaluation rules too.
+Test both meaningful paths while the flag exists. For targeted rollouts, test evaluation rules too.
 
 ## Security
 
-A feature flag is not authorization.
-
-If a user is forbidden from an operation, enforce authorization even when the feature is enabled.
+A feature flag is not authorization. If a user is forbidden from an operation, enforce authorization even when the feature is enabled.
 
 ## When It Helps
 
@@ -134,8 +112,7 @@ Long-lived unmanaged flags create hidden configuration complexity and dead code.
 
 ## Summary
 
-Feature flags make release a runtime decision.
+Feature flags make release a runtime decision. Their power comes from reversibility and controlled exposure. Their cost is combinatorial complexity, so every temporary flag should have a retirement plan.
+---
 
-Their power comes from reversibility and controlled exposure.
-
-Their cost is combinatorial complexity, so every temporary flag should have a retirement plan.
+C# or .NET question? Ask away. [steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

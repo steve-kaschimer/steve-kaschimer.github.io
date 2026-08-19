@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity"]
 title: "Getting Started with Coravel in .NET"
 ---
 
+
+
 Coravel's whole value proposition is that it doesn't ask you for anything - no database, no storage configuration, no dashboard to secure. You add a package, write a fluent scheduling expression, and you're done. That simplicity is genuinely the point, not a limitation to work around, but it does mean the setup guide for Coravel is mostly about knowing exactly where its boundaries are, so you don't discover them the hard way after a restart wipes your schedule state.
 
 This guide covers installing Coravel, bootstrapping its scheduler (and its optional queuing and caching helpers), the core scheduling workflow, and the best practices for using Coravel specifically within the scope it's designed for. By the end you'll know exactly when Coravel's zero-infrastructure model is the right fit and when it's time to graduate to something with persistence.
@@ -144,3 +146,10 @@ That's a reasonable path if you're genuinely unsure how much scheduling complexi
 ### What's the most common mistake in a first Coravel setup?
 
 Using it in a multi-instance deployment without realizing there's no coordination between instances, resulting in the same job running once per instance instead of once total. The second common mistake is skipping `PreventOverlapping` on a job whose execution time isn't reliably shorter than its schedule interval.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

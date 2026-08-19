@@ -11,6 +11,8 @@ tags: ["dotnet", "tooling", "developer-productivity", "architecture"]
 title: "Getting Started with Manual Mapping in .NET"
 ---
 
+
+
 There's no package to install for this one, which is exactly the point - manual mapping is just writing the conversion between two types as ordinary C#, the same way you'd write any other method. It's easy to dismiss as "what you do before you get a real mapping library," but that framing undersells it: for a genuinely large share of applications, manual mapping is the fastest, most transparent, and most maintainable option in this entire comparison series, not a placeholder for something better.
 
 This guide covers the patterns that make manual mapping scale cleanly as a codebase grows - where mapping logic should live, how to keep it from becoming its own kind of boilerplate mess, and the specific techniques (constructors, static factory methods, extension methods) that keep it readable. By the end you'll have a mapping approach with zero dependencies, full transparency, and nothing hidden behind a library's internals.
@@ -176,3 +178,10 @@ Yes, and it's common - using manual mapping for a handful of simple, stable type
 ### What's the most common mistake with manual mapping?
 
 Inconsistency - different developers solving the same "convert type A to type B" problem with different patterns (extension methods here, inline object initializers there, constructors somewhere else) across the same codebase, making mapping logic harder to find and trust than it needs to be. The fix is agreeing on one convention early and following it consistently, not switching to a library purely to solve a discipline problem a library won't actually fix on its own.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)

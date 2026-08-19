@@ -11,6 +11,8 @@ tags: ["dotnet", "logging", "tooling", "developer-productivity"]
 title: "Getting Started with log4net in ASP.NET Core"
 ---
 
+
+
 Setting up **log4net in ASP.NET Core** is a bit less "batteries included" than some of the newer logging libraries, since log4net predates `Microsoft.Extensions.Logging` by well over a decade. That doesn't mean it's hard - but there are a handful of decisions and gotchas that catch people the first time through: XML config vs. code-based config, where the config file needs to live, and how to make sure buffered log entries actually get flushed before the process exits.
 
 This guide walks through a complete setup from scratch: installing the right packages, configuring log4net, wiring it into `Program.cs` for both ASP.NET Core apps and Worker Services, and using `ILogger<T>` the same way you would with any other provider. By the end you'll have a working, production-ready log4net configuration for a .NET 8 project.
@@ -299,3 +301,10 @@ This is the most common log4net gotcha: unlike NLog, it fails silently on config
 ### How do I configure log4net differently for Development vs Production?
 
 Since appender definitions live in XML rather than `appsettings.json`, the cleanest approach is maintaining a separate config file per environment (for example, `log4net.Development.config`) and selecting which one to load based on `builder.Environment.EnvironmentName` when you call `AddLog4Net(...)`. This keeps the JSON-based override pattern you may be used to from `Microsoft.Extensions.Logging`, adapted to log4net's XML-first design.
+
+
+---
+
+C# or .NET question? Ask away.
+
+[steve.kaschimer@slalom.com](mailto:steve.kaschimer@slalom.com)
